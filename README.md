@@ -8,7 +8,7 @@ It is emphatically **not** a CV, developer portfolio, professional marketing sit
 
 ## Status
 
-**DH-00 foundation established, 20 October 2026.** Concept exploration is next. No design winner, domain, web framework, deployed site or live demo has yet been approved.
+**DH-00 foundation established, 20 October 2026.** Concept exploration is next. The owner has purchased **davehub.co.uk** as the primary domain; DNS and hosting are not configured. No design winner, web framework, deployed site or live demo has yet been approved.
 
 ## North star
 
@@ -29,6 +29,7 @@ The experience should reward exploration without making it difficult to find a s
 - [Creative brief](docs/CREATIVE_BRIEF.md)
 - [Experience principles](docs/EXPERIENCE_PRINCIPLES.md)
 - [Three concept directions](docs/CONCEPTS.md)
+- [Visual direction and exclusions](docs/VISUAL_DIRECTION.md)
 - [Prototype comparison and test plan](docs/PROTOTYPE_TEST_PLAN.md)
 - [Roadmap](docs/ROADMAP.md)
 - [Technical direction](docs/TECHNICAL_DIRECTION.md)
@@ -45,4 +46,4 @@ The experience should reward exploration without making it difficult to find a s
 - Integrations must not automatically publish content; human review is required.
 - British English throughout.
 
-**DaveHub is a working name.** No final domain or branding has been chosen.
+**DaveHub** is the working name and **davehub.co.uk** is the chosen primary domain (reported purchased by the owner). Branding, final visuals and hosting remain open.

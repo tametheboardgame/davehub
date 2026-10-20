@@ -29,14 +29,24 @@
       "id": "ADR-0002",
       "decision": "GitHub repository is public; publication safeguards apply to all committed material",
       "status": "accepted"
+    },
+    {
+      "id": "ADR-0003",
+      "decision": "Owner purchased davehub.co.uk as primary domain; Cloudflare is the host candidate; DNS not configured",
+      "status": "accepted_domain_provisional_host"
+    },
+    {
+      "id": "ADR-0004",
+      "decision": "Mindscape framing explored with non-photographic stylised character; Gilliam/cut-out collage style explicitly excluded",
+      "status": "accepted_constraints_concept_unselected"
     }
   ],
   "open_questions": [
     "Choose visual direction after hands-on prototype comparison",
-    "Confirm final name and domain",
     "Select graphics and runtime based on working prototype performance",
     "Approve public use of each featured real-world project and person's likeness or audio",
-    "Select deployment platform and preview process"
+    "Select deployment platform and preview process",
+    "Agree stylised character visual identity and entering-the-mind interaction, without realistic likeness"
   ],
   "deployment": {
     "status": "not_configured",
@@ -49,7 +59,30 @@
     "remote_status": "connected"
   },
   "last_verified": {
-    "scope": "GitHub repository and planning foundation",
-    "result": "read/write GitHub access verified, planning baseline committed; no website deployed"
+    "scope": "Repository creative plan and domain decision",
+    "result": "Owner reports domain purchased; site remains undeployed and DNS unverified"
+  },
+  "domain": {
+    "primary": "davehub.co.uk",
+    "ownership": "owner_reports_purchased",
+    "dns_status": "not_configured_or_verified",
+    "alternative_dot_com": "not_purchased_due_to_cost"
+  },
+  "creative_direction": {
+    "overarching_idea": "An optional non-photographic stylised Dave-like entrance leading into an explorable creative mind",
+    "machine": "Coherent, designed and interconnected representation of the mind rather than literal ramshackle clockwork",
+    "hard_exclusions": [
+      "Terry Gilliam or Monty Python cut-out animation aesthetic",
+      "grotesque/photo cut-up collage",
+      "scrapbook-style surrealism",
+      "jerky paper puppet animation",
+      "default Victorian steampunk or random brass gears"
+    ],
+    "final_style": "unselected_pending_concept_review"
+  },
+  "hosting": {
+    "preferred_candidate": "Cloudflare",
+    "decision_status": "provisional",
+    "deployed": false
   }
 }

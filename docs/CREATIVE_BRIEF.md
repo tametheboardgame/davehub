@@ -28,14 +28,23 @@ A distinctive digital environment for David's games, stories, musicals, writing,
 - Technical experiments, using public or synthetic data.
 - Abandoned prototypes and unfinished ideas, clearly labelled.
 
+## New conceptual framing
+
+A possible opening shows an **original stylised Dave-like character**, then moves through a playful threshold into an extraordinary representation of the creative mind. The Dave Machine is the inner organising system: games, stories, music, experiments, unfinished ideas and development history become discoverable interconnected experiences. The opening must be skippable and the likeness must not be a photograph or realistically identifying portrait. The precise creative treatment remains subject to concept review.
+
+## Visual tone
+
+Not deliberately ramshackle, collage-like or grotesque. Aim for a coherent, carefully designed and surprising world. The user has explicitly vetoed **Terry Gilliam / Monty Python cut-out animation aesthetics**. See [Visual direction](VISUAL_DIRECTION.md) for detailed exclusions.
+
 ## Explicit non-goals
 
 - Developer portfolio, CV or recruitment pitch.
 - Generic Wix-style website, standard portfolio grid or blog theme.
+- Terry Gilliam-inspired cut-out animation, grotesque photo collage, old-paper surrealism or default steampunk imagery.
 - A 3D world added for spectacle rather than meaningful exploration.
 - An interface that hides content behind long loading sequences.
 - Publishing material from private repos or work without approval.
 
 **Guiding sentence:** DaveHub is a place you discover, not a profile you scroll.
 
-DaveHub is a provisional name. No final artwork, brand, domain or concept has been selected.
+DaveHub is the working name; **davehub.co.uk has been purchased** according to the owner. No final artwork, hosting or concept has been selected.

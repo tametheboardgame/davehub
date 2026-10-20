@@ -1,6 +1,6 @@
 # DaveHub development roadmap
 
-**Updated:** 20 October 2026. **Current stage:** DH-01 concept exploration. Repository is public and the planning foundation is established. There is no website deployment yet.
+**Updated:** 20 October 2026. **Current stage:** DH-01 concept exploration. Repository is public and the planning foundation is established. Primary domain **davehub.co.uk** has been purchased by the owner, but DNS/hosting are not configured. There is no website deployment yet.
 
 Stages are decision gates, not promises about delivery dates.
 
@@ -9,7 +9,7 @@ Stages are decision gates, not promises about delivery dates.
 | DH-00A | Creative brief | Purpose, audience and non-goals documented | Complete |
 | DH-00B | Experience and publication principles | Access, discoverability, privacy and performance documented | Complete |
 | DH-00C | GitHub foundation | `main`, README, agent rules, state and roadmap committed | Complete |
-| DH-01A | Dave Machine concept | Interaction language, references and storyboard | Next |
+| DH-01A | Dave Machine mindscape concept | Non-Gilliam visual language, character/entry concept, references and storyboard | Next |
 | DH-01B | Impossible Building concept | Interaction language, references and storyboard | Next |
 | DH-01C | The Signal concept | Interaction language, references and storyboard | Next |
 | DH-02A | Machine prototype | Playable mechanic, three destinations and fallback index | Not started |
@@ -36,4 +36,4 @@ Stages are decision gates, not promises about delivery dates.
 
 ## Immediate next steps
 
-Prepare DH-01A, DH-01B and DH-01C as deliberately contrasting visual/interaction explorations. Prototype all three in DH-02 before selecting a winner.
+Prepare DH-01A, DH-01B and DH-01C as deliberately contrasting visual/interaction explorations. Enforce the explicit Gilliam/cut-out aesthetic exclusion and test the idea of an original stylised character as an optional entrance to the mind-machine. Prototype all three in DH-02 before selecting a winner.

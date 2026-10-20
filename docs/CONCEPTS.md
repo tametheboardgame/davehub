@@ -2,47 +2,56 @@
 
 These are different interaction metaphors, not three colour schemes for the same portfolio.
 
-## DH-01A: The Dave Machine
+## Overarching creative idea
 
-An enormous, evolving Rube Goldberg contraption of pipes, gears, suspicious controls, arcade cabinets, theatre signs and portals. Different parts of the machine lead to different work.
+A visitor may enter through an **original stylised character**, a deliberately non-photographic, non-realistic depiction suggestive of Dave but not a portrait. The camera or interface crosses into the character's creative mind and discovers an unexpected internal universe. This is an exploration direction, **not** an approved design or mandatory intro. People must be able to skip directly to projects.
 
-**Interaction:** Pan, zoom, activate contraptions, reveal hidden compartments; the machine grows as projects are added.
+**Non-negotiable visual exclusion:** No Terry Gilliam / Monty Python-style cut-out animation, ugly scrapbook surrealism, grotesque caricature, collaged body parts, jerky paper puppetry, Victorian/steampunk clutter or random brass gear constructions. Weirdness should be intentional and internally coherent. See [visual direction](VISUAL_DIRECTION.md).
 
-**Advantage:** Distinctive, expandable and full of opportunities for connected jokes.
+## DH-01A: The Dave Machine (inside the mind)
 
-**Risk:** Large scene-production effort, mobile navigation and growing-world maintenance.
+An impossible, highly designed interconnected system visualising thoughts and creative projects. The 'machine' is not literal clockwork: it might be abstract architecture, flowing information, reactive structures and portals that form a recognisable inner logic.
 
-**First prototype:** One mechanical chamber, three project destinations, one optional secret, one visible accessible index.
+**Possible opening:** A stylised character turns towards the visitor; interaction transitions through an eye, silhouette, graphical portal or abstract threshold into the mind. Avoid photo-real faces or grotesque cranial imagery.
+
+**Interaction:** Explore linked idea spaces, trigger purposeful reactive structures, discover projects and reveal surprising connections. The environment evolves as projects are added.
+
+**Advantage:** The strongest personal unifying metaphor; expandable and capable of original interactions.
+
+**Risk:** Excessive scene-production effort, hard-to-maintain 3D spectacle, accidentally abstract or confusing navigation.
+
+**First prototype:** One coherent mind-space, three project destinations, one original surprise and a visible accessible index; test optional entry sequence.
 
 ## DH-01B: The Impossible Building
 
-A physically impossible building where an arcade, theatre, library, laboratory and other rooms coexist. Doors, lifts, corridors and perspective tricks make visiting different projects an adventure.
+An impossible architecture of ideas and worlds, perhaps a mental construct rather than a physical building. Rooms, shifting geometries and unexpected transitions lead to creative projects without resembling a whimsical collage or retro museum.
 
-**Interaction:** Explore rooms and unexpected transitions; rooms may have contrasting creative identities.
+**Interaction:** Explore sophisticated rooms and improbable spaces, reach distinct project destinations, and use an always-available index.
 
-**Advantage:** Project-as-destination is intuitive; new rooms are easy to imagine.
+**Advantage:** New projects can become new spatial destinations.
 
-**Risk:** Becoming an ordinary virtual museum unless the surprises are original.
+**Risk:** Becoming a conventional 3D museum, an expensive environment to populate or a confusing labyrinth.
 
-**First prototype:** A lobby, three rooms, one improbable transition and an immediate project-jump control.
+**First prototype:** A lobby, three differentiated rooms, a convincing impossible transition and an immediate project-jump control.
 
 ## DH-01C: The Signal
 
-DaveHub is not a location but a bizarre transmission system. A receiver, observatory or terminal catches broadcasts from different creative worlds.
+A creative mind as an original transmission network rather than a place. Visitors tune channels to discover different works and dispatches. Treat the visual system as a designed interface, not an old-timey radio collage.
 
-**Interaction:** Tune stations, manipulate waveforms, discover transmissions that turn into games, creative work and development dispatches.
+**Interaction:** Shift frequency, resolve signals into projects, reveal hidden channels and open directly linked experiences.
 
-**Advantage:** A strong non-spatial alternative, rich atmosphere and expressive interactions.
+**Advantage:** A distinct non-spatial interface, expressive motion and easier modular expansion.
 
-**Risk:** Confusing discoverability, audio dependence and gimmick fatigue.
+**Risk:** Discoverability, audio dependence, novelty wearing thin.
 
-**First prototype:** Three clearly labelled channels, one reactive signal display, non-audio navigation and a direct-access index.
+**First prototype:** Three legible channels, one reactive display, entirely usable silent navigation and a direct-access index.
 
 ## Comparison ground rules
 
-- All three use the *same* three public-safe placeholder projects.
-- Each allows a real project to be found quickly, without a tutorial.
-- Test direct URLs, keyboard, touch, reduced-motion and smaller screens.
-- Build just the core mechanic and one memorable moment for each.
-- Make the final decision from hands-on prototypes, not static moodboards.
-- Hybridise only if it genuinely produces a stronger, coherent experience.
+- All three respect the explicit visual veto; none should rely on a Gilliam-style collage or steampunk clutter.
+- All three use the same three public-safe sample project destinations.
+- All three provide direct links and accessible project search/jump navigation.
+- Test keyboard, touch, reduced motion, laptop and phone views.
+- Build working interactions and at least one memorable original moment, not static moodboards only.
+- Compare the concepts before approving a final look or framework.
+- Use the idea of 'entering Dave's mind' creatively, but do not require a long, unskippable intro.
