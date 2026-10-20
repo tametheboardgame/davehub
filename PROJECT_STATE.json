@@ -1,0 +1,55 @@
+{
+  "project": "DaveHub",
+  "updated": "2026-10-20",
+  "status": "concept_design",
+  "current_work_package": "DH-01",
+  "completed": [
+    "DH-00A",
+    "DH-00B",
+    "DH-00C"
+  ],
+  "in_progress": [],
+  "next": [
+    "DH-01A",
+    "DH-01B",
+    "DH-01C"
+  ],
+  "decisions": [
+    {
+      "id": "CREATIVE-001",
+      "decision": "An explorable personal creative world, not a conventional developer portfolio",
+      "status": "agreed"
+    },
+    {
+      "id": "ADR-0001",
+      "decision": "Original private-first proposal, superseded by actual public repository",
+      "status": "superseded"
+    },
+    {
+      "id": "ADR-0002",
+      "decision": "GitHub repository is public; publication safeguards apply to all committed material",
+      "status": "accepted"
+    }
+  ],
+  "open_questions": [
+    "Choose visual direction after hands-on prototype comparison",
+    "Confirm final name and domain",
+    "Select graphics and runtime based on working prototype performance",
+    "Approve public use of each featured real-world project and person's likeness or audio",
+    "Select deployment platform and preview process"
+  ],
+  "deployment": {
+    "status": "not_configured",
+    "url": null
+  },
+  "repository": {
+    "full_name": "tametheboardgame/davehub",
+    "default_branch": "main",
+    "visibility": "public",
+    "remote_status": "connected"
+  },
+  "last_verified": {
+    "scope": "GitHub repository and planning foundation",
+    "result": "read/write GitHub access verified, planning baseline committed; no website deployed"
+  }
+}

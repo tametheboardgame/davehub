@@ -1,0 +1,16 @@
+node_modules/
+.astro/
+dist/
+.vercel/
+.wrangler/
+.cloudflare/
+.env
+.env.*
+!.env.example
+coverage/
+.playwright/
+playwright-report/
+test-results/
+.DS_Store
+Thumbs.db
+*.log
