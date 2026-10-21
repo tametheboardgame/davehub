@@ -1,7 +1,7 @@
 {
   "project": "DaveHub",
   "updated": "2026-10-21",
-  "status": "concept_baseline_locked",
+  "status": "homepage_first_look_in_review",
   "current_work_package": "DH-01A",
   "completed": [
     "DH-00A",
@@ -11,9 +11,12 @@
     "DH-01M",
     "DH-01N"
   ],
-  "in_progress": [],
-  "next": [
+  "in_progress": [
     "DH-01A",
+    "DH-02A"
+  ],
+  "next": [
+    "DH-01A illustrated Dave movement and compositing",
     "DH-01B",
     "DH-01C",
     "DH-01D"
@@ -70,7 +73,10 @@
     "Approve public use of each featured real-world project and person's likeness or audio",
     "Select deployment platform and preview process",
     "Refine original illustrated Dave asset, image-driven destinations, intro and responsive layout",
-    "Confirm precise 1990s boring HTML menu style during prototype review"
+    "Confirm precise 1990s boring HTML menu style during prototype review",
+    "Review first-look homepage visual placement with the actual approved background/logo in browser",
+    "Decide illustrated Dave's movement and integration before composing character art",
+    "Decide whether the previously proposed retro HTML mode needs a separate entry, now bottom menu navigation exists"
   ],
   "deployment": {
     "status": "not_configured",
@@ -83,8 +89,8 @@
     "remote_status": "connected"
   },
   "last_verified": {
-    "scope": "2026-10-21 locked concept art",
-    "result": "Original PNG Git blobs hash-matched against local originals; Google Drive backups uploaded; design requirements documented; no site deployed"
+    "scope": "DH-01A first-look HTML interactions",
+    "result": "Local browser smoke tested at 1440x900, 1366x768, 390x844, 375x667: navigation/dialog/escape/no horizontal overflow passed; local artwork inaccessible so composed-image visual review remains outstanding"
   },
   "domain": {
     "primary": "davehub.co.uk",
@@ -168,5 +174,19 @@
     "sha256_png": "b7ef95c6d731451ef0def7702b24fbb3e69e59ffb6b5b6f923b483dc4ba259ec",
     "drive_file_id": "1va5nh4ZJDiyUz9ET3X6jJ2G6Zf75PR8t",
     "production_note": "Layer Dave, logo, navigation and accessible HTML controls separately; responsive cropping and performance variants still to be tested"
+  },
+  "homepage_prototype": {
+    "status": "feature_branch_review",
+    "branch": "feature/dh-01a-homepage-first-look",
+    "files": [
+      "index.html",
+      "styles.css",
+      "catalogue.js",
+      "main.js",
+      "docs/HOMEPAGE_FIRST_LOOK.md"
+    ],
+    "illustrated_dave": "intentionally_deferred",
+    "real_projects": "not_published",
+    "deployment": "not_configured"
   }
 }
