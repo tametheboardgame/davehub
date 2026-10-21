@@ -8,7 +8,7 @@ It is emphatically **not** a CV, developer portfolio, professional marketing sit
 
 ## Status
 
-**DH-00 foundation established, 20 October 2026.** Concept exploration is next. The owner has purchased **davehub.co.uk** as the primary domain; DNS and hosting are not configured. No design winner, web framework, deployed site or live demo has yet been approved.
+**DH-00 foundation established; DH-01 visual baseline locked, 21 October 2026.** The owner has purchased **davehub.co.uk** as the primary domain; DNS and hosting are not configured. The owner has selected Concept 1 as the primary visual reference; final layout, framework and interactive prototypes remain unapproved. No site is deployed.
 
 ## North star
 
@@ -18,19 +18,21 @@ The experience should reward exploration without making it difficult to find a s
 
 ## The plan
 
-1. Develop three genuinely different interaction concepts.
-2. Build small working prototypes using the same example content.
-3. Compare them for fun, clarity, performance, extensibility and accessibility.
-4. Select or combine the best ideas, then build the content and navigation infrastructure.
-5. Bring approved projects online, followed by optional draft-only publishing automation.
+1. Refine the **locked Concept 1** landing direction, supported by Concept 2's portal architecture and Concept 3's observatory/interface elements.
+2. Design the illustrated Dave host and skippable entry into a creative mindscape.
+3. Build a click-to-explore prototype **without a walking avatar**, plus a deliberately basic 1990s-style HTML menu mode.
+4. Test the same project catalogue in both interfaces, including mobile and accessibility.
+5. Integrate approved real projects and optional human-reviewed publication drafts.
 
 ## Planning documents
 
 - [Creative brief](docs/CREATIVE_BRIEF.md)
 - [Experience principles](docs/EXPERIENCE_PRINCIPLES.md)
-- [Three concept directions](docs/CONCEPTS.md)
+- [Locked concept-art gallery](docs/LOCKED_CONCEPTS.md)
+- [Consolidated visual concepts](docs/CONCEPTS.md)
 - [Visual direction and exclusions](docs/VISUAL_DIRECTION.md)
 - [Prototype comparison and test plan](docs/PROTOTYPE_TEST_PLAN.md)
+- [Retro menu mode design](docs/BORING_MENU.md)
 - [Roadmap](docs/ROADMAP.md)
 - [Technical direction](docs/TECHNICAL_DIRECTION.md)
 - [Publication and permissions policy](docs/PUBLICATION_POLICY.md)
@@ -46,4 +48,4 @@ The experience should reward exploration without making it difficult to find a s
 - Integrations must not automatically publish content; human review is required.
 - British English throughout.
 
-**DaveHub** is the working name and **davehub.co.uk** is the chosen primary domain (reported purchased by the owner). Branding, final visuals and hosting remain open.
+**DaveHub** is the working name and **davehub.co.uk** is the selected primary domain (owner reports purchased). The core visual references are approved, while the exact artwork for production, hosting and deployment remain open.

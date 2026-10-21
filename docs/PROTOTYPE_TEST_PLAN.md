@@ -1,43 +1,34 @@
-# DH-02 — Interactive prototype comparison
+# DH-02 — Two-mode working prototype plan
 
-## Shared brief
+## Scope
 
-Produce three small, functioning experiences for Dave Machine, Impossible Building and The Signal. These must be interactive demonstrations, not just concept illustrations.
+Build the approved **Concept 1-led immersive homepage** and the deliberately low-tech **1990s HTML menu mode**. Concepts 2 and 3 provide supporting portal / observatory art direction rather than competing prototypes.
 
-## Common content fixtures
+## Shared fixtures
 
-1. Unicorn Valley: a game destination and preview.
-2. Stephen Martin: an interactive story/game destination and preview.
-3. Writing & music: an excerpt or performance destination.
+Three public-safe placeholder project records, for a game, an interactive story and a writing/music project. Both modes consume the same data and share deep-link URLs.
 
-Use synthetic content or neutral placeholders until permissions, public URLs and publication suitability have been reviewed.
+## Immersive acceptance criteria
 
-## Required behaviours
+1. A large illustrated Dave host evokes the approved character reference.
+2. Main scene has visually discoverable clickable project categories, without a user-controlled mini-avatar.
+3. The experience begins quickly, and any entrance sequence can be skipped.
+4. A visitor can open a project in one or two meaningful interactions.
+5. The prominent exact-wording boring-menu link works.
+6. Mouse, touch, keyboard and reduced-motion alternatives are usable.
 
-1. The visitor understands there is something unusual here within five seconds.
-2. An interesting interaction is possible without instructions.
-3. All three projects can be found via the concept's main metaphor.
-4. Each destination also has a stable, shareable URL.
-5. Search or jump-to-project navigation is available independently.
-6. Keyboard and touch interactions work; reduced motion is honoured.
-7. A laptop-sized screen and a narrow mobile screen are usable.
-8. The optional 'surprise me' action takes visitors somewhere meaningful.
+## Boring-mode acceptance criteria
 
-## Review scorecard
+1. Deliberately primitive, recognisably 1990s HTML look, with default serif text and blue underlined hyperlinks.
+2. Loads quickly without 3D/Canvas assets.
+3. Categories and project links work from the same catalogue as immersive mode.
+4. Return link to immersive mode is clear and accessible.
+5. Keyboard navigation, semantic headings, contrast and narrow screens remain functional.
 
-Score each on a 1–5 scale, considering:
+## Evidence
 
-- Immediate intrigue and personality.
-- Enjoyment and clarity of interaction.
-- Speed of reaching a genuine project.
-- Discoverability without a tutorial.
-- Uniqueness versus generic web portfolios.
-- Extensibility to many projects and updates.
-- Mobile, keyboard and reduced-motion accessibility.
-- Performance and maintenance burden.
+Record checked preview URLs, file paths, interaction notes and mobile/desktop screenshots. Do not declare implementation complete from concept art alone.
 
-## Evidence to gather
+## Not yet decided
 
-For each concept: verified preview URL and commit, desktop/mobile screenshots, a short interaction recording or notes, measured performance, usability findings, problems and recommended improvements.
-
-**Selection gate:** Do not choose a final concept, buy branding or lock in a production graphics engine before these prototypes have been reviewed.
+Framework, production layouts, animation style, final responsive arrangements, routing details, deployment provider and actual published project catalogue.

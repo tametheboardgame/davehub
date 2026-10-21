@@ -36,12 +36,20 @@ A possible opening shows an **original stylised Dave-like character**, then move
 
 Not deliberately ramshackle, collage-like or grotesque. Aim for a coherent, carefully designed and surprising world. The user has explicitly vetoed **Terry Gilliam / Monty Python cut-out animation aesthetics**. See [Visual direction](VISUAL_DIRECTION.md) for detailed exclusions.
 
+## Core visual direction locked 21 October 2026
+
+The approved three-image concept set establishes a stylised illustrated Dave host and a polished fantasy/sci-fi **mindscape of floating worlds, luminous architecture and meaningful category destinations**. **Concept 1, the floating-islands hero, is the owner's favourite and primary reference.** Concepts 2 and 3 are supporting treatments for portal areas and a central observatory/interface. These are reference images, not pixel-perfect finished website screenshots.
+
+Interactive exploration is click/tap and scene selection, **not** a small avatar walking around the world. The visitor can always select **"I want to view this as a menu coz I'm boring"** and enter an intentionally basic 1990s HTML website with the same real projects and links. See [locked concept gallery](LOCKED_CONCEPTS.md) and [retro mode](BORING_MENU.md).
+
 ## Explicit non-goals
 
 - Developer portfolio, CV or recruitment pitch.
 - Generic Wix-style website, standard portfolio grid or blog theme.
 - Terry Gilliam-inspired cut-out animation, grotesque photo collage, old-paper surrealism or default steampunk imagery.
 - A 3D world added for spectacle rather than meaningful exploration.
+- Tiny player avatars, free-roaming character controls or compulsory walking between projects.
+- A 'boring menu' that is just a glossy modern grid instead of a deliberately plain retro HTML experience.
 - An interface that hides content behind long loading sequences.
 - Publishing material from private repos or work without approval.
 

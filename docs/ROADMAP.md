@@ -1,39 +1,37 @@
 # DaveHub development roadmap
 
-**Updated:** 20 October 2026. **Current stage:** DH-01 concept exploration. Repository is public and the planning foundation is established. Primary domain **davehub.co.uk** has been purchased by the owner, but DNS/hosting are not configured. There is no website deployment yet.
+**Updated:** 21 October 2026. **Current stage:** DH-01 refinement of **approved visual references**. The primary domain is **davehub.co.uk** (purchased by owner), but hosting/DNS are unconfigured. No site has been deployed.
 
-Stages are decision gates, not promises about delivery dates.
+## Design baseline
 
-| Work package | Deliverable | Acceptance / exit criteria | Status |
+- Three reference images are **locked**, with **Concept 1 as the owner's favourite and lead**.
+- Concept 2 informs category portals; Concept 3 informs the observatory and interactive controls.
+- The main site is navigated through clickable destinations / scene transitions, **not** a walking avatar.
+- A prominent **"I want to view this as a menu coz I'm boring"** link opens a deliberately basic **1990s-style HTML interface**.
+- Both views share one approved project catalogue, stable routes and deep links.
+- See [reference gallery](LOCKED_CONCEPTS.md), [visual direction](VISUAL_DIRECTION.md) and [retro menu brief](BORING_MENU.md).
+
+| Work package | Deliverable | Exit criteria | Status |
 |---|---|---|---|
-| DH-00A | Creative brief | Purpose, audience and non-goals documented | Complete |
-| DH-00B | Experience and publication principles | Access, discoverability, privacy and performance documented | Complete |
-| DH-00C | GitHub foundation | `main`, README, agent rules, state and roadmap committed | Complete |
-| DH-01A | Dave Machine mindscape concept | Non-Gilliam visual language, character/entry concept, references and storyboard | Next |
-| DH-01B | Impossible Building concept | Interaction language, references and storyboard | Next |
-| DH-01C | The Signal concept | Interaction language, references and storyboard | Next |
-| DH-02A | Machine prototype | Playable mechanic, three destinations and fallback index | Not started |
-| DH-02B | Building prototype | Three rooms, unexpected transition and fallback index | Not started |
-| DH-02C | Signal prototype | Tuning mechanic, three channels and fallback index | Not started |
-| DH-02D | Prototype comparison | Demonstrated strengths, trade-offs and chosen direction | Not started |
-| DH-03A | Interactive world foundation | Responsive and performant chosen environment | Not started |
-| DH-03B | Content system | Catalogue, search, deep links, project pages, devlogs | Not started |
-| DH-03C | Accessibility and performance | Keyboard, touch, reduced-motion and smoke tests | Not started |
-| DH-04A | Public project showcases | At least three approved real projects added | Not started |
-| DH-04B | Creative archive | Writing, music, historic work and development stories | Not started |
-| DH-05A | Draft publication pipeline | Controlled, human-reviewed editorial process | Not started |
-| DH-05B | Optional integrations | Approved project metadata sync and draft generation | Not started |
-| DH-05C | Public launch | Domain, deployment, monitoring and rights review | Not started |
+| DH-00A–C | Original project foundation | Brief, repo, safety constraints and roadmap | Complete |
+| DH-01L | Lock initial three design references | Original images in GitHub and Google Drive; decision notes updated | Complete |
+| DH-01A | Refine Concept 1 homepage | Illustrated Dave, floating destination world, exploration interactions and mobile storyboards | Next |
+| DH-01B | Refine category portals | Concept 2-derived destinations and clear navigation | Planned |
+| DH-01C | Refine observatory details | Concept 3-derived interfaces, index integration and discoverable interactions | Planned |
+| DH-01D | Basic HTML menu-mode design | Literal 1990s HTML appearance and functional accessible navigation | Planned |
+| DH-02A | Click-to-explore homepage prototype | No roaming avatar; project links and skippable entry are working | Not started |
+| DH-02B | Retro HTML-mode prototype | Basic HTML navigation; switch both ways; shared content | Not started |
+| DH-02C | Responsive/navigation test | Desktop, mobile, keyboard, reduced-motion and direct links pass | Not started |
+| DH-03A | Production shell | Host-flexible build and performant shared content model | Not started |
+| DH-03B | Content and editorial system | Project catalogue, devlogs, search, deep links, archive | Not started |
+| DH-04A | First public-safe projects | At least three approved projects showcased or linked | Not started |
+| DH-05A | Human-reviewed content drafts | Safe workflow for proposed updates | Not started |
+| DH-05B | Deployment and launch | Cloudflare or alternative selected, DNS, TLS and monitoring verified | Not started |
 
-## Working practice
+## Workflow
 
-- Small, explicit work packages on feature branches.
-- Interactive previews and evidence before approving design.
-- Update `PROJECT_STATE.json` and this roadmap with every delivered package.
-- Record substantial decisions under `docs/DECISIONS/`.
-- Keep all source projects independent.
-- All future publishing integrations require a human approval gate.
-
-## Immediate next steps
-
-Prepare DH-01A, DH-01B and DH-01C as deliberately contrasting visual/interaction explorations. Enforce the explicit Gilliam/cut-out aesthetic exclusion and test the idea of an original stylised character as an optional entrance to the mind-machine. Prototype all three in DH-02 before selecting a winner.
+- Keep reference images unchanged and version any refinements separately; do not overwrite approved originals.
+- Refine within the selected direction. New competing high-level visual concepts require explicit approval.
+- Development should use small reviewable work packages, tests and preview links after an actual deployment.
+- Update `PROJECT_STATE.json` and this roadmap at each completed work package.
+- Publication of another project's source, asset or private content requires separate approval.

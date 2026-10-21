@@ -10,7 +10,7 @@ Create an eccentric, explorable place for the things David has made. It is not a
 
 1. Name the roadmap work package and scope before implementation.
 2. Work in small, independently reviewable increments.
-3. Keep DH-01A, DH-01B and DH-01C genuinely distinct until prototype comparison.
+3. **DH-01 concept baseline is approved.** Concept 1 is the lead, Concepts 2 and 3 support it; do not restart an open competition between unrelated visual styles. Exact layout and implementation still require review.
 4. Use feature branches, test what was built, and seek review before merging.
 5. Never claim a deployment succeeded or provide an invented test URL.
 6. Update `docs/ROADMAP.md` and `PROJECT_STATE.json` for each completed work package; log important design/architecture decisions under `docs/DECISIONS/`.
@@ -21,11 +21,14 @@ Create an eccentric, explorable place for the things David has made. It is not a
 
 - Primary domain: **davehub.co.uk** (owner reports it purchased; do not claim DNS is live until verified).
 - The Dave Machine is a metaphor for the **inside of a stylised, invented Dave-like character's mind**, not a literal mechanical room full of random gears.
-- The 'enter the head / discover the mind' opening is a concept candidate, not approval of any illustration or transition yet.
+- The illustrated Dave-host / creative-mindscape direction is approved as a **design concept**. Its exact character asset and entry transition still require production review.
 - **Hard style veto:** no Terry Gilliam / Monty Python-style cut-out animation or collage; no grotesque caricatures, mismatched photo clippings, Victorian scrapbook surrealism, jerky paper puppets or ramshackle steampunk for the central visual language.
 - Explore an original, coherent, designed, striking and surreal visual language with expressive motion, clear interaction and intentional humour.
 - Do not use the real user's photograph or identifiable realistic likeness as an entrance asset. Create original, non-photographic character concepts subject to approval.
-- See `docs/VISUAL_DIRECTION.md`; apply this veto to **every** concept and prototype.
+- No small player-controlled avatars walking around the site. Interactive exploration is by clicking/tapping destinations, portals, panels and camera/view transitions.
+- Provide a clearly visible **"I want to view this as a menu coz I'm boring"** option, opening an intentionally plain, 1990s HTML-style menu with identical public content and direct links.
+- The retro mode should be a real accessible, functional alternative, not a modern theme disguised as retro styling.
+- **Concept 1 is the primary reference**. See `docs/LOCKED_CONCEPTS.md`, `docs/VISUAL_DIRECTION.md` and `docs/BORING_MENU.md` for the reference images and locked decisions.
 
 ## Public repository safeguards
 
@@ -34,7 +37,7 @@ This repository is PUBLIC. Never commit tokens, secrets, private source files, e
 ## Experience requirements
 
 - Curious visitors should find something interactive immediately.
-- Offer a quick index/search and direct deep links, even when the main interface is unusual.
+- Offer an obvious 1990s-style plain HTML menu, accessible project index/search and direct deep links; both modes must navigate the same content.
 - Mobile, keyboard access, reduced-motion alternatives, usable contrast and performance are required.
 - No forced tutorials, mandatory cinematic intros or surprise autoplay sound.
 - Use real interactive prototypes to choose the visual technology. Do not commit to 3D, a CMS or a database without evidence that it helps.

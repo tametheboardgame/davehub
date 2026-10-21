@@ -13,7 +13,9 @@
 11. **No surprise disclosures.** Nothing becomes public simply because a connector can see it.
 12. **Performance is part of the art.** A novel interface still has to work well on ordinary devices.
 13. **Strangeness with visual discipline.** The design should be distinctive without becoming a collage of arbitrary objects or styles.
-14. **An original mindscape.** Explore the Dave-head-to-Dave-Machine transition without using a realistic likeness, and treat the intro as optional.
+14. **An original mindscape.** Use the illustrated Dave-host and creative mindscape direction as the visual baseline. Keep the entry transition skippable.
+15. **No avatar wandering.** Explore with direct clicks, portals, view transitions and project selection, not tiny characters walking around.
+16. **Two intentionally different interfaces.** Immersive mode is artistic; the alternative is genuinely simple 1990s HTML. Both use the same content and deep links.
 
 ## Avoid
 
@@ -21,5 +23,7 @@
 - Unskippable introductions or compulsory tutorials.
 - Secret-only navigation, with no accessible escape.
 - Large 3D worlds populated mainly with ordinary web cards.
+- Tiny playable avatars requiring walking across scenes.
+- A fancy menu theme pretending to be the intentionally primitive fallback.
 - Premature framework/CMS/database complexity.
 - Terry Gilliam / Monty Python cut-out aesthetics, paper-puppet motion, grotesque collage, Victorian scrapbook styling, default steampunk gears and random mechanical clutter. This is a hard exclusion across all three concepts.

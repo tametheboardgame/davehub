@@ -1,6 +1,6 @@
 # DaveHub visual direction — hard constraints and concept prompt
 
-**Date:** 20 October 2026. **Status:** User-specified creative constraints accepted; final art direction remains open.
+**Updated:** 21 October 2026. **Status:** Three concept references approved as core direction; Concept 1 is primary. Production assets/layout remain open.
 
 ## Core idea to explore
 
@@ -20,7 +20,21 @@ Do not use the visual language of Terry Gilliam's cut-out animation or the Monty
 
 **This is a hard exclusion, not a stylistic inspiration.** It applies to all alternatives, visual references, concept art, animated transitions and the finished experience. A mechanically themed concept must express its ideas without falling into the above language.
 
-## Positive creative characteristics (direction, not yet an approved design)
+## Locked reference set (approved direction)
+
+See [locked concept art and source files](LOCKED_CONCEPTS.md).
+
+1. **Concept 1: Floating-islands DaveHub landing**, the owner's favourite. A large illustrated bald, ginger-bearded Dave in a navy hoodie/olive shirt presenting an expansive network of floating project destinations. Lead reference for identity, welcome, scale and colour.
+2. **Concept 2: Portal hall**, supporting reference for category doors and immersive destination transitions.
+3. **Concept 3: Observatory/menu composition**, supporting reference for data/creative-hub instrumentation and legible interactive panels.
+
+**Do not treat these as three alternative winners**. They are a shared approved vocabulary, with Concept 1 leading. Their fonts, placeholder copy, positioning, decorative icons and specific UI layouts are not yet final.
+
+**Exploration design:** no player-controlled mini-avatars or walking simulator. Direct click/tap navigation through world areas and meaningful scene transitions.
+
+**Alternative mode:** clearly visible, exact wording **"I want to view this as a menu coz I'm boring"**. This leads to a deliberately primitive, highly functional 1990s HTML-style menu, **not** a slick card layout. Both routes use the same catalogue.
+
+## Positive creative characteristics (now an approved overall direction, not final assets)
 
 - An original, internally coherent visual world rather than an accumulation of mismatched styles.
 - Clever, surprising interactions and a sense of scale and depth.
@@ -42,9 +56,9 @@ Do not use the visual language of Terry Gilliam's cut-out animation or the Monty
 
 A compelling direct project index, search and stable deep links coexist with the unusual interface. Support mobile, keyboard, touch and reduced-motion. No forced tutorial, long splash sequence or automatic sound.
 
-## Concept review gate
+## Design refinement gate
 
-Present genuinely different candidate art directions and **interactive prototypes** before choosing a final design language. Recheck all mock-ups against this explicit exclusion; reject anything that looks like a vintage cut-out collage or generic steampunk.
+Work within the approved Concept 1-led family. Prototype the immersive homepage, portal transitions and deliberately basic HTML alternative. Test usability, interactions, mobile and reduced motion. Recheck each asset against the explicit exclusions; reject anything resembling vintage cut-out collage or generic steampunk.
 
 ## Domain / deployment context
 

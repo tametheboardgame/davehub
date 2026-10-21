@@ -1,18 +1,20 @@
 {
   "project": "DaveHub",
-  "updated": "2026-10-20",
-  "status": "concept_design",
-  "current_work_package": "DH-01",
+  "updated": "2026-10-21",
+  "status": "concept_baseline_locked",
+  "current_work_package": "DH-01A",
   "completed": [
     "DH-00A",
     "DH-00B",
-    "DH-00C"
+    "DH-00C",
+    "DH-01L"
   ],
   "in_progress": [],
   "next": [
     "DH-01A",
     "DH-01B",
-    "DH-01C"
+    "DH-01C",
+    "DH-01D"
   ],
   "decisions": [
     {
@@ -39,14 +41,24 @@
       "id": "ADR-0004",
       "decision": "Mindscape framing explored with non-photographic stylised character; Gilliam/cut-out collage style explicitly excluded",
       "status": "accepted_constraints_concept_unselected"
+    },
+    {
+      "id": "ADR-0005",
+      "decision": "Lock all three illustrated DaveHub visuals; Concept 1 primary; no walking mini-avatars",
+      "status": "accepted"
+    },
+    {
+      "id": "ADR-0006",
+      "decision": "Boring-menu link opens genuinely primitive 1990s HTML route, sharing the main project catalogue",
+      "status": "accepted"
     }
   ],
   "open_questions": [
-    "Choose visual direction after hands-on prototype comparison",
     "Select graphics and runtime based on working prototype performance",
     "Approve public use of each featured real-world project and person's likeness or audio",
     "Select deployment platform and preview process",
-    "Agree stylised character visual identity and entering-the-mind interaction, without realistic likeness"
+    "Refine original illustrated Dave asset, image-driven destinations, intro and responsive layout",
+    "Confirm precise 1990s boring HTML menu style during prototype review"
   ],
   "deployment": {
     "status": "not_configured",
@@ -59,8 +71,8 @@
     "remote_status": "connected"
   },
   "last_verified": {
-    "scope": "Repository creative plan and domain decision",
-    "result": "Owner reports domain purchased; site remains undeployed and DNS unverified"
+    "scope": "2026-10-21 locked concept art",
+    "result": "Original PNG Git blobs hash-matched against local originals; Google Drive backups uploaded; design requirements documented; no site deployed"
   },
   "domain": {
     "primary": "davehub.co.uk",
@@ -78,11 +90,50 @@
       "jerky paper puppet animation",
       "default Victorian steampunk or random brass gears"
     ],
-    "final_style": "unselected_pending_concept_review"
+    "final_style": "core_visual_direction_locked_final_design_pending",
+    "primary_reference": "Concept 1: floating islands illustrated DaveHub homepage",
+    "supporting_references": [
+      "Concept 2: category portal hall",
+      "Concept 3: observatory and menu interface elements"
+    ],
+    "visitor_movement": "click/tap on destinations; no mini-avatar walking around",
+    "character_reference": "User-provided illustrated Dave-like bald, ginger-brown bearded game character in navy hoodie and olive shirt"
   },
   "hosting": {
     "preferred_candidate": "Cloudflare",
     "decision_status": "provisional",
     "deployed": false
-  }
+  },
+  "navigation_modes": {
+    "immersive": "click-to-explore mindscape",
+    "boring": {
+      "name": "1990s HTML mode",
+      "entry_copy": "I want to view this as a menu coz I'm boring",
+      "status": "design_locked_not_built",
+      "shared_content_model": true
+    }
+  },
+  "visual_reference_assets": [
+    {
+      "rank": 1,
+      "role": "primary",
+      "path": "assets/concepts/2026-10-21/01-floating-islands-home.png",
+      "github_blob": "831ed729fbc461e167af234e4ea04241194f582c",
+      "drive_file_id": "1BrEdUguS-sAGm8tWcDDGJkmySmxYKBSI"
+    },
+    {
+      "rank": 2,
+      "role": "supporting_portals",
+      "path": "assets/concepts/2026-10-21/02-portal-hall.png",
+      "github_blob": "f07f356dafb7359d7bc08a8511876b6897fd4521",
+      "drive_file_id": "1BtSQKmQVDIaXR2jAAcC_8pLWDuGkfZP0"
+    },
+    {
+      "rank": 3,
+      "role": "supporting_observatory",
+      "path": "assets/concepts/2026-10-21/03-observatory-menu.png",
+      "github_blob": "3f03f65955011f4692bf88d35a17b6b5dbbc209d",
+      "drive_file_id": "1AEKKam4KcbFq31P3rf_83JwhlzFhqwtH"
+    }
+  ]
 }

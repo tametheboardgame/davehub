@@ -1,57 +1,47 @@
-# DH-01 — Three competing experience concepts
+# DH-01 — Locked DaveHub core design concepts
 
-These are different interaction metaphors, not three colour schemes for the same portfolio.
+**Decision date:** 21 October 2026. **Status:** Core visual direction approved. Exact layouts, production art, colours, typography and animation are not frozen.
 
-## Overarching creative idea
+## Main choice: Concept 1, floating-islands welcome
 
-A visitor may enter through an **original stylised character**, a deliberately non-photographic, non-realistic depiction suggestive of Dave but not a portrait. The camera or interface crosses into the character's creative mind and discovers an unexpected internal universe. This is an exploration direction, **not** an approved design or mandatory intro. People must be able to skip directly to projects.
+**Owner's favourite and primary reference.** A large original illustrated Dave figure on the left, bald with ginger-brown beard, navy hoodie and olive shirt, confidently welcoming visitors. A glowing portal/mindscape behind him connects beautiful floating creative territories. Clearly labelled destinations and a principal **Explore DaveHub** action invite discovery.
 
-**Non-negotiable visual exclusion:** No Terry Gilliam / Monty Python-style cut-out animation, ugly scrapbook surrealism, grotesque caricature, collaged body parts, jerky paper puppetry, Victorian/steampunk clutter or random brass gear constructions. Weirdness should be intentional and internally coherent. See [visual direction](VISUAL_DIRECTION.md).
+Reference: [Concept 1 original PNG](../assets/concepts/2026-10-21/01-floating-islands-home.png).
 
-## DH-01A: The Dave Machine (inside the mind)
+## Supporting reference: Concept 2, portal hall
 
-An impossible, highly designed interconnected system visualising thoughts and creative projects. The 'machine' is not literal clockwork: it might be abstract architecture, flowing information, reactive structures and portals that form a recognisable inner logic.
+A grand connected interior with visually distinct destinations for Games, Writing, Experiments, Archive and Latest Work. Useful for how visitors move between areas, not a competing design winner.
 
-**Possible opening:** A stylised character turns towards the visitor; interaction transitions through an eye, silhouette, graphical portal or abstract threshold into the mind. Avoid photo-real faces or grotesque cranial imagery.
+Reference: [Concept 2 original PNG](../assets/concepts/2026-10-21/02-portal-hall.png).
 
-**Interaction:** Explore linked idea spaces, trigger purposeful reactive structures, discover projects and reveal surprising connections. The environment evolves as projects are added.
+## Supporting reference: Concept 3, observatory menu
 
-**Advantage:** The strongest personal unifying metaphor; expandable and capable of original interactions.
+A more structured hub/observatory with interacting category panels and mind-machine detail. Useful for content discovery, interiors and interface hierarchy, not the lead homepage.
 
-**Risk:** Excessive scene-production effort, hard-to-maintain 3D spectacle, accidentally abstract or confusing navigation.
+Reference: [Concept 3 original PNG](../assets/concepts/2026-10-21/03-observatory-menu.png).
 
-**First prototype:** One coherent mind-space, three project destinations, one original surprise and a visible accessible index; test optional entry sequence.
+## Design decisions that apply to all three
 
-## DH-01B: The Impossible Building
+- DaveHub is an eccentric, carefully art-directed **creative mindscape**, not a CV or conventional developer portfolio.
+- The stylised Dave host should follow the user's provided character reference: bald/shaved head, ginger-brown beard, assertive/cheeky expression, navy hoodie, olive shirt and a contemporary illustrated game-character aesthetic.
+- Do not publish a photograph or a realistic identifiable likeness.
+- Visitors **do not walk around as tiny avatars**. Navigate by clicking/tapping portals, destinations, structures and responsive scene transitions.
+- Visitors should be able to explore without instructions. Any entrance animation into the mind is skippable.
+- A visible link using the exact wording **"I want to view this as a menu coz I'm boring"** opens a genuinely retro, deliberately plain HTML website.
+- Both modes present the **same approved project catalogue**, supporting stable deep links and direct search/index access.
+- Terry Gilliam / Monty Python collage, jerky cut-outs, grotesque heads, retro scrapbook art and default steampunk remain explicitly vetoed.
+- The reference screenshots are *concept art*, not production-ready HTML interfaces or proof of actual working controls.
 
-An impossible architecture of ideas and worlds, perhaps a mental construct rather than a physical building. Rooms, shifting geometries and unexpected transitions lead to creative projects without resembling a whimsical collage or retro museum.
+## Status of older explorations
 
-**Interaction:** Explore sophisticated rooms and improbable spaces, reach distinct project destinations, and use an always-available index.
+The original 'three competing concepts' idea (literal Dave Machine / Impossible Building / Signal) has been superseded by the visual language above. Possible observatory or signal motifs may still appear as areas *within* the approved world. Do not revive an independent competition without a new explicit design decision.
 
-**Advantage:** New projects can become new spatial destinations.
+## Next work
 
-**Risk:** Becoming a conventional 3D museum, an expensive environment to populate or a confusing labyrinth.
+1. **DH-01A:** Refine Concept 1 into a coherent clickable homepage, taking the supplied character reference seriously.
+2. **DH-01B:** Refine concept 2's category portals and internal destinations.
+3. **DH-01C:** Refine concept 3's observatory, search and control-interface elements.
+4. **DH-01D:** Design the deliberately cheap-looking but genuinely functional 1990s HTML menu, including switching back.
+5. **DH-02:** Build and test both navigation routes on a shared content model.
 
-**First prototype:** A lobby, three differentiated rooms, a convincing impossible transition and an immediate project-jump control.
-
-## DH-01C: The Signal
-
-A creative mind as an original transmission network rather than a place. Visitors tune channels to discover different works and dispatches. Treat the visual system as a designed interface, not an old-timey radio collage.
-
-**Interaction:** Shift frequency, resolve signals into projects, reveal hidden channels and open directly linked experiences.
-
-**Advantage:** A distinct non-spatial interface, expressive motion and easier modular expansion.
-
-**Risk:** Discoverability, audio dependence, novelty wearing thin.
-
-**First prototype:** Three legible channels, one reactive display, entirely usable silent navigation and a direct-access index.
-
-## Comparison ground rules
-
-- All three respect the explicit visual veto; none should rely on a Gilliam-style collage or steampunk clutter.
-- All three use the same three public-safe sample project destinations.
-- All three provide direct links and accessible project search/jump navigation.
-- Test keyboard, touch, reduced motion, laptop and phone views.
-- Build working interactions and at least one memorable original moment, not static moodboards only.
-- Compare the concepts before approving a final look or framework.
-- Use the idea of 'entering Dave's mind' creatively, but do not require a long, unskippable intro.
+See [locked gallery](LOCKED_CONCEPTS.md), [visual rules](VISUAL_DIRECTION.md), [retro menu brief](BORING_MENU.md) and [roadmap](ROADMAP.md).
