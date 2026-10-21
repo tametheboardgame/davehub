@@ -7,7 +7,8 @@
     "DH-00A",
     "DH-00B",
     "DH-00C",
-    "DH-01L"
+    "DH-01L",
+    "DH-01M"
   ],
   "in_progress": [],
   "next": [
@@ -50,6 +51,11 @@
     {
       "id": "ADR-0006",
       "decision": "Boring-menu link opens genuinely primitive 1990s HTML route, sharing the main project catalogue",
+      "status": "accepted"
+    },
+    {
+      "id": "ADR-0007",
+      "decision": "Approve and preserve DaveHub cosmic-orbit primary logo PNG; real vector redraw requires separate review",
       "status": "accepted"
     }
   ],
@@ -135,5 +141,13 @@
       "github_blob": "3f03f65955011f4692bf88d35a17b6b5dbbc209d",
       "drive_file_id": "1AEKKam4KcbFq31P3rf_83JwhlzFhqwtH"
     }
-  ]
+  ],
+  "branding": {
+    "status": "approved_master_png_locked",
+    "master_path": "assets/branding/davehub-logo-approved.png",
+    "master_sha256": "ac0c0d298c58e19d0a3f47972b8f4d828c8fc64231b6177aed5c3878858d4033",
+    "drive_file_id": "1TcM_93rvTBbPxNECHHRs17z7ugiGBG9A",
+    "true_vector_redraw": "not_approved",
+    "faithful_svg_wrapper": "available_locally_not_pure_vector"
+  }
 }
