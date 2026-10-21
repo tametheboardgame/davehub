@@ -147,7 +147,8 @@
     "master_path": "assets/branding/davehub-logo-approved.png",
     "master_sha256": "ac0c0d298c58e19d0a3f47972b8f4d828c8fc64231b6177aed5c3878858d4033",
     "drive_file_id": "1TcM_93rvTBbPxNECHHRs17z7ugiGBG9A",
-    "true_vector_redraw": "not_approved",
-    "faithful_svg_wrapper": "available_locally_not_pure_vector"
+    "true_vector_redraw": "rejected_autotrace_no_vector_requested",
+    "faithful_svg_wrapper": "approved_for_use_embedded_png",
+    "faithful_svg_path": "assets/branding/davehub-logo-faithful.svg"
   }
 }
