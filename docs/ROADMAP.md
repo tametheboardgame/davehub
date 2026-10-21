@@ -7,6 +7,7 @@
 - Three reference images are **locked**, with **Concept 1 as the owner's favourite and lead**.
 - Concept 2 informs category portals; Concept 3 informs the observatory and interactive controls.
 - The approved DaveHub logo is locked as an unchanged transparent PNG under `assets/branding/`; the exact-appearance SVG wrapper is approved. The distorted vector trace is discarded; no separate vector redraw is currently required.
+- The text-free floating-islands homepage background is separately approved in `assets/homepage/` as PNG plus exact-appearance SVG wrapper; it is not genuine vector art.
 - The main site is navigated through clickable destinations / scene transitions, **not** a walking avatar.
 - A prominent **"I want to view this as a menu coz I'm boring"** link opens a deliberately basic **1990s-style HTML interface**.
 - Both views share one approved project catalogue, stable routes and deep links.
@@ -17,6 +18,7 @@
 | DH-00A–C | Original project foundation | Brief, repo, safety constraints and roadmap | Complete |
 | DH-01L | Lock initial three design references | Original images in GitHub and Google Drive; decision notes updated | Complete |
 | DH-01M | Lock primary DaveHub wordmark | Approved transparent PNG and ADR in GitHub; backup in Google Drive | Complete |
+| DH-01N | Lock floating-islands homepage background | Approved original PNG, faithful SVG wrapper, Drive backup and usage rules | Complete |
 | DH-01A | Refine Concept 1 homepage | Illustrated Dave, floating destination world, exploration interactions and mobile storyboards | Next |
 | DH-01B | Refine category portals | Concept 2-derived destinations and clear navigation | Planned |
 | DH-01C | Refine observatory details | Concept 3-derived interfaces, index integration and discoverable interactions | Planned |

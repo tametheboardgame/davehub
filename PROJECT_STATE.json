@@ -8,7 +8,8 @@
     "DH-00B",
     "DH-00C",
     "DH-01L",
-    "DH-01M"
+    "DH-01M",
+    "DH-01N"
   ],
   "in_progress": [],
   "next": [
@@ -56,6 +57,11 @@
     {
       "id": "ADR-0007",
       "decision": "Approve and preserve DaveHub cosmic-orbit primary logo PNG; real vector redraw requires separate review",
+      "status": "accepted"
+    },
+    {
+      "id": "ADR-0008",
+      "decision": "Approve clean floating-islands hero background as separate artwork; PNG master and embedded PNG SVG, not pure vector",
       "status": "accepted"
     }
   ],
@@ -150,5 +156,17 @@
     "true_vector_redraw": "rejected_autotrace_no_vector_requested",
     "faithful_svg_wrapper": "approved_for_use_embedded_png",
     "faithful_svg_path": "assets/branding/davehub-logo-faithful.svg"
+  },
+  "homepage_background": {
+    "status": "approved_asset_locked",
+    "work_package": "DH-01N",
+    "source": "2026-10-21 background-only floating-islands generation",
+    "resolution": "1672x941",
+    "master_path": "assets/homepage/floating-islands-background.png",
+    "svg_path": "assets/homepage/floating-islands-background.svg",
+    "svg_type": "exact_fidelity_embedded_png_not_vector",
+    "sha256_png": "b7ef95c6d731451ef0def7702b24fbb3e69e59ffb6b5b6f923b483dc4ba259ec",
+    "drive_file_id": "1va5nh4ZJDiyUz9ET3X6jJ2G6Zf75PR8t",
+    "production_note": "Layer Dave, logo, navigation and accessible HTML controls separately; responsive cropping and performance variants still to be tested"
   }
 }
