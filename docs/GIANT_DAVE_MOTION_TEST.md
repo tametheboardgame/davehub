@@ -5,18 +5,18 @@
 
 ## What's demonstrably working locally
 
-An interactive HTML/CSS/JavaScript prototype has been packaged with:
+An interactive HTML/CSS/JavaScript prototype with a precomputed localised image-warp gesture has been packaged with:
 
 - Four individually transparent character sprites derived from the exact approved four-pose concept sheet (idle, welcome/reach, point/attention, open-armed presentation).
 - Subtle continuous idle breathing via CSS keyframes.
 - A separately composited idle blinking-eyelid overlay at irregular intervals.
 - Four explicit state controls for user-triggered gestures, plus a gesture-cycling switch and a static-motion switch.
-- Motion easing and short crossfades between the *approved whole-body key poses*.
+- Motion easing and short crossfades between the *approved whole-body key poses*, plus a 12-frame localised hand/forearm image-warp sequence in the Welcome state.
 - Mobile/desktop responsive composition, keyboard buttons, and `prefers-reduced-motion` support.
 - Source image preserved unchanged inside the local ZIP for provenance.
 - Optional reference background loaded from the public DaveHub repository and a navy fallback when offline.
 
-**Important distinction:** This is moving, but it is **not yet a skeletal/mesh rig**. In particular, the arm movement between different illustrated poses is a crossfade with eased position, not continuous anatomical articulation. Calling it a finished Rive animation would be misleading. A visual review should decide whether these transitions feel sufficiently natural to pursue this style, or whether we must build true multi-layer arm/head deformation.
+**Important distinction:** This is moving, but it is **not yet a skeletal/mesh rig**. The forward hand/forearm now makes a small smooth localised deformation towards the approved pose; **the major switch between whole-body poses still crossfades**, rather than continuously articulating the shoulder/elbow from one actual pose into another. Calling it a finished Rive animation would be misleading. A visual review should decide whether these transitions feel sufficiently natural to pursue this style, or whether we must build true multi-layer arm/head deformation.
 
 The prototype is packaged as `Giant-Dave-Moving-Prototype.zip` and an accompanying six-second MP4. These are current-conversation download artifacts, not committed GitHub binaries. Their transient sandbox URLs should not be treated as permanent repository assets.
 
@@ -24,7 +24,7 @@ The prototype is packaged as `Giant-Dave-Moving-Prototype.zip` and an accompanyi
 
 - Input: generated 1774×887 RGB approved four-pose sheet (same subject, four separated panels).
 - Extract each panel; use OpenCV GrabCut with conservative background seeds to matte the character to transparent RGBA.
-- Export each state as WebP with alpha. The five WebP assets are small, together about 190 KB (not counting the preserved original sheet).
+- Export each state as WebP with alpha. The base five WebP assets total about 190 KB, and the additional 12 localised Welcome deformation frames total about 550 KB (not counting the original concept sheet).
 - The matte/eyelid overlay is a prototype only. Manual quality checks found some edges to refine in pointing and presenting states before production.
 - Transparency is a convenience for staged motion, not proof that the image is a properly authored puppet mesh or transparent layered source.
 
