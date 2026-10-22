@@ -1,7 +1,7 @@
 {
   "project": "DaveHub",
-  "updated": "2026-10-21",
-  "status": "homepage_first_look_in_review",
+  "updated": "2026-10-22",
+  "status": "homepage_first_look_ready_for_pages",
   "current_work_package": "DH-01A",
   "completed": [
     "DH-00A",
@@ -12,8 +12,8 @@
     "DH-01N"
   ],
   "in_progress": [
-    "DH-01A",
-    "DH-02A"
+    "DH-02A hosted visual review",
+    "DH-01A illustrated Dave concept"
   ],
   "next": [
     "DH-01A illustrated Dave movement and compositing",
@@ -76,10 +76,11 @@
     "Confirm precise 1990s boring HTML menu style during prototype review",
     "Review first-look homepage visual placement with the actual approved background/logo in browser",
     "Decide illustrated Dave's movement and integration before composing character art",
-    "Decide whether the previously proposed retro HTML mode needs a separate entry, now bottom menu navigation exists"
+    "Decide whether the previously proposed retro HTML mode needs a separate entry, now bottom menu navigation exists",
+    "Connect Cloudflare Pages to GitHub repository and verify actual live pages.dev URL"
   ],
   "deployment": {
-    "status": "not_configured",
+    "status": "cloudflare_pages_setup_required",
     "url": null
   },
   "repository": {
@@ -89,8 +90,8 @@
     "remote_status": "connected"
   },
   "last_verified": {
-    "scope": "DH-01A first-look HTML interactions",
-    "result": "Local browser smoke tested at 1440x900, 1366x768, 390x844, 375x667: navigation/dialog/escape/no horizontal overflow passed; local artwork inaccessible so composed-image visual review remains outstanding"
+    "scope": "DH-01A static assets/build preparation",
+    "result": "Prepared deterministic Pages static build and setup guide. Cloudflare account not connected; no live URL verified."
   },
   "domain": {
     "primary": "davehub.co.uk",
@@ -118,9 +119,13 @@
     "character_reference": "User-provided illustrated Dave-like bald, ginger-brown bearded game character in navy hoodie and olive shirt"
   },
   "hosting": {
-    "preferred_candidate": "Cloudflare",
-    "decision_status": "provisional",
-    "deployed": false
+    "preferred_candidate": "Cloudflare Pages",
+    "decision_status": "selected_for_visual_previews",
+    "deployed": false,
+    "git_branch": "main",
+    "build_command": "sh scripts/build-pages.sh",
+    "output_directory": "dist",
+    "provider_connection_status": "requires_user_dashboard_setup"
   },
   "navigation_modes": {
     "immersive": "click-to-explore mindscape",
@@ -176,7 +181,7 @@
     "production_note": "Layer Dave, logo, navigation and accessible HTML controls separately; responsive cropping and performance variants still to be tested"
   },
   "homepage_prototype": {
-    "status": "feature_branch_review",
+    "status": "ready_for_pages_live_review",
     "branch": "feature/dh-01a-homepage-first-look",
     "files": [
       "index.html",
@@ -187,6 +192,10 @@
     ],
     "illustrated_dave": "intentionally_deferred",
     "real_projects": "not_published",
-    "deployment": "not_configured"
+    "deployment": "requires_cloudflare_account_setup",
+    "assets_in_build": [
+      "assets/branding/davehub-logo-faithful.svg",
+      "assets/homepage/floating-islands-background.png"
+    ]
   }
 }
