@@ -1,8 +1,8 @@
 {
   "project": "DaveHub",
   "updated": "2026-10-22",
-  "status": "giant_dave_pose_approved_animation_prototype_next",
-  "current_work_package": "DH-06B",
+  "status": "dh_06c1_layered_rig_spec_committed_assets_pending",
+  "current_work_package": "DH-06C1",
   "completed": [
     "DH-00A",
     "DH-00B",
@@ -13,13 +13,15 @@
     "DH-06A"
   ],
   "in_progress": [
-    "DH-06B riggable character asset and animation prototype",
+    "DH-06C1 produce coherent editable character layers from approved look",
     "DH-07 content inventory and information architecture"
   ],
   "next": [
-    "DH-06B transparent rig production layers and idle/welcome proof of concept",
-    "DH-06C responsive character integration",
-    "DH-08 DaveHub Ready publishing contract"
+    "DH-06C1a painterly neutral torso/neck/head with shoulder underpaint and static fallback",
+    "DH-06C1b separate near shoulder, elbow bridge, forearm and hand variations",
+    "DH-06C1c facial layers; DH-06C1d real rigged welcome and return",
+    "DH-06C1e Rive vs Canvas comparison and tested export",
+    "DH-06C Cloudflare feature-branch integration after approval"
   ],
   "decisions": [
     {
@@ -76,6 +78,11 @@
       "id": "ADR-0009",
       "decision": "Owner approved all four illustrated Giant Dave character poses as fixed design baseline; only movement and rigging remain to be proved",
       "status": "accepted"
+    },
+    {
+      "id": "ADR-0010",
+      "decision": "Default all ordinary Giant Dave character acting to anatomically articulated layered art; reserve morphing only for deliberate magical scene/world changes",
+      "status": "accepted"
     }
   ],
   "open_questions": [
@@ -85,14 +92,15 @@
     "Refine original illustrated Dave asset, image-driven destinations, intro and responsive layout",
     "Confirm precise 1990s boring HTML menu style during prototype review",
     "Review first-look homepage visual placement with the actual approved background/logo in browser",
-    "Decide illustrated Dave's movement and integration before composing character art",
     "Decide whether the previously proposed retro HTML mode needs a separate entry, now bottom menu navigation exists",
     "Visually confirm full viewport layout and actual hosted Cloudflare Pages URL before closing DH-02C",
-    "DH-06B: test Rive versus simple layered/clip-based alternatives for original painted art",
     "DH-07: which content types, canonical project records, categories and story templates belong on DaveHub?",
     "DH-08: define a safe DaveHub Ready nomination and draft approval pipeline",
     "DH-09: select approved game pilot and ensure any voices or real people's likenesses are cleared",
-    "DH-06B: create credible transparent painted rig asset based on the approved four-pose sheet, then evaluate actual idle and welcome motion"
+    "DH-06B: create credible transparent painted rig asset based on the approved four-pose sheet, then evaluate actual idle and welcome motion",
+    "DH-06C1: draw and inspect all mandatory body/arm/facial underpaint layers and measure actual joint pivots from approved master before rigging",
+    "DH-06C1: verify binary-safe asset commit route and measure rig payload, frame rate and device behaviour",
+    "DH-06C1: owner approval of genuine articulated idle/welcome, then optionally design separate signature magical world transition"
   ],
   "deployment": {
     "status": "pages_live_reported_by_owner_url_not_verified",
@@ -232,7 +240,7 @@
     }
   },
   "giant_dave": {
-    "status": "four_pose_concept_approved",
+    "status": "layered_rig_build_spec_complete",
     "approved_on": "2026-10-22",
     "approved_asset": "ChatGPT generated original, pending binary repository upload",
     "approved_asset_sha256": "18397610f45669b8bfbb0d5c64e33ff395c7fdf8b565c1598dc03bb635a84930",
@@ -243,6 +251,16 @@
       "open-armed presentation"
     ],
     "technical_next": "DH-06B riggable transparent character and Rive-or-alternative prototype",
-    "runtime_locked": false
+    "runtime_locked": false,
+    "design_doc": "docs/GIANT_DAVE_LAYERED_RIG_SPEC.md",
+    "motion_decision": "articulation_normal_motion_morph_only_magical_scene_transitions",
+    "rig_spec_version": "v001",
+    "artboard": "1536x2048 RGBA sRGB proposal",
+    "source_master": "layered PSD or ORA (not yet created)",
+    "binary_assets_committed": false,
+    "artwork_layers_status": "specified_not_drawn",
+    "runtime": "Rive candidate vs Canvas comparator; not selected",
+    "site_integrated": false,
+    "animation_approved": false
   }
 }
