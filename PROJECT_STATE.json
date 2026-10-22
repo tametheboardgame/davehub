@@ -1,8 +1,8 @@
 {
   "project": "DaveHub",
   "updated": "2026-10-22",
-  "status": "dh_06c1_layered_rig_spec_committed_assets_pending",
-  "current_work_package": "DH-06C1",
+  "status": "dh_06c2a_candidate_baseline_static_pending_visible_hand_master",
+  "current_work_package": "DH-06C2A",
   "completed": [
     "DH-00A",
     "DH-00B",
@@ -13,15 +13,15 @@
     "DH-06A"
   ],
   "in_progress": [
-    "DH-06C1 produce coherent editable character layers from approved look",
-    "DH-07 content inventory and information architecture"
+    "DH-06C2A confirm one neutral consistent full-body Dave with near arm relaxed and hand visible",
+    "DH-07 content inventory/information architecture"
   ],
   "next": [
-    "DH-06C1a painterly neutral torso/neck/head with shoulder underpaint and static fallback",
-    "DH-06C1b separate near shoulder, elbow bridge, forearm and hand variations",
-    "DH-06C1c facial layers; DH-06C1d real rigged welcome and return",
-    "DH-06C1e Rive vs Canvas comparison and tested export",
-    "DH-06C Cloudflare feature-branch integration after approval"
+    "Generate or paint one standalone cohesive transparent neutral figure with visible hand, no infographic panels",
+    "Review and approve canonical fullbody drawing",
+    "Recompute joint anchors on approved exact source",
+    "Derive compatible layered authoring master and pass zero-degree static assembly QA",
+    "Only then construct articulated motion and Cloudflare preview"
   ],
   "decisions": [
     {
@@ -83,6 +83,11 @@
       "id": "ADR-0010",
       "decision": "Default all ordinary Giant Dave character acting to anatomically articulated layered art; reserve morphing only for deliberate magical scene/world changes",
       "status": "accepted"
+    },
+    {
+      "id": "DH-06C2-RESET",
+      "decision": "Stop using independent generated body-part sheets that introduce scale/proportion mismatch. Require one canonical intact neutral figure, one certified skeleton and zero-degree reassembly gate before any animation.",
+      "status": "accepted"
     }
   ],
   "open_questions": [
@@ -100,7 +105,9 @@
     "DH-06B: create credible transparent painted rig asset based on the approved four-pose sheet, then evaluate actual idle and welcome motion",
     "DH-06C1: draw and inspect all mandatory body/arm/facial underpaint layers and measure actual joint pivots from approved master before rigging",
     "DH-06C1: verify binary-safe asset commit route and measure rig payload, frame rate and device behaviour",
-    "DH-06C1: owner approval of genuine articulated idle/welcome, then optionally design separate signature magical world transition"
+    "DH-06C1: owner approval of genuine articulated idle/welcome, then optionally design separate signature magical world transition",
+    "DH-06C2A: approve a single full-body transparent neutral Dave with visible relaxed near hand; candidate proportions/skeleton exist but are not final",
+    "DH-06C2B: independently painted hidden torso and hand layers must reassemble to canonical intact silhouette at rest before animation"
   ],
   "deployment": {
     "status": "pages_live_reported_by_owner_url_not_verified",
@@ -113,8 +120,8 @@
     "remote_status": "connected"
   },
   "last_verified": {
-    "scope": "DH-02C responsive viewport change",
-    "result": "Local Chromium layout tested at 1840x800, 1366x768, 1440x900, 1920x1080, 1024x600, 768x1024, 390x844, 375x667, 320x568, 844x390, 667x375, 600x650 and 414x600: navigation and CTA visible, no page overflow; native destination dialog interactions checked at 1840x800, 390x844 and 844x390. External live site unverified."
+    "scope": "DH-06C2A canonical static baseline",
+    "result": "One original source transparent full-body illustration placed with aspect-preserving affine scale on 1536×2048 artboard; anatomical joint estimates bound to SHA; review sheet, overlay and self-contained static HTML produced. Both hands in pockets prevent final neutral approval. New generation attempts returned unrelated multi-panel sheets, rejected as masters. No rig, no deployment."
   },
   "domain": {
     "primary": "davehub.co.uk",
@@ -240,7 +247,7 @@
     }
   },
   "giant_dave": {
-    "status": "layered_rig_build_spec_complete",
+    "status": "canonical_static_baseline_candidate_not_approved_master",
     "approved_on": "2026-10-22",
     "approved_asset": "ChatGPT generated original, pending binary repository upload",
     "approved_asset_sha256": "18397610f45669b8bfbb0d5c64e33ff395c7fdf8b565c1598dc03bb635a84930",
@@ -261,6 +268,17 @@
     "artwork_layers_status": "specified_not_drawn",
     "runtime": "Rive candidate vs Canvas comparator; not selected",
     "site_integrated": false,
-    "animation_approved": false
+    "animation_approved": false,
+    "motion_rig": "blocked_until_static_assembled_anatomy_passes",
+    "review_docs": "docs/GIANT_DAVE_CANONICAL_SKELETON.md",
+    "local_outputs": [
+      "Giant-Dave-DH-06C2A-Canonical-Baseline.zip",
+      "DaveHub-DH-06C2A/04-review-sheet.jpg",
+      "DaveHub-DH-06C2A/05-static-skeleton-review.html"
+    ],
+    "candidate_source_sha256": "877a337c33e24e117a4b8ed3c5cc55ff9aa2c3e1f1da44a21c09d3f6694a6523",
+    "candidate_source": "Original single transparent full-body generated illustration, hands in pockets",
+    "character_master_approved": false,
+    "rig_source_approved": false
   }
 }
