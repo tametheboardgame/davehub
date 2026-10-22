@@ -1,7 +1,7 @@
 {
   "project": "DaveHub",
   "updated": "2026-10-22",
-  "status": "giant_dave_pose_approved_animation_prototype_next",
+  "status": "dh_06b_ab_jointed_vs_magic_study_tested_pending_owner_review",
   "current_work_package": "DH-06B",
   "completed": [
     "DH-00A",
@@ -13,13 +13,14 @@
     "DH-06A"
   ],
   "in_progress": [
-    "DH-06B riggable character asset and animation prototype",
-    "DH-07 content inventory and information architecture"
+    "DH-06B review A/B character movement test and painted rig-layer requirements",
+    "DH-07 content architecture discovery"
   ],
   "next": [
-    "DH-06B transparent rig production layers and idle/welcome proof of concept",
-    "DH-06C responsive character integration",
-    "DH-08 DaveHub Ready publishing contract"
+    "Owner chooses natural everyday articulation vs rare magical effects after A/B prototype review",
+    "DH-06B paint clean concealed shoulder, elbow, sleeve and torso layers",
+    "DH-06B inspect rigging tools for longer gestures and add asset binaries via supported route",
+    "DH-06C integrate on Cloudflare preview branch after approval"
   ],
   "decisions": [
     {
@@ -105,8 +106,8 @@
     "remote_status": "connected"
   },
   "last_verified": {
-    "scope": "DH-02C responsive viewport change",
-    "result": "Local Chromium layout tested at 1840x800, 1366x768, 1440x900, 1920x1080, 1024x600, 768x1024, 390x844, 375x667, 320x568, 844x390, 667x375, 600x650 and 414x600: navigation and CTA visible, no page overflow; native destination dialog interactions checked at 1840x800, 390x844 and 844x390. External live site unverified."
+    "scope": "DH-06B motion study 03",
+    "result": "Built browser comparison A natural joint transforms vs B magical morph; standalone HTML and video exported, verified controls in Chromium and no horizontal overflow at 1366x768, 390x844, 375x667. Artwork joints need production repaint, binaries unavailable in repository."
   },
   "domain": {
     "primary": "davehub.co.uk",
@@ -232,7 +233,7 @@
     }
   },
   "giant_dave": {
-    "status": "four_pose_concept_approved",
+    "status": "motion_study_03_ab_ready_for_review",
     "approved_on": "2026-10-22",
     "approved_asset": "ChatGPT generated original, pending binary repository upload",
     "approved_asset_sha256": "18397610f45669b8bfbb0d5c64e33ff395c7fdf8b565c1598dc03bb635a84930",
@@ -243,6 +244,18 @@
       "open-armed presentation"
     ],
     "technical_next": "DH-06B riggable transparent character and Rive-or-alternative prototype",
-    "runtime_locked": false
+    "runtime_locked": false,
+    "local_outputs": [
+      "Giant-Dave-Rig-vs-Magic-Interactive.html",
+      "Giant-Dave-Rig-vs-Magic-Comparison.mp4",
+      "Giant-Dave-Rig-vs-Magic-Source.zip"
+    ],
+    "motion_type": "A: independent shoulder + elbow joint rotation on painterly image layers; B: intentional optical-flow morph with glow overlay",
+    "rig_status": "small Canvas hierarchical articulated motion proof, not production Rive rig",
+    "binary_art_committed": false,
+    "site_integrated": false,
+    "visual_review": "pending",
+    "browser_test": "Chromium A/B playback, pause, reset, scrubbing and static tests at desktop/mobile; zero JS errors",
+    "asset_painting": "needs hidden sleeve/torso/shoulder redraw"
   }
 }
