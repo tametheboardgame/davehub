@@ -32,7 +32,7 @@
 | DH-05A | Human-reviewed content drafts | Safe workflow for proposed updates | Not started |
 | DH-05B | Deployment and launch | Cloudflare Pages used for previews; public domain/DNS, TLS and monitoring still pending | Preview reported live; launch pending |
 | DH-06A | Giant Dave key poses and motion personality | Four coherent poses approved by owner on 22 October 2026; visual baseline locked | **Complete** |
-| DH-06B | Giant Dave rig and movement prototype | Local transparent four-pose motion lab, idle breathing, blink and gesture controls assembled; true bone/mesh rig and binary GitHub upload still pending | **Local motion study built; owner review next** |
+| DH-06B | Giant Dave rig and movement prototype | Seven transparent generated poses face-aligned; 36 in-between reaching frames, isolated blink and timed controls tested locally; true elbow/shoulder bridge remains necessary | **Motion Study 02 tested; owner review next** |
 | DH-06C | Giant Dave homepage integration | Independent character layer; responsive crop, static fallback, reduced-motion, no lost navigation | Planned |
 | DH-07 | Content inventory and information architecture | Typed catalogue, cross-category views, stories, timelines, media and source/rights inventory agreed | **In progress, parallel** |
 | DH-08 | DaveHub Ready publication contract | Explicit approved project onboarding, source collection, draft review, provenance, withdrawal and security gates | Planned after DH-07 |
@@ -48,6 +48,10 @@
 - **DH-07: Content and information architecture.** Four visitor destinations (Projects, Writing, Games, Experiments) are overlapping discovery categories over *shared* canonical content. Inventory projects, ideas, milestones, releases, development stories and authorised media. Design What's Happening, project history and search. Run in parallel with DH-06. See [Living content and ingestion discovery](CONTENT_PIPELINE_DISCOVERY.md).
 - **DH-08–DH-11: The publishing system.** Owner nominates public-safe work as **DaveHub Ready**; read-only integrations and AI can create sourced drafts, but public publication still requires deliberate human approval under the existing policy. Pilot a single approved game; generate short human-readable development stories from meaningful milestones rather than blogging every commit; only then expand sources. Do not introduce a CMS or database without a measured need.
 - **Visibility rule:** This roadmap authorises discovery and prototypes, **not automatic publishing**, ingestion of private conversations, third-party voices/likenesses or employment-related information.
+
+## DH-06B second movement prototype (22 October 2026)
+
+[Motion Study 02](GIANT_DAVE_MOTION_STUDY_V2.md) assembles seven genuine transparent generations rather than auto-matting an old opaque image. Matching face placement and generating 36 optical-flow tween frames improves the already-reaching movement. The initial arm-lift still reveals a severe geometry gap, so neither a production animation nor a live Cloudflare deployment has been approved. Self-contained local HTML and MP4 were produced and checked at desktop/mobile sizes; binary assets remain in conversation downloads, not GitHub. Owner review required before further bridging art.
 
 ## DH-06B first movement prototype
 
