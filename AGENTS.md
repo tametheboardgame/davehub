@@ -30,6 +30,15 @@ Create an eccentric, explorable place for the things David has made. It is not a
 - The retro mode should be a real accessible, functional alternative, not a modern theme disguised as retro styling.
 - **Concept 1 is the primary reference**. See `docs/LOCKED_CONCEPTS.md`, `docs/VISUAL_DIRECTION.md` and `docs/BORING_MENU.md` for the reference images and locked decisions.
 
+## Giant Dave motion implementation decision (ADR-0010)
+
+- Use the approved four-pose identity and [DH-06C1 exact layered rig spec](docs/GIANT_DAVE_LAYERED_RIG_SPEC.md).
+- Articulate ordinary idle/blink/look/welcome/point/present via painted independent body/arm/face layers and real joints/mesh. Do not use optical-flow whole-body morphing to change normal poses.
+- Morph or dissolve only for separately approved major magical/world transitions.
+- Draw concealed shoulder/chest/elbow/neck artwork and overlap patches; a transparent image cut out of an already composite pose is not a production rig.
+- Keep rigging experiments off `main` until an approved static fallback, real binary assets, tested gestures, mobile composition, accessibility and owner visual approval exist.
+- Rive is a possible runtime to evaluate against simpler alternatives, not a selected mandatory dependency.
+
 ## Public repository safeguards
 
 This repository is PUBLIC. Never commit tokens, secrets, private source files, employer/railway technical details, customer information, personal data, or third-party artwork/music without permission. All external project integrations are read-only by default. All generated public-content updates are drafts pending deliberate human approval.
