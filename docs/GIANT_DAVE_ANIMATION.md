@@ -57,6 +57,10 @@ Avoid a compulsory intro, surprise sound, eye tracking outside the Dave stage, m
 
 No 3D or game engine is required for this first test. Do not commit an animation library or asset export until the experiment actually warrants it.
 
+## First moving proof of concept produced
+
+A local interactive HTML/CSS prototype now demonstrates the four approved transparent character poses, idle breathing, independently composited blink and selected gesture states. **It is a sprite-based motion study, not a true Rive/mesh rig**, and has not been uploaded to Cloudflare. See [DH-06B motion test](GIANT_DAVE_MOTION_TEST.md) for limitations, original artefact preservation and next steps. Artwork binary upload and owner review are pending.
+
 ## Animation and placement acceptance
 
 - Dave matches the approved illustrated original closely enough that the first-frame look feels continuous.
