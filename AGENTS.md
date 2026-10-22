@@ -39,6 +39,10 @@ Create an eccentric, explorable place for the things David has made. It is not a
 - Keep rigging experiments off `main` until an approved static fallback, real binary assets, tested gestures, mobile composition, accessibility and owner visual approval exist.
 - Rive is a possible runtime to evaluate against simpler alternatives, not a selected mandatory dependency.
 
+## Mandatory DH-06C2 static anatomy gate
+
+After mixed-source artwork caused a severed neck, oversized arm and undersized hand, **never build a production rig from parts generated on independent canvases with incompatible proportions**. Begin from an approved complete neutral illustration, overlay and certify one skeleton, then derive each painted layer from that exact canonical master. At the neutral resting pose the assembled parts must reproduce the master without seams or anatomical discontinuities. No animation until this static gate passes. See [DH-06C2A recovery plan](docs/GIANT_DAVE_CANONICAL_SKELETON.md).
+
 ## Public repository safeguards
 
 This repository is PUBLIC. Never commit tokens, secrets, private source files, employer/railway technical details, customer information, personal data, or third-party artwork/music without permission. All external project integrations are read-only by default. All generated public-content updates are drafts pending deliberate human approval.

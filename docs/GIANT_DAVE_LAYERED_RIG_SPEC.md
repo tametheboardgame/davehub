@@ -1,9 +1,11 @@
 # DH-06C1 — Giant Dave: production layered-art and rig specification
 
 **Decision date:** 22 October 2026  
-**Status:** **Approved implementation direction; asset drawings, runtime choice and animation quality NOT yet approved.**  
+**Status:** Implementation inventory remains useful, but **DH-06C2A canonical-source gate takes precedence** after incompatible independent pieces caused visible scale failures. Asset drawings, final skeleton/runtime and animations NOT approved.  
 **Scope:** Production-quality idle, blink, welcome reach and return. Point/present and magical transitions are later increments.  
 **References:** [Approved character](DECISIONS/ADR-0009.md), [original animation brief](GIANT_DAVE_ANIMATION.md), [motion grammar decision](DECISIONS/ADR-0010.md), [existing A/B comparison on draft PR #9](https://github.com/tametheboardgame/davehub/pull/9).
+
+**Critical addendum (22 October):** Before following this layer inventory, approve **one intact full-body transparent neutral** with near hand visible and measure its joints. All moving pieces MUST be traced/painted to that single canvas and must reconstruct the master at 0° before motion. See [DH-06C2A](GIANT_DAVE_CANONICAL_SKELETON.md). Independent generation of separately scaled body parts is expressly rejected.
 
 ## 1. Locked design decisions
 
