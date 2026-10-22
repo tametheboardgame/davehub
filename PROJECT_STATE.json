@@ -1,7 +1,7 @@
 {
   "project": "DaveHub",
   "updated": "2026-10-22",
-  "status": "dh_06b_local_motion_study_awaiting_visual_review",
+  "status": "dh_06b_motion_study_02_locally_tested_pending_owner_review",
   "current_work_package": "DH-06B",
   "completed": [
     "DH-00A",
@@ -13,15 +13,13 @@
     "DH-06A"
   ],
   "in_progress": [
-    "DH-06B local prototype review and asset handoff",
-    "DH-07 content inventory and information architecture"
+    "DH-06B owner review of tested transparent-image sequence",
+    "DH-07 content architecture discovery"
   ],
   "next": [
-    "Review downloadable transparent sprite/CSS movement study",
-    "Determine production Rive/mesh rig path based on feedback",
-    "Commit approved binary art through verified pathway",
-    "Stage character animation on Cloudflare branch",
-    "DH-08 DaveHub Ready design"
+    "DH-06B inspect first-lift geometry and optionally generate a real early elbow/shoulder bridge pose",
+    "DH-06B verify binary artwork upload and possibly proper rig",
+    "DH-06C homepage integration after owner approval"
   ],
   "decisions": [
     {
@@ -107,8 +105,8 @@
     "remote_status": "connected"
   },
   "last_verified": {
-    "scope": "DH-06B local motion study",
-    "result": "Four transparent WebP poses and a blink layer generated from approved concept; interactive HTML and six-second MP4 packaged. JS syntax and asset presence checked. Local Chromium navigation blocked by environment policy, so not browser-verified or deployed."
+    "scope": "DH-06B motion study 02",
+    "result": "44 transparent WebP assets including 36 tween frames, source JS and self-contained browser preview built; Chromium desktop/mobile interaction checks passed without JS errors. Video exported. First arm lift visually imperfect; not deployed."
   },
   "domain": {
     "primary": "davehub.co.uk",
@@ -234,7 +232,7 @@
     }
   },
   "giant_dave": {
-    "status": "motion_study_local_review",
+    "status": "motion_study_v2_locally_tested",
     "approved_on": "2026-10-22",
     "approved_asset": "ChatGPT generated original, pending binary repository upload",
     "approved_asset_sha256": "18397610f45669b8bfbb0d5c64e33ff395c7fdf8b565c1598dc03bb635a84930",
@@ -247,13 +245,15 @@
     "technical_next": "DH-06B riggable transparent character and Rive-or-alternative prototype",
     "runtime_locked": false,
     "local_outputs": [
-      "Giant-Dave-Moving-Prototype.zip",
-      "Giant-Dave-Movement-Preview.mp4"
+      "Giant-Dave-Interactive-Welcome-v2.html",
+      "Giant-Dave-Welcome-Study-v2.zip",
+      "Giant-Dave-Welcome-Motion-v2.mp4"
     ],
-    "motion_type": "CSS character sprites and blink overlay; major pose changes crossfade",
-    "rig_status": "not_started",
+    "motion_type": "seven genuine transparent generated poses, face-aligned, 36 optical-flow reach tweens; 95ms first-lift bridge remains visibly imperfect",
+    "rig_status": "not_rigged",
     "binary_art_committed": false,
     "site_integrated": false,
-    "visual_review": "pending"
+    "visual_review": "pending",
+    "browser_test": "Chromium via inline self-contained HTML: 1440x900, 1366x768, 390x844, 375x667 controls passed"
   }
 }
