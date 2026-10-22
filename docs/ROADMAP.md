@@ -34,7 +34,7 @@
 | DH-06A | Giant Dave key poses and motion personality | Four coherent poses approved by owner on 22 October 2026; visual baseline locked | **Complete** |
 | DH-06B | Giant Dave motion investigations | Local sprite/optical-flow and joint-versus-magic studies documented in draft PR #9; natural articulation selected over everyday morphing | Studies performed; prototype evidence remains draft |
 | DH-06C1 | Giant Dave production layered art + rig | [Layer inventory/rig contract](GIANT_DAVE_LAYERED_RIG_SPEC.md) exists; tests demonstrated mixed-source component scaling/neck/elbow/wrist failures | Design reference retained, production approach reset |
-| DH-06C2A | Canonical Dave and fixed skeleton | [Single-body candidate, measured overlay and static review](GIANT_DAVE_CANONICAL_SKELETON.md); no animation until neutral visible-hand pose and matching pivot certification | **Baseline candidate assembled; visible-hand neutral still pending** |
+| DH-06C2A | Canonical Dave and fixed skeleton | Intact full-body v001 reference plus visible-hand neutral v002 from one drawn figure; new candidate proportions and rough pivots checked but source resolution/alpha fails production | **v002 static concept tested; high-resolution clean-alpha master still needed** |
 | DH-06C2B | One-source editable rig layers and static assembly | Hidden torso/shoulder, consistent head/arm/hand layers from approved canonical; reassembly matches master at rest | Pending C2A approval |
 | DH-06C2C | Joint tests and natural welcome animation | Smooth single-skeleton head, shoulder, elbow, wrist motion, blink and return, no scale jumps | Planned |
 | DH-06C | Giant Dave homepage integration | Independent character layer; responsive crop, static fallback, reduced-motion, no lost navigation | Planned |
@@ -52,6 +52,10 @@
 - **DH-07: Content and information architecture.** Four visitor destinations (Projects, Writing, Games, Experiments) are overlapping discovery categories over *shared* canonical content. Inventory projects, ideas, milestones, releases, development stories and authorised media. Design What's Happening, project history and search. Run in parallel with DH-06. See [Living content and ingestion discovery](CONTENT_PIPELINE_DISCOVERY.md).
 - **DH-08–DH-11: The publishing system.** Owner nominates public-safe work as **DaveHub Ready**; read-only integrations and AI can create sourced drafts, but public publication still requires deliberate human approval under the existing policy. Pilot a single approved game; generate short human-readable development stories from meaningful milestones rather than blogging every commit; only then expand sources. Do not introduce a CMS or database without a measured need.
 - **Visibility rule:** This roadmap authorises discovery and prototypes, **not automatic publishing**, ingestion of private conversations, third-party voices/likenesses or employment-related information.
+
+## DH-06C2A visible-hand candidate v002 (22 October 2026)
+
+[DH-06C2A visible-hand neutral review](GIANT_DAVE_NEUTRAL_CANDIDATE_V2.md): an entire intact, properly proportioned standing figure with the near hand visible was isolated from a new design sheet, scaled uniformly to the common canvas, and given an overlay tied to the same source. It avoids Frankenstein-style body-part stitching. Browser review controls work on desktop and mobile. **Not a production master:** its true source only covers ~286×523 px, and manual computer-vision transparency extraction left dark-blue contamination around trousers/shoes. Do not rig, commit as approved art, or deploy this candidate. Next get one high-resolution genuine transparent standalone illustration and certify its skeleton.
 
 ## DH-06C2 recovery plan: no animation until static anatomy passes
 
