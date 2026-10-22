@@ -1,6 +1,6 @@
 # DH-06 — Giant Dave: movement and character proof of concept
 
-**Started:** 22 October 2026. **Status:** Four-pose character appearance and acting direction APPROVED 22 October 2026. Rigging, transparent production layers and movement quality remain unapproved.
+**Started:** 22 October 2026. **Status:** Four-pose look approved. Motion decision locked in ADR-0010: articulate normal behaviour, save morphing for intentional magical scene transitions. DH-06C1 layer/rig specification complete; artwork and rig remain unbuilt.
 
 ## Purpose
 
@@ -31,6 +31,10 @@ The approved **four-panel image is a key-pose study**, not a transparent product
 **Image provenance and preservation:** Approved original conversation-generated PNG, 1774 × 887, RGB, SHA-256 `18397610f45669b8bfbb0d5c64e33ff395c7fdf8b565c1598dc03bb635a84930`. The original generated PNG remains in the conversation attachment; the binary has **not** yet been uploaded to GitHub. Store that exact original under `assets/characters/dave/approved-four-pose-study.png` once a binary-safe repository upload is available. Never claim the image itself was committed merely because this approval metadata exists. Avoid an unreviewed redraw.
 
 **Approval scope:** silhouette, face, clothing, proportions, graphic style and four acting directions. Approval does not yet cover layer topology, deformations, interpolation between poses, exported runtime or responsive layout.
+
+## Production specification and selection
+
+The detailed asset list, layer ordering, joint pivots, authoring format, runtime contract and acceptance gates are in [DH-06C1 Layered Rig Specification](GIANT_DAVE_LAYERED_RIG_SPEC.md). [ADR-0010](DECISIONS/ADR-0010.md) locks the motion grammar. This document remains the character/animation creative brief, **not** the exact asset manifest.
 
 ## Motion design v0.1
 
