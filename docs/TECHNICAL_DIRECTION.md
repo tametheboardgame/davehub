@@ -8,7 +8,7 @@ The interaction is still undecided, so choosing a giant technology stack now wou
 - **2D / 2.5D runtime:** Canvas and PixiJS as possibilities for the mechanical or spatial concepts.
 - **3D runtime:** Three.js only if a tested concept earns the complexity.
 - **Domain:** **davehub.co.uk** is the selected primary domain, purchased by the owner. No DNS records or certificates have been confirmed or changed.
-- **Hosting:** Cloudflare is the preferred candidate given existing project experience, but is not yet configured or locked. Keep prototype architecture host-flexible.
+- **Hosting:** Cloudflare Pages selected for Git-connected `*.pages.dev` visual previews, but the owner's Cloudflare account is not connected and there is no live deployment. The prototype remains portable static HTML/CSS/JS. See [Pages setup](CLOUDFLARE_PAGES.md).
 - **Editorial content:** GitHub-managed Markdown/MDX and typed metadata first.
 - **Database:** No database needed for concept prototypes. Consider Supabase only for real stateful features.
 - **Testing:** Browser interaction, unit tests, responsive screenshots, keyboard and accessibility smoke tests when implementation begins.
