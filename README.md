@@ -8,7 +8,7 @@ It is emphatically **not** a CV, developer portfolio, professional marketing sit
 
 ## Status
 
-**DH-00 foundation established; DH-01 visual baseline locked, 21 October 2026.** The owner has purchased **davehub.co.uk** as the primary domain; DNS and hosting are not configured. The owner has selected Concept 1 as the primary visual reference; final layout, framework and interactive prototypes remain unapproved. No site is deployed.
+**DH-01A homepage first-look implemented, 22 October 2026 (awaiting first hosted visual review).** The owner has purchased **davehub.co.uk** as the primary domain; DNS and hosting are not configured. The owner has selected Concept 1 as the primary visual reference; final foreground art and character motion remain open. The static interactive first-look homepage is built; no site is deployed.
 
 ## North star
 
@@ -24,6 +24,12 @@ The experience should reward exploration without making it difficult to find a s
 4. Test the same project catalogue in both interfaces, including mobile and accessibility.
 5. Integrate approved real projects and optional human-reviewed publication drafts.
 
+## Prototype
+
+The static homepage is at repository root (`index.html`, `styles.css`, `main.js`, `catalogue.js`). Use `sh scripts/build-pages.sh` to create the curated `dist/` output for Cloudflare Pages. Cloudflare account connection and first live `*.pages.dev` deployment are pending. Details: [Cloudflare Pages setup](docs/CLOUDFLARE_PAGES.md).
+
+The approved logo and background are repository assets; illustrated Dave remains intentionally absent pending a separate design review.
+
 ## Planning documents
 
 - [Creative brief](docs/CREATIVE_BRIEF.md)
@@ -38,6 +44,7 @@ The experience should reward exploration without making it difficult to find a s
 - [Publication and permissions policy](docs/PUBLICATION_POLICY.md)
 - [Architecture decisions](docs/DECISIONS/)
 - [Development and setup guidance](SETUP.md)
+- [Cloudflare Pages preview deployment guide](docs/CLOUDFLARE_PAGES.md)
 
 ## Working rules
 
