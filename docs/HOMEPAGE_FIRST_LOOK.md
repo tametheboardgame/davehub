@@ -1,6 +1,6 @@
 # DH-01A — Homepage first-look interactive prototype
 
-**Status:** Feature branch, awaiting visual review. Not merged or production-deployed.
+**Status:** First-look source approved for hosted visual review. The Cloudflare Pages build is prepared; first deploy requires Cloudflare account connection.
 
 ## What has been built
 - Static HTML/CSS/JavaScript homepage using the approved unchanged background and faithful logo assets already committed to the repository.
@@ -32,7 +32,7 @@
 5. Test Escape, Tab and visible keyboard focus.
 6. Test `#games` and other direct fragments, narrow mobile widths, reduced motion and non-clipped interactions.
 
-The first round of isolated browser interaction tests passed at 1440×900, 1366×768, 390×844 and 375×667. The local browser test environment could not load repository image assets, so visual judgement of the composed artwork requires a network-enabled browser; don't claim full asset/production deployment verification on that basis.
+The first round of isolated browser interaction tests passed at 1440×900, 1366×768, 390×844 and 375×667. The browser test environment could not load repository image assets, so visual judgement of the composed artwork requires a network-enabled browser. To publish the curated site see [Cloudflare Pages instructions](CLOUDFLARE_PAGES.md).
 
 ## Next design conversation
 Decide how illustrated Dave arrives, moves and sits over the existing world, then refine foreground/brand positioning and responsive crop with the real foreground asset. Do not bake Dave into the background.
