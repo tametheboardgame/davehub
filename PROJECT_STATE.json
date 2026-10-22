@@ -1,7 +1,7 @@
 {
   "project": "DaveHub",
   "updated": "2026-10-22",
-  "status": "giant_dave_pose_approved_animation_prototype_next",
+  "status": "dh_06b_local_motion_study_awaiting_visual_review",
   "current_work_package": "DH-06B",
   "completed": [
     "DH-00A",
@@ -13,13 +13,15 @@
     "DH-06A"
   ],
   "in_progress": [
-    "DH-06B riggable character asset and animation prototype",
+    "DH-06B local prototype review and asset handoff",
     "DH-07 content inventory and information architecture"
   ],
   "next": [
-    "DH-06B transparent rig production layers and idle/welcome proof of concept",
-    "DH-06C responsive character integration",
-    "DH-08 DaveHub Ready publishing contract"
+    "Review downloadable transparent sprite/CSS movement study",
+    "Determine production Rive/mesh rig path based on feedback",
+    "Commit approved binary art through verified pathway",
+    "Stage character animation on Cloudflare branch",
+    "DH-08 DaveHub Ready design"
   ],
   "decisions": [
     {
@@ -105,8 +107,8 @@
     "remote_status": "connected"
   },
   "last_verified": {
-    "scope": "DH-02C responsive viewport change",
-    "result": "Local Chromium layout tested at 1840x800, 1366x768, 1440x900, 1920x1080, 1024x600, 768x1024, 390x844, 375x667, 320x568, 844x390, 667x375, 600x650 and 414x600: navigation and CTA visible, no page overflow; native destination dialog interactions checked at 1840x800, 390x844 and 844x390. External live site unverified."
+    "scope": "DH-06B local motion study",
+    "result": "Four transparent WebP poses and a blink layer generated from approved concept; interactive HTML and six-second MP4 packaged. JS syntax and asset presence checked. Local Chromium navigation blocked by environment policy, so not browser-verified or deployed."
   },
   "domain": {
     "primary": "davehub.co.uk",
@@ -232,7 +234,7 @@
     }
   },
   "giant_dave": {
-    "status": "four_pose_concept_approved",
+    "status": "motion_study_local_review",
     "approved_on": "2026-10-22",
     "approved_asset": "ChatGPT generated original, pending binary repository upload",
     "approved_asset_sha256": "18397610f45669b8bfbb0d5c64e33ff395c7fdf8b565c1598dc03bb635a84930",
@@ -243,6 +245,15 @@
       "open-armed presentation"
     ],
     "technical_next": "DH-06B riggable transparent character and Rive-or-alternative prototype",
-    "runtime_locked": false
+    "runtime_locked": false,
+    "local_outputs": [
+      "Giant-Dave-Moving-Prototype.zip",
+      "Giant-Dave-Movement-Preview.mp4"
+    ],
+    "motion_type": "CSS character sprites and blink overlay; major pose changes crossfade",
+    "rig_status": "not_started",
+    "binary_art_committed": false,
+    "site_integrated": false,
+    "visual_review": "pending"
   }
 }
