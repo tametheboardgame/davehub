@@ -1,8 +1,8 @@
 {
   "project": "DaveHub",
   "updated": "2026-10-22",
-  "status": "dh_06c1_layered_rig_spec_committed_assets_pending",
-  "current_work_package": "DH-06C1",
+  "status": "dh_06c2b_native_scale_articulated_test_complete_art_quality_pending",
+  "current_work_package": "DH-06C2B",
   "completed": [
     "DH-00A",
     "DH-00B",
@@ -13,15 +13,15 @@
     "DH-06A"
   ],
   "in_progress": [
-    "DH-06C1 produce coherent editable character layers from approved look",
-    "DH-07 content inventory and information architecture"
+    "DH-06C2B native-scale articulated arm test owner review and seam repaint",
+    "DH-07 content architecture"
   ],
   "next": [
-    "DH-06C1a painterly neutral torso/neck/head with shoulder underpaint and static fallback",
-    "DH-06C1b separate near shoulder, elbow bridge, forearm and hand variations",
-    "DH-06C1c facial layers; DH-06C1d real rigged welcome and return",
-    "DH-06C1e Rive vs Canvas comparison and tested export",
-    "DH-06C Cloudflare feature-branch integration after approval"
+    "Review working fixed-scale HTML/video and identify visible elbow and wrist seams",
+    "Paint proper concealed shoulder and arm joins at canonical source scale",
+    "Repeat visible-pixel assembly test and joint stress angles",
+    "Expand to actual welcome reach only once articulation looks natural",
+    "Integrate character on Cloudflare preview after owner approval and binary artwork commit"
   ],
   "decisions": [
     {
@@ -113,8 +113,8 @@
     "remote_status": "connected"
   },
   "last_verified": {
-    "scope": "DH-02C responsive viewport change",
-    "result": "Local Chromium layout tested at 1840x800, 1366x768, 1440x900, 1920x1080, 1024x600, 768x1024, 390x844, 375x667, 320x568, 844x390, 667x375, 600x650 and 414x600: navigation and CTA visible, no page overflow; native destination dialog interactions checked at 1840x800, 390x844 and 844x390. External live site unverified."
+    "scope": "DH-06C2B same-source fixed-proportion rig",
+    "result": "Native-image pixel-partition rest reassembly matches all visible source pixels; 4 responsive Chromium tests passed (sliders, play/reset, original toggle, checkerboard, no overflow/JS exceptions). Canvas 3.5s MP4 rendered. Sleeve/wrist seams still visible; no production merge or hosted deployment."
   },
   "domain": {
     "primary": "davehub.co.uk",
@@ -240,7 +240,7 @@
     }
   },
   "giant_dave": {
-    "status": "layered_rig_build_spec_complete",
+    "status": "same_source_articulation_test_verified",
     "approved_on": "2026-10-22",
     "approved_asset": "ChatGPT generated original, pending binary repository upload",
     "approved_asset_sha256": "18397610f45669b8bfbb0d5c64e33ff395c7fdf8b565c1598dc03bb635a84930",
@@ -256,11 +256,23 @@
     "motion_decision": "articulation_normal_motion_morph_only_magical_scene_transitions",
     "rig_spec_version": "v001",
     "artboard": "1536x2048 RGBA sRGB proposal",
-    "source_master": "layered PSD or ORA (not yet created)",
+    "source_master": "confident_ginger_bearded_hoodie_character.png native 1086x1448",
     "binary_assets_committed": false,
     "artwork_layers_status": "specified_not_drawn",
     "runtime": "Rive candidate vs Canvas comparator; not selected",
     "site_integrated": false,
-    "animation_approved": false
+    "animation_approved": false,
+    "rig_method": "native-size source image partition (body/upper/forearm/hand) plus Canvas shoulder/elbow/wrist hierarchy",
+    "neutral_visible_pixel_diff": 0,
+    "remaining_art_failures": [
+      "Visible elbow seam at rotation",
+      "Visible wrist seam at rotation",
+      "Full welcome reach requires hidden-body painting"
+    ],
+    "local_outputs": [
+      "Giant-Dave-Fixed-Proportions-Interactive.html",
+      "Giant-Dave-Fixed-Proportions-Rig.zip",
+      "Giant-Dave-Fixed-Proportions-Motion-Preview.mp4"
+    ]
   }
 }
