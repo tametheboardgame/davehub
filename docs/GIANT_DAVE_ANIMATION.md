@@ -61,6 +61,10 @@ No 3D or game engine is required for this first test. Do not commit an animation
 
 A local interactive HTML/CSS prototype now demonstrates the four approved transparent character poses, idle breathing, independently composited blink and selected gesture states. **It is a sprite-based motion study, not a true Rive/mesh rig**, and has not been uploaded to Cloudflare. See [DH-06B motion test](GIANT_DAVE_MOTION_TEST.md) for limitations, original artefact preservation and next steps. Artwork binary upload and owner review are pending.
 
+## Motion Study 03: jointed movement versus magical morph
+
+The [A/B comparison](GIANT_DAVE_AB_COMPARISON.md) is built as a downloadable side-by-side browser prototype. Version A uses actual shoulder/elbow pivots with independent painted arm layers, and Version B intentionally embraces the existing optical-flow morph with magical light treatment. **Neither is a finished production rig.** The near arm only covers a modest range because hidden torso and shoulder artwork needs hand-painting; keep this next artwork task explicit and do not solve it through more generated in-between frames.
+
 ## Animation and placement acceptance
 
 - Dave matches the approved illustrated original closely enough that the first-frame look feels continuous.
