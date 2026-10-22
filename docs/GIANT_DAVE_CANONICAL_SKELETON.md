@@ -43,6 +43,10 @@ A downloadable package `Giant-Dave-DH-06C2A-Canonical-Baseline.zip` has:
 5. **Joint extremes:** only after 0° pass, rotate one joint at a time within approved realistic limits. Verify no hollow elbow, toddler hand, detached neck, exposed old arm or change of style.
 6. **Real natural animation:** idle/eyelids/welcome/return only after every static/motion-gate test passes. Magical transitions remain independent later.
 
+## Update: one-figure visible-hand candidate v002
+
+A neutral near-hand-visible **single complete figure** was isolated from one new generated sheet, without Frankenstein compositing. The resulting source crop has an effective resolution of only **286×523 pixels**, and its extracted transparency still carries navy background remnants. A matched provisional skeleton overlay and browser checker test are complete, but the image **fails the clean original/high-resolution production gate**. See [DH-06C2A visible-hand review](GIANT_DAVE_NEUTRAL_CANDIDATE_V2.md). Do not assume it supersedes the approved original or promote it to production.
+
 ## Owner review and repository boundaries
 
 - Prototype assets are available as a ChatGPT conversation ZIP / offline HTML. The current GitHub action can write text but **cannot import arbitrary local PNG files**. Therefore this branch commits only the specification, source provenance and candidate joint coordinate JSON. **It does not pretend to contain the art binaries.**
