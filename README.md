@@ -30,6 +30,11 @@ The static homepage is at repository root (`index.html`, `styles.css`, `main.js`
 
 The approved logo and background are repository assets; illustrated Dave remains intentionally absent pending a separate design review.
 
+## Current design and automation workstreams
+
+- [DH-06: Giant Dave motion concept](docs/GIANT_DAVE_ANIMATION.md), starting with consistent illustrated poses, a natural idle/welcome interaction and a small rig/runtime experiment.
+- [DH-07–DH-11: Living content and publishing system](docs/CONTENT_PIPELINE_DISCOVERY.md), designing canonical project pages and AI-assisted, human-approved development stories from deliberately nominated public-safe sources.
+
 ## Planning documents
 
 - [Creative brief](docs/CREATIVE_BRIEF.md)

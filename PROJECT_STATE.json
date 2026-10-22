@@ -1,8 +1,8 @@
 {
   "project": "DaveHub",
   "updated": "2026-10-22",
-  "status": "homepage_viewport_fit_in_review",
-  "current_work_package": "DH-02C",
+  "status": "giant_dave_animation_concept_and_content_architecture_discovery",
+  "current_work_package": "DH-06A",
   "completed": [
     "DH-00A",
     "DH-00B",
@@ -12,15 +12,16 @@
     "DH-01N"
   ],
   "in_progress": [
-    "DH-02C live visual review",
-    "DH-01A illustrated Dave concept"
+    "DH-06A Giant Dave key poses and movement concept",
+    "DH-07 content inventory and information architecture"
   ],
   "next": [
-    "DH-02C verify Cloudflare viewport fix on hosted URL",
-    "DH-01A illustrated Dave movement and compositing",
-    "DH-01B",
-    "DH-01C",
-    "DH-01D"
+    "DH-06B interactive character rig experiment",
+    "DH-06C responsive character integration",
+    "DH-08 DaveHub Ready editorial and approval design",
+    "DH-09 single-game ingestion pilot",
+    "DH-10 AI development stories",
+    "DH-11 expand approved sources"
   ],
   "decisions": [
     {
@@ -67,6 +68,11 @@
       "id": "ADR-0008",
       "decision": "Approve clean floating-islands hero background as separate artwork; PNG master and embedded PNG SVG, not pure vector",
       "status": "accepted"
+    },
+    {
+      "id": "STRATEGY-2026-10-22",
+      "decision": "Two parallel streams: (1) living illustrated Dave as an interactive host, (2) content taxonomy and minimally maintained human-readable creative updates; approvals and rights always enforced",
+      "status": "agreed_direction"
     }
   ],
   "open_questions": [
@@ -78,7 +84,12 @@
     "Review first-look homepage visual placement with the actual approved background/logo in browser",
     "Decide illustrated Dave's movement and integration before composing character art",
     "Decide whether the previously proposed retro HTML mode needs a separate entry, now bottom menu navigation exists",
-    "Visually confirm full viewport layout and actual hosted Cloudflare Pages URL before closing DH-02C"
+    "Visually confirm full viewport layout and actual hosted Cloudflare Pages URL before closing DH-02C",
+    "DH-06A: approve Giant Dave key poses and natural motion vocabulary before final rigging",
+    "DH-06B: test Rive versus simple layered/clip-based alternatives for original painted art",
+    "DH-07: which content types, canonical project records, categories and story templates belong on DaveHub?",
+    "DH-08: define a safe DaveHub Ready nomination and draft approval pipeline",
+    "DH-09: select approved game pilot and ensure any voices or real people's likenesses are cleared"
   ],
   "deployment": {
     "status": "pages_live_reported_by_owner_url_not_verified",
@@ -198,5 +209,23 @@
       "assets/branding/davehub-logo-faithful.svg",
       "assets/homepage/floating-islands-background.png"
     ]
+  },
+  "planned_workstreams": {
+    "giant_dave": {
+      "phase": "DH-06",
+      "status": "concept_started",
+      "design_doc": "docs/GIANT_DAVE_ANIMATION.md",
+      "art_status": "unapproved_concept",
+      "runtime": "Rive candidate; evaluate with proof of concept",
+      "site_integration": "deferred"
+    },
+    "living_content": {
+      "phase": "DH-07–DH-11",
+      "status": "requirements_discovery",
+      "design_doc": "docs/CONTENT_PIPELINE_DISCOVERY.md",
+      "publication_policy": "docs/PUBLICATION_POLICY.md",
+      "default_approval": "human_required",
+      "initial_pilot": "one specifically approved creative game, not yet selected"
+    }
   }
 }
