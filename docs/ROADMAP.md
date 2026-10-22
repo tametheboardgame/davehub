@@ -1,6 +1,6 @@
 # DaveHub development roadmap
 
-**Updated:** 22 October 2026. **Current stage:** DH-06C1 production layered-art rig design approved; production art/rig proof pending. DH-07 content information architecture continues in parallel. The full-screen homepage first-look is on Cloudflare Pages according to owner visual review; no exact preview hostname has been independently verified. **davehub.co.uk** remains a purchased domain, not a confirmed production deployment.
+**Updated:** 22 October 2026. **Current stage:** DH-06C2A canonical single-body/skeleton reset, after a mixed-piece rig showed severe scaling errors; DH-07 content architecture remains parallel. DH-07 content information architecture continues in parallel. The full-screen homepage first-look is on Cloudflare Pages according to owner visual review; no exact preview hostname has been independently verified. **davehub.co.uk** remains a purchased domain, not a confirmed production deployment.
 
 ## Design baseline
 
@@ -33,7 +33,10 @@
 | DH-05B | Deployment and launch | Cloudflare Pages used for previews; public domain/DNS, TLS and monitoring still pending | Preview reported live; launch pending |
 | DH-06A | Giant Dave key poses and motion personality | Four coherent poses approved by owner on 22 October 2026; visual baseline locked | **Complete** |
 | DH-06B | Giant Dave motion investigations | Local sprite/optical-flow and joint-versus-magic studies documented in draft PR #9; natural articulation selected over everyday morphing | Studies performed; prototype evidence remains draft |
-| DH-06C1 | Giant Dave production layered art + rig | [Exact asset inventory and rig contract](GIANT_DAVE_LAYERED_RIG_SPEC.md) committed: source masters, 29 P0 image layers/variants, pivots, anatomy, animation states and test gates | **Spec complete; painted assets next** |
+| DH-06C1 | Giant Dave production layered art + rig | [Layer inventory/rig contract](GIANT_DAVE_LAYERED_RIG_SPEC.md) exists; tests demonstrated mixed-source component scaling/neck/elbow/wrist failures | Design reference retained, production approach reset |
+| DH-06C2A | Canonical Dave and fixed skeleton | [Single-body candidate, measured overlay and static review](GIANT_DAVE_CANONICAL_SKELETON.md); no animation until neutral visible-hand pose and matching pivot certification | **Baseline candidate assembled; visible-hand neutral still pending** |
+| DH-06C2B | One-source editable rig layers and static assembly | Hidden torso/shoulder, consistent head/arm/hand layers from approved canonical; reassembly matches master at rest | Pending C2A approval |
+| DH-06C2C | Joint tests and natural welcome animation | Smooth single-skeleton head, shoulder, elbow, wrist motion, blink and return, no scale jumps | Planned |
 | DH-06C | Giant Dave homepage integration | Independent character layer; responsive crop, static fallback, reduced-motion, no lost navigation | Planned |
 | DH-07 | Content inventory and information architecture | Typed catalogue, cross-category views, stories, timelines, media and source/rights inventory agreed | **In progress, parallel** |
 | DH-08 | DaveHub Ready publication contract | Explicit approved project onboarding, source collection, draft review, provenance, withdrawal and security gates | Planned after DH-07 |
@@ -50,7 +53,13 @@
 - **DH-08–DH-11: The publishing system.** Owner nominates public-safe work as **DaveHub Ready**; read-only integrations and AI can create sourced drafts, but public publication still requires deliberate human approval under the existing policy. Pilot a single approved game; generate short human-readable development stories from meaningful milestones rather than blogging every commit; only then expand sources. Do not introduce a CMS or database without a measured need.
 - **Visibility rule:** This roadmap authorises discovery and prototypes, **not automatic publishing**, ingestion of private conversations, third-party voices/likenesses or employment-related information.
 
-## DH-06C1 implementation sequence (locked 22 October 2026)
+## DH-06C2 recovery plan: no animation until static anatomy passes
+
+The previous mixed-source articulated test visibly failed with a disconnected neck, oversized shoulder sleeve and tiny wrist/hand. **Stop using the old generated part sheets as interchangeable production anatomy.** DH-06C2A establishes a complete single illustrated Dave and provisional anatomically measured skeleton. The local offline compare/overlay artifacts are provided in the same ChatGPT conversation; see [canonical skeleton report](GIANT_DAVE_CANONICAL_SKELETON.md).
+
+**Current gate:** The prior single transparent full-body art is a useful proportionally consistent baseline, but **both hands are still in pockets**. Recreate one cohesive *visible-hand neutral* from that identity; do not stitch a hand from another generation. Approve it, certify joints from that exact source and then derive layered art and genuine hidden torso repaint. At zero degrees, the layered reassembly must reproduce the approved intact illustration precisely. Only then test joint rotation and build idle/welcome. Existing C1 layer spec remains a component checklist, not permission to revive mismatched cut-outs.
+
+## DH-06C1 implementation sequence (historic plan, superseded by C2 gates)
 
 1. **C1a:** coherent master torso/neck/head and underpaint behind the near shoulder; approved static fallback.
 2. **C1b:** separately painted near upper sleeve, elbow bridge, forearm, hand variants, shoulder cap and occlusion shadows; test pivots and extremes.
