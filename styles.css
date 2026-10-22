@@ -158,3 +158,139 @@ a:focus-visible, button:focus-visible { outline: 3px solid #fff; outline-offset:
    Never let that invisible area block the floating-island links. */
 .welcome { pointer-events: none; }
 .explore-button { pointer-events: auto; }
+
+/* DH-02C: One responsive, non-scrolling scene. Destination dialogs scroll
+   independently; the empty illustrated-Dave overlay remains untouched. */
+html, body { height: 100%; width: 100%; overflow: hidden; }
+.homepage {
+  --scene-side: clamp(18px, 3.5vw, 74px);
+  --nav-bottom: clamp(33px, 5.6vh, 55px);
+  --nav-row-height: clamp(58px, 8.5vh, 72px);
+  --hero-nav-gap: clamp(19px, 3.2vh, 38px);
+  height: 100vh;
+  height: 100svh;
+  min-height: 0;
+  max-height: 100svh;
+  overflow: hidden;
+  display: block;
+  padding-inline: var(--scene-side);
+}
+.page-top {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: min(calc(100% - 2 * var(--scene-side)), 1650px);
+  transform: translateX(-50%);
+}
+.welcome {
+  position: absolute;
+  bottom: calc(var(--nav-bottom) + var(--nav-row-height) + var(--hero-nav-gap));
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(calc(100% - 2 * var(--scene-side)), 640px);
+  padding: 0;
+  margin: 0;
+}
+.welcome__logo {
+  width: clamp(235px, 28vw, 475px);
+  max-height: min(20svh, 155px);
+}
+.welcome__tagline { margin: 3px 0 clamp(10px, 2.4vh, 22px); }
+.explore-button {
+  min-height: clamp(52px, 8.5vh, 72px);
+  padding-block: clamp(10px, 1.8vh, 17px);
+}
+.destination-nav {
+  position: absolute;
+  bottom: var(--nav-bottom);
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(calc(100% - 2 * var(--scene-side)), 1060px);
+}
+.nav-tile {
+  min-height: var(--nav-row-height);
+  padding-block: clamp(8px, 1.5vh, 14px);
+}
+.homepage__footer {
+  position: absolute;
+  bottom: max(9px, env(safe-area-inset-bottom));
+  left: 0;
+  width: 100%;
+  margin: 0;
+}
+@media (max-width: 900px) {
+  .homepage {
+    --scene-side: 20px;
+    --nav-row-height: clamp(54px, 8vh, 66px);
+    --hero-nav-gap: clamp(15px, 2.8vh, 29px);
+  }
+  .welcome { margin: 0; padding: 0; }
+}
+@media (max-width: 640px) {
+  .homepage {
+    --scene-side: 17px;
+    --nav-bottom: clamp(30px, 4.8vh, 43px);
+    --nav-row-height: clamp(52px, 7.3vh, 66px);
+    --hero-nav-gap: clamp(13px, 2vh, 23px);
+  }
+  .welcome {
+    bottom: calc(var(--nav-bottom) + 2 * var(--nav-row-height) + 9px + var(--hero-nav-gap));
+    width: min(calc(100% - 2 * var(--scene-side)), 440px);
+    margin: 0;
+    padding: 0;
+  }
+  .welcome__logo { width: min(75vw, 370px); max-height: min(15svh, 115px); }
+  .welcome__tagline { margin: 3px 0 clamp(9px, 1.8vh, 15px); }
+  .explore-button { min-height: clamp(50px, 7.4vh, 64px); }
+  .destination-nav { width: min(calc(100% - 2 * var(--scene-side)), 440px); }
+  .nav-tile { min-height: var(--nav-row-height); }
+  .homepage__footer { margin: 0; bottom: max(8px, env(safe-area-inset-bottom)); }
+}
+@media (max-height: 690px) and (min-width: 641px) {
+  .homepage {
+    --nav-bottom: 28px;
+    --nav-row-height: clamp(51px, 8vh, 62px);
+    --hero-nav-gap: 14px;
+  }
+  .welcome__logo { width: min(26vw, 360px); max-height: 16svh; }
+  .welcome__tagline { margin-bottom: 9px; }
+  .explore-button { min-height: 48px; padding-block: 9px; font-size: 19px; }
+  .island { padding-block: 8px; }
+  .island .glyph { font-size: clamp(22px, 4vh, 30px); }
+  .homepage__footer { bottom: 7px; }
+}
+@media (max-height: 650px) and (max-width: 640px) {
+  .homepage {
+    --nav-bottom: 27px;
+    --nav-row-height: 51px;
+    --hero-nav-gap: 10px;
+  }
+  .welcome__logo { max-height: 12svh; width: min(71vw, 320px); }
+  .welcome__tagline { margin-bottom: 8px; font-size: 8px; }
+  .explore-button { min-height: 46px; padding-block: 8px; font-size: 17px; }
+  .nav-tile { font-size: 12px; }
+  .island .glyph { font-size: 22px; }
+}
+@media (max-height: 430px) and (orientation: landscape) {
+  .homepage {
+    --nav-bottom: 10px;
+    --nav-row-height: 43px;
+    --hero-nav-gap: 8px;
+  }
+  .page-top { padding-top: 7px; }
+  .page-top__eyebrow, .page-top__prototype { font-size: 9px; }
+  .welcome__logo { width: min(24vw, 260px); max-height: 14svh; }
+  .welcome__tagline { font-size: 8px; margin: 2px 0 5px; }
+  .explore-button { width: min(305px, 94%); min-height: 42px; padding: 5px 15px; font-size: 16px; }
+  .nav-tile { min-height: 43px; padding: 6px 10px; font-size: 13px; }
+  .nav-tile__icon { font-size: 17px; }
+  .island { min-width: 90px; font-size: 10px; gap: 2px; padding: 4px 6px; }
+  .island .glyph { font-size: 21px; }
+  .island--projects { top: 33%; }
+  .homepage__footer { display: none; }
+}
+/* Extreme portrait heights/large zoom must not make controls inaccessible. */
+@media (max-height: 430px) and (orientation: portrait) {
+  html, body { overflow: auto; }
+  .homepage { min-height: 430px; height: auto; max-height: none; }
+}
