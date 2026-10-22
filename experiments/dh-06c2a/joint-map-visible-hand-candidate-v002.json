@@ -1,0 +1,99 @@
+{
+  "package": "DH-06C2A",
+  "candidate": "visible-hand v002",
+  "approval": "PROVISIONAL / NOT CERTIFIED",
+  "source_sheet": "a_wide_clean_professional_character_rigging_asse.png",
+  "source_sha256": "98bba752a514537508fb63105f0994e224c4700f66a45ac0c99bf56c1aed5591",
+  "source_crop_rect_xyxy": [
+    12,
+    35,
+    298,
+    558
+  ],
+  "source_crop_pixels": [
+    286,
+    523
+  ],
+  "authoring_frame": [
+    1536,
+    2048
+  ],
+  "uniform_scale": 3.45,
+  "offset_xy": [
+    275,
+    120
+  ],
+  "joints_artboard_pixels_approx": {
+    "root": [
+      792,
+      1214
+    ],
+    "head": [
+      799,
+      310
+    ],
+    "neck": [
+      810,
+      472
+    ],
+    "shoulder_near": [
+      527,
+      537
+    ],
+    "elbow_near": [
+      465,
+      855
+    ],
+    "wrist_near": [
+      472,
+      1034
+    ],
+    "shoulder_far": [
+      986,
+      572
+    ],
+    "elbow_far": [
+      1037,
+      841
+    ],
+    "wrist_far": [
+      1020,
+      1031
+    ],
+    "pelvis": [
+      782,
+      1110
+    ],
+    "hip_near": [
+      651,
+      1127
+    ],
+    "hip_far": [
+      930,
+      1120
+    ],
+    "knee_near": [
+      644,
+      1469
+    ],
+    "knee_far": [
+      975,
+      1462
+    ],
+    "ankle_near": [
+      516,
+      1769
+    ],
+    "ankle_far": [
+      1075,
+      1769
+    ]
+  },
+  "limitations": [
+    "The intact near-hand-visible person was extracted from one composite character sheet; original resolution 286x523 px",
+    "Mask from GrabCut is not clean original alpha; residual navy background contamination around shoes and trousers",
+    "All joint positions are approximate, not rig-certified",
+    "Do not derive production layers from this low-resolution extraction",
+    "Recreate a single genuinely transparent high-resolution neutral figure before rigging"
+  ]
+}
