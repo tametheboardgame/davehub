@@ -1,6 +1,6 @@
 # DH-06 — Giant Dave: movement and character proof of concept
 
-**Started:** 22 October 2026. **Status:** Concept/design investigation, not approved production art.
+**Started:** 22 October 2026. **Status:** Four-pose character appearance and acting direction APPROVED 22 October 2026. Rigging, transparent production layers and movement quality remain unapproved.
 
 ## Purpose
 
@@ -14,6 +14,23 @@ Reference: `assets/concepts/2026-10-21/01-floating-islands-home.png`. The backgr
 - **Composition:** Large near-camera three-quarter view emerging from the left, similar to the selected original. Leave the central logo, CTA, island hotspots and lower navigation fully operable and legible.
 - **Personality:** Curious, welcoming, a little knowing; subtle character acting rather than mechanical flailing.
 - **No Gilliam/collage treatment:** no paper cut-outs, disjointed photo faces, visible hinged joints, uncanny segmented hands, steampunk or grotesque motion.
+
+## Approved four-pose character study (DH-06A)
+
+**Owner approval:** 22 October 2026. All four poses and the consistent character depiction were explicitly approved as the correct look and personality.
+
+The approved **four-panel image is a key-pose study**, not a transparent production sprite, rig, frame-by-frame sequence or actual animation.
+
+- **Pose 1: Idle/confident.** Front three-quarter, one or both hands near jeans pockets, small knowing smile. Default resting state.
+- **Pose 2: Welcome/reach.** Hand extended towards the camera, open palm, inviting expression. Strongest homepage reference.
+- **Pose 3: Notice/point.** Eyes and head angled towards a destination, pointing index finger and engaged expression.
+- **Pose 4: Present.** Open arm and hand presenting the wider creative world, warmer broad smile.
+
+**Identity locked for subsequent art:** bald scalp, warm ginger-brown beard, blue eyes, navy zip hoodie with white drawstrings, olive T-shirt and blue jeans; comic-painterly rendering with confident proportions, warm orange edge light and cooler dark-blue shadows.
+
+**Image provenance and preservation:** Approved original conversation-generated PNG, 1774 × 887, RGB, SHA-256 `18397610f45669b8bfbb0d5c64e33ff395c7fdf8b565c1598dc03bb635a84930`. The original generated PNG remains in the conversation attachment; the binary has **not** yet been uploaded to GitHub. Store that exact original under `assets/characters/dave/approved-four-pose-study.png` once a binary-safe repository upload is available. Never claim the image itself was committed merely because this approval metadata exists. Avoid an unreviewed redraw.
+
+**Approval scope:** silhouette, face, clothing, proportions, graphic style and four acting directions. Approval does not yet cover layer topology, deformations, interpolation between poses, exported runtime or responsive layout.
 
 ## Motion design v0.1
 
@@ -31,7 +48,7 @@ Avoid a compulsory intro, surprise sound, eye tracking outside the Dave stage, m
 
 ## Asset and runtime experiments
 
-1. Produce a **visual key-pose sheet** (neutral, greeting/hand extension, glance towards a destination, relaxed idle) to validate likeness, gesture and overlap. This is reference artwork, **not** an animated rig.
+1. **Complete:** approved four-pose key-sheet. Preserve it and use it as the appearance benchmark for each movement frame.
 2. Prepare independently editable painted components as needed for believable shoulder, hand, face, eyelid and head movement, without visible seams.
 3. Build **a small Rive proof of concept** for idle + welcome and inspect expression quality, maintainability, asset size and browser performance. Rive supports raster/vector bones and meshes and JavaScript-driven state machines. Do not assume the drawing becomes a rig automatically.
 4. Compare against an alternative (e.g. pre-rendered transparent animation clip or simpler layered animation) **only if** the rig quality or authoring overhead does not justify Rive.
@@ -51,6 +68,31 @@ No 3D or game engine is required for this first test. Do not commit an animation
 - Works on the `*.pages.dev` review deployment before main merge; no autoplay audio; respects `prefers-reduced-motion`.
 - Performance, load failure and static fallback are measured, not guessed.
 
-## First review
+## Next: DH-06B production rig experiment
 
-Begin with key poses and the question **what does Dave actually do when a visitor arrives?** Approve the motion personality, then rig. Avoid investing in complex rigging before selecting the character expression and silhouette.
+### Layer/mesh preparation
+
+Create a transparent, riggable equivalent of the approved Dave rather than cutting the four flat panels into jerky collage fragments. Illustrate areas hidden in the poses (shoulder behind forward arm, torso under sleeve, back of hand at the wrist, neck under chin) so interpolation never reveals holes.
+
+Suggested logical controls/layers:
+
+1. Torso/hoodie and neck with independently deformable chest/shoulder areas.
+2. Head as a coherent painted plane, with limited rotation/tilt meshes, brows, individual lids, eyeballs and subtle mouth variants.
+3. Near arm as a carefully painted deformation chain, including hidden elbow and wrist fill; forward reaching hand should have appropriate perspective and its own hand poses.
+4. Far arm as a separate chain for the broad presenting gesture.
+5. Hair/beard-edge details and clothing folds remain visually attached, with no visible mechanical joints.
+
+### First interactive motion test
+
+- **Static → idle** on homepage load: character reads as the approved idle pose, then very gentle breathing and irregular blinking.
+- **Welcome** on an intentional user action (e.g. selecting Explore): small anticipatory shoulder motion, hand reach, natural settle and return to idle. No compulsory splash.
+- **Second pass:** user focuses/hovers Games/Writing/Projects/Experiments; Dave looks or points towards the selected island, avoiding constant pointer chasing.
+- **Fallback:** static PNG in reduced-motion, unsupported runtime or low-performance modes.
+
+Evaluate actual Rive rig quality versus any simpler authored clip approach. The winning technology depends on artistic coherence and responsiveness, not framework fashion.
+
+### Review gate
+
+Provide a short interactive desktop/mobile test on a feature branch. Capture both idle and welcome in the same prototype, including keyboard and reduced-motion behaviour. Do **not** merge a static whole-body wiggle labelled as 'rigged animation'.
+
+**Next approval needed:** the *movement test itself*, not another unrelated character concept.

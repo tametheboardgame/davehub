@@ -1,27 +1,25 @@
 {
   "project": "DaveHub",
   "updated": "2026-10-22",
-  "status": "giant_dave_animation_concept_and_content_architecture_discovery",
-  "current_work_package": "DH-06A",
+  "status": "giant_dave_pose_approved_animation_prototype_next",
+  "current_work_package": "DH-06B",
   "completed": [
     "DH-00A",
     "DH-00B",
     "DH-00C",
     "DH-01L",
     "DH-01M",
-    "DH-01N"
+    "DH-01N",
+    "DH-06A"
   ],
   "in_progress": [
-    "DH-06A Giant Dave key poses and movement concept",
+    "DH-06B riggable character asset and animation prototype",
     "DH-07 content inventory and information architecture"
   ],
   "next": [
-    "DH-06B interactive character rig experiment",
+    "DH-06B transparent rig production layers and idle/welcome proof of concept",
     "DH-06C responsive character integration",
-    "DH-08 DaveHub Ready editorial and approval design",
-    "DH-09 single-game ingestion pilot",
-    "DH-10 AI development stories",
-    "DH-11 expand approved sources"
+    "DH-08 DaveHub Ready publishing contract"
   ],
   "decisions": [
     {
@@ -73,6 +71,11 @@
       "id": "STRATEGY-2026-10-22",
       "decision": "Two parallel streams: (1) living illustrated Dave as an interactive host, (2) content taxonomy and minimally maintained human-readable creative updates; approvals and rights always enforced",
       "status": "agreed_direction"
+    },
+    {
+      "id": "ADR-0009",
+      "decision": "Owner approved all four illustrated Giant Dave character poses as fixed design baseline; only movement and rigging remain to be proved",
+      "status": "accepted"
     }
   ],
   "open_questions": [
@@ -85,11 +88,11 @@
     "Decide illustrated Dave's movement and integration before composing character art",
     "Decide whether the previously proposed retro HTML mode needs a separate entry, now bottom menu navigation exists",
     "Visually confirm full viewport layout and actual hosted Cloudflare Pages URL before closing DH-02C",
-    "DH-06A: approve Giant Dave key poses and natural motion vocabulary before final rigging",
     "DH-06B: test Rive versus simple layered/clip-based alternatives for original painted art",
     "DH-07: which content types, canonical project records, categories and story templates belong on DaveHub?",
     "DH-08: define a safe DaveHub Ready nomination and draft approval pipeline",
-    "DH-09: select approved game pilot and ensure any voices or real people's likenesses are cleared"
+    "DH-09: select approved game pilot and ensure any voices or real people's likenesses are cleared",
+    "DH-06B: create credible transparent painted rig asset based on the approved four-pose sheet, then evaluate actual idle and welcome motion"
   ],
   "deployment": {
     "status": "pages_live_reported_by_owner_url_not_verified",
@@ -213,11 +216,11 @@
   "planned_workstreams": {
     "giant_dave": {
       "phase": "DH-06",
-      "status": "concept_started",
+      "status": "approved_key_poses_DH-06B_next",
       "design_doc": "docs/GIANT_DAVE_ANIMATION.md",
-      "art_status": "unapproved_concept",
+      "art_status": "key_pose_reference_approved; transparent rig_art_not_yet_produced",
       "runtime": "Rive candidate; evaluate with proof of concept",
-      "site_integration": "deferred"
+      "site_integration": "after working motion test"
     },
     "living_content": {
       "phase": "DH-07–DH-11",
@@ -227,5 +230,19 @@
       "default_approval": "human_required",
       "initial_pilot": "one specifically approved creative game, not yet selected"
     }
+  },
+  "giant_dave": {
+    "status": "four_pose_concept_approved",
+    "approved_on": "2026-10-22",
+    "approved_asset": "ChatGPT generated original, pending binary repository upload",
+    "approved_asset_sha256": "18397610f45669b8bfbb0d5c64e33ff395c7fdf8b565c1598dc03bb635a84930",
+    "poses": [
+      "idle",
+      "welcome reach",
+      "attention point",
+      "open-armed presentation"
+    ],
+    "technical_next": "DH-06B riggable transparent character and Rive-or-alternative prototype",
+    "runtime_locked": false
   }
 }
