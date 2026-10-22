@@ -1,8 +1,8 @@
 {
   "project": "DaveHub",
   "updated": "2026-10-22",
-  "status": "homepage_first_look_ready_for_pages",
-  "current_work_package": "DH-01A",
+  "status": "homepage_viewport_fit_in_review",
+  "current_work_package": "DH-02C",
   "completed": [
     "DH-00A",
     "DH-00B",
@@ -12,10 +12,11 @@
     "DH-01N"
   ],
   "in_progress": [
-    "DH-02A hosted visual review",
+    "DH-02C live visual review",
     "DH-01A illustrated Dave concept"
   ],
   "next": [
+    "DH-02C verify Cloudflare viewport fix on hosted URL",
     "DH-01A illustrated Dave movement and compositing",
     "DH-01B",
     "DH-01C",
@@ -77,10 +78,10 @@
     "Review first-look homepage visual placement with the actual approved background/logo in browser",
     "Decide illustrated Dave's movement and integration before composing character art",
     "Decide whether the previously proposed retro HTML mode needs a separate entry, now bottom menu navigation exists",
-    "Connect Cloudflare Pages to GitHub repository and verify actual live pages.dev URL"
+    "Visually confirm full viewport layout and actual hosted Cloudflare Pages URL before closing DH-02C"
   ],
   "deployment": {
-    "status": "cloudflare_pages_setup_required",
+    "status": "pages_live_reported_by_owner_url_not_verified",
     "url": null
   },
   "repository": {
@@ -90,8 +91,8 @@
     "remote_status": "connected"
   },
   "last_verified": {
-    "scope": "DH-01A static assets/build preparation",
-    "result": "Prepared deterministic Pages static build and setup guide. Cloudflare account not connected; no live URL verified."
+    "scope": "DH-02C responsive viewport change",
+    "result": "Local Chromium layout tested at 1840x800, 1366x768, 1440x900, 1920x1080, 1024x600, 768x1024, 390x844, 375x667, 320x568, 844x390, 667x375, 600x650 and 414x600: navigation and CTA visible, no page overflow; native destination dialog interactions checked at 1840x800, 390x844 and 844x390. External live site unverified."
   },
   "domain": {
     "primary": "davehub.co.uk",
@@ -121,11 +122,11 @@
   "hosting": {
     "preferred_candidate": "Cloudflare Pages",
     "decision_status": "selected_for_visual_previews",
-    "deployed": false,
+    "deployed": "reported_by_owner_unverified",
     "git_branch": "main",
     "build_command": "sh scripts/build-pages.sh",
     "output_directory": "dist",
-    "provider_connection_status": "requires_user_dashboard_setup"
+    "provider_connection_status": "github_pages_connected_reported_by_owner"
   },
   "navigation_modes": {
     "immersive": "click-to-explore mindscape",
