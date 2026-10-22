@@ -1,7 +1,7 @@
 {
   "project": "DaveHub",
   "updated": "2026-10-22",
-  "status": "dh_06c1_layered_rig_spec_committed_assets_pending",
+  "status": "dh_06c1_motion_test_v3_locally_verified_not_production",
   "current_work_package": "DH-06C1",
   "completed": [
     "DH-00A",
@@ -13,15 +13,15 @@
     "DH-06A"
   ],
   "in_progress": [
-    "DH-06C1 produce coherent editable character layers from approved look",
-    "DH-07 content inventory and information architecture"
+    "DH-06C1 wrist and hand continuity paint for articulated welcome",
+    "DH-07 content architecture"
   ],
   "next": [
-    "DH-06C1a painterly neutral torso/neck/head with shoulder underpaint and static fallback",
-    "DH-06C1b separate near shoulder, elbow bridge, forearm and hand variations",
-    "DH-06C1c facial layers; DH-06C1d real rigged welcome and return",
-    "DH-06C1e Rive vs Canvas comparison and tested export",
-    "DH-06C Cloudflare feature-branch integration after approval"
+    "Paint continuous wrist/skin bridge and correct hand transition in 3-pivot rig",
+    "Validate sleeve/elbow/shoulder intersections under stress angles",
+    "Add independent blinking/head tilt",
+    "Select Rive versus Canvas and commit binary art through supported hand-off",
+    "Stage Cloudflare preview only after approval"
   ],
   "decisions": [
     {
@@ -98,9 +98,9 @@
     "DH-08: define a safe DaveHub Ready nomination and draft approval pipeline",
     "DH-09: select approved game pilot and ensure any voices or real people's likenesses are cleared",
     "DH-06B: create credible transparent painted rig asset based on the approved four-pose sheet, then evaluate actual idle and welcome motion",
-    "DH-06C1: draw and inspect all mandatory body/arm/facial underpaint layers and measure actual joint pivots from approved master before rigging",
     "DH-06C1: verify binary-safe asset commit route and measure rig payload, frame rate and device behaviour",
-    "DH-06C1: owner approval of genuine articulated idle/welcome, then optionally design separate signature magical world transition"
+    "DH-06C1: owner approval of genuine articulated idle/welcome, then optionally design separate signature magical world transition",
+    "DH-06C1: create genuinely painted hidden hoodie/chest/underarm (not a donor composite) and rerun moving elbow/shoulder gap tests"
   ],
   "deployment": {
     "status": "pages_live_reported_by_owner_url_not_verified",
@@ -113,8 +113,8 @@
     "remote_status": "connected"
   },
   "last_verified": {
-    "scope": "DH-02C responsive viewport change",
-    "result": "Local Chromium layout tested at 1840x800, 1366x768, 1440x900, 1920x1080, 1024x600, 768x1024, 390x844, 375x667, 320x568, 844x390, 667x375, 600x650 and 414x600: navigation and CTA visible, no page overflow; native destination dialog interactions checked at 1840x800, 390x844 and 844x390. External live site unverified."
+    "scope": "DH-06C1 motion test v3",
+    "result": "Working 3-pivot arm Canvas animation using transparent source crops, 2.65-second timeline. Play, pause, slider, hold, reset and checker tests passed at 1440x900, 1366x768, 390x844 and 375x667. Source bundle 5.3MB and 3.46s MP4 available as conversation downloads. Wrist hollow and hand swap remain visible, no live deployment."
   },
   "domain": {
     "primary": "davehub.co.uk",
@@ -240,7 +240,7 @@
     }
   },
   "giant_dave": {
-    "status": "layered_rig_build_spec_complete",
+    "status": "hierarchical_articulation_test_v3",
     "approved_on": "2026-10-22",
     "approved_asset": "ChatGPT generated original, pending binary repository upload",
     "approved_asset_sha256": "18397610f45669b8bfbb0d5c64e33ff395c7fdf8b565c1598dc03bb635a84930",
@@ -258,9 +258,20 @@
     "artboard": "1536x2048 RGBA sRGB proposal",
     "source_master": "layered PSD or ORA (not yet created)",
     "binary_assets_committed": false,
-    "artwork_layers_status": "specified_not_drawn",
+    "artwork_layers_status": "Illustrated component PNGs extracted from latest approved-looking sheets; elbow split aligned but wrist and hand underpaint unfinished.",
     "runtime": "Rive candidate vs Canvas comparator; not selected",
     "site_integrated": false,
-    "animation_approved": false
+    "animation_approved": false,
+    "local_outputs": [
+      "Giant-Dave-Articulated-Motion-Test-v3.html",
+      "Giant-Dave-Articulated-Welcome-v3.mp4",
+      "Giant-Dave-Articulated-Rig-Test-v3.zip"
+    ],
+    "asset_source": "approved exact prior-generated transparent Dave, not the rejected off-model asset-sheet generation",
+    "art_qa": "FAIL: resting arm ghost in underpaint, shoulder seam and wrist material missing",
+    "review_doc": "docs/GIANT_DAVE_C1_ART_WORKBENCH.md",
+    "motion_type": "3 real Canvas pivots: shoulder, elbow, wrist. No full-body morphing.",
+    "browser_test": "1440x900 1366x768 390x844 375x667 passed UI controls, playback, pause and no JS errors/horizontal overflow.",
+    "visual_review": "pending"
   }
 }

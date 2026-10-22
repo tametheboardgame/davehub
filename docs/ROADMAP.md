@@ -33,7 +33,7 @@
 | DH-05B | Deployment and launch | Cloudflare Pages used for previews; public domain/DNS, TLS and monitoring still pending | Preview reported live; launch pending |
 | DH-06A | Giant Dave key poses and motion personality | Four coherent poses approved by owner on 22 October 2026; visual baseline locked | **Complete** |
 | DH-06B | Giant Dave motion investigations | Local sprite/optical-flow and joint-versus-magic studies documented in draft PR #9; natural articulation selected over everyday morphing | Studies performed; prototype evidence remains draft |
-| DH-06C1 | Giant Dave production layered art + rig | [Exact asset inventory and rig contract](GIANT_DAVE_LAYERED_RIG_SPEC.md) committed: source masters, 29 P0 image layers/variants, pivots, anatomy, animation states and test gates | **Spec complete; painted assets next** |
+| DH-06C1 | Giant Dave production layered art + rig | First layered workbench, plus working Canvas shoulder/elbow/wrist animation from matched illustrated source; elbow join improved; hand change and wrist underpaint still unfinished | **Motion Test v3 browser-tested; production art pending** |
 | DH-06C | Giant Dave homepage integration | Independent character layer; responsive crop, static fallback, reduced-motion, no lost navigation | Planned |
 | DH-07 | Content inventory and information architecture | Typed catalogue, cross-category views, stories, timelines, media and source/rights inventory agreed | **In progress, parallel** |
 | DH-08 | DaveHub Ready publication contract | Explicit approved project onboarding, source collection, draft review, provenance, withdrawal and security gates | Planned after DH-07 |
@@ -49,6 +49,14 @@
 - **DH-07: Content and information architecture.** Four visitor destinations (Projects, Writing, Games, Experiments) are overlapping discovery categories over *shared* canonical content. Inventory projects, ideas, milestones, releases, development stories and authorised media. Design What's Happening, project history and search. Run in parallel with DH-06. See [Living content and ingestion discovery](CONTENT_PIPELINE_DISCOVERY.md).
 - **DH-08–DH-11: The publishing system.** Owner nominates public-safe work as **DaveHub Ready**; read-only integrations and AI can create sourced drafts, but public publication still requires deliberate human approval under the existing policy. Pilot a single approved game; generate short human-readable development stories from meaningful milestones rather than blogging every commit; only then expand sources. Do not introduce a CMS or database without a measured need.
 - **Visibility rule:** This roadmap authorises discovery and prototypes, **not automatic publishing**, ingestion of private conversations, third-party voices/likenesses or employment-related information.
+
+## DH-06C1a/b articulated movement test v3 (22 October 2026)
+
+[Motion Test v3](GIANT_DAVE_C1_MOTION_TEST_V3.md) uses actual hierarchical shoulder/elbow/wrist Canvas rotations and hand variant switching, not full-image morphing. The test now pairs upper arm and forearm painted sections from a single sleeve illustration to avoid the earlier large elbow seam. Full interactive self-contained HTML and 3.46-second MP4 are in conversation downloads; Chromium passed four responsive viewport checks, controls and playback. **The wrist remains visibly hollow in some poses and hand variants still swap abruptly.** These require real underpaint and controlled deformation before a production rig. Binary art is not in GitHub or Cloudflare.
+
+## DH-06C1a/b initial artwork workbench (22 October 2026)
+
+The [workbench QA report](GIANT_DAVE_C1_ART_WORKBENCH.md) records a real layered-art extraction study: 13 transparent PNG source/reference layers, an editable ORA, shoulder/elbow rotation manifest, dark/light seam inspection and an interactive browser stress test. Four responsive viewport checks passed. **This is not production rig completion.** It exposes a duplicate resting arm in the candidate underpaint and garment joins at rotations; the hidden torso and shoulder must be painted, not algorithmically guessed. No binaries or broken homepage references have been merged or deployed.
 
 ## DH-06C1 implementation sequence (locked 22 October 2026)
 
