@@ -1,0 +1,223 @@
+{
+  "schema": "davehub.character-joints.candidate.v0",
+  "package": "DH-06C2A",
+  "source_sha256": "877a337c33e24e117a4b8ed3c5cc55ff9aa2c3e1f1da44a21c09d3f6694a6523",
+  "source_dimensions": [
+    1024,
+    1536
+  ],
+  "authoring_dimensions": [
+    1536,
+    2048
+  ],
+  "uniform_scale": 1.2552083333333333,
+  "offset_xy": [
+    125,
+    60
+  ],
+  "coord_system": "top-left pixels, positive y downward",
+  "joint_positions_source_px": {
+    "root": [
+      516,
+      760
+    ],
+    "pelvis": [
+      516,
+      770
+    ],
+    "neck": [
+      558,
+      246
+    ],
+    "head": [
+      530,
+      135
+    ],
+    "shoulder_viewer_left": [
+      357,
+      294
+    ],
+    "elbow_viewer_left": [
+      319,
+      548
+    ],
+    "wrist_viewer_left": [
+      469,
+      661
+    ],
+    "shoulder_viewer_right": [
+      635,
+      295
+    ],
+    "elbow_viewer_right": [
+      711,
+      514
+    ],
+    "wrist_viewer_right": [
+      676,
+      662
+    ],
+    "hip_viewer_left": [
+      444,
+      770
+    ],
+    "hip_viewer_right": [
+      625,
+      770
+    ],
+    "knee_viewer_left": [
+      427,
+      1070
+    ],
+    "knee_viewer_right": [
+      674,
+      1037
+    ],
+    "ankle_viewer_left": [
+      350,
+      1405
+    ],
+    "ankle_viewer_right": [
+      716,
+      1355
+    ]
+  },
+  "joint_positions_artboard_px": {
+    "root": [
+      773,
+      1014
+    ],
+    "pelvis": [
+      773,
+      1027
+    ],
+    "neck": [
+      825,
+      369
+    ],
+    "head": [
+      790,
+      229
+    ],
+    "shoulder_viewer_left": [
+      573,
+      429
+    ],
+    "elbow_viewer_left": [
+      525,
+      748
+    ],
+    "wrist_viewer_left": [
+      714,
+      890
+    ],
+    "shoulder_viewer_right": [
+      922,
+      430
+    ],
+    "elbow_viewer_right": [
+      1017,
+      705
+    ],
+    "wrist_viewer_right": [
+      974,
+      891
+    ],
+    "hip_viewer_left": [
+      682,
+      1027
+    ],
+    "hip_viewer_right": [
+      910,
+      1027
+    ],
+    "knee_viewer_left": [
+      661,
+      1403
+    ],
+    "knee_viewer_right": [
+      971,
+      1362
+    ],
+    "ankle_viewer_left": [
+      564,
+      1824
+    ],
+    "ankle_viewer_right": [
+      1024,
+      1761
+    ]
+  },
+  "joint_positions_normalised": {
+    "root": [
+      0.50326,
+      0.49512
+    ],
+    "pelvis": [
+      0.50326,
+      0.50146
+    ],
+    "neck": [
+      0.53711,
+      0.18018
+    ],
+    "head": [
+      0.51432,
+      0.11182
+    ],
+    "shoulder_viewer_left": [
+      0.37305,
+      0.20947
+    ],
+    "elbow_viewer_left": [
+      0.3418,
+      0.36523
+    ],
+    "wrist_viewer_left": [
+      0.46484,
+      0.43457
+    ],
+    "shoulder_viewer_right": [
+      0.60026,
+      0.20996
+    ],
+    "elbow_viewer_right": [
+      0.66211,
+      0.34424
+    ],
+    "wrist_viewer_right": [
+      0.63411,
+      0.43506
+    ],
+    "hip_viewer_left": [
+      0.44401,
+      0.50146
+    ],
+    "hip_viewer_right": [
+      0.59245,
+      0.50146
+    ],
+    "knee_viewer_left": [
+      0.43034,
+      0.68506
+    ],
+    "knee_viewer_right": [
+      0.63216,
+      0.66504
+    ],
+    "ankle_viewer_left": [
+      0.36719,
+      0.89063
+    ],
+    "ankle_viewer_right": [
+      0.66667,
+      0.85986
+    ]
+  },
+  "approval": "UNAPPROVED ESTIMATES",
+  "notes": [
+    "Body is one intact transparent generated image, not assembled artwork",
+    "Both hands remain in pockets, not intended final neutral",
+    "Do not use these pivots for production until remeasured on approved visible-hand canonical master"
+  ]
+}
