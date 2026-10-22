@@ -5,8 +5,8 @@
 - GitHub: https://github.com/tametheboardgame/davehub
 - Visibility: **Public**, as selected when the remote repository was created
 - Default branch: `main`
-- State: planning foundation only; there is not yet a buildable website
-- Production and preview deployments: not configured
+- State: DH-01A first-look static homepage implemented; not yet hosted
+- Production and preview deployments: Cloudflare Pages integration pending
 
 Clone with:
 
@@ -25,7 +25,13 @@ Read `README.md`, `AGENTS.md`, `docs/ROADMAP.md` and `PROJECT_STATE.json` before
 
 ## Deployment
 
-No framework, hosting service, domain or GitHub Actions workflow has been committed to yet. Select the minimum tooling needed to produce working DH-02 concept prototypes. Do not invent preview URLs.
+Cloudflare Pages selected for Git-based visual previews, with a lightweight static build. Cloudflare account authorisation and the first deployment remain pending. See [Cloudflare Pages setup](docs/CLOUDFLARE_PAGES.md).
+
+- Build command: `sh scripts/build-pages.sh`
+- Build output directory: `dist`
+- Production branch: `main`
+- Every feature branch or PR can be deployed as a separate Cloudflare preview after setup.
+- The build only copies the homepage plus approved image assets. The site remains intentionally unindexed until public launch. Do not invent preview URLs.
 
 ## Security and publication
 
