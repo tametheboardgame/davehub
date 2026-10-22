@@ -1,6 +1,6 @@
 # DaveHub development roadmap
 
-**Updated:** 21 October 2026. **Current stage:** DH-01A homepage first-look ready for Cloudflare Pages first live preview, without illustrated Dave. The primary domain is **davehub.co.uk** (purchased by owner), but hosting account connection/DNS are unconfigured. Cloudflare Pages is the chosen visual-preview host; no site has been deployed.
+**Updated:** 22 October 2026. **Current stage:** DH-02C homepage full-screen responsive layout fix, without illustrated Dave. The primary domain is **davehub.co.uk** (purchased by owner), but hosting account connection/DNS are unconfigured. Cloudflare Pages is being used for visual review, according to the owner's live screenshot; exact Pages hostname has not been supplied for independent verification.
 
 ## Design baseline
 
@@ -25,12 +25,19 @@
 | DH-01D | Basic HTML menu-mode design | Literal 1990s HTML appearance and functional accessible navigation | Planned |
 | DH-02A | Click-to-explore homepage prototype | Initial Explore and category interactions work; illustrated Dave and real approved project destinations still pending | Partial; hosting setup next |
 | DH-02B | Retro HTML-mode prototype | Basic HTML navigation; switch both ways; shared content | Not started |
-| DH-02C | Responsive/navigation test | Desktop, mobile, keyboard, reduced-motion and direct links pass | Not started |
+| DH-02C | Responsive/navigation test | Full-viewport scene and bottom navigation visible across desktop, laptop, mobile and compact landscape; interaction regression tested | Implemented in review |
 | DH-03A | Production shell | Host-flexible build and performant shared content model | Not started |
 | DH-03B | Content and editorial system | Project catalogue, devlogs, search, deep links, archive | Not started |
 | DH-04A | First public-safe projects | At least three approved projects showcased or linked | Not started |
 | DH-05A | Human-reviewed content drafts | Safe workflow for proposed updates | Not started |
 | DH-05B | Deployment and launch | Cloudflare Pages chosen for previews; public domain/DNS, TLS and monitoring still pending | Not started |
+
+## Responsive scene fit (DH-02C)
+
+- Treat the homepage as a single viewport-sized, non-scrolling scene, not a conventional document with a minimum page height.
+- Anchor the logo, Explore CTA and navigation to the available viewport height. Keep native destination dialogs independently scrollable.
+- Use compact rules for smaller screens, portrait mobiles and landscape phones. For extremely short portrait viewports or heavy zoom, prioritise accessible scrolling over clipping controls.
+- The owner's live Cloudflare screenshot showed bottom navigation below the fold. The fullscreen CSS correction was browser-tested locally at 13 viewport sizes from 320×568 through 1920×1080; the live hosted update must still be visually reviewed.
 
 ## First-look preview and hosting
 
