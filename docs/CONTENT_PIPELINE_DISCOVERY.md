@@ -23,7 +23,7 @@ Explore these underlying record types before locking a schema:
 
 Additional surfaces to design: **What's Happening**, project history/timeline, search and direct links, the existing optional 1990s plain HTML mode, and a way to browse work at different maturity levels.
 
-## DH-07 — Inventory and information architecture (parallel with DH-06)
+## DH-07 — Inventory and information architecture (parallel with DH-06)\n\n**24 October 2026 discovery addition:** First batch of public-facing external candidate links exposed the need for a separate *publisher/organisation* record, *music identity* distinct from a specific *album*, and an archive view named **Trip Down Memory Lane**. Nine items are staged privately pending explicit publication approval. [External inventory architecture](DH07A_EXTERNAL_INVENTORY_DISCOVERY.md) defines the proposed model; do not put unapproved candidate metadata into the public GitHub repo.
 
 1. List *candidate* sources and what they can contribute: approved GitHub repository events, issues and PRs, project state, release metadata, art/media, deliberately selected design and development notes, and manually nominated ideas.
 2. Distinguish private/unsafe internal material from public-ready work. No connector access implies permission.

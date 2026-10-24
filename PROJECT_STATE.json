@@ -1,8 +1,8 @@
 {
   "project": "DaveHub",
-  "updated": "2026-10-22",
-  "status": "dh_06c1_layered_rig_spec_committed_assets_pending",
-  "current_work_package": "DH-06C1",
+  "updated": "2026-10-24",
+  "status": "dh_07a_external_creative_inventory_discovery",
+  "current_work_package": "DH-07A",
   "completed": [
     "DH-00A",
     "DH-00B",
@@ -13,15 +13,15 @@
     "DH-06A"
   ],
   "in_progress": [
-    "DH-06C1 produce coherent editable character layers from approved look",
-    "DH-07 content inventory and information architecture"
+    "DH-07A external public works and Memory Lane inventory, first nine candidates staged privately",
+    "DH-06 Giant Dave animation preparation delegated to owner"
   ],
   "next": [
-    "DH-06C1a painterly neutral torso/neck/head with shoulder underpaint and static fallback",
-    "DH-06C1b separate near shoulder, elbow bridge, forearm and hand variations",
-    "DH-06C1c facial layers; DH-06C1d real rigged welcome and return",
-    "DH-06C1e Rive vs Canvas comparison and tested export",
-    "DH-06C Cloudflare feature-branch integration after approval"
+    "Collect more historical music, instruments and other archive materials from owner",
+    "Resolve uncertain provider record types and cross-project links",
+    "Propose Music and Memory Lane catalogue discovery UX",
+    "Review public release scope item by item before adding to DaveHub site catalogue",
+    "DH-08 DaveHub Ready ingestion and editorial contract"
   ],
   "decisions": [
     {
@@ -100,7 +100,10 @@
     "DH-06B: create credible transparent painted rig asset based on the approved four-pose sheet, then evaluate actual idle and welcome motion",
     "DH-06C1: draw and inspect all mandatory body/arm/facial underpaint layers and measure actual joint pivots from approved master before rigging",
     "DH-06C1: verify binary-safe asset commit route and measure rig payload, frame rate and device behaviour",
-    "DH-06C1: owner approval of genuine articulated idle/welcome, then optionally design separate signature magical world transition"
+    "DH-06C1: owner approval of genuine articulated idle/welcome, then optionally design separate signature magical world transition",
+    "DH-07A: decide whether Music becomes a homepage category or a deeper discovery route",
+    "DH-07A: design Trip Down Memory Lane timeline for guitars, older bands, past attempts and old media",
+    "DH-07A: approve exact public metadata/media on nominated works before committing them to public repository"
   ],
   "deployment": {
     "status": "pages_live_reported_by_owner_url_not_verified",
@@ -113,8 +116,8 @@
     "remote_status": "connected"
   },
   "last_verified": {
-    "scope": "DH-02C responsive viewport change",
-    "result": "Local Chromium layout tested at 1840x800, 1366x768, 1440x900, 1920x1080, 1024x600, 768x1024, 390x844, 375x667, 320x568, 844x390, 667x375, 600x650 and 414x600: navigation and CTA visible, no page overflow; native destination dialog interactions checked at 1840x800, 390x844 and 844x390. External live site unverified."
+    "scope": "DH-07A external link discovery",
+    "result": "Nine owner-nominated public-link candidates: one publisher, three books, four music links and one historic band. Book titles/ISBNs checked against external catalogue; most Spotify/SoundCloud pages not independently readable. Detailed draft is conversation-local; no public catalogue publication."
   },
   "domain": {
     "primary": "davehub.co.uk",
@@ -261,6 +264,28 @@
     "artwork_layers_status": "specified_not_drawn",
     "runtime": "Rive candidate vs Canvas comparator; not selected",
     "site_integrated": false,
-    "animation_approved": false
+    "animation_approved": false,
+    "production_direction": "Owner to prepare AI-video-based animation in Adobe; site integration when approved file delivered; past rig plans retained as experiments"
+  },
+  "content_inventory_discovery": {
+    "status": "candidate_inventory_private_draft",
+    "first_batch_date": "2026-10-24",
+    "candidate_count": 9,
+    "candidate_details_in_public_repo": false,
+    "public_site_included_count": 0,
+    "proposed_types": [
+      "organisation",
+      "creative_work",
+      "music_identity",
+      "historical_creative_project",
+      "release",
+      "collection"
+    ],
+    "proposed_views": [
+      "Music",
+      "Trip Down Memory Lane"
+    ],
+    "design_doc": "docs/DH07A_EXTERNAL_INVENTORY_DISCOVERY.md",
+    "approval_gate": "item_level_explicit_review"
   }
 }
