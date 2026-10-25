@@ -10,6 +10,8 @@
 
 Four homepage destinations are **views**, not mutually exclusive data types: **Projects, Writing, Games and Experiments**. The same creation may appear in several places without duplicate records.
 
+**25 October 2026 extension:** deliberately unfinished writing and scripts belong in a curated archive, not an ongoing task backlog. Musicals are composite works with linked concept, story/world, script, scene, lyric, song, album/release, artwork and development-story artifacts. See [DH-07B Unfinished & Musicals](DH07B_UNFINISHED_AND_MUSICALS.md). The hard-drive archive may arrive later; do not block template design.
+
 Explore these underlying record types before locking a schema:
 
 | Record | Visitor-facing purpose | Examples |
@@ -23,7 +25,9 @@ Explore these underlying record types before locking a schema:
 
 Additional surfaces to design: **What's Happening**, project history/timeline, search and direct links, the existing optional 1990s plain HTML mode, and a way to browse work at different maturity levels.
 
-## DH-07 — Inventory and information architecture (parallel with DH-06)\n\n**24 October 2026 discovery addition:** First batch of public-facing external candidate links exposed the need for a separate *publisher/organisation* record, *music identity* distinct from a specific *album*, and an archive view named **Trip Down Memory Lane**. Nine items are staged privately pending explicit publication approval. [External inventory architecture](DH07A_EXTERNAL_INVENTORY_DISCOVERY.md) defines the proposed model; do not put unapproved candidate metadata into the public GitHub repo.
+## DH-07 — Inventory and information architecture (parallel with DH-06)
+
+**24 October 2026 discovery addition:** First batch of public-facing external candidate links exposed the need for a separate *publisher/organisation* record, *music identity* distinct from a specific *album*, and an archive view named **Trip Down Memory Lane**. Nine items are staged privately pending explicit publication approval. [External inventory architecture](DH07A_EXTERNAL_INVENTORY_DISCOVERY.md) defines the proposed model; do not put unapproved candidate metadata into the public GitHub repo.
 
 1. List *candidate* sources and what they can contribute: approved GitHub repository events, issues and PRs, project state, release metadata, art/media, deliberately selected design and development notes, and manually nominated ideas.
 2. Distinguish private/unsafe internal material from public-ready work. No connector access implies permission.
@@ -32,7 +36,7 @@ Additional surfaces to design: **What's Happening**, project history/timeline, s
 5. Design enough examples from **one existing creative game** to verify the visitor experience without publishing unapproved information. Unicorn Valley or Stephen Martin may be candidates; actual project/character/voice/media permissions remain separate.
 6. Establish what *not* to show: mundane commits, repetitive changelogs, unreviewed conversations, AI-generated assertions without sources, internal company information.
 
-**Exit:** Approved inventory and taxonomy, page/content templates, example information architecture and rights matrix. Do not begin connector write-back before this.
+**Exit:** Approved inventory and taxonomy, page/content templates (including an abandoned-work archive and composite musical), example information architecture and rights matrix. Do not begin connector write-back before this.
 
 ## DH-08 — DaveHub Ready and publishing contract
 
