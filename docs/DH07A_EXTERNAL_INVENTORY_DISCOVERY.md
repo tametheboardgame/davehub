@@ -55,6 +55,10 @@ Suggested shared fields:
 - **Musical** can occupy Writing, Music and Projects; it may merit a production/lyrics/story section after approval.
 - **Memory Lane** should accept partial recollections (unknown dates, missing photos) and later additions from old drives, not require a perfect archive before entry.
 
+## Follow-up: intentional unfinished projects and musicals
+
+The creator wants a collection of unfinished scripts/writing that will **not be completed**; it must not be framed as 'currently in progress'. Musicals require shared structured pages joining music, concept development, script and any available lyrics/demo/artwork, not just streaming links. These are handled in [DH-07B](DH07B_UNFINISHED_AND_MUSICALS.md). Historic material arriving later can be added without changing the schema or reopening unfinished work.
+
 ## Next steps
 
 1. Continue receiving loosely ordered links, images, names and archival files. Store them in a draft inventory pending review.
