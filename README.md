@@ -33,7 +33,7 @@ The approved logo and background are repository assets; illustrated Dave remains
 ## Current design and automation workstreams
 
 - [DH-06: Giant Dave motion concept](docs/GIANT_DAVE_ANIMATION.md), with the [exact production layered rig blueprint](docs/GIANT_DAVE_LAYERED_RIG_SPEC.md) and [articulation-first decision](docs/DECISIONS/ADR-0010.md). The layered artwork and production animation still need to be made.
-- [DH-07–DH-11: Living content and publishing system](docs/CONTENT_PIPELINE_DISCOVERY.md), designing canonical project pages and AI-assisted, human-approved development stories from deliberately nominated public-safe sources.
+- [DH-07–DH-11: Living content and publishing system](docs/CONTENT_PIPELINE_DISCOVERY.md), now including [DH-07B unfinished creative work and musical production pages](docs/DH07B_UNFINISHED_AND_MUSICALS.md). The archive can be populated incrementally and will never label deliberately abandoned work as an active to-do item.
 
 ## Planning documents
 

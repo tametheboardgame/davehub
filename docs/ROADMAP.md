@@ -1,6 +1,6 @@
 # DaveHub development roadmap
 
-**Updated:** 24 October 2026. **Current stage:** DH-07A external creative-content inventory and taxonomy discovery. Owner is preparing Giant Dave's video animation separately; website integration is pending delivery. The full-screen homepage first-look is on Cloudflare Pages according to owner visual review; no exact preview hostname has been independently verified. **davehub.co.uk** remains a purchased domain, not a confirmed production deployment.
+**Updated:** 25 October 2026. **Current stage:** DH-07B content-structure definition: intentional unfinished-project archive and musical production pages, alongside DH-07A incremental inventory discovery. Owner is preparing Giant Dave's video animation separately; website integration is pending delivery. The full-screen homepage first-look is on Cloudflare Pages according to owner visual review; no exact preview hostname has been independently verified. **davehub.co.uk** remains a purchased domain, not a confirmed production deployment.
 
 ## Design baseline
 
@@ -35,13 +35,24 @@
 | DH-06B | Giant Dave motion investigations | Local sprite/optical-flow and joint-versus-magic studies documented in draft PR #9; natural articulation selected over everyday morphing | Studies performed; prototype evidence remains draft |
 | DH-06C1 | Giant Dave production layered art + rig | [Exact asset inventory and rig contract](GIANT_DAVE_LAYERED_RIG_SPEC.md) committed: source masters, 29 P0 image layers/variants, pivots, anatomy, animation states and test gates | **Spec complete; painted assets next** |
 | DH-06C | Giant Dave homepage integration | Independent character layer; responsive crop, static fallback, reduced-motion, no lost navigation | Planned |
-| DH-07 | Content inventory and information architecture | Typed catalogue, cross-category views, stories, timelines, media and source/rights inventory agreed | **In progress** |\n| DH-07A | External published works and creative-history inventory | First nine nominated candidates staged privately; safe generic architecture notes committed; more historic work to come | **Discovery started; candidate publication approval pending** |
+| DH-07 | Content inventory and information architecture | Typed catalogue, cross-category views, stories, timelines, media and source/rights inventory agreed | **In progress** |
+| DH-07A | External published works and creative-history inventory | First nine nominated candidates staged privately; safe generic architecture notes committed; more historic work to come | **Discovery started; candidate publication approval pending** |
+| DH-07B | Unfinished Shelf and musical pages | Composite musical record/child artifacts and deliberately shelved writing/project archive; templates specified | **Architecture drafted; visual prototype next** |
+| DH-07C | Responsive page and navigation prototypes | Fictional Unfinished Shelf gallery, unfinished detail and multi-section musical page driven by one shared content model | **Next** |
 | DH-08 | DaveHub Ready publication contract | Explicit approved project onboarding, source collection, draft review, provenance, withdrawal and security gates | Planned after DH-07 |
 | DH-09 | Single-project ingestion pilot | One approved creative game becomes a project page + reviewed update through preview/merge | Planned |
 | DH-10 | Automated development stories | Significant approved project events become concise draft human-readable stories, not routine posts | Planned |
 | DH-11 | Extend feeds and content types | Approved books/music/ideas/experiments and other capture channels, no duplicate catalogues | Planned |
 
-## DH-07A creative catalogue discovery (24 October 2026)\n\nInitial outside-GitHub creative links suggest additional kinds of records: publishers and collaborative organisations, books, music artist identities, specific album releases, musical productions and historical bands. The same creation may be browsed through **Music**, **Writing**, **Projects** and **Trip Down Memory Lane**, without duplication. **Music and Trip Down Memory Lane are candidate views, not yet approved homepage buttons.** The first nine detailed entries are held as a conversation-local draft and are *not* committed to the public repository. Read the [inventory discovery specification](DH07A_EXTERNAL_INVENTORY_DISCOVERY.md) and respect the [publication policy](PUBLICATION_POLICY.md).\n\n## New strategic workstreams (agreed 22 October 2026)
+## DH-07B: Unfinished Shelf and musical production architecture (25 October 2026)
+
+The historical hard-drive inventory is **not a prerequisite**. The [DH-07B specification](DH07B_UNFINISHED_AND_MUSICALS.md) defines two visitor experiences: a deliberate home for works the owner **has no intention of finishing** (particularly scripts/writing), and first-class **musical worlds** connecting songs/releases, concepts, plots, characters, script/lyrics and creative-development artifacts. Categories, work lifecycle, historical period and publication status are independent: no unfinished project becomes an implied to-do item, and an album is not mistaken for the whole musical. Implement two responsive templates with fictional data and reviewed rights before introducing real files. Naming and homepage placement remain to be confirmed.
+
+## DH-07A creative catalogue discovery (24 October 2026)
+
+Initial outside-GitHub creative links suggest additional kinds of records: publishers and collaborative organisations, books, music artist identities, specific album releases, musical productions and historical bands. The same creation may be browsed through **Music**, **Writing**, **Projects** and **Trip Down Memory Lane**, without duplication. **Music and Trip Down Memory Lane are candidate views, not yet approved homepage buttons.** The first nine detailed entries are held as a conversation-local draft and are *not* committed to the public repository. Read the [inventory discovery specification](DH07A_EXTERNAL_INVENTORY_DISCOVERY.md) and respect the [publication policy](PUBLICATION_POLICY.md).
+
+## New strategic workstreams (agreed 22 October 2026)
 
 **Principle:** The owner creates games, books, music, software and ideas; DaveHub should organise and present the approved work without imposing regular website upkeep or hand-written blog posts.
 
