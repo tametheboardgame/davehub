@@ -47,6 +47,14 @@ A composite position study against the owner's original no-Dave screenshot was i
 
 Owner likes the lower-left composition but wants Dave **a little bigger and further right**. The static still has been enlarged by approximately 7% (large desktop `84svh` → `90svh`, ordinary desktop `82svh` → `88svh`) and shifted horizontally to `left: 0` on desktop. Bottom offsets increase proportionally so his head remains beneath Writing rather than rising back over the hotspot. Tablet and mobile variants have correspondingly smaller adjustments; all other homepage and mystical Explore portal CSS is untouched. Owner browser visual confirmation is still the release gate.
 
+## CTA-relative positioning (27 October 2026)
+
+The owner clarified that Dave should be aligned **a small fixed distance to the left of the Explore DaveHub button**, rather than positioned a certain number of pixels from the left edge. The previous x-offset method varied the perceived gap across screen sizes.
+
+The stage now computes its horizontal origin from the viewport centre (the CTA centre), the desktop CTA half-width (**212.5 px**), a **24 px visual gap**, and the static asset's approximately **0.58 × rendered height** visible rightward extent. This accounts for the illustration's transparent padding; the visible body edge (rather than the file edge) is intended to approach the CTA. On medium desktop widths, the figure scales down as necessary to avoid disappearing past the left screen edge; phones/tablets retain a separately composed portrait crop because the centred button leaves insufficient side-by-side space.
+
+The effect is CSS-only and the future video can reuse the same stage. The calculation was evaluated in Chromium with a simulated viewport, but full asset/breakpoint QA still needs the owner's live-page review.
+
 ## Acceptance to complete
 
 Owner verifies:
