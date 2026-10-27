@@ -8,7 +8,7 @@ It is emphatically **not** a CV, developer portfolio, professional marketing sit
 
 ## Status
 
-**DH-07 illustrated homepage and discovery navigation locked, merged and deployed to Cloudflare Pages on 27 October 2026. DH-08 publishing controls are in development.** The owner has purchased **davehub.co.uk** as the primary domain; DNS and hosting are not configured. The owner has selected Concept 1 as the primary visual reference; final foreground art and character motion remain open. The approved static homepage, mystical Explore directory and fictional content-world test pages are deployed. The real published-work catalogue remains empty pending explicit item approvals.
+**DH-07 illustrated homepage and discovery navigation locked, merged and deployed to Cloudflare Pages on 27 October 2026. DH-08 publishing controls are in development.** The owner has purchased **davehub.co.uk** as the primary domain; DNS and hosting are not configured. The owner has selected Concept 1 as the primary visual reference; final foreground art and character motion remain open. The approved static homepage, mystical Explore directory and fictional content-world test pages are deployed. The production catalogue was empty through DH-08B. DH-08C1 now proposes three owner-nominated, link-only real-world entries on a review branch, pending final browser/editorial approval.
 
 ## North star
 
@@ -30,7 +30,13 @@ The static homepage is at repository root (`index.html`, `styles.css`, `main.js`
 
 The approved logo and background are repository assets; illustrated Dave remains intentionally absent pending a separate design review.
 
-## DH-08B: Shared creative-world pages (review branch)
+## DH-08C1: Local Content Workshop and first approved-source showcase (review branch)
+
+- [Local-only workshop guide](docs/DH08C1_LOCAL_CONTENT_WORKSHOP.md): `node tools/workshop/server.cjs` → `http://127.0.0.1:8765/`. Drafts persist outside the public repo under your user profile, no cloud account or AI API needed.
+- Import a private candidate file downloaded separately from the chat; its books, bands, albums and other nominees **must not be committed** without individual review.
+- First proposed linked entries: Unicorn Valley and Stephen Martin's existing main playable builds; Tame The Board Game collaborative reviews blog. No media copied. The GitHub review branch is public and is still a review/proposal.
+
+## DH-08B: Shared creative-world pages (merged)
 
 - [Shared content-page architecture](docs/DH08B_SHARED_CONTENT_PAGES.md): single renderer generating seven catalogue views plus unique deep-linked creation pages.
 - Real approved entries are rendered from the validated `content/public/catalogue.json`; currently **empty**. The fictional musical/script/song example renders separately at `/previews/dh-08b/worlds/` on the branch.
