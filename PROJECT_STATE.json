@@ -1,8 +1,8 @@
 {
   "project": "DaveHub",
-  "updated": "2026-10-25",
-  "status": "dh_07b_unfinished_and_musical_templates_specified",
-  "current_work_package": "DH-07B",
+  "updated": "2026-10-27",
+  "status": "dh_07c_interactive_design_previews_pending_owner_review",
+  "current_work_package": "DH-07C",
   "completed": [
     "DH-00A",
     "DH-00B",
@@ -13,16 +13,16 @@
     "DH-06A"
   ],
   "in_progress": [
-    "DH-07B unfinished-project archive and musical multi-artifact information architecture",
-    "DH-07A ongoing external/historic catalogue discovery (not a blocker)",
-    "DH-06 moving Dave video production delegated to owner"
+    "DH-07C owner review of Unfinished Shelf and musical content-world prototypes",
+    "DH-07A historical and external inventory incrementally collected",
+    "DH-06 Giant Dave video authored separately by owner"
   ],
   "next": [
-    "DH-07C responsive unfinished works gallery and detail using fictional placeholder content",
-    "DH-07C musical detail experience with story, music, script/lyrics and making-of subviews",
-    "Decide music/unfinished/memory lane placements in navigation without overcrowding homepage",
-    "Continue receiving owner's historic archive whenever ready",
-    "DH-08 explicit publication and per-artifact approvals before actual content ingestion"
+    "Owner reviews responsive fictional Unfinished Shelf and musical page design",
+    "Agree names and top-level navigation placement for Music, Unfinished and Trip Down Memory Lane",
+    "Integrate approved layouts into shared public-site catalogue and navigation after approval",
+    "DH-08 DaveHub Ready publication approval architecture",
+    "Future ingestion of explicitly approved owner works and archive materials"
   ],
   "decisions": [
     {
@@ -123,8 +123,8 @@
     "remote_status": "connected"
   },
   "last_verified": {
-    "scope": "DH-07B requirements modelling",
-    "result": "Specified deliberately unfinished works as archive entries with no coming-soon or progress cues, and musicals as canonical works relating concept, script, lyrics, songs, recordings, album releases and development stories. No real unpublished content or website changes; templates to be prototyped with fiction."
+    "scope": "DH-07C prototype",
+    "result": "Self-contained standalone HTML interactive content worlds, tested with Chromium in-memory load at 4 viewports. Filter/search/details and song-to-scene tab interactions passed, no console JS errors or horizontal overflow. GitHub branch contains preview and copy-to-dist build route; Cloudflare preview hostname not yet verified."
   },
   "domain": {
     "primary": "davehub.co.uk",
@@ -301,5 +301,39 @@
     "hard_drive_required_to_proceed": false,
     "dh_07b_design_doc": "docs/DH07B_UNFINISHED_AND_MUSICALS.md",
     "homepage_new_button_approved": false
+  },
+  "content_page_prototypes": {
+    "status": "built_branch_review",
+    "branch": "feature/dh-07c-content-world-prototypes",
+    "entry": "prototypes/dh-07c/index.html",
+    "pages_route": "/previews/dh-07c/?view=shelf and ?view=musical",
+    "fictional_entries": {
+      "unfinished": 6,
+      "musical": 1,
+      "songs": 4,
+      "scenes": 4
+    },
+    "review_doc": "docs/DH07C_CONTENT_PROTOTYPES.md",
+    "browser_sizes": [
+      [
+        1440,
+        900
+      ],
+      [
+        1366,
+        768
+      ],
+      [
+        390,
+        844
+      ],
+      [
+        375,
+        667
+      ]
+    ],
+    "tests": "pass: search, filters, details, tabs, scene-song cross-links, no JS exceptions or horizontal overflow",
+    "publication": "No owner works added; all content fictional",
+    "merge_approval": "pending"
   }
 }
