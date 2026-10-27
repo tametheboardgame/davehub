@@ -23,14 +23,14 @@ test('old modal hashes are redirected to the appropriate deep links',()=>{
   assert.ok(js.includes(name),name);
  assert.match(js,/location\.replace\('\/worlds\/'\)/);
 });
-test('approved empty worlds offer a clearly-labelled route to the fictional preview',()=>{
+test('public worlds offer a clearly-labelled route to the fictional preview',()=>{
  const pages=filesFor(publicManifest,'',false);
  const index=pages.get('worlds/index.html');
  const writing=pages.get('worlds/writing/index.html');
  assert.match(index,/href="\/previews\/dh-08b\/worlds\/"/);
  assert.match(index,/fictional example/);
  assert.match(writing,/href="\/previews\/dh-08b\/worlds\/writing\/"/);
- assert.match(writing,/Nothing has landed here yet/);
+ assert.match(writing,/Tame The Board Game/);
  assert.doesNotMatch(index,/The Last Lightkeeper/);
 });
 test('fictional content and back links remain within preview paths',()=>{
