@@ -119,6 +119,10 @@ This is illustrative and requires referenced targets to exist in the **same appr
 
 Only nominate meaningful events: an approved release, major art/interface decision, completed milestone, publicly reviewed project launch or significant behind-the-scenes change. Do **not** create activity items for every commit, regular dependency bump, automation run, failed CI attempt or repetitive daily change. The story pipeline belongs to DH-10 and still requires approval for every published update.
 
+## DH-08B rendering update (27 October 2026)
+
+[DH-08B](DH08B_SHARED_CONTENT_PAGES.md) implements catalogue-driven world and per-creation static pages with one view system for Music, Writing, Games, Experiments, Projects, Unfinished Shelf and Memory Lane. The same generator produces public pages from the empty approved-only manifest and fictional design preview pages from a separate test fixture. It adds explicit artifact and release kinds (script scenes, concepts, notes, songs, albums) without implying that links grant republication rights. Real publication approvals remain wholly separate.
+
 ## Next phases
 
 - **DH-08B:** On branch only, render the approved shared catalogue into actual category and project pages, with safe deep links and a unified musical view. The browser proof here is fictional; it does not constitute a first real content release.
