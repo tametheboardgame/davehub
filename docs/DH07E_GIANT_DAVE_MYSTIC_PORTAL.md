@@ -43,6 +43,10 @@ The owner approved the **mystical Explore menu** but rejected Dave's initial ali
 
 A composite position study against the owner's original no-Dave screenshot was inspected before applying this change. It is a **visual approximation, not a deployed browser render**. The actual new Cloudflare preview still requires desktop/mobile visual confirmation. The Explore modal styling and destination data have not changed.
 
+## Second placement refinement (27 October 2026)
+
+Owner likes the lower-left composition but wants Dave **a little bigger and further right**. The static still has been enlarged by approximately 7% (large desktop `84svh` → `90svh`, ordinary desktop `82svh` → `88svh`) and shifted horizontally to `left: 0` on desktop. Bottom offsets increase proportionally so his head remains beneath Writing rather than rising back over the hotspot. Tablet and mobile variants have correspondingly smaller adjustments; all other homepage and mystical Explore portal CSS is untouched. Owner browser visual confirmation is still the release gate.
+
 ## Acceptance to complete
 
 Owner verifies:
