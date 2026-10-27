@@ -1,8 +1,8 @@
 {
   "project": "DaveHub",
   "updated": "2026-10-27",
-  "status": "dh_07d_navigation_preview_pending_approval",
-  "current_work_package": "DH-07D",
+  "status": "dh_07e_static_dave_mystic_explore_preview_candidate",
+  "current_work_package": "DH-07E",
   "completed": [
     "DH-00A",
     "DH-00B",
@@ -13,16 +13,17 @@
     "DH-06A"
   ],
   "in_progress": [
-    "DH-07D visual review of simplified floating-islands + Explore navigation",
-    "DH-07C fictional content-page prototypes (layout and typography liked by owner)",
-    "DH-07A archive inventory continues incrementally",
-    "DH-06 video animation handled by owner"
+    "DH-07E static Dave and mystical Explore review in Cloudflare preview",
+    "DH-07D simplified navigation is in feature branch, awaiting visual merge approval",
+    "DH-07C fictional content worlds owner-liked, approval pending consolidated review",
+    "DH-06 owner creating animation separately"
   ],
   "next": [
-    "Review two-tier Explore directory and onward routes on desktop and mobile",
-    "Decide whether Music and Memory Lane remain cross-world views in Explore",
-    "Merge reviewed DH-07C and DH-07D branches, then begin approved content model integration",
-    "DH-08 DaveHub Ready approval and ingestion workflows"
+    "Verify Cloudflare preview deployment and correct route",
+    "Owner review static Giant Dave placement, logo/CTA and island occlusion on desktop/mobile",
+    "Owner review mystical Explore category cards and modal readability",
+    "After approval reconcile stacked DH-07C/DH-07D/DH-07E into main",
+    "DH-08 DaveHub Ready approved-content ingestion"
   ],
   "decisions": [
     {
@@ -123,8 +124,8 @@
     "remote_status": "connected"
   },
   "last_verified": {
-    "scope": "DH-07D remove redundant homepage navigation",
-    "result": "Branch HTML now contains four floating island links, a single Explore CTA and no bottom category nav. CSS obsolete menu selectors removed; hero positioning reworked responsively. JavaScript compiles and style braces balance; browser verification still pending."
+    "scope": "DH-07E static integration checks",
+    "result": "WebP binary Git blob SHA verified; index has static Dave; Cloudflare build checks and copies asset, modern CSS has balanced braces; main.js and catalogue.js compile, original 4 islands and Explore remain. Browser visual QA and Cloudflare deployment check pending."
   },
   "domain": {
     "primary": "davehub.co.uk",
@@ -367,5 +368,26 @@
     },
     "main_cta_count": 1,
     "owner_feedback": "Remove the third/bottom navigation surface; retain floating islands and Explore directory"
+  },
+  "static_dave_preview": {
+    "path": "assets/characters/dave/dave-static-v1.webp",
+    "sha256": "82a82b44de83f19782c05e79a907394f7693455d6b80ee9564ac41933f3b2962",
+    "git_blob": "7fe69ab6441f4a53285f4a64ce65ef8965557911",
+    "dimensions": [
+      989,
+      1448
+    ],
+    "bytes": 177526,
+    "stage": "#dave-stage",
+    "role": "interim static illustration and future video fallback",
+    "approved_as_final_asset": false
+  },
+  "explore_design": {
+    "status": "branch_preview",
+    "reuses_approved_background": true,
+    "visual": "starfield, floating island scene, luminous amber-blue portal cards",
+    "categories_unchanged": true,
+    "homepage_bottom_menu_removed": true,
+    "docs": "docs/DH07E_GIANT_DAVE_MYSTIC_PORTAL.md"
   }
 }
