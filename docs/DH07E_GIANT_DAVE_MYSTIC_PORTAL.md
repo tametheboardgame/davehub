@@ -37,6 +37,12 @@ Build script now copies `assets/characters/dave/dave-static-v1.webp` to the Page
 
 **Publication safety:** All creative catalogue examples remain fictional. No unfinished private writing, real historic archive, third-party audio or employment material is exposed.
 
+## Owner screenshot review and placement correction (27 October 2026)
+
+The owner approved the **mystical Explore menu** but rejected Dave's initial alignment: the temporary still was clipped against the left edge and interfered with the Writing hotspot. This targeted correction reduces the image's height (desktop **82–84svh** instead of **95–102svh**), brings it horizontally into view (about **-2.6vw** instead of **-10 to -12vw**), and lowers the figure so his head is beneath the Writing label. Mobile uses a smaller **60–61svh** version and modest negative offset; tablet and landscape overrides are adjusted independently. The near hand should remain visible.
+
+A composite position study against the owner's original no-Dave screenshot was inspected before applying this change. It is a **visual approximation, not a deployed browser render**. The actual new Cloudflare preview still requires desktop/mobile visual confirmation. The Explore modal styling and destination data have not changed.
+
 ## Acceptance to complete
 
 Owner verifies:
