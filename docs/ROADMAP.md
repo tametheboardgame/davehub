@@ -1,6 +1,6 @@
 # DaveHub development roadmap
 
-**Updated:** 27 October 2026. **Current stage:** DH-07C interactive fictional-content prototypes built and browser-tested, pending owner design review. DH-07A inventory remains incremental; Giant Dave video is with owner. Owner is preparing Giant Dave's video animation separately; website integration is pending delivery. The full-screen homepage first-look is on Cloudflare Pages according to owner visual review; no exact preview hostname has been independently verified. **davehub.co.uk** remains a purchased domain, not a confirmed production deployment.
+**Updated:** 27 October 2026. **Current stage:** DH-07D integrated discovery navigation on a new review branch, extending DH-07C's interactive page prototypes. User liked both page layouts and preferred revised sans-serif type; Giant Dave animation is a separate owner workstream. DH-07A inventory remains incremental; Giant Dave video is with owner. Owner is preparing Giant Dave's video animation separately; website integration is pending delivery. The full-screen homepage first-look is on Cloudflare Pages according to owner visual review; no exact preview hostname has been independently verified. **davehub.co.uk** remains a purchased domain, not a confirmed production deployment.
 
 ## Design baseline
 
@@ -39,10 +39,15 @@
 | DH-07A | External published works and creative-history inventory | First nine nominated candidates staged privately; safe generic architecture notes committed; more historic work to come | **Discovery started; candidate publication approval pending** |
 | DH-07B | Unfinished Shelf and musical pages | Composite musical record/child artifacts and deliberately shelved writing/project archive; templates specified | **Architecture drafted; visual prototype next** |
 | DH-07C | Responsive page and navigation prototypes | Working fictional Unfinished Shelf (search/filter/detail) and composite musical (story/song/script links); desktop/mobile browser tests | **Built on review branch; visual approval pending** |
+| DH-07D | Cross-world discovery navigation | Keep the original four homepage destinations; extend Explore into worlds plus Music, The Unfinished Shelf and Trip Down Memory Lane, with functional prototype routes | **Built on review branch; visual/functional approval pending** |
 | DH-08 | DaveHub Ready publication contract | Explicit approved project onboarding, source collection, draft review, provenance, withdrawal and security gates | Planned after DH-07 |
 | DH-09 | Single-project ingestion pilot | One approved creative game becomes a project page + reviewed update through preview/merge | Planned |
 | DH-10 | Automated development stories | Significant approved project events become concise draft human-readable stories, not routine posts | Planned |
 | DH-11 | Extend feeds and content types | Approved books/music/ideas/experiments and other capture channels, no duplicate catalogues | Planned |
+
+## DH-07D cross-world navigation (27 October 2026)
+
+The user approves DH-07C **page concept and layout** and prefers a modern sans-serif typographic revision. Build [the two-tier discovery directory](DH07D_DISCOVERY_NAVIGATION.md) on a branch based on DH-07C: retain all four existing floating-world links and bottom tiles; group **Music**, **The Unfinished Shelf** and **Trip Down Memory Lane** inside **Explore** rather than adding buttons to the crowded homepage. Contextual onward links open the existing fictional shelf and musical previews. Unapproved real works are not exposed. Visual review, browser validation and main-branch approval are separate gates.
 
 ## DH-07C fictional content-world prototypes (27 October 2026)
 
