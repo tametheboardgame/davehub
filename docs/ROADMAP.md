@@ -1,6 +1,6 @@
 # DaveHub development roadmap
 
-**Updated:** 27 October 2026. **Current stage:** DH-07E static Giant Dave placement and mystical Explore portal visual refinement on a review branch, following DH-07D simplified navigation. User liked both page layouts and preferred revised sans-serif type; Giant Dave animation is a separate owner workstream. DH-07A inventory remains incremental; Giant Dave video is with owner. Owner is preparing Giant Dave's video animation separately; website integration is pending delivery. The full-screen homepage first-look is on Cloudflare Pages according to owner visual review; no exact preview hostname has been independently verified. **davehub.co.uk** remains a purchased domain, not a confirmed production deployment.
+**Updated:** 27 October 2026. **Current stage:** DH-07C/D/E visual foundation is locked and merged into main (merge `f822811`), with a successful Cloudflare production check. DH-08A publishing-contract validation, zero-content public manifest and linked fictional demonstration are under development on a separate branch.
 
 ## Design baseline
 
@@ -41,10 +41,16 @@
 | DH-07C | Responsive page and navigation prototypes | Working fictional Unfinished Shelf (search/filter/detail) and composite musical (story/song/script links); desktop/mobile browser tests | **Built on review branch; visual approval pending** |
 | DH-07D | Cross-world discovery navigation | Keep the four floating-island destination links, **remove duplicate bottom menu**, expand Explore into worlds plus Music, Unfinished and Memory Lane, with functional prototype routes | **Revised on review branch; final browser/visual approval pending** |
 | DH-07E | Interim Giant Dave and mystical Explore | Place one transparent static Dave in animation slot; make Explore a luminous portal using approved background art | **Built on preview branch; visual approval pending** |
+| DH-08A | Safe public catalogue and approval validation | Plain JSON canonical work model, fail-closed approval/rights checks, tests, fictional preview; zero owner works published | **Implemented on draft branch, testing/sign-off pending** |
+| DH-08B | Render approved catalogue into actual site | Category, work and musical deep-linked templates powered by approved public catalogue only | **Next** |
 | DH-08 | DaveHub Ready publication contract | Explicit approved project onboarding, source collection, draft review, provenance, withdrawal and security gates | Planned after DH-07 |
 | DH-09 | Single-project ingestion pilot | One approved creative game becomes a project page + reviewed update through preview/merge | Planned |
 | DH-10 | Automated development stories | Significant approved project events become concise draft human-readable stories, not routine posts | Planned |
 | DH-11 | Extend feeds and content types | Approved books/music/ideas/experiments and other capture channels, no duplicate catalogues | Planned |
+
+## DH-08A owner-controlled public content (27 October 2026)
+
+[The publication contract](DH08_PUBLICATION_CONTRACT.md) specifies `DaveHub Ready` as a nomination for read-only drafting, **not** blanket public permission. Implemented an empty `content/public/catalogue.json`, a strict validator, twelve Node tests, and a fictional four-item demonstrator at `/previews/dh-08/` on the review branch. The Cloudflare build blocks unapproved or unsafe records and ships only the approved manifest to `/content/catalogue.json`. Books, albums, historic material and any privately drafted descriptions still require individual rights and editorial approval. This is DH-08A only; actual owner work is not yet ingested.
 
 ## DH-07E static Giant Dave + mystical explorer (27 October 2026)
 

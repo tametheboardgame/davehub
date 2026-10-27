@@ -1,6 +1,6 @@
 # DH-07 to DH-11 — Living DaveHub: content architecture and assisted publishing
 
-**Agreed direction:** 22 October 2026. **Status:** Requirements discovery approved, technical implementation not yet designed or authorised.
+**Agreed direction:** 22 October 2026. **Status:** DH-07 is locked and merged. DH-08A executable public-catalogue validation and fictional-content demo are implemented on a review branch; real publication and importer automation remain unapproved.
 
 ## Product principle
 
@@ -39,6 +39,8 @@ Additional surfaces to design: **What's Happening**, project history/timeline, s
 **Exit:** Approved inventory and taxonomy, page/content templates (including an abandoned-work archive and composite musical), example information architecture and rights matrix. Do not begin connector write-back before this.
 
 ## DH-08 — DaveHub Ready and publishing contract
+
+**Implementation as of 27 October 2026:** [DH-08 publication contract](DH08_PUBLICATION_CONTRACT.md) defines owner nomination, per-work/content/artifact rights gates, review records, public repository limits, unsafe URL checks, corrections and withdrawal. The first executable deliverable is a dependency-free public catalogue validator and an isolated fictional demo. **No real owner works have been published.** The rest of DH-08 (secure draft store, source versioning, change detection, approval-ledger design and owner policy sign-off) is still open.
 
 Define a deliberate entry point: **DaveHub Ready**, marked only after the owner decides a project is suitable for the public site.
 
