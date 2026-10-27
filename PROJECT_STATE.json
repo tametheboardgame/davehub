@@ -123,8 +123,8 @@
     "remote_status": "connected"
   },
   "last_verified": {
-    "scope": "DH-07D navigation proposal",
-    "result": "Four original home navigation destinations retained; Explore modal code now renders separate cross-world collection group and contextual link cards, pointing only at fictional demo pages. Browser QA to follow before treating as verified."
+    "scope": "DH-07D static revision checks",
+    "result": "Live branch has index.html, catalogue.js, main.js, styles.css, DH-07C fictional page and build script; both JS files pass syntax compilation. Browser tests attempted but blocked by Chromium administrator policy for file:// and localhost; interactivity and viewport fit require owner/CI preview review."
   },
   "domain": {
     "primary": "davehub.co.uk",
@@ -358,6 +358,11 @@
       "/previews/dh-07c/?view=musical"
     ],
     "real_project_publication": "none",
-    "merge_approved": false
+    "merge_approved": false,
+    "validation": {
+      "javascript_syntax": "pass",
+      "remote_files": "verified",
+      "browser": "blocked_by_environment_policy; owner preview pending"
+    }
   }
 }
