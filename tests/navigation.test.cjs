@@ -29,7 +29,7 @@ test('public worlds offer a clearly-labelled route to the fictional preview',()=
  const writing=pages.get('worlds/writing/index.html');
  assert.match(index,/href="\/previews\/dh-08b\/worlds\/"/);
  assert.match(index,/fictional example/);
- assert.match(writing,/href="\/previews\/dh-08b\/worlds\/writing\/"/);
+ assert.match(pages.get('worlds/music/index.html'),/href="\/previews\/dh-08b\/worlds\/music\/"/);
  assert.match(writing,/Tame The Board Game/);
  assert.doesNotMatch(index,/The Last Lightkeeper/);
 });
