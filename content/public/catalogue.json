@@ -1,4 +1,145 @@
 {
   "schemaVersion": 1,
-  "items": []
+  "items": [
+    {
+      "id": "unicorn-valley",
+      "slug": "unicorn-valley",
+      "title": "Unicorn Valley",
+      "recordType": "work",
+      "workType": "game",
+      "lifecycle": "active",
+      "synopsis": "A colourful browser-based unicorn life-adventure with an explorable magical valley, customisation, friendships, discoveries, quests, races and activities. The main playable build is available while the wider world continues to grow.",
+      "views": [
+        "games",
+        "projects"
+      ],
+      "sources": [
+        {
+          "kind": "repository",
+          "url": "https://github.com/tametheboardgame/unicorn-valley"
+        },
+        {
+          "kind": "owner_attestation"
+        }
+      ],
+      "links": [
+        {
+          "kind": "play",
+          "label": "Play Unicorn Valley (main version)",
+          "url": "https://unicorn-valley.pages.dev/"
+        },
+        {
+          "kind": "repository",
+          "label": "Explore the development repository",
+          "url": "https://github.com/tametheboardgame/unicorn-valley"
+        }
+      ],
+      "media": [],
+      "relations": [],
+      "publication": {
+        "status": "public_approved",
+        "approvedBy": "owner",
+        "approvedOn": "2026-10-27",
+        "rightsReviewed": true,
+        "metadataReviewed": true,
+        "linksReviewed": true,
+        "mediaReviewed": true
+      }
+    },
+    {
+      "id": "stephen-martin-project",
+      "slug": "stephen-martin-project",
+      "title": "The Stephen Martin Project",
+      "recordType": "work",
+      "workType": "game",
+      "lifecycle": "completed",
+      "synopsis": "A fictional adult-comedy browser adventure with a bizarre rescue mission, illustrated scenes, puzzles and three different playable endings. Version 1 is complete; this links to the existing main game rather than copying its artwork or recordings.",
+      "views": [
+        "games",
+        "projects"
+      ],
+      "sources": [
+        {
+          "kind": "repository",
+          "url": "https://github.com/tametheboardgame/stephen-martin-project"
+        },
+        {
+          "kind": "owner_attestation"
+        }
+      ],
+      "links": [
+        {
+          "kind": "play",
+          "label": "Play the completed browser game",
+          "url": "https://stephen-martin-project.pages.dev/"
+        },
+        {
+          "kind": "repository",
+          "label": "View the project repository",
+          "url": "https://github.com/tametheboardgame/stephen-martin-project"
+        }
+      ],
+      "media": [],
+      "relations": [],
+      "publication": {
+        "status": "public_approved",
+        "approvedBy": "owner",
+        "approvedOn": "2026-10-27",
+        "rightsReviewed": true,
+        "metadataReviewed": true,
+        "linksReviewed": true,
+        "mediaReviewed": true
+      }
+    },
+    {
+      "id": "tame-the-board-game",
+      "slug": "tame-the-board-game",
+      "title": "Tame The Board Game",
+      "recordType": "work",
+      "workType": "other",
+      "lifecycle": "active",
+      "synopsis": "A collaborative board-games blog begun in 2013, featuring reviews, rules, strategy, and stories from years around the gaming table. It has a substantial archive as well as posts published in 2026.",
+      "views": [
+        "games",
+        "writing",
+        "memory-lane"
+      ],
+      "period": {
+        "fromYear": 2013,
+        "approximate": false
+      },
+      "sources": [
+        {
+          "kind": "official",
+          "url": "https://tametheboardgame.com/"
+        },
+        {
+          "kind": "owner_attestation"
+        }
+      ],
+      "links": [
+        {
+          "kind": "official",
+          "label": "Visit Tame The Board Game",
+          "url": "https://tametheboardgame.com/"
+        },
+        {
+          "kind": "read",
+          "label": "Read about the blog and its contributors",
+          "url": "https://tametheboardgame.com/about/"
+        }
+      ],
+      "media": [],
+      "relations": [],
+      "publication": {
+        "status": "public_approved",
+        "approvedBy": "owner",
+        "approvedOn": "2026-10-27",
+        "rightsReviewed": true,
+        "metadataReviewed": true,
+        "linksReviewed": true,
+        "mediaReviewed": true
+      }
+    }
+  ]
 }
