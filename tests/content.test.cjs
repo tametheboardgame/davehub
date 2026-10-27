@@ -13,7 +13,7 @@ test('empty public catalogue is valid and contains no owner works',()=>{
  assert.deepEqual(validateCatalogue(publicCatalogue),{valid:true,errors:[],count:0});
 });
 test('all fictional example records validate as a linked collection',()=>{
- assert.deepEqual(validateCatalogue(examples),{valid:true,errors:[],count:4});
+ assert.deepEqual(validateCatalogue(examples),{valid:true,errors:[],count:7});
 });
 test('unsupported or private URL schemes and internal hosts are rejected',()=>{
  for(const url of ['javascript:alert(1)','http://spotify.com','https://localhost','https://127.0.0.1','https://[::1]','https://intranet.local','https://10.2.3.4','https://user:pass@example.com','file:///private/doc']) assert.equal(safePublicUrl(url),false,url);
@@ -72,4 +72,14 @@ test('unknown nested link or media fields are blocked before publication',()=>{
  assert.equal(a.valid,false);assert.match(a.errors.join(' '),/unrecognised field/);
  const b=change(c=>{c.items[0].media=[{id:'sample-image',title:'Fictional art',kind:'image',url:'https://example.org/a.webp',rights:'owned',approval:'public_approved',privateNote:'do not publish'}]});
  assert.equal(b.valid,false);assert.match(b.errors.join(' '),/unrecognised field/);
+});
+test('musical artifacts and albums have explicit kinds',()=>{
+ const one=change(c=>delete c.items.find(i=>i.id==='lighting-the-lamp-scene').artifactKind);
+ assert.equal(one.valid,false);assert.match(one.errors.join(' '),/artifactKind/);
+ const two=change(c=>delete c.items.find(i=>i.id==='lightkeeper-album').releaseKind);
+ assert.equal(two.valid,false);assert.match(two.errors.join(' '),/releaseKind/);
+});
+test('artifact and release kind cannot be misapplied to unrelated works',()=>{
+ const a=change(c=>{c.items[0].artifactKind='concept'});
+ assert.equal(a.valid,false);assert.match(a.errors.join(' '),/artifactKind/);
 });
