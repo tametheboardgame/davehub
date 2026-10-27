@@ -42,11 +42,15 @@
 | DH-07D | Cross-world discovery navigation | Keep the four floating-island destination links, **remove duplicate bottom menu**, expand Explore into worlds plus Music, Unfinished and Memory Lane, with functional prototype routes | **Revised on review branch; final browser/visual approval pending** |
 | DH-07E | Interim Giant Dave and mystical Explore | Place one transparent static Dave in animation slot; make Explore a luminous portal using approved background art | **Built on preview branch; visual approval pending** |
 | DH-08A | Safe public catalogue and approval validation | Plain JSON canonical work model, fail-closed approval/rights checks, tests, fictional preview; zero owner works published | **Implemented on draft branch, testing/sign-off pending** |
-| DH-08B | Render approved catalogue into actual site | Seven themed world pages, shared musical/detail templates and fictional branch demonstration; public catalogue remains empty | **Built and tested on draft review branch; owner visual review pending** |
+| DH-08B | Render approved catalogue into actual site | Seven themed world pages, shared musical/detail templates and direct homepage/island navigation; fictional preview gateway; public catalogue empty | **Implemented on review branch; owner flow review pending** |
 | DH-08 | DaveHub Ready publication contract | Explicit approved project onboarding, source collection, draft review, provenance, withdrawal and security gates | Planned after DH-07 |
 | DH-09 | Single-project ingestion pilot | One approved creative game becomes a project page + reviewed update through preview/merge | Planned |
 | DH-10 | Automated development stories | Significant approved project events become concise draft human-readable stories, not routine posts | Planned |
 | DH-11 | Extend feeds and content types | Approved books/music/ideas/experiments and other capture channels, no duplicate catalogues | Planned |
+
+## DH-08B homepage navigation integration (27 October 2026)
+
+After seeing DH-08B pages, the owner noted the homepage Explore CTA still opened the **old pop-up**, leaving the new page designs inaccessible without pasted direct links. Corrected on the DH-08B branch: Explore links straight to `/worlds/`, islands open their respective world routes, previous hash deep links redirect, and empty public category pages clearly link to a separate fictional demonstration. The pop-up no longer duplicates the new world page. New navigation tests guard the integration.
 
 ## DH-08B shared content pages (27 October 2026)
 
