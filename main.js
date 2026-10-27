@@ -128,6 +128,11 @@
       restoringFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
       modal.showModal();
       closeButton.focus();
+    } else {
+      // Hash-based navigation can replace a currently focused link.
+      // Move focus to the new destination heading instead of dropping it.
+      heading.tabIndex = -1;
+      heading.focus({ preventScroll: true });
     }
   };
 
