@@ -10,7 +10,7 @@
 - A new entry point is generated at `/worlds/` with coherent mystical world cards.
 - Each approved work receives a stable URL derived from its reviewed slug: `/creations/<slug>/`. Related works link to the same canonical page.
 - The content-page stylesheet (`assets/content/worlds.css`) reuses the previously approved floating-islands illustration with dark gradients and glowing gold/blue portal accents, matching the improved sans-serif look of the existing homepage.
-- The homepage's existing **Explore** destination details now include a contextual link to the corresponding `/worlds/<view>/` route. The four islands, Dave, the main button and the modal's approved appearance have not changed.
+- **Navigation correction after owner review:** the central Explore DaveHub button now links directly to `/worlds/`, and the four island hotspots link directly to their respective `/worlds/<view>/` pages. The old intermediate pop-up directory has been removed, so visitors no longer face two menus before reaching the content. Giant Dave, the main CTA artwork and island composition are unchanged. Legacy `/#explore`, `/#writing` and related hashes redirect to the new permanent routes.
 - When a category has **zero approved works**, the generated page shows a truthful empty-state invitation to explore other worlds. No fictional works appear in production data.
 
 ## One musical, interconnected artifacts
@@ -46,6 +46,8 @@ Musicals can be concept-only, music-first or script-first. No finished album, sc
 - Sample musical: *The Last Lightkeeper*, including a fictional song, script scene, concept, making-of note and concept album.
 - Every preview page includes an explicit fictional-content notice.
 
+The live empty world index and category pages include a prominent, explicitly labelled gateway into the separate fictional preview. This preserves the real/fictional separation while making the newly built page layouts reachable from the homepage without copied direct links.
+
 The previously built standalone DH-08A JSON-browser prototype remains accessible at `/previews/dh-08/`. DH-08B adds fully rendered, responsive site pages produced by the **same generator** that builds the future real pages.
 
 ## Safety and validation
@@ -61,7 +63,7 @@ The previously built standalone DH-08A JSON-browser prototype remains accessible
 ## How to test
 
 ```sh
-node --test tests/content.test.cjs tests/render-content.test.cjs
+node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs
 node scripts/content-check.cjs content/public/catalogue.json
 node scripts/content-check.cjs content/examples/fictional.json
 sh scripts/build-pages.sh
@@ -75,4 +77,4 @@ DH-08B is the *rendering* phase, not automatic ingestion. Next, design a private
 
 ## Approval gates
 
-The owner should check responsive world tiles, typography, readable category sections, musical scene-to-song navigation and the view switch from the mystical Explore menu. No real content is published or PR merged without those checks and the explicit publication policy.
+The owner should check responsive world tiles, typography, readable category sections, musical scene-to-song navigation and the **direct homepage Explore → world index → fictional demonstration** flow. The old Explore modal is intentionally retired in favour of the new world index. No real content is published or PR merged without those checks and the explicit publication policy.
