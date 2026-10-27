@@ -326,31 +326,33 @@ html, body { height: 100%; width: 100%; overflow: hidden; }
 .dave-stage__still {
   position: absolute;
   display: block;
-  height: 95svh;
+  /* Keep Dave's whole face and near hand inside the left side of the scene.
+     Anchor from the bottom so the future video can reuse the same stage. */
+  height: 82svh;
   width: auto;
   max-width: none;
-  left: clamp(-235px, -10vw, -112px);
-  bottom: -8svh;
+  left: clamp(-58px, -2.6vw, -20px);
+  bottom: -10svh;
   object-fit: contain;
   pointer-events: none;
   user-select: none;
   filter: drop-shadow(0 14px 25px rgba(1, 8, 28, .62)) drop-shadow(7px 0 15px rgba(64, 145, 235, .18));
 }
 @media (min-width: 1750px) {
-  .dave-stage__still { height: 102svh; left: clamp(-265px, -12vw, -180px); bottom: -11svh; }
+  .dave-stage__still { height: 84svh; left: clamp(-65px, -2.6vw, -30px); bottom: -11svh; }
 }
 @media (max-width: 900px) {
-  .dave-stage__still { height: 88svh; left: -18vw; bottom: -9svh; }
+  .dave-stage__still { height: 73svh; left: clamp(-75px, -8vw, -25px); bottom: -10svh; }
 }
 @media (max-width: 640px) {
   .dave-stage { width: 52vw; }
-  .dave-stage__still { height: 76svh; left: -35vw; bottom: -7svh; filter: drop-shadow(0 7px 16px rgba(3,8,29,.55)); }
+  .dave-stage__still { height: 61svh; left: -9vw; bottom: -9svh; filter: drop-shadow(0 7px 16px rgba(3,8,29,.55)); }
 }
 @media (max-width: 380px) {
-  .dave-stage__still { height: 72svh; left: -39vw; bottom: -7svh; }
+  .dave-stage__still { height: 60svh; left: -10vw; bottom: -9svh; }
 }
 @media (max-height: 430px) and (orientation: landscape) {
-  .dave-stage__still { height: 102svh; left: -6vw; bottom: -24svh; }
+  .dave-stage__still { height: 85svh; left: -1vw; bottom: -17svh; }
 }
 
 /* DH-07E — The explorer is a magical portal into the SAME approved island-world
