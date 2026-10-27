@@ -104,7 +104,7 @@ function exportReview(store){
 }
 function reply(res,status,data,ctype='application/json; charset=utf-8'){
  const content=ctype.startsWith('application/json')?JSON.stringify(data):data;
- res.writeHead(status,{'Content-Type':ctype,'Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Content-Security-Policy':"default-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'; connect-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self';",'Referrer-Policy':'no-referrer','Access-Control-Allow-Origin':'null'});
+ res.writeHead(status,{'Content-Type':ctype,'Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Content-Security-Policy':"default-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'; connect-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self';",'Referrer-Policy':'no-referrer'});
  res.end(content);
 }
 function jsonReply(res,status,data){reply(res,status,data)}
@@ -125,6 +125,11 @@ async function serve(req,res){
  if(req.method==='GET'&&req.url==='/'){
   const html=fs.readFileSync(path.join(__dirname,'index.html'),'utf8').replace('__SESSION_TOKEN__',TOKEN);
   reply(res,200,html,'text/html; charset=utf-8');return;
+ }
+ if(req.method==='GET'&&['/app.js','/style.css'].includes(req.url)){
+  const name=req.url.slice(1);
+  const kind=name.endsWith('.js')?'text/javascript; charset=utf-8':'text/css; charset=utf-8';
+  reply(res,200,fs.readFileSync(path.join(__dirname,name),'utf8'),kind);return;
  }
  if(!req.url.startsWith('/api/')){res.writeHead(404);res.end('Not found');return}
  if(req.headers['x-workshop-token']!==TOKEN){jsonReply(res,403,{error:'No valid local session'});return}
