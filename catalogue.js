@@ -1,4 +1,4 @@
-/* DH-07D: shared navigation destinations. These are approved design categories, not published user content. */
+/* DH-08B: approved discovery categories and onward links to validated world pages. */
 window.DAVEHUB_CATALOGUE = Object.freeze([
   {
     "id": "projects",
@@ -10,6 +10,11 @@ window.DAVEHUB_CATALOGUE = Object.freeze([
     "status": "World being developed",
     "note": "Projects connect the things that overlap: games, music, writing, creations and experiments. The public collection is still being prepared.",
     "links": [
+      {
+        "title": "Browse projects",
+        "description": "Explore the approved creative catalogue",
+        "href": "/worlds/projects/"
+      },
       {
         "title": "Explore music",
         "description": "Shows, sounds and albums",
@@ -33,6 +38,11 @@ window.DAVEHUB_CATALOGUE = Object.freeze([
     "note": "Writing can be finished, published, deliberately abandoned or somewhere in between. These are sample experiences with fictional content.",
     "links": [
       {
+        "title": "Browse writing",
+        "description": "Explore the approved creative catalogue",
+        "href": "/worlds/writing/"
+      },
+      {
         "title": "The Unfinished Shelf",
         "description": "Explore a deliberately abandoned project archive",
         "href": "previews/dh-07c/?view=shelf"
@@ -55,6 +65,11 @@ window.DAVEHUB_CATALOGUE = Object.freeze([
     "note": "Games will connect playable releases with their making-of stories and related creative works. Real projects will arrive after content approval.",
     "links": [
       {
+        "title": "Browse games",
+        "description": "Explore the approved creative catalogue",
+        "href": "/worlds/games/"
+      },
+      {
         "title": "Explore all the worlds",
         "description": "Discover other creative destinations",
         "href": "#explore"
@@ -71,6 +86,11 @@ window.DAVEHUB_CATALOGUE = Object.freeze([
     "status": "World being developed",
     "note": "Not everything needs to become a finished product. Experiments can turn into projects, or survive as interesting artifacts.",
     "links": [
+      {
+        "title": "Browse experiments",
+        "description": "Explore the approved creative catalogue",
+        "href": "/worlds/experiments/"
+      },
       {
         "title": "The Unfinished Shelf",
         "description": "Things deliberately left unfinished",
@@ -94,6 +114,11 @@ window.DAVEHUB_CATALOGUE = Object.freeze([
     "note": "The music collection will unite artists, songs and albums with scripts, stories and the ideas behind them. See the fictional demonstration.",
     "links": [
       {
+        "title": "Browse music",
+        "description": "Explore the approved creative catalogue",
+        "href": "/worlds/music/"
+      },
+      {
         "title": "Explore a musical",
         "description": "Inside The Last Lightkeeper — a fictional interactive example",
         "href": "previews/dh-07c/?view=musical"
@@ -116,6 +141,11 @@ window.DAVEHUB_CATALOGUE = Object.freeze([
     "note": "These are not ongoing projects or promises to finish anything. Explore the fictional shelf, its surviving fragments and notes.",
     "links": [
       {
+        "title": "Browse the Unfinished Shelf",
+        "description": "Explore the approved creative catalogue",
+        "href": "/worlds/unfinished/"
+      },
+      {
         "title": "Explore the shelf",
         "description": "Search abandoned scripts, books, musicals and ideas",
         "href": "previews/dh-07c/?view=shelf"
@@ -137,6 +167,11 @@ window.DAVEHUB_CATALOGUE = Object.freeze([
     "status": "Archive collection in planning",
     "note": "Old bands, handmade instruments, past projects and wonderfully strange attempts will live here alongside more recent work. We'll add actual memories whenever the archive is ready.",
     "links": [
+      {
+        "title": "Explore Memory Lane",
+        "description": "Explore the approved creative catalogue",
+        "href": "/worlds/memory-lane/"
+      },
       {
         "title": "Explore the Unfinished Shelf",
         "description": "One collection that can also appear in the timeline",
