@@ -31,9 +31,11 @@
 
 - Browser network requests for `/assets/branding/davehub-logo-faithful.svg` and `/assets/homepage/floating-islands-background.png` succeed (HTTP 200).
 - The Explore button opens the destination directory and each category can be selected.
-- Floating island labels and bottom navigation lead to the same categories.
+- Four floating-island labels and Explore directory lead to their corresponding categories; there is **no bottom duplicated menu**.
 - The dialog closes with Escape and on clicking close.
 - No horizontal overflow on 390px and 375px mobile widths, and no important visual content is hidden at 1366×768.
+- The separate static Giant Dave WebP exists at `/assets/characters/dave/dave-static-v1.webp` and neither blocks island hotspots nor overlaps the CTA unexpectedly.
+- The Explore dialog reuses the background illustration and remains legible, focusable and scrollable on mobile.
 - The response header `X-Robots-Tag: noindex, nofollow` is present until deliberate public launch.
 - `/docs/ROADMAP.md`, `/PROJECT_STATE.json` and unapproved concept assets are **not** included in the deployment.
 

@@ -312,3 +312,226 @@ html, body { height: 100%; width: 100%; overflow: hidden; }
   .world-directory__group:first-child .world-directory { grid-template-columns: 1fr; }
   .world-directory__item { min-height: 91px; }
 }
+
+/* DH-07E — Static, transparent Giant Dave. This slot also hosts the future animation.
+   Keep Dave behind the links and the hero copy; never intercept pointer/focus events. */
+/* Dave is geometrically tethered to the left edge of the centred Explore CTA.
+   The visible illustration reaches ~58% of its rendered height from its image's
+   left edge (remaining width is transparent padding). This lets the 24px gap
+   stay consistent when viewport width changes instead of pinning Dave to x=0. */
+.dave-stage {
+  /* Scale down on narrower desktop widths rather than letting the figure
+     disappear beyond the left edge while staying tethered to the CTA. */
+  --dave-height: min(88svh, calc((50vw - 212.5px - 24px + 16px) / .58));
+  --dave-explore-half-width: 212.5px; /* half of .explore-button's 425px desktop width */
+  --dave-to-cta-gap: 24px;
+  --dave-visible-reach: .58;
+  position: absolute;
+  z-index: 1;
+  inset: 0 auto 0 0;
+  width: min(46vw, 740px);
+  overflow: visible;
+  pointer-events: none;
+  left: calc(50% - var(--dave-explore-half-width) - var(--dave-to-cta-gap) - var(--dave-height) * var(--dave-visible-reach));
+}
+.dave-stage__still {
+  position: absolute;
+  display: block;
+  height: var(--dave-height);
+  width: auto;
+  max-width: none;
+  left: 0;
+  bottom: -24svh;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 14px 25px rgba(1, 8, 28, .62)) drop-shadow(7px 0 15px rgba(64, 145, 235, .18));
+}
+@media (min-width: 1750px) {
+  .dave-stage { --dave-height: 90svh; }
+  .dave-stage__still { bottom: -25svh; }
+}
+@media (max-width: 900px) {
+  /* On narrower screens, there is physically insufficient horizontal space
+     for Dave to stand fully beside a centred button: use portrait framing. */
+  .dave-stage { left: 0; --dave-height: 78svh; }
+  .dave-stage__still { left: -4vw; bottom: -13svh; }
+}
+@media (max-width: 640px) {
+  .dave-stage { width: 52vw; --dave-height: 65svh; }
+  .dave-stage__still { left: -5vw; bottom: -12svh; filter: drop-shadow(0 7px 16px rgba(3,8,29,.55)); }
+}
+@media (max-width: 380px) {
+  .dave-stage { --dave-height: 64svh; }
+  .dave-stage__still { left: -6vw; bottom: -12svh; }
+}
+@media (max-height: 430px) and (orientation: landscape) {
+  .dave-stage { left: 0; --dave-height: 89svh; }
+  .dave-stage__still { left: 1vw; bottom: -28svh; }
+}
+
+/* DH-07E — The explorer is a magical portal into the SAME approved island-world
+   image. Cards remain genuine accessible links; all effects are noninteractive. */
+.world-dialog {
+  width: min(94vw, 820px);
+  max-height: min(92svh, 900px);
+  border: 1px solid rgba(255, 215, 149, .7);
+  border-radius: 28px;
+  background: #0a1633;
+  box-shadow: 0 34px 110px rgba(0, 4, 20, .82),
+    0 0 0 2px rgba(110, 206, 255, .13),
+    0 0 54px rgba(62, 143, 228, .37),
+    inset 0 0 24px rgba(255, 205, 130, .1);
+}
+.world-dialog::backdrop {
+  background: radial-gradient(ellipse at 50% 42%, rgba(34, 63, 117, .54), rgba(2, 7, 28, .91) 82%);
+  backdrop-filter: blur(13px) saturate(1.1);
+  -webkit-backdrop-filter: blur(13px) saturate(1.1);
+}
+.world-dialog__panel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 390px;
+  background:
+    linear-gradient(145deg, rgba(6, 14, 39, .89) 0%, rgba(12, 23, 56, .9) 48%, rgba(6, 13, 36, .94) 100%),
+    url('assets/homepage/floating-islands-background.png') center 46% / cover no-repeat;
+}
+.world-dialog__panel::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  width: 390px;
+  height: 390px;
+  right: -118px;
+  top: -145px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 217, 157, .28);
+  box-shadow: 0 0 0 26px rgba(255, 217, 157, .035),
+    0 0 0 56px rgba(91, 199, 249, .03),
+    0 0 95px rgba(255, 191, 83, .16),
+    inset 0 0 90px rgba(255, 196, 98, .11);
+  background: radial-gradient(circle, rgba(255, 203, 118, .13), rgba(75, 136, 229, .03) 58%, transparent 70%);
+}
+.world-dialog__panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 11% 20%, rgba(255,226,172,.9) 0 1px, transparent 2px),
+    radial-gradient(circle at 72% 31%, rgba(180,232,255,.85) 0 1px, transparent 2px),
+    radial-gradient(circle at 24% 77%, rgba(248,213,167,.75) 0 1px, transparent 2px),
+    radial-gradient(circle at 92% 81%, rgba(191,225,255,.8) 0 1px, transparent 2px),
+    linear-gradient(0deg, rgba(3, 10, 31, .25), transparent 55%);
+}
+.world-dialog__top, .world-dialog__footer {
+  position: relative;
+  z-index: 1;
+  border-color: rgba(255, 209, 145, .23);
+  background: rgba(5, 13, 37, .46);
+}
+.world-dialog__top { padding-block: 18px; }
+.world-dialog__eyebrow, .world-dialog__kicker { color: #ffd89d; letter-spacing: .19em; }
+.world-dialog__star {
+  color: #ffe9af !important;
+  font-size: 19px;
+  padding-right: 7px !important;
+  text-shadow: 0 0 9px rgba(255, 200, 92, .75);
+}
+.world-dialog__body {
+  position: relative;
+  z-index: 1;
+  padding-block: 34px 40px;
+}
+.world-dialog__body::before {
+  content: '✦';
+  position: absolute;
+  z-index: -1;
+  right: 44px;
+  top: 18px;
+  color: rgba(255, 217, 144, .28);
+  font-size: 45px;
+  text-shadow: 0 0 25px rgba(255, 222, 149, .3);
+  pointer-events: none;
+}
+.world-dialog__body h2 {
+  color: #fff8ea;
+  font-family: 'Bahnschrift','Aptos Display','Segoe UI Variable Display','Segoe UI',system-ui,sans-serif;
+  font-size: clamp(32px, 4.5vw, 48px);
+  font-weight: 800;
+  letter-spacing: -.035em;
+  text-shadow: 0 3px 20px rgba(0, 6, 25, .8), 0 0 22px rgba(129, 204, 255, .15);
+}
+.world-dialog__body > p { color: #e6e8f8; }
+.world-directory__group:last-child { border-top-color: rgba(255, 208, 127, .3); }
+.world-directory__label {
+  color: #ffdaa6;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+.world-directory__summary { color: #d0d9ef; }
+.world-directory__item {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  min-height: 148px;
+  border-radius: 26px 26px 12px 12px;
+  border: 1px solid color-mix(in srgb, var(--tile-color) 34%, rgba(253,213,158,.3));
+  background: linear-gradient(145deg, rgba(31, 53, 94, .86), rgba(8, 18, 48, .89));
+  box-shadow: inset 0 1px 0 rgba(255, 231, 181, .12), 0 8px 26px rgba(0, 4, 22, .3);
+  transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease, background .2s ease;
+}
+.world-directory__item::before {
+  content: '';
+  position: absolute;
+  inset: -60% -25% 34% 48%;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--tile-color) 24%, transparent), transparent 69%);
+  pointer-events: none;
+  z-index: -1;
+}
+.world-directory__item::after {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border: 1px solid rgba(255, 213, 144, .12);
+  border-radius: 22px 22px 9px 9px;
+  pointer-events: none;
+}
+.world-directory__item:hover,.world-directory__item:focus-visible {
+  background: linear-gradient(145deg, rgba(37, 62, 113, .96), rgba(11, 26, 63, .96));
+  border-color: color-mix(in srgb, var(--tile-color) 72%, #ffdb9e);
+  box-shadow: inset 0 1px 0 rgba(255,235,195,.25),
+    0 0 22px color-mix(in srgb, var(--tile-color) 31%, transparent), 0 10px 30px rgba(1,5,25,.5);
+}
+.world-directory__item .glyph:first-child {
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--tile-color) 55%, transparent));
+}
+.world-directory__words strong { color: #fff6e5; font-weight: 800; }
+.world-directory__words small { color: #cbd8f1; }
+.world-directory__item--collection { min-height: 146px; border-radius: 22px 22px 12px 12px; }
+.world-directory__item--collection::after { border-radius: 18px 18px 9px 9px; }
+.section-details__link {
+  border-color: rgba(211, 186, 150, .3);
+  background: linear-gradient(140deg, rgba(26, 49, 91, .84), rgba(7, 19, 48, .83));
+}
+.section-details__link:hover,.section-details__link:focus-visible {
+  box-shadow: 0 0 19px color-mix(in srgb,var(--tile-color) 23%,transparent);
+}
+.dialog-close { background: rgba(5, 17, 48, .7); border-color: rgba(255, 222, 165, .42); }
+.dialog-close:hover { background: rgba(66, 91, 142, .65); }
+@media (max-width: 670px) {
+  .world-dialog { max-height: calc(100svh - 18px); border-radius: 18px; }
+  .world-dialog__body { padding-block: 24px 27px; }
+  .world-dialog__body h2 { font-size: clamp(30px, 8vw, 40px); }
+  .world-dialog__panel::before { width: 270px; height: 270px; top: -110px; right: -150px; }
+  .world-directory__item { min-height: 114px; }
+  .world-directory__item--collection { min-height: 84px; border-radius: 16px; }
+  .world-directory__item--collection::after { border-radius: 12px; }
+  .world-dialog__eyebrow { font-size: 9px; letter-spacing: .12em; }
+}
