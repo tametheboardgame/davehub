@@ -400,12 +400,13 @@
     "public_owner_work_count": 0,
     "fictional_demo": "prototypes/dh-08/index.html",
     "checks": [
-      "12 Node tests",
+      "14 Node tests",
       "fail-closed public manifest validator",
       "explicit rights/source/media gates",
       "safe HTTPS URL check",
       "referential integrity",
-      "withdrawal by remove and reviewed redeploy"
+      "withdrawal by remove and reviewed redeploy",
+      "deny unrecognised keys at public-manifest and nested-record levels"
     ],
     "no_automatic_publication": true,
     "no_api_costs": true,
