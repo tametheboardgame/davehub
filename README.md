@@ -34,7 +34,7 @@ The approved logo and background are repository assets; illustrated Dave remains
 
 - [Shared content-page architecture](docs/DH08B_SHARED_CONTENT_PAGES.md): single renderer generating seven catalogue views plus unique deep-linked creation pages.
 - Real approved entries are rendered from the validated `content/public/catalogue.json`; currently **empty**. The fictional musical/script/song example renders separately at `/previews/dh-08b/worlds/` on the branch.
-- The existing mystical Explore destination cards now link to new `/worlds/<view>/` pages; visual appearance of the homepage and Explore is unchanged.
+- Explore DaveHub now opens the new `/worlds/` experience directly, and each floating island leads to its own content world; the redundant intermediate pop-up has been removed. Empty public worlds link to an explicitly fictional walkthrough.
 
 ## DH-08: Safe creative catalogue (in development)
 
