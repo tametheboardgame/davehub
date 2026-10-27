@@ -1,113 +1,102 @@
-# DH-09 / ADR-0012 — First-party game URLs with independently deployed repositories
+# DH-09 / ADR-0012 — One DaveHub site, game paths on both domains
 
 **Date:** 27 October 2026  
-**Status:** Proposed, pending owner agreement and domain routing access. Design only; **no DNS, game deployment, production catalogue or other repository has been changed**.
+**Status:** Proposed, revised after owner clarification: `pages.dev` paths must work **before** the custom domain is configured. Design + packaging foundation only; no live game URLs or DNS were changed.
 
-## Decision requested
+## Accepted user-facing URL contract
 
-All interactive creations that DaveHub can legally and technically host should run under stable **first-party paths** on `davehub.co.uk`, not navigate to separate `*.pages.dev` hostnames or depend on iframes as the final architecture.
+One Cloudflare Pages project should serve **the same file paths** on both hostnames:
 
-Primary examples:
+| Right now | Later, after attaching the custom domain |
+|---|---|
+| `https://davehub.pages.dev/` | `https://davehub.co.uk/` |
+| `https://davehub.pages.dev/worlds/games/` | `https://davehub.co.uk/worlds/games/` |
+| `https://davehub.pages.dev/games/unicorn-valley/` | `https://davehub.co.uk/games/unicorn-valley/` |
+| `https://davehub.pages.dev/games/stephen-martin/` | `https://davehub.co.uk/games/stephen-martin/` |
 
-| Visitor URL | App | Development source |
-|---|---|---|
-| `https://davehub.co.uk/` | Illustrated DaveHub homepage | `tametheboardgame/davehub` |
-| `https://davehub.co.uk/worlds/games/` | Games catalogue | `tametheboardgame/davehub` |
-| `https://davehub.co.uk/creations/unicorn-valley/` | Unicorn Valley editorial page | DaveHub content manifest |
-| `https://davehub.co.uk/games/unicorn-valley/` | Full Unicorn Valley gameplay | `tametheboardgame/unicorn-valley` |
-| `https://davehub.co.uk/creations/stephen-martin-project/` | Stephen Martin editorial page | DaveHub content manifest |
-| `https://davehub.co.uk/games/stephen-martin/` | Full Stephen Martin gameplay | `tametheboardgame/stephen-martin-project` |
+No external redirects, iframe wrappers or host-specific hardcoded links. When the custom domain is attached, **no rebuilding, game-path changes or duplicate game deployments** are required. Pages continues to serve the `*.pages.dev` hostname unless the owner explicitly configures a redirect or an access restriction.
 
-The game and the page *about* the game are intentionally different, but should link to each other. Use genuine first-party static assets, not a URL-changing 301 redirect or an iframe wrapper.
+The previous path-specific Workers Static Assets routing proposal is **superseded for this project**: custom-domain Worker routes cannot be relied on to also control the Cloudflare-owned `davehub.pages.dev` hostname.
 
-## Chosen technical approach: independently deployed Cloudflare Workers Static Assets at paths
+Cloudflare documentation: https://developers.cloudflare.com/pages/configuration/custom-domains/ and https://developers.cloudflare.com/pages/configuration/build-configuration/.
 
-**Keep all three GitHub repositories independent**. Do not merge Phaser, audio, game scenes or test pipelines into the DaveHub homepage repository. Each game publishes a separately built **DaveHub-path-compatible static distribution** to a dedicated Cloudflare Workers Static Assets deployment. Cloudflare path-specific Worker Routes on the `davehub.co.uk` zone send only the following requests to the respective game:
+## Publishing architecture
 
-- `davehub.co.uk/games/unicorn-valley/*` → Unicorn Valley static asset Worker.
-- `davehub.co.uk/games/stephen-martin/*` → Stephen Martin static asset Worker.
-- Everything else → the existing DaveHub Pages site on the same custom domain.
+Keep the three source repositories independent:
+- `tametheboardgame/davehub`: homepage, categories, editorial catalogue, the final **assembled** Pages static output.
+- `tametheboardgame/unicorn-valley`: game code, tests, asset pipeline and its existing standalone Cloudflare Pages deployment.
+- `tametheboardgame/stephen-martin-project`: completed V1 game code, 3-ending tests, provenance and its standalone deployment.
 
-Wrangler's static-assets-on-subdirectory support requires the on-disk asset paths to reflect the URL prefix, e.g. `dist-davehub/games/unicorn-valley/index.html` and `dist-davehub/games/unicorn-valley/assets/...`. A route matches the original URL, so the asset file is served at the same first-party URL without rewriting HTML at runtime.
+Each game generates an approved, immutable **DaveHub path-compatible release bundle** from its own repository, after passing its current CI and rights review. DaveHub's release assembly takes those bundles, verifies their versions and integrity, and lays their static contents under:
 
-Reference: https://developers.cloudflare.com/workers/static-assets/routing/advanced/serving-a-subdirectory/ and https://developers.cloudflare.com/workers/configuration/routing/routes/.
+```text
+dist/
+  index.html
+  assets/...
+  worlds/...
+  creations/...
+  games/
+    unicorn-valley/
+      index.html
+      assets/...
+      audio/...
+    stephen-martin/
+      index.html
+      src/...
+      public/assets/...
+```
 
-**Cloudflare constraints:** Workers Free permits up to 20,000 assets per Worker version and 25 MiB per individual asset (see https://developers.cloudflare.com/workers/platform/limits/). Static asset requests are free and unlimited by platform policy when served as assets rather than invoking a Worker script (https://developers.cloudflare.com/workers/static-assets/billing-and-limitations/). Validate deployed asset inventory and largest asset before deciding each route's suitability; do not assert that a game passes by considering total bytes alone.
+The existing Cloudflare Pages project deploys that **single** `dist/` tree. Paths are domain-relative, so both `davehub.pages.dev` and future `davehub.co.uk` work identically.
 
-### What we need on Cloudflare
+A version-pinned release manifest should record each included source repository, exact **main commit SHA**, bundle version/SHA-256, complete inventory count and maximum asset size. **Never download floating `main` during public builds:** game updates should only reach DaveHub after a reviewed game-release promotion. Avoid committing privately sourced content, authentication tokens or giant generated bundles to DaveHub source history. Game build/download automation still needs a subsequent implementation phase and an explicit release-artifact mechanism.
 
-1. Confirm ownership and Cloudflare zone/nameserver status for `davehub.co.uk`; the existing repository documentation is **stale** and does not establish that the custom domain is configured.
-2. Add the custom domain to the existing **DaveHub Pages project**, with working TLS/redirect policy (choose one of apex/www canonical).
-3. Create separate Workers Static Assets projects, with appropriately scoped CI credentials, and deploy path-prefixed static distributions from each game repository.
-4. Register the game path-specific routes in Cloudflare; do not route the homepage or shared `/assets/` path to either game.
-5. Configure exact-path redirects `/games/unicorn-valley` → `/games/unicorn-valley/` and `/games/stephen-martin` → `/games/stephen-martin/` (or test this normalisation inside the route). The trailing slash is important for relative asset URL resolution.
-6. Test HTTPS, cache headers, content-type, range/audio delivery, rollback, route priority and hostnames on desktop/mobile before exposing public links.
+If future games exceed Cloudflare Pages quotas, evaluate packaging/architecture again rather than silently routing different games via their old `pages.dev` URLs. Pages Free currently caps one deployed site at **20,000 files** and a **25 MiB per-file limit**. See https://developers.cloudflare.com/pages/platform/limits/.
 
-**Do not assume `*.pages.dev` can host custom-domain Worker Routes directly.** The eventual target is the user's controlled DNS zone; until configured, builds can be smoke-tested locally and deployed to an isolated test domain or Workers staging endpoint.
+## Necessary game changes
 
-## Changes per repository
+### Stephen Martin (first pilot, easier)
 
-### Unicorn Valley — moderate, bounded path compatibility work
+Current V1 build uses relative HTML/script/image/audio paths such as `./src/styles.css`, `./public/assets/...`; packaging its tested `dist/` under `games/stephen-martin/` is likely to work without changing core gameplay. Before release:
 
-Current observed source facts (main branch, 27 October):
-- `vite.config.ts` explicitly uses `base: '/'`, making generated JS, CSS and dynamic chunk URLs assume site root.
-- `index.html` uses root-relative `/favicon.svg` and `/src/main.ts` in its Vite input; Vite can transform the latter for a configured base, but static public assets still need checking.
-- `scripts/generateAudioCatalogue.mjs` generates paths like `/audio/music/...`; `src/generated/audioCatalogue.ts` contains those root-relative paths. This **will fail** if the game is mounted at `/games/unicorn-valley/` unchanged.
-- Production remains at `https://unicorn-valley.pages.dev/` and CI has a substantial pre-existing test suite.
+1. Inspect dynamic URL creation, CSS `url(...)`, the approved asset whitelist, dialogue audio and path handling.
+2. Run `npm run verify`, including V1 asset audit.
+3. Package `dist/` **without modifying the root build** and exercise all three endings at the nested URL, plus sound/autosave/fullscreen/responsive checks.
+4. Preserve game copyright/character likeness/audio/promotional review gates. The existing game repository explicitly says owner acceptance of V1 does not automatically grant new publicity/artwork republication permission.
 
-Actions:
-1. Add a **separate** DaveHub build command selecting Vite `base: '/games/unicorn-valley/'` while preserving the existing root build for `unicorn-valley.pages.dev`.
-2. Route all runtime public asset paths through a tested game-base resolver (including generated audio, image and story catalogues, favicons, lazy imports, CSS, paths that build URLs at runtime). Avoid replacing strings in minified JS at Cloudflare edge.
-3. Run existing unit and browser suites, plus a subpath smoke test proving all JS/CSS/audio and progress-save functions work at the prefixed route.
-4. Package `dist` beneath `dist-davehub/games/unicorn-valley/` and deploy only that isolated output with Wrangler; leave main/root Pages deployment and its release gate unchanged.
+### Unicorn Valley (Vite subpath work)
 
-### The Stephen Martin Project — small path/build changes
+Current `vite.config.ts` sets `base: '/'`, and `scripts/generateAudioCatalogue.mjs` produces URLs like `/audio/music/...`. Both require refactoring for deployment beneath `/games/unicorn-valley/`:
 
-Observed source facts:
-- Plain HTML, CSS and JS. Most HTML script, CSS, image and scene asset paths use `./src/...` and `./public/...`, suitable for serving at the trailing-slash game directory.
-- Build is `npm run build` → `dist/`; final V1 is complete with three endings, approved 254 dialogue MP3s and two opening songs. Full distribution was ~44 MB across hundreds of files, not one huge asset.
-- Production Pages project follows `main`. The V1 README explicitly distinguishes **playable V1** from wider permission to republish images, recordings or likenesses.
+1. Add a second *explicit* Vite build with `base: '/games/unicorn-valley/'`; preserve the original `/ ` root build on `unicorn-valley.pages.dev`.
+2. Ensure **all runtime public assets** (especially audio, story catalogs, images, favicons and lazy-loaded chunks) respect the selected base. Treat root-relative paths as test failures; do not rewrite minified output at runtime.
+3. Run full game CI and subpath browser smoke testing, including mobile, save storage, dynamic imports and music.
+4. Package the validated output under `dist/games/unicorn-valley/`. Match URLs against the actual `dist/` inventory rather than guessing.
 
-Actions:
-1. Preserve the original build and run `npm run verify` before repackaging its `dist/`.
-2. Add a second deployment pipeline that nests the unchanged files beneath `dist-davehub/games/stephen-martin/`.
-3. Audit for stray root-relative requests, unusual canonical URLs, CSS url(), JavaScript-generated URLs and route/hash handling.
-4. Confirm all three endings and voice playback through a true first-party path, on mobile as well as desktop.
-5. Keep voice/likeness rights and promotion scope separate from the technical URL migration. Use the original approved build output rather than regenerating art.
+### DaveHub navigation
 
-### DaveHub — small navigation/catalogue changes
+The content catalogue retains editorial `/creations/unicorn-valley/` and `/creations/stephen-martin-project/` pages. Once the game routes **actually exist**, update the `Play now` links to domain-relative `/games/unicorn-valley/` and `/games/stephen-martin/`. The homepage URL and other world links remain unchanged. Add a `Back to DaveHub` control appropriate to each game's full-screen layout, without embedding them in an iframe.
 
-- Keep editorial `/creations/<slug>/` pages as the making-of, description, screenshots/permissions, and project relationships.
-- Add a canonical `play` link targeting `/games/<slug>/`, only after the relevant game route passes release QA.
-- `/worlds/games/` lists playable works, and the editorial page has a clear `Play now` action and return-navigation to DaveHub.
-- Optionally introduce a launch-shell / return-to-DaveHub control **outside** gameplay while preserving full-screen/focus/audio performance. Avoid imposing a global fixed header on Phaser and puzzle layouts.
-- Preserve standalone `pages.dev` builds as direct testing/fallback channels; do not make their public URLs the advertised canonical destination once first-party routing is accepted.
+## Important browser considerations
 
-## Browser-origin/save-data caution
+- Both games will share the **DaveHub browser origin**; namespace localStorage/IndexedDB keys by game and confirm one game cannot mistakenly read/write the other's progress.
+- Progress already saved on `unicorn-valley.pages.dev` or `stephen-martin-project.pages.dev` will **not** automatically appear on `davehub.pages.dev`; provide an opt-in import/export where practical or explain that users are starting fresh.
+- Progress at `davehub.pages.dev` will likewise not automatically migrate to `davehub.co.uk` because custom domains are different browser origins, even though the site paths are identical. This requires a separate opt-in save-transfer plan before switching the advertised host.
+- Do not copy unapproved collaborator material, musical recordings or historical archive sources to the bundled site just because source repositories are public.
 
-Moving a game from `<game>.pages.dev` to `davehub.co.uk` **changes browser origin**. Existing localStorage/IndexedDB saves will not automatically move. Decide whether to support a one-time opt-in export/import save transfer or clearly warn of a fresh start. Future games on one origin must use distinct, namespaced storage keys and consider third-party content isolation. Do not promise that changing the address preserves progress.
+## Implementation sequence
 
-## What we deliberately avoid
+**DH-09A — Bundle/prefix contract and automated tests.** A reusable static-asset assembler in DaveHub that safely stages already-built game distributions below `/games/<slug>/`, proves links and nesting and rejects missing/malformed releases. Does not deploy the games without release bundles.
 
-- **Redirect-only:** A 301 to another Pages site loses the requested DaveHub address.
-- **Iframe wrapper as final solution:** Keeps the address bar but gives the actual game a separate browser origin, plus possible fullscreen/audio, focus, performance, storage and accessibility complications.
-- **Central monorepo:** Forces unrelated game builds and large assets into DaveHub's own build/test/deploy lifecycle, increasing coupling and release risk.
-- **HTML/JS content rewriting reverse proxy:** Brittle for hashed Vite chunks, audio catalogs and script-generated URLs; static subpath assets are more reliable.
-- **Auto-merging game source to DaveHub:** Not needed. Only approved release artifacts and reviewed catalogue metadata connect them.
-- **Unapproved mirrors of third-party content:** Books, music streaming and the collaborative WordPress blog need DaveHub landing pages plus official links; mirroring complete media/articles is a separate rights/export decision.
+**DH-09B — Stephen Martin main build on `davehub.pages.dev/games/stephen-martin/`.** Produce a verified source-repo release bundle, pin it in DaveHub, serve on a branch preview, test all A/B/C paths, then release to `davehub.pages.dev` with an approved canonical play link. Its existing Pages site remains a fallback.
 
-## Phased acceptance plan
+**DH-09C — Unicorn Valley dual-build compatibility.** Correct Vite/asset base configuration, pin a proven subpath release, package and test under `davehub.pages.dev/games/unicorn-valley/` while its original `unicorn-valley.pages.dev` build keeps working.
 
-**DH-09A — DNS and first-party routing readiness.** Check zone and SSL; reserve the two routes; prepare a non-production test endpoint and rollout/rollback checklist. No production traffic changes.
+**DH-09D — Attach `davehub.co.uk`.** Add/verify Cloudflare DNS zone and TLS, connect domain to **the same** Pages project, choose a canonical host and plan save migration. No game-code or game-hosting changes.
 
-**DH-09B — Stephen Martin pilot.** Easiest relative-asset game; deploy nested build on a test hostname/path, verify all routes/audio/saves and only then enable first-party path. Retain original Pages production as rollback.
+**DH-09E — Independent release promotion.** Source repos can offer a new verified bundle by PR/dispatch and require approval before changing the DaveHub pinned release manifest. A change in one game does not force rebuilding the other game's source; DaveHub publishes the previously approved assets for the other.
 
-**DH-09C — Unicorn Valley.** Implement path-base configuration and generated-audio refactor; prove root deployment unchanged and nested build passes smoke/CI; deploy static assets and switch canonical play link.
+## Release gate
 
-**DH-09D — Extend the pattern.** A tiny documented template for future DaveHub-ready games, with independent build, static asset inventory, route registration, release decision, monitoring and rollback. No blanket automatic publication.
+**No Play link may point at a DaveHub games URL until its full build is actually deployed and verified at that route.** Existing third-party play links remain until independently verified first-party paths are available. This document alone does not constitute working game hosting.
 
-## Final design contract
-
-**A DaveHub visitor should stay on a DaveHub URL when moving from Games → Game Page → Play.** The game repository should remain independently testable and independently deployable, and its working public root build should never be sacrificed purely to achieve a nicer URL.
-
-Deployment and DNS changes require explicit user approval and Cloudflare account access. This proposal is not a claim that the custom domain is configured or that first-party game links already work.
+The DNS/custom-domain setup can happen much later. Build and test at `davehub.pages.dev` now, and both hosts get the same paths after the domain is attached.
