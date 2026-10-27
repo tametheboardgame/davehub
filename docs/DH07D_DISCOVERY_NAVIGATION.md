@@ -5,7 +5,7 @@
 
 ## Decision proposed
 
-Preserve the approved **four floating island / bottom bar destinations** — Projects, Writing, Games, Experiments — rather than adding three more controls to the fixed full-screen scene. The **Explore DaveHub** button opens one accessible, scrollable directory with two distinct groups:
+Preserve the approved **four floating-island destinations** — Projects, Writing, Games, Experiments — and **remove the redundant four-tile bottom navigation row**. The homepage should offer only the islands plus Explore DaveHub, not three menus leading to the same places. The **Explore DaveHub** button opens one accessible, scrollable directory with two distinct groups:
 
 - **The four worlds:** Projects, Writing, Games, Experiments.
 - **Elsewhere in DaveHub:** Music, The Unfinished Shelf, Trip Down Memory Lane.
@@ -20,7 +20,7 @@ The second group contains **cross-world discovery routes**, not duplicated conte
 4. Homepage → click a floating island or bottom category → relevant section → other destinations or back to Explore.
 5. Links to `previews/dh-07c/?view=shelf` or `?view=musical` are strictly fictional-design demonstrations, not approved public user content.
 
-The user can enter the Explore directory without passing through project content or loading a separate application. The four island and four bottom tiles remain untouched in number and placement.
+The user can enter the Explore directory without passing through project content or loading a separate application. The four floating-island links remain untouched in number and placement; the redundant bottom four-tile row is removed entirely, including its CSS and obsolete skip target. The keyboard skip link now opens Explore.
 
 ## Code layout
 
@@ -45,9 +45,13 @@ No framework, external fonts, API calls, database or new illustrated assets.
 
 - Checked on the live review-branch commit that the entry-point homepage, seven-record navigation source, modal renderer, stylesheet, fictional DH-07C content page and build script are all present.
 - Both `main.js` and `catalogue.js` pass JavaScript syntax compilation, and the local standalone navigation mirror passes `node --check` on both scripts.
-- Confirmed the original four homepage navigation buttons and four floating-island links remain in the HTML; the additional three destinations are added through the Explore modal only.
+- Confirmed the four floating-island links remain, the four duplicate bottom tiles are removed, and the additional three destinations are added through the Explore modal only.
 - **Browser limitation:** The browser runtime currently reports `ERR_BLOCKED_BY_ADMINISTRATOR` loading both file and localhost HTML. Therefore click-through, focus, scroll and breakpoint behaviour for DH-07D are **not yet independently browser-verified**. Do not treat this as a browser test pass or production-ready gate. The DH-07C page templates had previously passed browser tests in the prior working session.
 - A standalone zip containing navigation and the earlier fictional content pages is produced for manual review. Because the canonical site uses referenced assets/scripts, the repository branch remains the authoritative implementation.
+
+## Owner refinement — remove the third navigation surface (27 October 2026)
+
+On visual review, the owner liked the floating-islands homepage but observed that four island links + Explore directory + four bottom tiles duplicated destinations. **Remove the bottom menu rather than adding more controls.** The logo and CTA are re-anchored with a single `--hero-bottom` variable and responsive overrides. The removed bottom row no longer appears in the HTML or CSS, and `Skip to Explore DaveHub` targets the hash-driven accessible directory. Preserve the four island links, the expanded Explore directory and fictional content page links. New small-screen browser/visual QA remains required.
 
 ## Subsequent design work
 
