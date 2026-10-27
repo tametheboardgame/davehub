@@ -1,8 +1,8 @@
 {
   "project": "DaveHub",
   "updated": "2026-10-27",
-  "status": "dh_08a_publication_contract_foundation_in_review",
-  "current_work_package": "DH-08A",
+  "status": "dh_08b_shared_world_pages_in_review",
+  "current_work_package": "DH-08B",
   "completed": [
     "DH-00A",
     "DH-00B",
@@ -13,19 +13,20 @@
     "DH-06A",
     "DH-07C",
     "DH-07D",
-    "DH-07E"
+    "DH-07E",
+    "DH-08A"
   ],
   "in_progress": [
-    "DH-08A executable public-approval catalogue and fiction-only linked-content demonstration",
-    "DH-08 written publication contract and risk review",
-    "DH-06 Giant Dave video animation remains owner-led"
+    "DH-08B generated world and creation pages awaiting owner visual review",
+    "DH-08 written publication contract (owner/content approval scope open)",
+    "DH-06 Giant Dave animation remains owner-led"
   ],
   "next": [
-    "Run Node tests and confirm Cloudflare DH-08 review-branch deployment",
-    "Owner reviews DH-08 publication rights and draft/workflow contract",
-    "DH-08B render real approved catalogue via shared site category/project page templates",
-    "DH-08C add secure drafts, provenance/change detection and withdrawal controls",
-    "DH-09 select first public-safe owner project for one end-to-end pilot"
+    "Verify DH-08B Cloudflare preview and musical navigation across desktop/mobile",
+    "Review seven world pages and linked musical fiction on branch",
+    "After approval merge DH-08B and preserve empty public catalogue",
+    "DH-08C private draft review and withdrawal/change-detection design",
+    "Select first real published work for item-level metadata/rights approval before DH-09"
   ],
   "decisions": [
     {
@@ -126,8 +127,8 @@
     "remote_status": "connected"
   },
   "last_verified": {
-    "scope": "DH-07 merged and DH-08A founded",
-    "result": "DH-07C, DH-07D and DH-07E merged consecutively into main. Cloudflare Pages check passed on resulting main merge f822811. DH-08A branch now defines a draft empty public catalogue and fictional examples; review/testing ongoing."
+    "scope": "DH-08B generator initial QA",
+    "result": "Seven approved views and per-work routes are rendered by a shared static generator. Fictional demonstration contains seven linked records; public catalogue remains empty. V8 parse and example manifest validation passed; Cloudflare/Node tests to verify before review."
   },
   "domain": {
     "primary": "davehub.co.uk",
@@ -393,7 +394,7 @@
     "docs": "docs/DH07E_GIANT_DAVE_MYSTIC_PORTAL.md"
   },
   "dh08": {
-    "state": "dh_08a_branch_implemented_pending_final_tests_and_owner_contract_signoff",
+    "state": "dh_08a_merged_dh_08b_branch_pending_owner_approval",
     "branch": "feature/dh-08-publication-contract",
     "document": "docs/DH08_PUBLICATION_CONTRACT.md",
     "source_of_truth": "content/public/catalogue.json",
@@ -410,6 +411,13 @@
     ],
     "no_automatic_publication": true,
     "no_api_costs": true,
-    "real_content_approval": "not granted"
+    "real_content_approval": "not granted",
+    "dh08a_merged_commit": "d1b4ec0d6971aa3178fae019c217e423b6b15151",
+    "dh08b_branch": "feature/dh-08b-shared-world-pages",
+    "dh08b_design_doc": "docs/DH08B_SHARED_CONTENT_PAGES.md",
+    "fictional_demo_count": 7,
+    "generated_public_index_pages": 8,
+    "generated_preview_pages": 15,
+    "validation": "fail-closed schema and Node tests"
   }
 }
