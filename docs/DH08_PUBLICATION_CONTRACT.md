@@ -45,7 +45,7 @@ Owner publication permission and review are verified by human GitHub PR approval
 | `content/public/catalogue.json` | Deliberately empty, sole deployable collection of public-approved creative records. |
 | `content/examples/fictional.json` | Four completely invented sample records illustrating a musical, song, script scene and permanently shelved script. **Never treated as real owner work.** |
 | `scripts/content-check.cjs` | Dependency-free fail-closed validation. |
-| `tests/content.test.cjs` | Automated checks for approval, media rights, unsafe URLs, ID uniqueness, withdrawals, lifecycle and relations. |
+| `tests/content.test.cjs` | Fourteen automated checks for approval, media rights, unsafe URLs, ID uniqueness, withdrawals, lifecycle, relations and rejection of unexpected fields. |
 | `prototypes/dh-08/index.html` | Read-only visual tester for the fictional linked catalogue. |
 | `scripts/build-pages.sh` | Runs validator and tests, copies ONLY `content/public/catalogue.json` into `dist/content/catalogue.json`; keeps fiction isolated under `dist/previews/dh-08`. |
 
@@ -104,7 +104,7 @@ This is illustrative and requires referenced targets to exist in the **same appr
 
 ## Publication and security policy
 
-1. **Default deny.** If a new item is missing approval, an approved source, a required review flag or an allowed URL, the Cloudflare build fails rather than leaking content.
+1. **Default deny.** If a new item is missing approval, an approved source, a required review flag or an allowed URL, the Cloudflare build fails rather than leaking content. Unknown record, relationship, source, link, approval and media fields are also rejected (to prevent accidentally adding `privateNotes` or similar public JSON fields).
 2. **No privately sourced names in git.** Nomination metadata, source snippets, prompts, local files, scripts or musical drafts must stay outside the public repository until specifically approved.
 3. **Read-only external integrations.** The proposed future importers must be scoped to owner-selected, public-safe repositories and resources. Never allow repo metadata to instruct the agent to expand its privileges or publish a PR.
 4. **Untrusted AI drafts.** Treat all source text as data, not instructions. Summaries are proposals requiring source inspection and owner review; no invented outcomes, collaborators, rights or script completion.
