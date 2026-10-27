@@ -15,6 +15,14 @@ const RIGHTS = new Set(['owned','licensed','permission_received']);
 const ID = /^[a-z][a-z0-9-]{2,79}$/;
 const YEAR = 1600;
 const MAX_YEAR = 2200;
+const ROOT_KEYS = new Set(['schemaVersion','items']);
+const ITEM_KEYS = new Set(['id','slug','title','recordType','workType','lifecycle','synopsis','views','period','sources','links','media','relations','publication']);
+const PERIOD_KEYS = new Set(['fromYear','toYear','approximate']);
+const SOURCE_KEYS = new Set(['kind','url']);
+const LINK_KEYS = new Set(['label','kind','url']);
+const MEDIA_KEYS = new Set(['id','title','kind','url','rights','approval']);
+const RELATION_KEYS = new Set(['kind','targetId']);
+const APPROVAL_KEYS = new Set(['status','approvedBy','approvedOn','rightsReviewed','metadataReviewed','mediaReviewed','linksReviewed']);
 
 function safePublicUrl(value) {
   if (typeof value !== 'string' || value.length > 2048 || /[\\\r\n\t]/.test(value)) return false;
@@ -38,11 +46,13 @@ function validateCatalogue(data) {
   if (!isObj(data) || data.schemaVersion !== 1 || !Array.isArray(data.items)) {
     return {valid:false, errors:['catalogue: require {schemaVersion:1, items:[]}'], count:0};
   }
+  for (const key of Object.keys(data)) if (!ROOT_KEYS.has(key)) fail('catalogue.'+key,'unrecognised field must not be public');
   if (data.items.length > 1000) fail('items', 'maximum 1000 records');
   const ids = new Set(), slugs = new Set(), records = new Map();
   data.items.forEach((item,index)=>{
     const p='items['+index+']';
     if (!isObj(item)) { fail(p,'not an object'); return; }
+    for (const key of Object.keys(item)) if (!ITEM_KEYS.has(key)) fail(p+'.'+key,'unrecognised field must not be public');
     if (!ID.test(item.id || '')) fail(p+'.id','expected stable lowercase ID');
     else if(ids.has(item.id)) fail(p+'.id','duplicate ID');
     else { ids.add(item.id); records.set(item.id,item); }
@@ -59,6 +69,7 @@ function validateCatalogue(data) {
     if (item.period !== undefined) {
       if (!isObj(item.period)) fail(p+'.period','expected object');
       else {
+        for (const key of Object.keys(item.period)) if (!PERIOD_KEYS.has(key)) fail(p+'.period.'+key,'unrecognised field');
         const {fromYear,toYear,approximate}=item.period;
         if (fromYear!==undefined && (!Number.isInteger(fromYear)||fromYear<YEAR||fromYear>MAX_YEAR)) fail(p+'.period.fromYear','invalid year');
         if (toYear!==undefined && (!Number.isInteger(toYear)||toYear<YEAR||toYear>MAX_YEAR)) fail(p+'.period.toYear','invalid year');
@@ -67,6 +78,7 @@ function validateCatalogue(data) {
       }
     }
     const a=item.publication;
+    if (isObj(a)) for(const key of Object.keys(a)) if(!APPROVAL_KEYS.has(key)) fail(p+'.publication.'+key,'unrecognised field');
     if (!isObj(a)||a.status!=='public_approved'||a.approvedBy!=='owner'||!/^\d{4}-\d{2}-\d{2}$/.test(a.approvedOn||'')||
         !Number.isFinite(Date.parse(a.approvedOn))||
         a.rightsReviewed!==true||a.metadataReviewed!==true||a.mediaReviewed!==true||a.linksReviewed!==true) {
@@ -76,23 +88,27 @@ function validateCatalogue(data) {
     else item.sources.forEach((source,i)=>{
       const sp=p+'.sources['+i+']';
       if (!isObj(source)||!SOURCE_KINDS.has(source.kind)) {fail(sp,'invalid source');return;}
+      for(const key of Object.keys(source)) if(!SOURCE_KEYS.has(key)) fail(sp+'.'+key,'unrecognised field');
       if (source.kind==='owner_attestation') {
         if (source.url!==undefined) fail(sp+'.url','owner attestation must not include a public link');
       } else if (!safePublicUrl(source.url)) fail(sp+'.url','require safe public HTTPS link');
     });
     if (!Array.isArray(item.links)) fail(p+'.links','expected links array (empty is allowed)');
     else item.links.forEach((link,i)=>{
-      if (!isObj(link)||!text(link.label,100)||!LINK_KINDS.has(link.kind)||!safePublicUrl(link.url)) fail(p+'.links['+i+']','invalid public link');
+      if (!isObj(link)||!text(link.label,100)||!LINK_KINDS.has(link.kind)||!safePublicUrl(link.url)) {fail(p+'.links['+i+']','invalid public link');return;}
+      for(const key of Object.keys(link)) if(!LINK_KEYS.has(key)) fail(p+'.links['+i+'].'+key,'unrecognised field');
     });
     if (!Array.isArray(item.media)) fail(p+'.media','expected media array (empty is allowed)');
     else item.media.forEach((media,i)=>{
       const mp=p+'.media['+i+']';
       if (!isObj(media)||!ID.test(media.id||'')||!text(media.title,160)||!MEDIA_KINDS.has(media.kind)||!RIGHTS.has(media.rights)||
-          media.approval!=='public_approved'||!safePublicUrl(media.url)) fail(mp,'media requires ID, type, title, approved rights and a safe HTTPS URL');
+          media.approval!=='public_approved'||!safePublicUrl(media.url)) {fail(mp,'media requires ID, type, title, approved rights and a safe HTTPS URL');return;}
+      for(const key of Object.keys(media)) if(!MEDIA_KEYS.has(key)) fail(mp+'.'+key,'unrecognised field');
     });
     if (!Array.isArray(item.relations)) fail(p+'.relations','expected relations array (empty is allowed)');
     else item.relations.forEach((rel,i)=>{
-      if (!isObj(rel)||!RELATIONS.has(rel.kind)||!ID.test(rel.targetId||'')) fail(p+'.relations['+i+']','invalid relation');
+      if (!isObj(rel)||!RELATIONS.has(rel.kind)||!ID.test(rel.targetId||'')) {fail(p+'.relations['+i+']','invalid relation');return;}
+      for(const key of Object.keys(rel)) if(!RELATION_KEYS.has(key)) fail(p+'.relations['+i+'].'+key,'unrecognised field');
     });
   });
   data.items.forEach((item,index)=>{
