@@ -315,21 +315,27 @@ html, body { height: 100%; width: 100%; overflow: hidden; }
 
 /* DH-07E — Static, transparent Giant Dave. This slot also hosts the future animation.
    Keep Dave behind the links and the hero copy; never intercept pointer/focus events. */
+/* Dave is geometrically tethered to the left edge of the centred Explore CTA.
+   The visible illustration reaches ~58% of its rendered height from its image's
+   left edge (remaining width is transparent padding). This lets the 24px gap
+   stay consistent when viewport width changes instead of pinning Dave to x=0. */
 .dave-stage {
+  --dave-height: 88svh;
+  --dave-explore-half-width: 212.5px; /* half of .explore-button's 425px desktop width */
+  --dave-to-cta-gap: 24px;
+  --dave-visible-reach: .58;
   position: absolute;
   z-index: 1;
   inset: 0 auto 0 0;
   width: min(46vw, 740px);
   overflow: visible;
   pointer-events: none;
+  left: calc(50% - var(--dave-explore-half-width) - var(--dave-to-cta-gap) - var(--dave-height) * var(--dave-visible-reach));
 }
 .dave-stage__still {
   position: absolute;
   display: block;
-  /* Slightly enlarged and shifted right after owner screenshot review.
-     Keep the figure low, under Writing, with the hand inside the frame.
-     Anchor from the bottom for future animation interchangeability. */
-  height: 88svh;
+  height: var(--dave-height);
   width: auto;
   max-width: none;
   left: 0;
@@ -340,20 +346,26 @@ html, body { height: 100%; width: 100%; overflow: hidden; }
   filter: drop-shadow(0 14px 25px rgba(1, 8, 28, .62)) drop-shadow(7px 0 15px rgba(64, 145, 235, .18));
 }
 @media (min-width: 1750px) {
-  .dave-stage__still { height: 90svh; left: 0; bottom: -25svh; }
+  .dave-stage { --dave-height: 90svh; }
+  .dave-stage__still { bottom: -25svh; }
 }
 @media (max-width: 900px) {
-  .dave-stage__still { height: 78svh; left: -4vw; bottom: -13svh; }
+  /* On narrower screens, there is physically insufficient horizontal space
+     for Dave to stand fully beside a centred button: use portrait framing. */
+  .dave-stage { left: 0; --dave-height: 78svh; }
+  .dave-stage__still { left: -4vw; bottom: -13svh; }
 }
 @media (max-width: 640px) {
-  .dave-stage { width: 52vw; }
-  .dave-stage__still { height: 65svh; left: -5vw; bottom: -12svh; filter: drop-shadow(0 7px 16px rgba(3,8,29,.55)); }
+  .dave-stage { width: 52vw; --dave-height: 65svh; }
+  .dave-stage__still { left: -5vw; bottom: -12svh; filter: drop-shadow(0 7px 16px rgba(3,8,29,.55)); }
 }
 @media (max-width: 380px) {
-  .dave-stage__still { height: 64svh; left: -6vw; bottom: -12svh; }
+  .dave-stage { --dave-height: 64svh; }
+  .dave-stage__still { left: -6vw; bottom: -12svh; }
 }
 @media (max-height: 430px) and (orientation: landscape) {
-  .dave-stage__still { height: 89svh; left: 1vw; bottom: -28svh; }
+  .dave-stage { left: 0; --dave-height: 89svh; }
+  .dave-stage__still { left: 1vw; bottom: -28svh; }
 }
 
 /* DH-07E — The explorer is a magical portal into the SAME approved island-world
