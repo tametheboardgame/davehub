@@ -86,7 +86,7 @@ function renderIndex(data,root,preview){
   return '<a class="world-tile"'+attr('href',viewUrl(root,v.id))+'><span class="symbol">'+esc(v.mark)+'</span>'+
    '<strong>'+esc(v.title)+'</strong><span>'+esc(v.subtitle)+'</span><em>'+(n?n+' '+(n===1?'creation':'creations'):'Open this world')+' ↗</em></a>';
  }).join('\n')+'</div>';
- return shell({title:'Every world has a doorway',kicker:'EXPLORE / CREATIVE WORLDS',lead:'Follow an idea into music, writing, games, forgotten experiments and beyond. One creation can belong to several worlds.',body:(!preview && !data.items.length?demoInvitation(): '')+blocks,root,preview});
+ return shell({title:'Every world has a doorway',kicker:'EXPLORE / CREATIVE WORLDS',lead:'Follow an idea into music, writing, games, forgotten experiments and beyond. One creation can belong to several worlds.',body:(!preview?demoInvitation(): '')+blocks,root,preview});
 }
 function renderView(data,root,view,preview){
  const v=VIEWS.find(x=>x.id===view);
