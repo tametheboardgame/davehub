@@ -1,8 +1,8 @@
 {
   "project": "DaveHub",
   "updated": "2026-10-27",
-  "status": "dh_07e_static_dave_mystic_explore_preview_candidate",
-  "current_work_package": "DH-07E",
+  "status": "dh_08a_publication_contract_foundation_in_review",
+  "current_work_package": "DH-08A",
   "completed": [
     "DH-00A",
     "DH-00B",
@@ -10,20 +10,22 @@
     "DH-01L",
     "DH-01M",
     "DH-01N",
-    "DH-06A"
+    "DH-06A",
+    "DH-07C",
+    "DH-07D",
+    "DH-07E"
   ],
   "in_progress": [
-    "DH-07E static Dave and mystical Explore review in Cloudflare preview",
-    "DH-07D simplified navigation is in feature branch, awaiting visual merge approval",
-    "DH-07C fictional content worlds owner-liked, approval pending consolidated review",
-    "DH-06 owner creating animation separately"
+    "DH-08A executable public-approval catalogue and fiction-only linked-content demonstration",
+    "DH-08 written publication contract and risk review",
+    "DH-06 Giant Dave video animation remains owner-led"
   ],
   "next": [
-    "Verify Cloudflare preview deployment and correct route",
-    "Owner review static Giant Dave placement, logo/CTA and island occlusion on desktop/mobile",
-    "Owner review mystical Explore category cards and modal readability",
-    "After approval reconcile stacked DH-07C/DH-07D/DH-07E into main",
-    "DH-08 DaveHub Ready approved-content ingestion"
+    "Run Node tests and confirm Cloudflare DH-08 review-branch deployment",
+    "Owner reviews DH-08 publication rights and draft/workflow contract",
+    "DH-08B render real approved catalogue via shared site category/project page templates",
+    "DH-08C add secure drafts, provenance/change detection and withdrawal controls",
+    "DH-09 select first public-safe owner project for one end-to-end pilot"
   ],
   "decisions": [
     {
@@ -124,8 +126,8 @@
     "remote_status": "connected"
   },
   "last_verified": {
-    "scope": "DH-07E static integration checks",
-    "result": "WebP binary Git blob SHA verified; index has static Dave; Cloudflare build checks and copies asset, modern CSS has balanced braces; main.js and catalogue.js compile, original 4 islands and Explore remain. Browser visual QA and Cloudflare deployment check pending."
+    "scope": "DH-07 merged and DH-08A founded",
+    "result": "DH-07C, DH-07D and DH-07E merged consecutively into main. Cloudflare Pages check passed on resulting main merge f822811. DH-08A branch now defines a draft empty public catalogue and fictional examples; review/testing ongoing."
   },
   "domain": {
     "primary": "davehub.co.uk",
@@ -389,5 +391,24 @@
     "categories_unchanged": true,
     "homepage_bottom_menu_removed": true,
     "docs": "docs/DH07E_GIANT_DAVE_MYSTIC_PORTAL.md"
+  },
+  "dh08": {
+    "state": "dh_08a_branch_implemented_pending_final_tests_and_owner_contract_signoff",
+    "branch": "feature/dh-08-publication-contract",
+    "document": "docs/DH08_PUBLICATION_CONTRACT.md",
+    "source_of_truth": "content/public/catalogue.json",
+    "public_owner_work_count": 0,
+    "fictional_demo": "prototypes/dh-08/index.html",
+    "checks": [
+      "12 Node tests",
+      "fail-closed public manifest validator",
+      "explicit rights/source/media gates",
+      "safe HTTPS URL check",
+      "referential integrity",
+      "withdrawal by remove and reviewed redeploy"
+    ],
+    "no_automatic_publication": true,
+    "no_api_costs": true,
+    "real_content_approval": "not granted"
   }
 }
