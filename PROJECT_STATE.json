@@ -17,9 +17,10 @@
     "DH-08A"
   ],
   "in_progress": [
-    "DH-08B generated world and creation pages awaiting owner visual review",
-    "DH-08 written publication contract (owner/content approval scope open)",
-    "DH-06 Giant Dave animation remains owner-led"
+    "DH-08B direct home/island navigation to generated creative worlds awaiting browser review",
+    "DH-08B shared page layout and fictional musical storytelling review",
+    "DH-08C private draft/review workflow planning",
+    "DH-06 owner-led Giant Dave animation"
   ],
   "next": [
     "Verify DH-08B Cloudflare preview and musical navigation across desktop/mobile",
@@ -127,8 +128,8 @@
     "remote_status": "connected"
   },
   "last_verified": {
-    "scope": "DH-08B generator initial QA",
-    "result": "Seven approved views and per-work routes are rendered by a shared static generator. Fictional demonstration contains seven linked records; public catalogue remains empty. V8 parse and example manifest validation passed; Cloudflare/Node tests to verify before review."
+    "scope": "DH-08B homepage integration fix",
+    "result": "Homepage CTA now links to /worlds/ and each of four islands links to category URLs; retired old modal UI; legacy hashes redirect to generated routes; public zero-content index links clearly to isolated fictional walkthrough. Added five navigation tests, Cloudflare build to verify."
   },
   "domain": {
     "primary": "davehub.co.uk",
@@ -418,6 +419,17 @@
     "fictional_demo_count": 7,
     "generated_public_index_pages": 8,
     "generated_preview_pages": 15,
-    "validation": "fail-closed schema and Node tests"
+    "validation": "fail-closed schema and Node tests",
+    "dh08b_home_integration": true,
+    "main_explore_destination": "/worlds/",
+    "island_routes": [
+      "/worlds/projects/",
+      "/worlds/writing/",
+      "/worlds/games/",
+      "/worlds/experiments/"
+    ],
+    "demo_gateway": "/previews/dh-08b/worlds/",
+    "old_explore_modal": "retired on DH-08B branch",
+    "navigation_tests": 5
   }
 }
