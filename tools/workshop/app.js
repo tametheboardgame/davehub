@@ -34,9 +34,12 @@ function show(c){
  current=c;
  $('editor-title').textContent=c.title||'New creation';
  $('id').value=c.id||'';$('slug').value=c.slug||'';
- $('title').value=c.title||'';$('work-type').value=c.workType||'other';
+ $('title').value=c.title||'';
+ $('record-type').value=c.recordType||'work';$('work-type').value=c.workType||'other';
+ $('release-kind').value=c.releaseKind||'album';$('artifact-kind').value=c.artifactKind||'other';
  $('lifecycle').value=c.lifecycle||'active';$('synopsis').value=c.synopsis||'';
  $('source-url').value=c.sourceUrl||'';$('link-url').value=c.linkUrl||'';
+ $('source-kind').value=c.sourceKind||'official';$('link-kind').value=c.linkKind||'official';
  $('link-label').value=c.linkLabel||'';$('status').value=c.status||'nominated';
  $('notes').value=c.notes||'';
  document.querySelectorAll('#views input').forEach(x=>{x.checked=(c.views||[]).includes(x.value)});
@@ -54,14 +57,15 @@ function toCandidate(){
   id:$('id').value.trim(),
   slug:$('slug').value.trim()||$('id').value.trim(),
   title:$('title').value.trim(),
-  workType:$('work-type').value,
+  recordType:$('record-type').value,workType:$('work-type').value,
+  releaseKind:$('release-kind').value,artifactKind:$('artifact-kind').value,
   lifecycle:$('lifecycle').value,
   synopsis:$('synopsis').value.trim(),
   views:Array.from(document.querySelectorAll('#views input:checked')).map(x=>x.value),
   sourceUrl:$('source-url').value.trim(),
-  sourceKind:$('source-url').value.includes('github.com')?'repository':'official',
+  sourceKind:$('source-kind').value,
   linkUrl:$('link-url').value.trim(),
-  linkLabel:$('link-label').value.trim(),
+  linkLabel:$('link-label').value.trim(),linkKind:$('link-kind').value,
   status:$('status').value,
   notes:$('notes').value.trim(),
   review:{
