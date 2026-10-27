@@ -19,6 +19,9 @@ const FILE=path.join(DIR,'drafts.json');
 const TOKEN=crypto.randomBytes(32).toString('hex');
 const BASE={schemaVersion:1,candidates:[]};
 const MAX_POST=1024*1024;
+const RECORD_TYPES=['work','organisation','music_identity','release','artifact'];
+const RELEASE_KINDS=['album','single','edition','playable','other'];
+const ARTIFACT_KINDS=['script_scene','concept','development_note','lyrics','demo','artwork','excerpt','other'];
 const TYPES=['book','script','musical','song','game','physical_build','software','idea','other'];
 const VIEWS=['projects','writing','games','experiments','music','unfinished','memory-lane'];
 const STATUSES=['nominated','needs_review','ready_for_owner_approval','approved_for_export','withdrawn'];
@@ -48,18 +51,23 @@ function cleanCandidate(input){
  if(!input||typeof input!=='object'||Array.isArray(input))throw Error('Candidate must be an object');
  if(!ID.test(input.id||''))throw Error('Invalid ID (use lowercase slug-like ID)');
  if(typeof input.title!=='string'||!input.title.trim()||input.title.length>180)throw Error('A title is required');
- if(!TYPES.includes(input.workType||'other'))throw Error('Unrecognised work type');
+ if(!RECORD_TYPES.includes(input.recordType||'work'))throw Error('Unrecognised record type');
+ if((input.recordType||'work')==='work'&&!TYPES.includes(input.workType||'other'))throw Error('Unrecognised work type');
+ if(input.recordType==='release'&&!RELEASE_KINDS.includes(input.releaseKind||'album'))throw Error('Unrecognised release kind');
+ if(input.recordType==='artifact'&&!ARTIFACT_KINDS.includes(input.artifactKind||'other'))throw Error('Unrecognised artifact kind');
  if(!Array.isArray(input.views)||!input.views.length||!input.views.every(x=>VIEWS.includes(x))||new Set(input.views).size!==input.views.length)throw Error('Invalid categories');
  if(input.status&&!STATUSES.includes(input.status))throw Error('Invalid editorial status');
  safeStrings(input);
  const c={
-  id:input.id,title:input.title.trim(),slug:input.slug||input.id,workType:input.workType||'other',
+  id:input.id,title:input.title.trim(),slug:input.slug||input.id,recordType:input.recordType||'work',
+  workType:input.workType||'other',releaseKind:input.releaseKind||'album',artifactKind:input.artifactKind||'other',
   lifecycle:input.lifecycle||'active', synopsis:typeof input.synopsis==='string'?input.synopsis.trim():'',
   views:input.views, status:input.status||'nominated',
   sourceUrl:typeof input.sourceUrl==='string'?input.sourceUrl.trim():'',
   sourceKind:input.sourceKind||'official',
   linkUrl:typeof input.linkUrl==='string'?input.linkUrl.trim():'',
   linkLabel:typeof input.linkLabel==='string'?input.linkLabel.trim():'',
+  linkKind:input.linkKind||'official',
   notes:typeof input.notes==='string'?input.notes.trim():'',
   review:{
    rights:input.review?.rights===true,
@@ -84,10 +92,14 @@ function makeApproved(candidate){
  if(c.status!=='approved_for_export'||!c.ownerApproved||!Object.values(c.review).every(Boolean))throw Error(c.id+' not explicitly approved');
  if(!c.synopsis)throw Error(c.id+' has no synopsis');
  const record={
-  id:c.id,slug:c.slug,title:c.title,recordType:'work',workType:c.workType,lifecycle:c.lifecycle,synopsis:c.synopsis,
+  id:c.id,slug:c.slug,title:c.title,recordType:c.recordType,
+  ...(c.recordType==='work'?{workType:c.workType}:{}),
+  ...(c.recordType==='release'?{releaseKind:c.releaseKind}:{}),
+  ...(c.recordType==='artifact'?{artifactKind:c.artifactKind}:{}),
+  lifecycle:c.lifecycle,synopsis:c.synopsis,
   views:c.views,
   sources:c.sourceUrl?[{kind:c.sourceKind,url:c.sourceUrl}]:[{kind:'owner_attestation'}],
-  links:c.linkUrl?[{kind:'official',label:c.linkLabel||'Explore the original',url:c.linkUrl}]:[],
+  links:c.linkUrl?[{kind:c.linkKind,label:c.linkLabel||'Explore the original',url:c.linkUrl}]:[],
   media:[],relations:[],
   publication:{status:'public_approved',approvedBy:'owner',approvedOn:c.approvedOn,
    rightsReviewed:c.review.rights,metadataReviewed:c.review.metadata,linksReviewed:c.review.links,mediaReviewed:c.review.media}
