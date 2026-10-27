@@ -29,7 +29,10 @@
 <label>Stable ID <input name="id" id="id" required pattern="[a-z][a-z0-9-]{2,79}" placeholder="my-project"></label>
 <label>Public URL slug <input name="slug" id="slug" pattern="[a-z][a-z0-9-]{2,79}" placeholder="my-project"></label>
 <label class="span2">Title <input name="title" id="title" required maxlength="180"></label>
+<label>Record type <select name="recordType" id="record-type"><option value="work">Creative work</option><option value="organisation">Publisher / organisation</option><option value="music_identity">Music artist / identity</option><option value="release">Album / release</option><option value="artifact">Script scene / artifact</option></select></label>
 <label>Format <select name="workType" id="work-type"><option value="book">Book</option><option value="script">Script</option><option value="musical">Musical</option><option value="song">Song</option><option value="game">Game</option><option value="physical_build">Physical build</option><option value="software">Software</option><option value="idea">Idea</option><option value="other">Other / blog</option></select></label>
+<label>Release format (when applicable) <select id="release-kind"><option value="album">Album</option><option value="single">Single</option><option value="edition">Edition</option><option value="playable">Playable release</option><option value="other">Other release</option></select></label>
+<label>Artifact format (when applicable) <select id="artifact-kind"><option value="script_scene">Script scene</option><option value="concept">Concept</option><option value="development_note">Development note</option><option value="lyrics">Lyrics</option><option value="demo">Demo</option><option value="artwork">Artwork</option><option value="excerpt">Excerpt</option><option value="other">Other artifact</option></select></label>
 <label>Lifecycle <select name="lifecycle" id="lifecycle"><option value="active">Active</option><option value="completed">Completed</option><option value="idea">Idea</option><option value="permanently_shelved">Permanently shelved</option><option value="abandoned">Abandoned</option></select></label>
 <fieldset class="span2"><legend>Which worlds should this appear in?</legend><div class="checks" id="views">
 <label><input type="checkbox" value="projects"> Projects</label><label><input type="checkbox" value="writing"> Writing</label>
@@ -38,8 +41,10 @@
 <label><input type="checkbox" value="memory-lane"> Memory Lane</label></div></fieldset>
 <label class="span2">Public-facing description <textarea id="synopsis" rows="5" maxlength="1400" placeholder="What is this creation, and why would someone explore it?"></textarea></label>
 <label>Original source URL (optional) <input type="url" id="source-url" placeholder="https://example.com/"></label>
+<label>Source kind <select id="source-kind"><option value="official">Official website</option><option value="repository">GitHub repository</option><option value="streaming">Streaming platform</option><option value="retailer">Retailer / ISBN listing</option><option value="archive">Historical archive</option><option value="other">Other public source</option></select></label>
 <label>Primary public link (optional) <input type="url" id="link-url" placeholder="https://example.com/"></label>
 <label>Link label <input id="link-label" placeholder="Read / Play / Listen"></label>
+<label>Link type <select id="link-kind"><option value="official">Official</option><option value="play">Play</option><option value="read">Read</option><option value="streaming">Listen</option><option value="repository">Source repository</option><option value="retailer">Buy / retailer</option><option value="other">Other</option></select></label>
 <label>Editorial stage <select id="status"><option value="nominated">Nominated</option><option value="needs_review">Needs review</option><option value="ready_for_owner_approval">Ready for approval</option><option value="approved_for_export">Approved for export</option><option value="withdrawn">Withdrawn</option></select></label>
 <label class="span2">Private editorial notes — never exported <textarea id="notes" rows="4" placeholder="What needs verification? Rights, permissions, attribution, missing links..."></textarea></label>
 </div>
