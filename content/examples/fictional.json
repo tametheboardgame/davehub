@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "lightkeeper-musical",
+      "slug": "last-lightkeeper",
+      "title": "The Last Lightkeeper",
+      "recordType": "work",
+      "workType": "musical",
+      "lifecycle": "completed",
+      "synopsis": "An entirely fictional musical about the last person tending a lighthouse beyond the edge of the known world.",
+      "views": [
+        "music",
+        "writing",
+        "projects"
+      ],
+      "period": {
+        "fromYear": 2024,
+        "approximate": true
+      },
+      "sources": [
+        {
+          "kind": "owner_attestation"
+        }
+      ],
+      "links": [],
+      "media": [],
+      "relations": [
+        {
+          "kind": "has_song",
+          "targetId": "glass-harbour-song"
+        },
+        {
+          "kind": "contains",
+          "targetId": "lighting-the-lamp-scene"
+        }
+      ],
+      "publication": {
+        "status": "public_approved",
+        "approvedBy": "owner",
+        "approvedOn": "2026-10-27",
+        "rightsReviewed": true,
+        "metadataReviewed": true,
+        "mediaReviewed": true,
+        "linksReviewed": true
+      }
+    },
+    {
+      "id": "glass-harbour-song",
+      "slug": "glass-harbour",
+      "title": "Glass Harbour",
+      "recordType": "work",
+      "workType": "song",
+      "lifecycle": "completed",
+      "synopsis": "A fictional song from The Last Lightkeeper, following its imaginary keeper through an imagined storm.",
+      "views": [
+        "music",
+        "writing"
+      ],
+      "sources": [
+        {
+          "kind": "owner_attestation"
+        }
+      ],
+      "links": [],
+      "media": [],
+      "relations": [
+        {
+          "kind": "part_of",
+          "targetId": "lightkeeper-musical"
+        },
+        {
+          "kind": "related_to",
+          "targetId": "lighting-the-lamp-scene"
+        }
+      ],
+      "publication": {
+        "status": "public_approved",
+        "approvedBy": "owner",
+        "approvedOn": "2026-10-27",
+        "rightsReviewed": true,
+        "metadataReviewed": true,
+        "mediaReviewed": true,
+        "linksReviewed": true
+      }
+    },
+    {
+      "id": "lighting-the-lamp-scene",
+      "slug": "lighting-the-lamp",
+      "title": "Lighting the Lamp",
+      "recordType": "artifact",
+      "lifecycle": "completed",
+      "synopsis": "A fictional scene outline that introduces the harbour, the keeper and the lighthouse's final night.",
+      "views": [
+        "writing",
+        "music"
+      ],
+      "sources": [
+        {
+          "kind": "owner_attestation"
+        }
+      ],
+      "links": [],
+      "media": [],
+      "relations": [
+        {
+          "kind": "part_of",
+          "targetId": "lightkeeper-musical"
+        },
+        {
+          "kind": "related_to",
+          "targetId": "glass-harbour-song"
+        }
+      ],
+      "publication": {
+        "status": "public_approved",
+        "approvedBy": "owner",
+        "approvedOn": "2026-10-27",
+        "rightsReviewed": true,
+        "metadataReviewed": true,
+        "mediaReviewed": true,
+        "linksReviewed": true
+      }
+    },
+    {
+      "id": "unfinished-clock-novel",
+      "slug": "the-clock-of-tomorrow",
+      "title": "The Clock of Tomorrow",
+      "recordType": "work",
+      "workType": "script",
+      "lifecycle": "permanently_shelved",
+      "synopsis": "A fictional abandoned screenplay in which a clock discovers that tomorrow has been cancelled.",
+      "views": [
+        "writing",
+        "unfinished",
+        "memory-lane"
+      ],
+      "period": {
+        "fromYear": 2011,
+        "approximate": true
+      },
+      "sources": [
+        {
+          "kind": "owner_attestation"
+        }
+      ],
+      "links": [],
+      "media": [],
+      "relations": [],
+      "publication": {
+        "status": "public_approved",
+        "approvedBy": "owner",
+        "approvedOn": "2026-10-27",
+        "rightsReviewed": true,
+        "metadataReviewed": true,
+        "mediaReviewed": true,
+        "linksReviewed": true
+      }
+    }
+  ]
+}
