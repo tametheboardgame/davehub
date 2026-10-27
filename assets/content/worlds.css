@@ -75,3 +75,19 @@ h1{font-size:clamp(39px,6.5vw,76px);line-height:1.02;letter-spacing:-.056em;marg
  main{padding:38px 0 60px}h1{margin-bottom:15px}.section{margin:35px 0}.work-head{padding:24px}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+
+/* DH-08B navigation bridge: show the rich fictional example when real records
+   have not yet passed owner approval, without mixing sample data into public pages. */
+.demo-invitation{
+  margin:0 0 28px;
+  padding:clamp(20px,3vw,30px);
+  border:1px solid rgba(255,213,141,.62);
+  border-radius:24px;
+  background:linear-gradient(117deg,rgba(30,64,107,.93),rgba(10,25,56,.94));
+  box-shadow:0 12px 40px rgba(3,9,30,.48),inset 0 1px 0 rgba(255,239,185,.15);
+}
+.demo-invitation .eyebrow{margin:0 0 6px}
+.demo-invitation h2{font-size:clamp(23px,3vw,32px);margin:4px 0 10px}
+.demo-invitation p:not(.eyebrow){margin:0;color:var(--soft);line-height:1.65;max-width:690px}
+.demo-invitation .ghost{margin:20px 0 0;background:rgba(255,210,129,.12)}
+.demo-invitation .ghost:hover,.demo-invitation .ghost:focus-visible{background:rgba(255,210,129,.23)}
