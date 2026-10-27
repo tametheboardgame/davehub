@@ -1,6 +1,6 @@
 # DaveHub development roadmap
 
-**Updated:** 27 October 2026. **Current stage:** DH-07C/D/E visual foundation is locked and merged into main (merge `f822811`), with a successful Cloudflare production check. DH-08A publishing-contract validation, zero-content public manifest and linked fictional demonstration are under development on a separate branch.
+**Updated:** 27 October 2026. **Current stage:** DH-07 design locked/merged, DH-08A publication foundation merged into main, DH-08B shared world/creation page renderer complete on a review branch.
 
 ## Design baseline
 
@@ -42,11 +42,15 @@
 | DH-07D | Cross-world discovery navigation | Keep the four floating-island destination links, **remove duplicate bottom menu**, expand Explore into worlds plus Music, Unfinished and Memory Lane, with functional prototype routes | **Revised on review branch; final browser/visual approval pending** |
 | DH-07E | Interim Giant Dave and mystical Explore | Place one transparent static Dave in animation slot; make Explore a luminous portal using approved background art | **Built on preview branch; visual approval pending** |
 | DH-08A | Safe public catalogue and approval validation | Plain JSON canonical work model, fail-closed approval/rights checks, tests, fictional preview; zero owner works published | **Implemented on draft branch, testing/sign-off pending** |
-| DH-08B | Render approved catalogue into actual site | Category, work and musical deep-linked templates powered by approved public catalogue only | **Next** |
+| DH-08B | Render approved catalogue into actual site | Seven themed world pages, shared musical/detail templates and fictional branch demonstration; public catalogue remains empty | **Built and tested on draft review branch; owner visual review pending** |
 | DH-08 | DaveHub Ready publication contract | Explicit approved project onboarding, source collection, draft review, provenance, withdrawal and security gates | Planned after DH-07 |
 | DH-09 | Single-project ingestion pilot | One approved creative game becomes a project page + reviewed update through preview/merge | Planned |
 | DH-10 | Automated development stories | Significant approved project events become concise draft human-readable stories, not routine posts | Planned |
 | DH-11 | Extend feeds and content types | Approved books/music/ideas/experiments and other capture channels, no duplicate catalogues | Planned |
+
+## DH-08B shared content pages (27 October 2026)
+
+The [DH-08B implementation and verification record](DH08B_SHARED_CONTENT_PAGES.md) covers a single statically generated UI driven by the approved public manifest. Seven Explore world destinations and per-creation deep links are now built from one source; a musical can link concept, songs, script scenes, making-of notes and releases. A separate seven-work fictional dataset produces a 15-page browser demonstration using exactly the same templates. Public world pages are currently empty because **no real owner works are approved**. DH-08B is a draft feature branch, not a production content release.
 
 ## DH-08A owner-controlled public content (27 October 2026)
 
