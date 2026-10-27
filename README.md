@@ -8,7 +8,7 @@ It is emphatically **not** a CV, developer portfolio, professional marketing sit
 
 ## Status
 
-**DH-01A homepage first-look implemented, 22 October 2026 (awaiting first hosted visual review).** The owner has purchased **davehub.co.uk** as the primary domain; DNS and hosting are not configured. The owner has selected Concept 1 as the primary visual reference; final foreground art and character motion remain open. The static interactive first-look homepage is built; no site is deployed.
+**DH-07 illustrated homepage and discovery navigation locked, merged and deployed to Cloudflare Pages on 27 October 2026. DH-08 publishing controls are in development.** The owner has purchased **davehub.co.uk** as the primary domain; DNS and hosting are not configured. The owner has selected Concept 1 as the primary visual reference; final foreground art and character motion remain open. The approved static homepage, mystical Explore directory and fictional content-world test pages are deployed. The real published-work catalogue remains empty pending explicit item approvals.
 
 ## North star
 
@@ -26,9 +26,16 @@ The experience should reward exploration without making it difficult to find a s
 
 ## Prototype
 
-The static homepage is at repository root (`index.html`, `styles.css`, `main.js`, `catalogue.js`). Use `sh scripts/build-pages.sh` to create the curated `dist/` output for Cloudflare Pages. Cloudflare account connection and first live `*.pages.dev` deployment are pending. Details: [Cloudflare Pages setup](docs/CLOUDFLARE_PAGES.md).
+The static homepage is at repository root (`index.html`, `styles.css`, `main.js`, `catalogue.js`). Use `sh scripts/build-pages.sh` to create the curated `dist/` output for Cloudflare Pages. Cloudflare GitHub integration is active; the project is deployed at the existing `davehub.pages.dev` hostname, with branch previews on PRs. Details: [Cloudflare Pages setup](docs/CLOUDFLARE_PAGES.md).
 
 The approved logo and background are repository assets; illustrated Dave remains intentionally absent pending a separate design review.
+
+## DH-08: Safe creative catalogue (in development)
+
+- [DaveHub Ready publication contract](docs/DH08_PUBLICATION_CONTRACT.md): owner-nominated sources, rights reviews and human-approved publication only.
+- `content/public/catalogue.json` contains **zero real works** until explicitly approved. `content/examples/fictional.json` is a separate test fixture.
+- `node --test tests/content.test.cjs` and `node scripts/content-check.cjs content/public/catalogue.json` verify content safety. The Cloudflare build runs both automatically.
+- `/previews/dh-08/` is a read-only fictional-content demonstration on the branch, not an importer or publishing UI.
 
 ## Current design and automation workstreams
 
