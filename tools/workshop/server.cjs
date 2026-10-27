@@ -94,10 +94,14 @@ function makeApproved(candidate){
  };
  return record;
 }
-function exportReview(store){
+function exportReview(store,baseline={schemaVersion:1,items:[]}){
  const c=store.candidates.filter(x=>x.status==='approved_for_export');
  if(!c.length)throw Error('No items have been explicitly approved for export.');
- const output={schemaVersion:1,items:c.map(makeApproved)};
+ const keep=validateCatalogue(baseline);
+ if(!keep.valid)throw Error('Existing approved catalogue is invalid: '+keep.errors.join('; '));
+ const merged=new Map(baseline.items.map(item=>[item.id,item]));
+ for(const candidate of c){const approved=makeApproved(candidate);merged.set(approved.id,approved)}
+ const output={schemaVersion:1,items:[...merged.values()]};
  const check=validateCatalogue(output);
  if(!check.valid)throw Error('Export blocked: '+check.errors.join('; '));
  return output;
@@ -157,7 +161,10 @@ async function serve(req,res){
   writeStore(d);jsonReply(res,200,{ok:true,count:d.candidates.length});return;
  }
  if(req.method==='POST'&&req.url==='/api/export'){
-  const result=exportReview(readStore());
+  // Retain other already-published entries; a proposal must not silently
+  // withdraw previously approved works it doesn't mention.
+  const baseline=JSON.parse(fs.readFileSync(path.join(__dirname,'../../content/public/catalogue.json'),'utf8'));
+  const result=exportReview(readStore(),baseline);
   const json=JSON.stringify(result,null,2)+'\n';
   res.writeHead(200,{'Content-Type':'application/json; charset=utf-8','Content-Disposition':'attachment; filename="davehub-approved-proposal.json"','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Content-Security-Policy':"default-src 'none'; frame-ancestors 'none'"});
   res.end(json);return;
