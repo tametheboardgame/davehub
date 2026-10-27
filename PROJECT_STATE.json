@@ -1,8 +1,8 @@
 {
   "project": "DaveHub",
   "updated": "2026-10-27",
-  "status": "dh_08b_shared_world_pages_in_review",
-  "current_work_package": "DH-08B",
+  "status": "dh_08c1_local_workshop_first_public_entries_review",
+  "current_work_package": "DH-08C1",
   "completed": [
     "DH-00A",
     "DH-00B",
@@ -14,20 +14,20 @@
     "DH-07C",
     "DH-07D",
     "DH-07E",
-    "DH-08A"
+    "DH-08A",
+    "DH-08B"
   ],
   "in_progress": [
-    "DH-08B direct home/island navigation to generated creative worlds awaiting browser review",
-    "DH-08B shared page layout and fictional musical storytelling review",
-    "DH-08C private draft/review workflow planning",
-    "DH-06 owner-led Giant Dave animation"
+    "DH-08C1 local-only editor and first text-only game/blog publication proposal in review branch",
+    "16 previously nominated creator projects supplied as a private workshop import, not in git",
+    "DH-08C2 rights/metadata approval for books, music and historic creations pending"
   ],
   "next": [
-    "Verify DH-08B Cloudflare preview and musical navigation across desktop/mobile",
-    "Review seven world pages and linked musical fiction on branch",
-    "After approval merge DH-08B and preserve empty public catalogue",
-    "DH-08C private draft review and withdrawal/change-detection design",
-    "Select first real published work for item-level metadata/rights approval before DH-09"
+    "Verify Cloudflare PR build and inspect first Unicorn Valley, Stephen Martin and Tame The Board Game pages",
+    "Run local workshop and import private nomination file",
+    "Verify Stephen Martin production URL in an ordinary browser and check outward-facing release permissions",
+    "Owner approves first three metadata/link-only records; then merge PR",
+    "Continue DH-08C2 individual book and musical release approvals"
   ],
   "decisions": [
     {
@@ -128,8 +128,8 @@
     "remote_status": "connected"
   },
   "last_verified": {
-    "scope": "DH-08B homepage integration fix",
-    "result": "Homepage CTA now links to /worlds/ and each of four islands links to category URLs; retired old modal UI; legacy hashes redirect to generated routes; public zero-content index links clearly to isolated fictional walkthrough. Added five navigation tests, Cloudflare build to verify."
+    "scope": "DH-08C1 initial implementation",
+    "result": "Three owner-nominated real entries staged only on review branch with official/repository/play links and no duplicated media. Local-only Content Workshop code and approval tests added; branch Cloudflare check must pass before final promotion."
   },
   "domain": {
     "primary": "davehub.co.uk",
@@ -395,7 +395,7 @@
     "docs": "docs/DH07E_GIANT_DAVE_MYSTIC_PORTAL.md"
   },
   "dh08": {
-    "state": "dh_08a_merged_dh_08b_branch_pending_owner_approval",
+    "state": "dh_08b_merged_dh_08c1_review_branch",
     "branch": "feature/dh-08-publication-contract",
     "document": "docs/DH08_PUBLICATION_CONTRACT.md",
     "source_of_truth": "content/public/catalogue.json",
@@ -430,6 +430,15 @@
     ],
     "demo_gateway": "/previews/dh-08b/worlds/",
     "old_explore_modal": "retired on DH-08B branch",
-    "navigation_tests": 5
+    "navigation_tests": 5,
+    "dh08b_merge": "c91103929d9253e089cf12ba8a1d42d9d56ab7a2",
+    "dh08c_branch": "feature/dh-08c-content-workshop-first-real-worlds",
+    "dh08c_doc": "docs/DH08C1_LOCAL_CONTENT_WORKSHOP.md",
+    "public_owner_work_count_proposed": 3,
+    "public_owner_work_count_on_main": 0,
+    "local_review_import_candidates": 16,
+    "workshop_server": "127.0.0.1:8765",
+    "draft_storage": "~/.davehub/workshop/drafts.json",
+    "no_subscription": true
   }
 }
