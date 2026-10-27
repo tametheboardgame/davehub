@@ -11,6 +11,7 @@ for asset in \
   catalogue.js \
   assets/branding/davehub-logo-faithful.svg \
   assets/homepage/floating-islands-background.png \
+  assets/characters/dave/dave-static-v1.webp \
   prototypes/dh-07c/index.html
 do
   if [ ! -s "$asset" ]; then
@@ -20,11 +21,12 @@ do
 done
 
 rm -rf dist
-mkdir -p dist/assets/branding dist/assets/homepage dist/previews/dh-07c
+mkdir -p dist/assets/branding dist/assets/homepage dist/assets/characters/dave dist/previews/dh-07c
 
 cp index.html styles.css main.js catalogue.js dist/
 cp assets/branding/davehub-logo-faithful.svg dist/assets/branding/
 cp assets/homepage/floating-islands-background.png dist/assets/homepage/
+cp assets/characters/dave/dave-static-v1.webp dist/assets/characters/dave/
 cp prototypes/dh-07c/index.html dist/previews/dh-07c/index.html
 
 # Prototype deployments remain noindex; this is not an access control.
