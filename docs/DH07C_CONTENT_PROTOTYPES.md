@@ -45,6 +45,10 @@ The actual `*.pages.dev` branch URL must be confirmed from Cloudflare/GitHub bui
 - No new external services and no secret-bearing backend.
 - `prefers-reduced-motion` disables transitions.
 
+## Typography revision (27 October 2026)
+
+Owner liked the concept and page layout but disliked the original font choice. Revised the **same** standalone prototype to favour a modern all-sans type hierarchy: system-first Aptos / Segoe UI text with Bahnschrift / Aptos Display display headings and platform fallbacks. Removed the prominent Georgia serif title/card treatment; no external font files, requests or dependencies. Colours, interactive flows, layout grids, fictional source records and navigation are unchanged. Retested shelf filter/search interactions and horizontal overflow at 1440×900, 1366×768, 390×844 and 375×667 with no browser script errors. The typography direction still needs owner review, and the old GitHub commit can be compared if preferred.
+
 ## Next review decisions
 
 1. Is the **Unfinished Shelf** the right name and tone, or should the archive be weirder/funnier?
