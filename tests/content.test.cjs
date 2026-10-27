@@ -63,3 +63,13 @@ test('unknown year is allowed; arbitrary fake precision is not required',()=>{
  delete c.items[3].period;
  assert.equal(validateCatalogue(c).valid,true);
 });
+test('unknown record fields cannot leak private editorial notes into the site',()=>{
+ const r=change(c=>{c.items[0].privateDraft='Unpublished raw script text';});
+ assert.equal(r.valid,false);assert.match(r.errors.join(' '),/unrecognised field/);
+});
+test('unknown nested link or media fields are blocked before publication',()=>{
+ const a=change(c=>{c.items[0].links=[{label:'Official',kind:'official',url:'https://example.org',privateToken:'secret'}]});
+ assert.equal(a.valid,false);assert.match(a.errors.join(' '),/unrecognised field/);
+ const b=change(c=>{c.items[0].media=[{id:'sample-image',title:'Fictional art',kind:'image',url:'https://example.org/a.webp',rights:'owned',approval:'public_approved',privateNote:'do not publish'}]});
+ assert.equal(b.valid,false);assert.match(b.errors.join(' '),/unrecognised field/);
+});
