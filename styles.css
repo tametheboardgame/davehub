@@ -320,7 +320,9 @@ html, body { height: 100%; width: 100%; overflow: hidden; }
    left edge (remaining width is transparent padding). This lets the 24px gap
    stay consistent when viewport width changes instead of pinning Dave to x=0. */
 .dave-stage {
-  --dave-height: 88svh;
+  /* Scale down on narrower desktop widths rather than letting the figure
+     disappear beyond the left edge while staying tethered to the CTA. */
+  --dave-height: min(88svh, calc((50vw - 212.5px - 24px + 16px) / .58));
   --dave-explore-half-width: 212.5px; /* half of .explore-button's 425px desktop width */
   --dave-to-cta-gap: 24px;
   --dave-visible-reach: .58;
