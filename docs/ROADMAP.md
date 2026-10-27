@@ -1,6 +1,6 @@
 # DaveHub development roadmap
 
-**Updated:** 25 October 2026. **Current stage:** DH-07B content-structure definition: intentional unfinished-project archive and musical production pages, alongside DH-07A incremental inventory discovery. Owner is preparing Giant Dave's video animation separately; website integration is pending delivery. The full-screen homepage first-look is on Cloudflare Pages according to owner visual review; no exact preview hostname has been independently verified. **davehub.co.uk** remains a purchased domain, not a confirmed production deployment.
+**Updated:** 27 October 2026. **Current stage:** DH-07C interactive fictional-content prototypes built and browser-tested, pending owner design review. DH-07A inventory remains incremental; Giant Dave video is with owner. Owner is preparing Giant Dave's video animation separately; website integration is pending delivery. The full-screen homepage first-look is on Cloudflare Pages according to owner visual review; no exact preview hostname has been independently verified. **davehub.co.uk** remains a purchased domain, not a confirmed production deployment.
 
 ## Design baseline
 
@@ -38,11 +38,15 @@
 | DH-07 | Content inventory and information architecture | Typed catalogue, cross-category views, stories, timelines, media and source/rights inventory agreed | **In progress** |
 | DH-07A | External published works and creative-history inventory | First nine nominated candidates staged privately; safe generic architecture notes committed; more historic work to come | **Discovery started; candidate publication approval pending** |
 | DH-07B | Unfinished Shelf and musical pages | Composite musical record/child artifacts and deliberately shelved writing/project archive; templates specified | **Architecture drafted; visual prototype next** |
-| DH-07C | Responsive page and navigation prototypes | Fictional Unfinished Shelf gallery, unfinished detail and multi-section musical page driven by one shared content model | **Next** |
+| DH-07C | Responsive page and navigation prototypes | Working fictional Unfinished Shelf (search/filter/detail) and composite musical (story/song/script links); desktop/mobile browser tests | **Built on review branch; visual approval pending** |
 | DH-08 | DaveHub Ready publication contract | Explicit approved project onboarding, source collection, draft review, provenance, withdrawal and security gates | Planned after DH-07 |
 | DH-09 | Single-project ingestion pilot | One approved creative game becomes a project page + reviewed update through preview/merge | Planned |
 | DH-10 | Automated development stories | Significant approved project events become concise draft human-readable stories, not routine posts | Planned |
 | DH-11 | Extend feeds and content types | Approved books/music/ideas/experiments and other capture channels, no duplicate catalogues | Planned |
+
+## DH-07C fictional content-world prototypes (27 October 2026)
+
+[Interactive test and QA record](DH07C_CONTENT_PROTOTYPES.md). A responsive HTML/CSS/JS design lab is available from the feature branch at `/previews/dh-07c/` once the actual Cloudflare branch build is confirmed. It contains six fictional deliberately shelved projects and an entirely fictional musical whose songs link to script scenes, plus story, development notes and releases. **No user's real private work has been published.** Browser interaction and zero horizontal-overflow checks passed at 1440×900, 1366×768, 390×844 and 375×667. The old homepage remains unchanged, and the page designs await owner review before merge.
 
 ## DH-07B: Unfinished Shelf and musical production architecture (25 October 2026)
 
