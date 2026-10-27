@@ -4,6 +4,8 @@
  * Git review and the human editorial decision remain mandatory.
  */
 const RECORD_TYPES = new Set(['work','organisation','music_identity','release','artifact']);
+const ARTIFACT_KINDS = new Set(['script_scene','concept','development_note','lyrics','demo','artwork','excerpt','other']);
+const RELEASE_KINDS = new Set(['album','single','edition','playable','other']);
 const WORK_TYPES = new Set(['book','script','musical','song','game','physical_build','software','idea','other']);
 const LIFECYCLES = new Set(['idea','active','completed','permanently_shelved','abandoned']);
 const VIEWS = new Set(['projects','writing','games','experiments','music','unfinished','memory-lane']);
@@ -16,7 +18,7 @@ const ID = /^[a-z][a-z0-9-]{2,79}$/;
 const YEAR = 1600;
 const MAX_YEAR = 2200;
 const ROOT_KEYS = new Set(['schemaVersion','items']);
-const ITEM_KEYS = new Set(['id','slug','title','recordType','workType','lifecycle','synopsis','views','period','sources','links','media','relations','publication']);
+const ITEM_KEYS = new Set(['id','slug','title','recordType','workType','artifactKind','releaseKind','lifecycle','synopsis','views','period','sources','links','media','relations','publication']);
 const PERIOD_KEYS = new Set(['fromYear','toYear','approximate']);
 const SOURCE_KEYS = new Set(['kind','url']);
 const LINK_KEYS = new Set(['label','kind','url']);
@@ -62,6 +64,10 @@ function validateCatalogue(data) {
     if (!text(item.title,180)) fail(p+'.title','required, max 180 characters');
     if (!RECORD_TYPES.has(item.recordType)) fail(p+'.recordType','unknown record type');
     if (item.recordType==='work' && !WORK_TYPES.has(item.workType)) fail(p+'.workType','required for creative works');
+    if (item.recordType==='artifact' && !ARTIFACT_KINDS.has(item.artifactKind)) fail(p+'.artifactKind','required for artifacts');
+    if (item.recordType!=='artifact' && item.artifactKind!==undefined) fail(p+'.artifactKind','only artifacts have artifactKind');
+    if (item.recordType==='release' && !RELEASE_KINDS.has(item.releaseKind)) fail(p+'.releaseKind','required for releases');
+    if (item.recordType!=='release' && item.releaseKind!==undefined) fail(p+'.releaseKind','only releases have releaseKind');
     if (!LIFECYCLES.has(item.lifecycle)) fail(p+'.lifecycle','unknown lifecycle');
     if (!text(item.synopsis,1400)) fail(p+'.synopsis','public-approved synopsis required (max 1400 characters)');
     if (!Array.isArray(item.views) || !item.views.length || item.views.length>7 || new Set(item.views).size!==item.views.length || !item.views.every(v=>VIEWS.has(v))) fail(p+'.views','unique recognised discovery views required');

@@ -33,6 +33,18 @@
         {
           "kind": "contains",
           "targetId": "lighting-the-lamp-scene"
+        },
+        {
+          "kind": "contains",
+          "targetId": "lightkeeper-concept"
+        },
+        {
+          "kind": "contains",
+          "targetId": "lightkeeper-making-notes"
+        },
+        {
+          "kind": "contains",
+          "targetId": "lightkeeper-album"
         }
       ],
       "publication": {
@@ -120,7 +132,8 @@
         "metadataReviewed": true,
         "mediaReviewed": true,
         "linksReviewed": true
-      }
+      },
+      "artifactKind": "script_scene"
     },
     {
       "id": "unfinished-clock-novel",
@@ -156,6 +169,116 @@
         "mediaReviewed": true,
         "linksReviewed": true
       }
+    },
+    {
+      "id": "lightkeeper-concept",
+      "slug": "the-harbour-myth",
+      "title": "The Harbour Myth",
+      "recordType": "artifact",
+      "lifecycle": "completed",
+      "synopsis": "A fictional early premise: the lighthouse beam is the only thing holding the distant harbour together.",
+      "views": [
+        "writing",
+        "music",
+        "projects"
+      ],
+      "sources": [
+        {
+          "kind": "owner_attestation"
+        }
+      ],
+      "links": [],
+      "media": [],
+      "relations": [
+        {
+          "kind": "part_of",
+          "targetId": "lightkeeper-musical"
+        }
+      ],
+      "publication": {
+        "status": "public_approved",
+        "approvedBy": "owner",
+        "approvedOn": "2026-10-27",
+        "rightsReviewed": true,
+        "metadataReviewed": true,
+        "mediaReviewed": true,
+        "linksReviewed": true
+      },
+      "artifactKind": "concept"
+    },
+    {
+      "id": "lightkeeper-making-notes",
+      "slug": "the-first-sketch",
+      "title": "The First Sketch",
+      "recordType": "artifact",
+      "lifecycle": "completed",
+      "synopsis": "A fictional behind-the-scenes reflection on why the lighthouse idea became a musical rather than a short story.",
+      "views": [
+        "projects",
+        "writing",
+        "music"
+      ],
+      "sources": [
+        {
+          "kind": "owner_attestation"
+        }
+      ],
+      "links": [],
+      "media": [],
+      "relations": [
+        {
+          "kind": "part_of",
+          "targetId": "lightkeeper-musical"
+        }
+      ],
+      "publication": {
+        "status": "public_approved",
+        "approvedBy": "owner",
+        "approvedOn": "2026-10-27",
+        "rightsReviewed": true,
+        "metadataReviewed": true,
+        "mediaReviewed": true,
+        "linksReviewed": true
+      },
+      "artifactKind": "development_note"
+    },
+    {
+      "id": "lightkeeper-album",
+      "slug": "last-lightkeeper-concept-album",
+      "title": "The Last Lightkeeper — Concept Album",
+      "recordType": "release",
+      "lifecycle": "completed",
+      "synopsis": "An entirely fictional concept-album entry showing how a musical could connect recordings and story without duplicating the show.",
+      "views": [
+        "music"
+      ],
+      "sources": [
+        {
+          "kind": "owner_attestation"
+        }
+      ],
+      "links": [],
+      "media": [],
+      "relations": [
+        {
+          "kind": "release_of",
+          "targetId": "lightkeeper-musical"
+        },
+        {
+          "kind": "contains",
+          "targetId": "glass-harbour-song"
+        }
+      ],
+      "publication": {
+        "status": "public_approved",
+        "approvedBy": "owner",
+        "approvedOn": "2026-10-27",
+        "rightsReviewed": true,
+        "metadataReviewed": true,
+        "mediaReviewed": true,
+        "linksReviewed": true
+      },
+      "releaseKind": "album"
     }
   ]
 }

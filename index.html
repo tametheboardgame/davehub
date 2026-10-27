@@ -8,7 +8,6 @@
   <title>DaveHub | Ideas / Projects / Play</title>
   <link rel="preload" href="assets/homepage/floating-islands-background.png" as="image" fetchpriority="high">
   <link rel="stylesheet" href="styles.css">
-  <script defer src="catalogue.js"></script>
   <script defer src="main.js"></script>
 </head>
 <body>
@@ -28,7 +27,7 @@
     <symbol id="icon-spark" viewBox="0 0 24 24"><path d="m12 2 2.1 7.9L22 12l-7.9 2.1L12 22l-2.1-7.9L2 12l7.9-2.1z"/></symbol>
   </svg>
 
-  <a class="skip-link" href="#explore">Skip to Explore DaveHub</a>
+  <a class="skip-link" href="/worlds/">Skip to Explore DaveHub</a>
 
   <main class="homepage">
     <div class="world-art" aria-hidden="true"></div>
@@ -47,16 +46,16 @@
     </header>
 
     <nav class="island-nav" aria-label="Discover destinations in the illustrated world">
-      <a class="island island--writing" href="#writing" aria-label="Explore Writing">
+      <a class="island island--writing" href="/worlds/writing/" aria-label="Explore Writing">
         <svg class="glyph" aria-hidden="true"><use href="#icon-writing"/></svg><span>Writing</span>
       </a>
-      <a class="island island--games" href="#games" aria-label="Explore Games">
+      <a class="island island--games" href="/worlds/games/" aria-label="Explore Games">
         <svg class="glyph" aria-hidden="true"><use href="#icon-games"/></svg><span>Games</span>
       </a>
-      <a class="island island--experiments" href="#experiments" aria-label="Explore Experiments">
+      <a class="island island--experiments" href="/worlds/experiments/" aria-label="Explore Experiments">
         <svg class="glyph" aria-hidden="true"><use href="#icon-experiments"/></svg><span>Experiments</span>
       </a>
-      <a class="island island--projects" href="#projects" aria-label="Explore Projects">
+      <a class="island island--projects" href="/worlds/projects/" aria-label="Explore Projects">
         <svg class="glyph" aria-hidden="true"><use href="#icon-folder"/></svg><span>Projects</span>
       </a>
     </nav>
@@ -65,7 +64,7 @@
       <h1 id="welcome-heading" class="visually-hidden">DaveHub</h1>
       <img class="welcome__logo" src="assets/branding/davehub-logo-faithful.svg" alt="DaveHub" width="640" height="200">
       <p class="welcome__tagline">IDEAS <span>/</span> PROJECTS <span>/</span> PLAY <span>/</span> WHAT'S NEXT</p>
-      <a class="explore-button" href="#explore">
+      <a class="explore-button" href="/worlds/">
         <svg class="glyph explore-button__compass" aria-hidden="true"><use href="#icon-compass"/></svg>
         <span>Explore DaveHub</span>
         <svg class="glyph explore-button__arrow" aria-hidden="true"><use href="#icon-arrow"/></svg>
@@ -76,21 +75,5 @@
     <footer class="homepage__footer"><span>Somewhere between an idea and a very bad idea.</span></footer>
   </main>
 
-  <dialog class="world-dialog" id="world-dialog" aria-labelledby="dialog-heading" aria-describedby="dialog-description">
-    <div class="world-dialog__panel">
-      <header class="world-dialog__top"><span class="world-dialog__eyebrow"><span class="world-dialog__star" aria-hidden="true">✦</span> DAVEHUB <span>/</span> THE WORLD BETWEEN WORLDS</span>
-        <button id="dialog-close" type="button" class="dialog-close" aria-label="Close and return to homepage">
-          <svg class="glyph" aria-hidden="true"><use href="#icon-close"/></svg>
-        </button>
-      </header>
-      <div class="world-dialog__body">
-        <span class="world-dialog__kicker" id="dialog-kicker">CHOOSE A DESTINATION</span>
-        <h2 id="dialog-heading">Where shall we go?</h2>
-        <p id="dialog-description">Four worlds, with a few unexpected ways to explore them.</p>
-        <div id="dialog-content" class="world-dialog__content"></div>
-      </div>
-      <footer class="world-dialog__footer"><span>DaveHub navigation preview. Example content is fictional; the real archive arrives by approval.</span></footer>
-    </div>
-  </dialog>
 </body>
 </html>
