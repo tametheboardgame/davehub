@@ -18,7 +18,8 @@ for asset in \
   content/examples/fictional.json \
   assets/content/worlds.css \
   scripts/render-content.cjs \
-  tests/render-content.test.cjs
+  tests/render-content.test.cjs \
+  tests/navigation.test.cjs
 do
   if [ ! -s "$asset" ]; then
     printf 'Missing or empty required file: %s\n' "$asset" >&2
@@ -28,7 +29,7 @@ done
 
 # A private draft must never become a deployed page through a build bypass.
 # Validate both the empty/approved production manifest and fictional test fixtures.
-node --test tests/content.test.cjs tests/render-content.test.cjs
+node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs
 node scripts/content-check.cjs content/public/catalogue.json
 node scripts/content-check.cjs content/examples/fictional.json
 
