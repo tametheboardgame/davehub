@@ -332,14 +332,14 @@ html, body { height: 100%; width: 100%; overflow: hidden; }
   width: auto;
   max-width: none;
   left: clamp(-58px, -2.6vw, -20px);
-  bottom: -10svh;
+  bottom: -20svh;
   object-fit: contain;
   pointer-events: none;
   user-select: none;
   filter: drop-shadow(0 14px 25px rgba(1, 8, 28, .62)) drop-shadow(7px 0 15px rgba(64, 145, 235, .18));
 }
 @media (min-width: 1750px) {
-  .dave-stage__still { height: 84svh; left: clamp(-65px, -2.6vw, -30px); bottom: -11svh; }
+  .dave-stage__still { height: 84svh; left: clamp(-65px, -2.6vw, -30px); bottom: -21svh; }
 }
 @media (max-width: 900px) {
   .dave-stage__still { height: 73svh; left: clamp(-75px, -8vw, -25px); bottom: -10svh; }
@@ -352,7 +352,7 @@ html, body { height: 100%; width: 100%; overflow: hidden; }
   .dave-stage__still { height: 60svh; left: -10vw; bottom: -9svh; }
 }
 @media (max-height: 430px) and (orientation: landscape) {
-  .dave-stage__still { height: 85svh; left: -1vw; bottom: -17svh; }
+  .dave-stage__still { height: 85svh; left: -1vw; bottom: -25svh; }
 }
 
 /* DH-07E — The explorer is a magical portal into the SAME approved island-world
