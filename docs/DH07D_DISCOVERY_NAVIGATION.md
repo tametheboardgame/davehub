@@ -41,6 +41,14 @@ No framework, external fonts, API calls, database or new illustrated assets.
 - **No false availability**: Memory Lane remains a placeholder; no real user names, personal historical data or archived files exposed.
 - **No publication without approval**: feature branches and draft PRs are public source review artefacts; do not commit private unpublished works. Do not merge into main solely based on this implementation.
 
+## QA status (27 October 2026)
+
+- Checked on the live review-branch commit that the entry-point homepage, seven-record navigation source, modal renderer, stylesheet, fictional DH-07C content page and build script are all present.
+- Both `main.js` and `catalogue.js` pass JavaScript syntax compilation, and the local standalone navigation mirror passes `node --check` on both scripts.
+- Confirmed the original four homepage navigation buttons and four floating-island links remain in the HTML; the additional three destinations are added through the Explore modal only.
+- **Browser limitation:** The browser runtime currently reports `ERR_BLOCKED_BY_ADMINISTRATOR` loading both file and localhost HTML. Therefore click-through, focus, scroll and breakpoint behaviour for DH-07D are **not yet independently browser-verified**. Do not treat this as a browser test pass or production-ready gate. The DH-07C page templates had previously passed browser tests in the prior working session.
+- A standalone zip containing navigation and the earlier fictional content pages is produced for manual review. Because the canonical site uses referenced assets/scripts, the repository branch remains the authoritative implementation.
+
 ## Subsequent design work
 
 When the owner accepts DH-07D, land navigation and content-world pages together, then use one shared canonical *creative work* record shape (from DH-07B) for approved works, with record-to-category relationships. Memory Lane will become a chronological *view* over those records when the owner supplies historical media. Its collections should not require every entry to have an exact date.
