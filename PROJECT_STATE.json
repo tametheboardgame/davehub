@@ -13,10 +13,10 @@
     "DH-06A"
   ],
   "in_progress": [
-    "DH-07D review grouped Explore modal and cross-world navigation",
-    "DH-07C fictional Unfinished Shelf and musical prototype pending visual sign-off",
-    "DH-07A progressive creative inventory, hard drive not required",
-    "DH-06 Giant Dave animation production remains with owner"
+    "DH-07D visual review of simplified floating-islands + Explore navigation",
+    "DH-07C fictional content-page prototypes (layout and typography liked by owner)",
+    "DH-07A archive inventory continues incrementally",
+    "DH-06 video animation handled by owner"
   ],
   "next": [
     "Review two-tier Explore directory and onward routes on desktop and mobile",
@@ -123,8 +123,8 @@
     "remote_status": "connected"
   },
   "last_verified": {
-    "scope": "DH-07D static revision checks",
-    "result": "Live branch has index.html, catalogue.js, main.js, styles.css, DH-07C fictional page and build script; both JS files pass syntax compilation. Browser tests attempted but blocked by Chromium administrator policy for file:// and localhost; interactivity and viewport fit require owner/CI preview review."
+    "scope": "DH-07D remove redundant homepage navigation",
+    "result": "Branch HTML now contains four floating island links, a single Explore CTA and no bottom category nav. CSS obsolete menu selectors removed; hero positioning reworked responsively. JavaScript compiles and style braces balance; browser verification still pending."
   },
   "domain": {
     "primary": "davehub.co.uk",
@@ -337,11 +337,11 @@
     "merge_approval": "pending"
   },
   "navigation_discovery": {
-    "status": "design_branch_preview",
+    "status": "updated_on_review_branch",
     "branch": "feature/dh-07d-world-navigation",
     "review_doc": "docs/DH07D_DISCOVERY_NAVIGATION.md",
     "homepage_island_count": 4,
-    "homepage_bottom_tile_count": 4,
+    "homepage_bottom_tile_count": 0,
     "worlds": [
       "Projects",
       "Writing",
@@ -362,7 +362,10 @@
     "validation": {
       "javascript_syntax": "pass",
       "remote_files": "verified",
-      "browser": "blocked_by_environment_policy; owner preview pending"
-    }
+      "browser": "blocked_by_environment_policy; owner preview pending",
+      "static": "HTML has exactly four island links, no bottom nav; CSS removes obsolete selectors and hero variables"
+    },
+    "main_cta_count": 1,
+    "owner_feedback": "Remove the third/bottom navigation surface; retain floating islands and Explore directory"
   }
 }
