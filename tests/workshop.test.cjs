@@ -51,3 +51,20 @@ test('editor files are not copied to Cloudflare public output',()=>{
  assert.ok(!build.includes('cp tools/workshop'));
  assert.ok(!build.includes('node tools/workshop/server.cjs'));
 });
+test('review exporter supports publisher and music identity records without fake work types',()=>{
+ const pub=makeApproved({...example,id:'test-publisher',recordType:'organisation'});
+ const artist=makeApproved({...example,id:'test-artist',recordType:'music_identity'});
+ assert.equal(pub.recordType,'organisation');assert.equal(pub.workType,undefined);
+ assert.equal(artist.recordType,'music_identity');assert.equal(artist.workType,undefined);
+});
+test('review exporter distinguishes album releases from linked original works',()=>{
+ const item=makeApproved({...example,id:'test-album',recordType:'release',releaseKind:'album'});
+ assert.equal(item.releaseKind,'album');assert.equal(item.recordType,'release');
+ assert.equal(item.workType,undefined);
+});
+test('export merges approved changes into the existing public catalogue, never deleting other works',()=>{
+ const baseline={schemaVersion:1,items:[makeApproved({...example,id:'already-published',slug:'already-published'})]};
+ const result=exportReview({candidates:[{...example,id:'newly-published',slug:'newly-published'}]},baseline);
+ assert.equal(result.items.length,2);
+ assert.deepEqual(new Set(result.items.map(x=>x.id)),new Set(['already-published','newly-published']));
+});
