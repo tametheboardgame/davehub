@@ -1,6 +1,5 @@
 #!/bin/sh
-# Build the public-safe DaveHub prototype for Cloudflare Pages.
-# Only ship the homepage and its approved assets, not project/source documents.
+# Build only the public-safe DaveHub site and fictional design previews for Cloudflare Pages.
 set -eu
 
 cd "$(dirname "$0")/.."
@@ -11,7 +10,8 @@ for asset in \
   main.js \
   catalogue.js \
   assets/branding/davehub-logo-faithful.svg \
-  assets/homepage/floating-islands-background.png
+  assets/homepage/floating-islands-background.png \
+  prototypes/dh-07c/index.html
 do
   if [ ! -s "$asset" ]; then
     printf 'Missing or empty required file: %s\n' "$asset" >&2
@@ -20,13 +20,14 @@ do
 done
 
 rm -rf dist
-mkdir -p dist/assets/branding dist/assets/homepage
+mkdir -p dist/assets/branding dist/assets/homepage dist/previews/dh-07c
 
 cp index.html styles.css main.js catalogue.js dist/
 cp assets/branding/davehub-logo-faithful.svg dist/assets/branding/
 cp assets/homepage/floating-islands-background.png dist/assets/homepage/
+cp prototypes/dh-07c/index.html dist/previews/dh-07c/index.html
 
-# DH-07C design-lab route. Fictional-only content, intentionally isolated from the homepage.\nif [ ! -s prototypes/dh-07c/index.html ]; then\n  printf 'Missing DH-07C prototype\\n' >&2\n  exit 1\nfi\nmkdir -p dist/previews/dh-07c\ncp prototypes/dh-07c/index.html dist/previews/dh-07c/index.html\n\n# This is an early visual prototype and should not be indexed by search engines.
+# Prototype deployments remain noindex; this is not an access control.
 cat > dist/_headers <<'HEADERS'
 /*
   X-Robots-Tag: noindex, nofollow

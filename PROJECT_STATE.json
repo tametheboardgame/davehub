@@ -1,8 +1,8 @@
 {
   "project": "DaveHub",
   "updated": "2026-10-27",
-  "status": "dh_07c_interactive_design_previews_pending_owner_review",
-  "current_work_package": "DH-07C",
+  "status": "dh_07d_navigation_preview_pending_approval",
+  "current_work_package": "DH-07D",
   "completed": [
     "DH-00A",
     "DH-00B",
@@ -13,16 +13,16 @@
     "DH-06A"
   ],
   "in_progress": [
-    "DH-07C owner review of Unfinished Shelf and musical content-world prototypes",
-    "DH-07A historical and external inventory incrementally collected",
-    "DH-06 Giant Dave video authored separately by owner"
+    "DH-07D visual review of simplified floating-islands + Explore navigation",
+    "DH-07C fictional content-page prototypes (layout and typography liked by owner)",
+    "DH-07A archive inventory continues incrementally",
+    "DH-06 video animation handled by owner"
   ],
   "next": [
-    "Owner reviews responsive fictional Unfinished Shelf and musical page design",
-    "Agree names and top-level navigation placement for Music, Unfinished and Trip Down Memory Lane",
-    "Integrate approved layouts into shared public-site catalogue and navigation after approval",
-    "DH-08 DaveHub Ready publication approval architecture",
-    "Future ingestion of explicitly approved owner works and archive materials"
+    "Review two-tier Explore directory and onward routes on desktop and mobile",
+    "Decide whether Music and Memory Lane remain cross-world views in Explore",
+    "Merge reviewed DH-07C and DH-07D branches, then begin approved content model integration",
+    "DH-08 DaveHub Ready approval and ingestion workflows"
   ],
   "decisions": [
     {
@@ -123,8 +123,8 @@
     "remote_status": "connected"
   },
   "last_verified": {
-    "scope": "DH-07C prototype",
-    "result": "Self-contained standalone HTML interactive content worlds, tested with Chromium in-memory load at 4 viewports. Filter/search/details and song-to-scene tab interactions passed, no console JS errors or horizontal overflow. GitHub branch contains preview and copy-to-dist build route; Cloudflare preview hostname not yet verified."
+    "scope": "DH-07D remove redundant homepage navigation",
+    "result": "Branch HTML now contains four floating island links, a single Explore CTA and no bottom category nav. CSS obsolete menu selectors removed; hero positioning reworked responsively. JavaScript compiles and style braces balance; browser verification still pending."
   },
   "domain": {
     "primary": "davehub.co.uk",
@@ -335,5 +335,37 @@
     "tests": "pass: search, filters, details, tabs, scene-song cross-links, no JS exceptions or horizontal overflow",
     "publication": "No owner works added; all content fictional",
     "merge_approval": "pending"
+  },
+  "navigation_discovery": {
+    "status": "updated_on_review_branch",
+    "branch": "feature/dh-07d-world-navigation",
+    "review_doc": "docs/DH07D_DISCOVERY_NAVIGATION.md",
+    "homepage_island_count": 4,
+    "homepage_bottom_tile_count": 0,
+    "worlds": [
+      "Projects",
+      "Writing",
+      "Games",
+      "Experiments"
+    ],
+    "crossworld_collections": [
+      "Music",
+      "The Unfinished Shelf",
+      "Trip Down Memory Lane"
+    ],
+    "demo_routes": [
+      "/previews/dh-07c/?view=shelf",
+      "/previews/dh-07c/?view=musical"
+    ],
+    "real_project_publication": "none",
+    "merge_approved": false,
+    "validation": {
+      "javascript_syntax": "pass",
+      "remote_files": "verified",
+      "browser": "blocked_by_environment_policy; owner preview pending",
+      "static": "HTML has exactly four island links, no bottom nav; CSS removes obsolete selectors and hero variables"
+    },
+    "main_cta_count": 1,
+    "owner_feedback": "Remove the third/bottom navigation surface; retain floating islands and Explore directory"
   }
 }

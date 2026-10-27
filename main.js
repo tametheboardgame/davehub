@@ -37,11 +37,35 @@
   };
 
   const buildWorldDirectory = () => {
-    const grid = document.createElement('nav');
-    grid.className = 'world-directory';
-    grid.setAttribute('aria-label', 'Choose a destination');
-    catalogue.forEach((section) => grid.append(makeLink(section)));
-    return grid;
+    const groups = document.createElement('div');
+    groups.className = 'world-directory__groups';
+    const views = [
+      { id: 'worlds', title: 'The four worlds', summary: 'The main paths through DaveHub.' },
+      { id: 'collections', title: 'Elsewhere in DaveHub', summary: 'Different ways to uncover the same creations.' }
+    ];
+    views.forEach((view) => {
+      const matching = catalogue.filter((section) => (section.group || 'worlds') === view.id);
+      if (!matching.length) return;
+      const group = document.createElement('section');
+      group.className = 'world-directory__group';
+      const label = document.createElement('h3');
+      label.className = 'world-directory__label';
+      label.textContent = view.title;
+      const summary = document.createElement('p');
+      summary.className = 'world-directory__summary';
+      summary.textContent = view.summary;
+      const grid = document.createElement('nav');
+      grid.className = 'world-directory';
+      grid.setAttribute('aria-label', view.title);
+      matching.forEach((section) => {
+        const link = makeLink(section);
+        if (view.id === 'collections') link.classList.add('world-directory__item--collection');
+        grid.append(link);
+      });
+      group.append(label, summary, grid);
+      groups.append(group);
+    });
+    return groups;
   };
 
   const buildSection = (section) => {
@@ -53,12 +77,35 @@
     status.textContent = section.status;
     const note = document.createElement('p');
     note.className = 'section-details__note';
-    note.textContent = 'This is a working navigation prototype. We have not published any projects into this destination yet.';
+    note.textContent = section.note || 'This is a working navigation prototype. No real project content has been published here.';
+    wrapper.append(status, note);
+    if (section.links?.length) {
+      const label = document.createElement('h3');
+      label.className = 'section-details__heading';
+      label.textContent = 'Where to next?';
+      const list = document.createElement('nav');
+      list.className = 'section-details__links';
+      list.setAttribute('aria-label', section.title + ' destinations');
+      section.links.forEach(({ title, description, href }) => {
+        const anchor = document.createElement('a');
+        anchor.className = 'section-details__link';
+        anchor.href = href;
+        const words = document.createElement('span');
+        const titleText = document.createElement('strong');
+        titleText.textContent = title;
+        const sub = document.createElement('small');
+        sub.textContent = description;
+        words.append(titleText, sub);
+        anchor.append(words, icon('arrow'));
+        list.append(anchor);
+      });
+      wrapper.append(label, list);
+    }
     const back = document.createElement('a');
     back.href = '#explore';
     back.className = 'section-details__back';
     back.textContent = '← Explore the other worlds';
-    wrapper.append(status, note, back);
+    wrapper.append(back);
     return wrapper;
   };
 
@@ -73,7 +120,7 @@
     }
     const isExplorer = hash === 'explore';
     heading.textContent = isExplorer ? 'Where shall we go?' : section.title;
-    description.textContent = isExplorer ? 'Four parts of one very unreasonable place. Pick somewhere to start.' : section.description;
+        description.textContent = isExplorer ? 'Four worlds, with a few unexpected ways to explore them.' : section.description;
     kicker.textContent = isExplorer ? 'CHOOSE A DESTINATION' : `DESTINATION / ${section.number}`;
     content.replaceChildren(isExplorer ? buildWorldDirectory() : buildSection(section));
     modal.dataset.destination = isExplorer ? 'explore' : section.id;
@@ -81,6 +128,11 @@
       restoringFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
       modal.showModal();
       closeButton.focus();
+    } else {
+      // Hash-based navigation can replace a currently focused link.
+      // Move focus to the new destination heading instead of dropping it.
+      heading.tabIndex = -1;
+      heading.focus({ preventScroll: true });
     }
   };
 
