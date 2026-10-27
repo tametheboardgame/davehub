@@ -15,9 +15,11 @@ test('seven landing worlds, an index and one unique page per canonical creation'
  for(const v of VIEWS)assert.ok(files.has('worlds/'+v.id+'/index.html'),v.id);
  for(const item of fixture.items)assert.ok(files.has('creations/'+item.slug+'/index.html'),item.slug);
 });
-test('public catalogue builds empty public pages without fictional creations',()=>{
+test('public catalogue builds approved game and blog pages without fictional creations',()=>{
  const pages=filesFor(publicCatalogue,'',false);
- assert.equal(pages.size,8);
+ assert.equal(pages.size,8+publicCatalogue.items.length);
+ assert.match(pages.get('worlds/games/index.html'),/Unicorn Valley/);
+ assert.match(pages.get('worlds/writing/index.html'),/Tame The Board Game/);
  assert.match(pages.get('worlds/music/index.html'),/Nothing has landed here yet/);
  assert.doesNotMatch(pages.get('worlds/music/index.html'),/Last Lightkeeper/);
  assert.doesNotMatch(pages.get('worlds/music/index.html'),/Fictional design demonstration/);
@@ -63,7 +65,7 @@ test('disk renderer isolates real and fictional outputs',()=>{
   const demo=path.join(temp,'preview');
   const one=renderToDisk(path.join(root,'content/public/catalogue.json'),live,'',false);
   const two=renderToDisk(path.join(root,'content/examples/fictional.json'),demo,'/previews/dh-08b',true);
-  assert.equal(one.creations,0);
+  assert.equal(one.creations,publicCatalogue.items.length);
   assert.equal(two.creations,fixture.items.length);
   assert.ok(fs.existsSync(path.join(live,'worlds/music/index.html')));
   assert.ok(!fs.existsSync(path.join(live,'creations/last-lightkeeper/index.html')));
