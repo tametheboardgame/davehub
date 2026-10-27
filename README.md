@@ -30,6 +30,12 @@ The static homepage is at repository root (`index.html`, `styles.css`, `main.js`
 
 The approved logo and background are repository assets; illustrated Dave remains intentionally absent pending a separate design review.
 
+## DH-08B: Shared creative-world pages (review branch)
+
+- [Shared content-page architecture](docs/DH08B_SHARED_CONTENT_PAGES.md): single renderer generating seven catalogue views plus unique deep-linked creation pages.
+- Real approved entries are rendered from the validated `content/public/catalogue.json`; currently **empty**. The fictional musical/script/song example renders separately at `/previews/dh-08b/worlds/` on the branch.
+- The existing mystical Explore destination cards now link to new `/worlds/<view>/` pages; visual appearance of the homepage and Explore is unchanged.
+
 ## DH-08: Safe creative catalogue (in development)
 
 - [DaveHub Ready publication contract](docs/DH08_PUBLICATION_CONTRACT.md): owner-nominated sources, rights reviews and human-approved publication only.
