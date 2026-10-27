@@ -48,7 +48,7 @@ function shell({title,kicker,lead,body,root,preview=false}){
  '<div class="sky" aria-hidden="true"></div>'+
  '<div class="shell">'+
  '<header class="top"><a class="brand" href="/"><strong>Dave<span>Hub</span></strong><small>THE CREATIVE UNIVERSE</small></a>'+
- '<a class="home" href="/#explore">← Back to the islands</a></header>'+
+ '<a class="home" href="/">← Back to the islands</a></header>'+
  '<nav class="trail" aria-label="Content destinations"><a'+attr('href',worldIndex(root))+'>All worlds</a>'+nav+'</nav>'+
  '<main id="main"><div class="intro"><div class="eyebrow">✦ '+esc(kicker)+'</div><h1>'+esc(title)+'</h1><p class="lead">'+esc(lead)+'</p></div>'+
  (preview?'<div class="preview"><strong>Fictional design demonstration.</strong> All names and stories here are invented. No real work has been published by this preview.</div>':'')+
@@ -67,25 +67,33 @@ function linkList(items,root,empty){
  if(!items.length)return '<p class="quiet">'+esc(empty||'Nothing available here yet.')+'</p>';
  return '<div class="cards">'+items.map(i=>card(i,root)).join('\n')+'</div>';
 }
-function emptyState(){
+function demoInvitation(view){
+ const target='/previews/dh-08b/worlds/'+(view?encodeURIComponent(view)+'/':'');
+ return '<aside class="demo-invitation"><p class="eyebrow">DESIGN PREVIEW</p>'+
+ '<h2>Step into a fictional example</h2>'+
+ '<p>We haven\'t added any approved real works yet, but you can explore the full page designs with clearly labelled, invented creations.</p>'+
+ '<a class="ghost"'+attr('href',target)+'>Explore the fictional example ↗</a></aside>';
+}
+function emptyState(root,view,preview){
  return '<div class="empty"><div class="orb">✧</div><h2>Nothing has landed here yet.</h2>'+
  '<p>DaveHub is ready for its first approved creations. This is an empty destination, not a promise that something is coming soon.</p>'+
- '<a class="ghost" href="/#explore">Explore the other worlds →</a></div>';
+ '<a class="ghost"'+attr('href',worldIndex(root))+'>Explore the other worlds →</a></div>'+
+ (!preview?demoInvitation(view):'');
 }
 function renderIndex(data,root,preview){
  const blocks='<div class="world-tiles">'+VIEWS.map(v=>{
   const n=data.items.filter(i=>i.views.includes(v.id)).length;
   return '<a class="world-tile"'+attr('href',viewUrl(root,v.id))+'><span class="symbol">'+esc(v.mark)+'</span>'+
-   '<strong>'+esc(v.title)+'</strong><span>'+esc(v.subtitle)+'</span><em>'+n+' '+(n===1?'creation':'creations')+' ↗</em></a>';
+   '<strong>'+esc(v.title)+'</strong><span>'+esc(v.subtitle)+'</span><em>'+(n?n+' '+(n===1?'creation':'creations'):'Open this world')+' ↗</em></a>';
  }).join('\n')+'</div>';
- return shell({title:'Every world has a doorway',kicker:'EXPLORE / CREATIVE WORLDS',lead:'Follow an idea into music, writing, games, forgotten experiments and beyond. One creation can belong to several worlds.',body:blocks,root,preview});
+ return shell({title:'Every world has a doorway',kicker:'EXPLORE / CREATIVE WORLDS',lead:'Follow an idea into music, writing, games, forgotten experiments and beyond. One creation can belong to several worlds.',body:(!preview && !data.items.length?demoInvitation(): '')+blocks,root,preview});
 }
 function renderView(data,root,view,preview){
  const v=VIEWS.find(x=>x.id===view);
  const works=sortEntries(data.items.filter(i=>i.views.includes(view)),view);
  const feature=works.length
    ? '<p class="found">'+works.length+' '+(works.length===1?'creation':'creations')+' in this world</p>'+linkList(works,root)
-   : emptyState();
+   : emptyState(root,view,preview);
  const caveat=view==='unfinished'?'<p class="quiet">The Unfinished Shelf is an archive, not a list of things that will be completed.</p>':'';
  return shell({title:v.title,kicker:'WORLD / '+v.id.toUpperCase().replaceAll('-',' '),lead:v.subtitle,body:section('Discover the creations',feature,'EXPLORE THIS WORLD')+caveat,root,preview});
 }
