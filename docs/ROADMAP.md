@@ -1,6 +1,6 @@
 # DaveHub development roadmap
 
-**Updated:** 27 October 2026. **Current stage:** DH-07 design locked/merged, DH-08A publication foundation merged into main, DH-08B shared world/creation page renderer complete on a review branch.
+**Updated:** 27 October 2026. **Current stage:** DH-08B merged into production (Cloudflare PASS); DH-08C1 local-only Content Workshop and the first three safe game/blog entries implemented on a new review branch.
 
 ## Design baseline
 
@@ -42,11 +42,17 @@
 | DH-07D | Cross-world discovery navigation | Keep the four floating-island destination links, **remove duplicate bottom menu**, expand Explore into worlds plus Music, Unfinished and Memory Lane, with functional prototype routes | **Revised on review branch; final browser/visual approval pending** |
 | DH-07E | Interim Giant Dave and mystical Explore | Place one transparent static Dave in animation slot; make Explore a luminous portal using approved background art | **Built on preview branch; visual approval pending** |
 | DH-08A | Safe public catalogue and approval validation | Plain JSON canonical work model, fail-closed approval/rights checks, tests, fictional preview; zero owner works published | **Implemented on draft branch, testing/sign-off pending** |
-| DH-08B | Render approved catalogue into actual site | Seven themed world pages, shared musical/detail templates and direct homepage/island navigation; fictional preview gateway; public catalogue empty | **Implemented on review branch; owner flow review pending** |
+| DH-08B | Render approved catalogue into actual site | Seven world pages, musical/detail templates, direct homepage/island navigation | **Merged; Cloudflare PASS** |
+| DH-08C1 | Local Content Workshop and first real destinations | Private loopback editor, import/export approval gate and first three text-only game/blog records | **Built on branch; Cloudflare and owner review pending** |
+| DH-08C2 | First creator catalogue batch | Previously supplied books, publisher, music and history imported privately; approve entries individually | **Private candidate file supplied, approval pending** |
 | DH-08 | DaveHub Ready publication contract | Explicit approved project onboarding, source collection, draft review, provenance, withdrawal and security gates | Planned after DH-07 |
 | DH-09 | Single-project ingestion pilot | One approved creative game becomes a project page + reviewed update through preview/merge | Planned |
 | DH-10 | Automated development stories | Significant approved project events become concise draft human-readable stories, not routine posts | Planned |
 | DH-11 | Extend feeds and content types | Approved books/music/ideas/experiments and other capture channels, no duplicate catalogues | Planned |
+
+## DH-08C1 Local Content Workshop and first public candidates (27 October 2026)
+
+[DH-08C1 implementation](DH08C1_LOCAL_CONTENT_WORKSHOP.md): a loopback-only, no-subscription browser editor saves drafts outside public Git and exports an approval-validated merged catalogue proposal. The owner explicitly nominated the main playable builds of Unicorn Valley and The Stephen Martin Project and rediscovered collaborative board-games blog Tame The Board Game. Three text-and-link-only records have been added to the review branch; no media, recordings or articles copied. Earlier books, publisher, musical/music projects and historical works remain in a **private downloadable candidate import**, not public git. Owner reviews the branch before public merge.
 
 ## DH-08B homepage navigation integration (27 October 2026)
 
