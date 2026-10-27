@@ -52,14 +52,13 @@ a:focus-visible, button:focus-visible { outline: 3px solid #fff; outline-offset:
 .explore-button__arrow { font-size: 24px; transition: transform .22s ease; }
 .explore-button:hover .explore-button__arrow { transform: translateX(5px); }
 
-.destination-nav { position: relative; z-index: 3; width: min(100%,1060px); display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 12px; scroll-margin: 28px; }
-.nav-tile { --tile-color:var(--blue); display: flex; align-items: center; gap: 14px; min-height: 72px; padding: 14px 16px; border-radius: 12px; text-decoration: none; color: #fff; background: linear-gradient(110deg,rgba(16,33,70,.9),rgba(10,25,55,.66)); border: 1px solid rgba(170,192,239,.35); box-shadow: inset 0 1px 0 rgba(255,255,255,.06),0 7px 25px rgba(0,0,0,.25); backdrop-filter: blur(13px); -webkit-backdrop-filter: blur(13px); font-size: clamp(15px,1.15vw,18px); font-weight: 700; transition: background .2s ease,border-color .2s ease,transform .2s ease,box-shadow .2s ease; }
-.nav-tile[data-category="writing"] { --tile-color: var(--purple); }
-.nav-tile[data-category="games"] { --tile-color: var(--cyan); }
-.nav-tile[data-category="experiments"] { --tile-color: var(--amber); }
-.nav-tile__icon { color: var(--tile-color); font-size: 25px; filter: drop-shadow(0 0 5px color-mix(in srgb,var(--tile-color) 46%,transparent)); }
-.nav-tile__chevron { margin-left: auto; color: #c5d6f5; font-size: 17px; }
-.nav-tile:hover,.nav-tile:focus-visible { transform: translateY(-5px); background: rgba(24,43,85,.95); border-color: var(--tile-color); box-shadow: 0 0 22px color-mix(in srgb,var(--tile-color) 20%,transparent),0 10px 30px rgba(0,0,0,.34); }
+
+
+
+
+
+
+
 .homepage__footer { position: relative; z-index: 2; text-align: center; color: rgba(227,233,255,.62); font-size: 11px; letter-spacing: .09em; margin-top: 22px; margin-bottom: max(18px,env(safe-area-inset-bottom)); }
 
 .world-dialog { max-width: none; max-height: none; margin: auto; padding: 0; border: 1px solid rgba(173,198,255,.45); border-radius: 22px; background: #0e1c3c; color: #fff; box-shadow: 0 30px 100px rgba(0,0,0,.63),0 0 55px rgba(67,133,250,.24); width: min(92vw,690px); overflow: auto; }
@@ -103,9 +102,9 @@ a:focus-visible, button:focus-visible { outline: 3px solid #fff; outline-offset:
   .island--experiments { right: 2%; top: 18%; }
   .island--projects { right: 2%; top: 44%; }
   .welcome { margin-bottom: 30px; }
-  .destination-nav { gap: 9px; }
-  .nav-tile { min-height: 66px; gap: 9px; padding: 12px; font-size: 14px; }
-  .nav-tile__icon { font-size: 21px; }
+
+
+
 }
 @media (max-width: 640px) {
   .homepage { min-height: max(760px,100svh); padding: 0 17px; }
@@ -128,9 +127,9 @@ a:focus-visible, button:focus-visible { outline: 3px solid #fff; outline-offset:
   .explore-button { width: min(100%,360px); min-height: 64px; font-size: 19px; padding: 13px 20px; }
   .explore-button__compass { font-size: 18px; }
   .explore-button__arrow { font-size: 20px; }
-  .destination-nav { width: min(100%,440px); grid-template-columns: repeat(2,minmax(0,1fr)); gap: 9px; }
-  .nav-tile { min-height: 66px; font-size: 14px; gap: 9px; }
-  .nav-tile__chevron { font-size: 14px; }
+
+
+
   .homepage__footer { font-size: 10px; margin-top: 20px; line-height: 1.4; }
   .world-dialog { width: min(94vw,540px); max-height: calc(100svh - 32px); border-radius: 17px; }
 }
@@ -138,7 +137,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid #fff; outline-offset:
   .page-top__eyebrow { max-width: 170px; }
   .island { min-width: 80px; font-size: 10px; }
   .island--games { left: 35%; }
-  .nav-tile { padding: 10px 11px; }
+
   .world-directory { grid-template-columns: 1fr; }
   .world-directory__item { min-height: 100px; }
 }
@@ -159,14 +158,12 @@ a:focus-visible, button:focus-visible { outline: 3px solid #fff; outline-offset:
 .welcome { pointer-events: none; }
 .explore-button { pointer-events: auto; }
 
-/* DH-02C: One responsive, non-scrolling scene. Destination dialogs scroll
-   independently; the empty illustrated-Dave overlay remains untouched. */
+/* DH-02C/DH-07D: One responsive, non-scrolling scene. Destination dialogs scroll
+   independently; floating islands and Explore replace the duplicate bottom tiles. */
 html, body { height: 100%; width: 100%; overflow: hidden; }
 .homepage {
   --scene-side: clamp(18px, 3.5vw, 74px);
-  --nav-bottom: clamp(33px, 5.6vh, 55px);
-  --nav-row-height: clamp(58px, 8.5vh, 72px);
-  --hero-nav-gap: clamp(19px, 3.2vh, 38px);
+  --hero-bottom: clamp(65px, 9svh, 108px);
   height: 100vh;
   height: 100svh;
   min-height: 0;
@@ -184,7 +181,7 @@ html, body { height: 100%; width: 100%; overflow: hidden; }
 }
 .welcome {
   position: absolute;
-  bottom: calc(var(--nav-bottom) + var(--nav-row-height) + var(--hero-nav-gap));
+  bottom: var(--hero-bottom);
   left: 50%;
   transform: translateX(-50%);
   width: min(calc(100% - 2 * var(--scene-side)), 640px);
@@ -200,17 +197,8 @@ html, body { height: 100%; width: 100%; overflow: hidden; }
   min-height: clamp(52px, 8.5vh, 72px);
   padding-block: clamp(10px, 1.8vh, 17px);
 }
-.destination-nav {
-  position: absolute;
-  bottom: var(--nav-bottom);
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(calc(100% - 2 * var(--scene-side)), 1060px);
-}
-.nav-tile {
-  min-height: var(--nav-row-height);
-  padding-block: clamp(8px, 1.5vh, 14px);
-}
+
+
 .homepage__footer {
   position: absolute;
   bottom: max(9px, env(safe-area-inset-bottom));
@@ -221,20 +209,17 @@ html, body { height: 100%; width: 100%; overflow: hidden; }
 @media (max-width: 900px) {
   .homepage {
     --scene-side: 20px;
-    --nav-row-height: clamp(54px, 8vh, 66px);
-    --hero-nav-gap: clamp(15px, 2.8vh, 29px);
+    --hero-bottom: clamp(55px, 8svh, 86px);
   }
   .welcome { margin: 0; padding: 0; }
 }
 @media (max-width: 640px) {
   .homepage {
     --scene-side: 17px;
-    --nav-bottom: clamp(30px, 4.8vh, 43px);
-    --nav-row-height: clamp(52px, 7.3vh, 66px);
-    --hero-nav-gap: clamp(13px, 2vh, 23px);
+    --hero-bottom: clamp(54px, 7.5svh, 78px);
   }
   .welcome {
-    bottom: calc(var(--nav-bottom) + 2 * var(--nav-row-height) + 9px + var(--hero-nav-gap));
+    bottom: var(--hero-bottom);
     width: min(calc(100% - 2 * var(--scene-side)), 440px);
     margin: 0;
     padding: 0;
@@ -242,15 +227,13 @@ html, body { height: 100%; width: 100%; overflow: hidden; }
   .welcome__logo { width: min(75vw, 370px); max-height: min(15svh, 115px); }
   .welcome__tagline { margin: 3px 0 clamp(9px, 1.8vh, 15px); }
   .explore-button { min-height: clamp(50px, 7.4vh, 64px); }
-  .destination-nav { width: min(calc(100% - 2 * var(--scene-side)), 440px); }
-  .nav-tile { min-height: var(--nav-row-height); }
+
+
   .homepage__footer { margin: 0; bottom: max(8px, env(safe-area-inset-bottom)); }
 }
 @media (max-height: 690px) and (min-width: 641px) {
   .homepage {
-    --nav-bottom: 28px;
-    --nav-row-height: clamp(51px, 8vh, 62px);
-    --hero-nav-gap: 14px;
+    --hero-bottom: clamp(36px, 7svh, 60px);
   }
   .welcome__logo { width: min(26vw, 360px); max-height: 16svh; }
   .welcome__tagline { margin-bottom: 9px; }
@@ -261,29 +244,25 @@ html, body { height: 100%; width: 100%; overflow: hidden; }
 }
 @media (max-height: 650px) and (max-width: 640px) {
   .homepage {
-    --nav-bottom: 27px;
-    --nav-row-height: 51px;
-    --hero-nav-gap: 10px;
+    --hero-bottom: 35px;
   }
   .welcome__logo { max-height: 12svh; width: min(71vw, 320px); }
   .welcome__tagline { margin-bottom: 8px; font-size: 8px; }
   .explore-button { min-height: 46px; padding-block: 8px; font-size: 17px; }
-  .nav-tile { font-size: 12px; }
+
   .island .glyph { font-size: 22px; }
 }
 @media (max-height: 430px) and (orientation: landscape) {
   .homepage {
-    --nav-bottom: 10px;
-    --nav-row-height: 43px;
-    --hero-nav-gap: 8px;
+    --hero-bottom: 12px;
   }
   .page-top { padding-top: 7px; }
   .page-top__eyebrow, .page-top__prototype { font-size: 9px; }
   .welcome__logo { width: min(24vw, 260px); max-height: 14svh; }
   .welcome__tagline { font-size: 8px; margin: 2px 0 5px; }
   .explore-button { width: min(305px, 94%); min-height: 42px; padding: 5px 15px; font-size: 16px; }
-  .nav-tile { min-height: 43px; padding: 6px 10px; font-size: 13px; }
-  .nav-tile__icon { font-size: 17px; }
+
+
   .island { min-width: 90px; font-size: 10px; gap: 2px; padding: 4px 6px; }
   .island .glyph { font-size: 21px; }
   .island--projects { top: 33%; }
