@@ -34,7 +34,7 @@ The approved logo and background are repository assets; illustrated Dave remains
 
 - [DaveHub Ready publication contract](docs/DH08_PUBLICATION_CONTRACT.md): owner-nominated sources, rights reviews and human-approved publication only.
 - `content/public/catalogue.json` contains **zero real works** until explicitly approved. `content/examples/fictional.json` is a separate test fixture.
-- `node --test tests/content.test.cjs` and `node scripts/content-check.cjs content/public/catalogue.json` verify content safety. The Cloudflare build runs both automatically.
+- `node --test tests/content.test.cjs` and `node scripts/content-check.cjs content/public/catalogue.json` verify content safety, including rejection of unexpected private/draft fields. The Cloudflare build runs both automatically.
 - `/previews/dh-08/` is a read-only fictional-content demonstration on the branch, not an importer or publishing UI.
 
 ## Current design and automation workstreams
