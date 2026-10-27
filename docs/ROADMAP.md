@@ -39,7 +39,7 @@
 | DH-07A | External published works and creative-history inventory | First nine nominated candidates staged privately; safe generic architecture notes committed; more historic work to come | **Discovery started; candidate publication approval pending** |
 | DH-07B | Unfinished Shelf and musical pages | Composite musical record/child artifacts and deliberately shelved writing/project archive; templates specified | **Architecture drafted; visual prototype next** |
 | DH-07C | Responsive page and navigation prototypes | Working fictional Unfinished Shelf (search/filter/detail) and composite musical (story/song/script links); desktop/mobile browser tests | **Built on review branch; visual approval pending** |
-| DH-07D | Cross-world discovery navigation | Keep the original four homepage destinations; extend Explore into worlds plus Music, The Unfinished Shelf and Trip Down Memory Lane, with functional prototype routes | **Built on review branch; visual/functional approval pending** |
+| DH-07D | Cross-world discovery navigation | Keep the four floating-island destination links, **remove duplicate bottom menu**, expand Explore into worlds plus Music, Unfinished and Memory Lane, with functional prototype routes | **Revised on review branch; final browser/visual approval pending** |
 | DH-08 | DaveHub Ready publication contract | Explicit approved project onboarding, source collection, draft review, provenance, withdrawal and security gates | Planned after DH-07 |
 | DH-09 | Single-project ingestion pilot | One approved creative game becomes a project page + reviewed update through preview/merge | Planned |
 | DH-10 | Automated development stories | Significant approved project events become concise draft human-readable stories, not routine posts | Planned |
@@ -47,7 +47,9 @@
 
 ## DH-07D cross-world navigation (27 October 2026)
 
-The user approves DH-07C **page concept and layout** and prefers a modern sans-serif typographic revision. Build [the two-tier discovery directory](DH07D_DISCOVERY_NAVIGATION.md) on a branch based on DH-07C: retain all four existing floating-world links and bottom tiles; group **Music**, **The Unfinished Shelf** and **Trip Down Memory Lane** inside **Explore** rather than adding buttons to the crowded homepage. Contextual onward links open the existing fictional shelf and musical previews. Unapproved real works are not exposed. Visual review, browser validation and main-branch approval are separate gates.
+The user approves DH-07C **page concept and layout** and prefers a modern sans-serif typographic revision. Build [the two-tier discovery directory](DH07D_DISCOVERY_NAVIGATION.md) on a branch based on DH-07C: retain all four existing floating-world links and **remove the redundant bottom tiles**; group **Music**, **The Unfinished Shelf** and **Trip Down Memory Lane** inside **Explore** rather than adding buttons to the crowded homepage. Contextual onward links open the existing fictional shelf and musical previews. Unapproved real works are not exposed. Visual review, browser validation and main-branch approval are separate gates.
+
+The owner reviewed the homepage and explicitly rejected the third navigation surface: the bottom four-tile row repeated the floating islands and Explore. It has been removed from the branch, and the logo/Explore area is repositioned to suit. This is a targeted refinement, not a new visual design direction. Browser QA remains pending because the available browser runner previously blocked local page loads.
 
 ## DH-07C fictional content-world prototypes (27 October 2026)
 
