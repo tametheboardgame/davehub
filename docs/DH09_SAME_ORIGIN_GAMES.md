@@ -44,6 +44,20 @@ Before changing the standalone game links or decommissioning any original Pages 
 
 This phase does **not** configure `davehub.co.uk`. The separate Pages staging/live architecture from [ADR-0012](ADR-0012-FIRST-PARTY-GAME-ROUTING.md) remains locked. Until the two-project split is configured, the existing `davehub.pages.dev` is the owner test environment.
 
+## Automatic staging updates (DH-09E)
+
+The owner explicitly approved automatic game updates to the test environment on 28 October 2026. The new [hourly GitHub Actions workflow](../.github/workflows/davehub-game-auto-sync.yml) reads the latest public Unicorn Valley `main` SHA and the latest **successful `CI` push workflow for that exact SHA**. A PR-only success, a failed or pending main run, an older passing SHA or a GitHub API error cannot promote the candidate.
+
+If a new commit qualifies, the workflow updates only `config/game-releases.json` in its checkout, independently builds both game routes and the full DaveHub site, checks all tests, then revalidates upstream main and the exact CI run. Only then does its bot commit and push the vetted source SHA to the branch currently used by DaveHub staging (`main`). It confirms the release with `/games/unicorn-valley/davehub-release.json`, containing the **deployed upstream SHA**, and separately validates the game JS/CSS/audio and both site launch links. Failed builds never change the pinned release. Remote deployment failures are visible as failed Actions runs; they are **not** mistaken for successful releases.
+
+**Important:** GitHub Actions-created commits using the built-in `GITHUB_TOKEN` do not normally trigger other GitHub `push` workflows. This updater **does not depend on that happening**: it runs its own full build before committing and its own Cloudflare HTTP verification after committing. Cloudflare Git integration must still actually deploy the bot commit; if that integration does not, the release-verification job fails rather than claiming success. Check deployment settings before investigating code regressions.
+
+**Current staging constraint:** `davehub.pages.dev` is connected to the `main` branch **only until** the two-project staging/live split. `config/game-auto-sync-policy.json` explicitly forbids continuing automation once the production domain is configured. During the DH-09D cutover, change Cloudflare staging to the dedicated `staging` branch, update the updater's branch and policy gate, and leave `main` as the separately owner-promoted live branch. **Never auto-promote a game update onto `davehub.co.uk`.** No Cloudflare account token or new GitHub credential is needed for this hourly poll; the workflow uses GitHub's repository-scoped token.
+
+Stephen Martin **already tracks new publicly deployed game files automatically** through the fixed-origin Cloudflare Pages proxy. It does not need a DaveHub rebuild, and the private source repository stays private. This does *not* guarantee that an unfinished or broken upstream deployment will be rolled back. A future pinned public release artifact can replace the proxy if fully independent staged versions are required.
+
+For diagnosing updates, use GitHub Actions → **DaveHub staging game auto-sync**. An unchanged or blocked run makes no commits and does not rebuild 89 MB of assets. `workflow_dispatch` includes a one-time `force_redeploy` option for qualifying and testing the **current** upstream SHA, with no gameplay source changes. If the workflow cannot push due to branch protection, it fails visibly; do not bypass branch rules or add personal access tokens.
+
 ## Version update procedure
 
 Only update Unicorn Valley by explicitly replacing the pinned SHA after upstream game CI and QA pass. The Stephen Martin route tracks the already-public origin while its private source remains inaccessible to DaveHub builds; availability and functional tests should continue to monitor the origin. Never clone private repositories with unreviewed personal access tokens or publish their sources.
