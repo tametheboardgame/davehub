@@ -3,7 +3,7 @@
 const token=document.body.dataset.token;
 const $=id=>document.getElementById(id);
 const el=(tag,className,text)=>{const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=text;return node};
-let drafts=[],current=null;
+let drafts=[],current=null,dirty=false;
 const F=['id','slug','title','work-type','lifecycle','synopsis','source-url','link-url','link-label','status','notes'];
 function message(text,error=false){$('message').textContent=text;$('message').className=error?'error':''}
 async function api(method,endpoint,body){
@@ -16,9 +16,48 @@ async function api(method,endpoint,body){
 }
 async function load(){
  const result=await (await api('GET','drafts')).json();
+ const review=await (await api('GET','readiness')).json();
  drafts=result.candidates;
  drawQueue();
- if(current){const found=drafts.find(x=>x.id===current.id);if(found)show(found)}
+ drawReview(review);
+ if(current&&!dirty){const found=drafts.find(x=>x.id===current.id);if(found)show(found)}
+}
+function drawReview(report){
+ const target=$('review-cards');target.replaceChildren();
+ $('review-progress').textContent=report.prepared+' of '+report.total+' prepared · '+report.readyForProposal+' ready for owner-approved proposal';
+ for(const item of report.items){
+  const card=el('article','review-card');
+  const header=el('div','review-card-head');
+  header.append(el('strong','',item.title),el('span',item.readyForProposal?'review-done':'review-wait',item.present?item.checked+'/4 checks signed':'Not prepared'));
+  card.append(header);
+  const summary=el('p','',item.present
+   ?'Editorial stage: '+item.stage.replaceAll('_',' ')+'. '+item.openChecks.length+' outstanding review item'+(item.openChecks.length===1?'':'s')+'.'
+   :'This project has not been prepared in your local Workshop.');
+  card.append(summary);
+  if(item.openChecks.length){
+   const details=el('details','review-issues');
+   const heading=el('summary','',item.openChecks.length+' items to review');
+   const list=el('ul','');
+   item.openChecks.forEach(t=>{const li=el('li','',t);list.append(li)});
+   details.append(heading,list);card.append(details);
+  }
+  const actions=el('div','review-actions');
+  if(item.present){
+   const select=el('button','', 'Review record');
+   select.type='button';
+   select.addEventListener('click',()=>{
+    const selected=drafts.find(x=>x.id===item.id);
+    if(dirty&&!window.confirm('Discard unsaved edits before opening another record?'))return;
+    if(selected)show(selected);
+    $('editor-title').scrollIntoView({behavior:'smooth',block:'start'});
+   });
+   const preview=el('a','', 'Preview private page');
+   preview.href='/creations/'+encodeURIComponent(item.slug)+'/';
+   preview.target='_blank';preview.rel='noopener noreferrer';
+   actions.append(select,preview);
+  }
+  card.append(actions);target.append(card);
+ }
 }
 function drawQueue(){
  const q=$('queue');q.replaceChildren();
@@ -26,12 +65,12 @@ function drawQueue(){
  for(const c of drafts){
   const button=el('button','queueitem'+(current?.id===c.id?' active':''));
   button.type='button';button.append(el('strong','',c.title),el('span','',c.status.replaceAll('_',' ')));
-  button.addEventListener('click',()=>show(c));q.append(button);
+  button.addEventListener('click',()=>{if(dirty&&!window.confirm('Discard unsaved edits before opening another record?'))return;show(c)});q.append(button);
  }
  if(!drafts.length)q.append(el('p','none','Import an inventory or create your first candidate.'));
 }
 function show(c){
- current=c;
+ current=c;dirty=false;
  $('editor-title').textContent=c.title||'New creation';
  $('id').value=c.id||'';$('slug').value=c.slug||'';
  $('title').value=c.title||'';
@@ -51,6 +90,7 @@ function show(c){
  const saved=drafts.some(x=>x.id===c.id);
  $('preview-page').href=saved?'/creations/'+encodeURIComponent(c.slug||c.id)+'/':'#';
  $('preview-page').setAttribute('aria-disabled',saved?'false':'true');
+ $('draft-state').textContent='Saved local draft. Changes you make here are not included in the preview until you save again.';
  message('Local draft loaded. No public changes have been made.');
  drawQueue();
 }
@@ -90,7 +130,16 @@ $('seed-first-wave').addEventListener('click',async()=>{
 $('preview-page').addEventListener('click',e=>{
  if($('preview-page').getAttribute('aria-disabled')==='true'){e.preventDefault();message('Save this draft locally before previewing.',true)}
 });
+function markDirty(){
+ if(!current)return;
+ dirty=true;
+ $('draft-state').textContent='Unsaved changes. Save local draft before previewing this revision.';
+ $('preview-page').setAttribute('aria-disabled','true');
+}
+$('edit-form').addEventListener('input',markDirty);
+$('edit-form').addEventListener('change',markDirty);
 $('new-record').addEventListener('click',()=>{
+ if(dirty&&!window.confirm('Discard unsaved edits before creating another record?'))return;
  show({id:'',title:'',slug:'',workType:'other',lifecycle:'active',synopsis:'',views:['projects'],status:'nominated',review:{},ownerApproved:false,notes:''});
  $('id').focus();
 });
@@ -98,7 +147,7 @@ $('edit-form').addEventListener('submit',async e=>{
  e.preventDefault();
  try{
   const c=toCandidate();await api('POST','save',c);
-  current=c;message('Saved to the private local catalogue.');
+  dirty=false;current=c;message('Saved to the private local catalogue.');
   await load();
  }catch(err){message(err.message,true)}
 });
@@ -115,6 +164,7 @@ $('import-file').addEventListener('change',async e=>{
 });
 $('export-approved').addEventListener('click',async()=>{
  try{
+  if(dirty)throw Error('Save or discard your unsaved edits before exporting a proposal.');
   const response=await api('POST','export',{});
   const content=await response.blob();
   const url=URL.createObjectURL(content);
