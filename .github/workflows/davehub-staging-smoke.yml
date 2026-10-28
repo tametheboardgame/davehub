@@ -10,6 +10,7 @@ on:
       - 'assets/content/worlds.css'
       - 'assets/content/staging-review.js'
       - 'scripts/build-pages.sh'
+      - '.node-version'
       - 'scripts/bundle-games.cjs'
       - 'scripts/check-game-routes.cjs'
       - 'config/game-releases.json'
