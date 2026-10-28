@@ -145,6 +145,10 @@ function buildGame(game,sourceDir,outputDir){
  const target=path.join(outputDir,game.output);
  fs.mkdirSync(path.dirname(target),{recursive:true});
  fs.cpSync(source,target,{recursive:true,force:false,errorOnExist:true});
+ if(game.id==='unicorn-valley'){
+  const release={schemaVersion:1,game:'unicorn-valley',sourceRepository:game.repository,sourceCommit:game.commit,version:game.version};
+  fs.writeFileSync(path.join(target,'davehub-release.json'),JSON.stringify(release,null,2)+'\n');
+ }
  verifyIndex(target,game.id);
  return target;
 }
@@ -161,6 +165,12 @@ function checkOnly(directory){
   const where=path.join(directory,game.output);
   if(!fs.existsSync(where))throw Error('Game output missing: '+game.output);
   verifyIndex(where,game.id);
+  const releasePath=path.join(where,'davehub-release.json');
+  if(!fs.existsSync(releasePath))throw Error('Missing immutable Unicorn Valley release marker');
+  const release=JSON.parse(fs.readFileSync(releasePath,'utf8'));
+  if(release.schemaVersion!==1||release.game!==game.id||release.sourceCommit!==game.commit||
+     release.sourceRepository!==game.repository||release.version!==game.version)
+   throw Error('Published release marker does not match the approved game SHA');
  }
  console.log('PASS pinned Unicorn Valley bundle and scoped Stephen Martin same-origin proxy');
 }

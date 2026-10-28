@@ -16,6 +16,10 @@ The future launch will use **two separate Cloudflare Pages projects connected to
 
 DaveHub owner review uses hosted staging previews by default, **not local server commands**. The public-safe, layout-only first-wave demonstration is built at `/previews/dh-08c/`, containing three project names, placeholder descriptions and no unapproved game/blog links or private editorial drafts. This historical design-only preview remains available but the normal Games/Projects/Writing destinations now use **three explicitly approved first-wave records**. See [first publication record](docs/DH08D_FIRST_THREE_PUBLISHED_PROJECTS.md).
 
+## DH-09E: Automatic game updates to staging
+
+**Unicorn Valley** has an hourly updater: after `main` completes its exact-commit CI successfully, DaveHub rebuilds and tests the pinned source, advances the staging lock and checks that Cloudflare actually serves that SHA. No update or failed upstream CI means no rebuild. **Stephen Martin** follows its existing public Pages deployment via the same-origin proxy without a DaveHub rebuild. No private source access. This is staging automation only, never automatic `davehub.co.uk` promotion. See [automatic update details](docs/DH09_SAME_ORIGIN_GAMES.md#automatic-staging-updates-dh-09e).
+
 ## DH-09: Games available on DaveHub staging
 
 DaveHub's first-party routes are `/games/unicorn-valley/` and `/games/stephen-martin/`. Unicorn Valley is bundled as an **immutable compiled static release** from its public GitHub source; Stephen Martin uses a **restricted same-origin Cloudflare Pages proxy** to the existing public playable site because its GitHub source repository is private. Both stay on DaveHub's hostname, and the originals remain accessible. **Cloudflare live HTTP verification passed at 15:48 GMT on 28 October 2026** for both game HTML pages, Unicorn JavaScript/CSS/audio, Stephen JavaScript/CSS/image and both creation links (workflow #40719683462). Full interactive playthrough and save/reload browser QA remain outstanding. The private repository is not made public or copied.

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "enabled": true,
+  "stagingBranch": "main",
+  "stagingHost": "davehub.pages.dev",
+  "liveDomainConfigured": false,
+  "autoLivePromotion": false,
+  "upstream": {
+    "unicorn-valley": {
+      "repository": "tametheboardgame/unicorn-valley",
+      "branch": "main",
+      "requiredPushWorkflow": "CI",
+      "poll": "hourly"
+    }
+  },
+  "notes": "DH-09E: main is temporarily Cloudflare staging. Before configuring davehub.co.uk/live main, change stagingBranch and update Cloudflare staging project accordingly; never auto-promote games to live."
+}

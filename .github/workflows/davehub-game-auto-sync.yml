@@ -1,0 +1,87 @@
+name: DaveHub staging game auto-sync
+on:
+  schedule:
+    - cron: '37 * * * *'
+  workflow_dispatch:
+    inputs:
+      force_redeploy:
+        description: Re-verify and republish the current qualified Unicorn Valley SHA (one-time canary only)
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: davehub-staging-game-auto-sync
+  cancel-in-progress: false
+
+jobs:
+  update-unicorn-valley:
+    if: github.repository == 'tametheboardgame/davehub' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+      - name: Check latest public Unicorn Valley main and exact-head CI
+        id: upstream
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          FORCE_REDEPLOY: ${{ inputs.force_redeploy || false }}
+        run: node scripts/auto-sync-unicorn.cjs check
+      - name: Build and qualify the entire candidate DaveHub + games release
+        if: steps.upstream.outputs.action == 'update'
+        run: sh scripts/build-pages.sh
+      - name: Recheck upstream source and CI after the successful build
+        if: steps.upstream.outputs.action == 'update'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          EXPECTED_UPSTREAM_SHA: ${{ steps.upstream.outputs.upstream_sha }}
+          EXPECTED_UPSTREAM_CI_RUN: ${{ steps.upstream.outputs.upstream_ci_run }}
+        run: node scripts/auto-sync-unicorn.cjs verify
+      - name: Atomically advance the staging game pin
+        if: steps.upstream.outputs.action == 'update'
+        env:
+          EXPECTED_UPSTREAM_SHA: ${{ steps.upstream.outputs.upstream_sha }}
+          EXPECTED_UPSTREAM_CI_RUN: ${{ steps.upstream.outputs.upstream_ci_run }}
+        run: |
+          set -eu
+          git fetch origin main --quiet
+          test "$(git rev-parse origin/main)" = "$(git rev-parse HEAD)" || {
+            echo "::error::DaveHub main changed during staging qualification. Retry on the next hourly run."
+            exit 1
+          }
+          test "$(git status --porcelain | wc -l)" -gt 0
+          git add config/game-releases.json
+          if git diff --cached --quiet; then
+            echo "::error::No candidate release change was prepared."
+            exit 1
+          fi
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m "chore(DH-09E): sync Unicorn Valley staging to ${EXPECTED_UPSTREAM_SHA} (upstream CI #${EXPECTED_UPSTREAM_CI})"
+          git push origin HEAD:refs/heads/main
+      - name: Verify the new exact SHA and gameplay files on Cloudflare staging
+        if: steps.upstream.outputs.action == 'update'
+        env:
+          EXPECTED_UPSTREAM_SHA: ${{ steps.upstream.outputs.upstream_sha }}
+        run: node scripts/verify-game-staging-release.cjs
+      - name: Report automated staging update
+        if: always()
+        env:
+          SYNC_ACTION: ${{ steps.upstream.outputs.action }}
+          UPSTREAM_SHA: ${{ steps.upstream.outputs.upstream_sha }}
+        run: |
+          {
+            echo "### DaveHub automatic game update"
+            echo "Upstream status: ${SYNC_ACTION:-check failed}"
+            echo "Unicorn Valley candidate: ${UPSTREAM_SHA:-not available}"
+            echo "Stephen Martin: existing live public-origin proxy, no source update required"
+            echo "Future davehub.co.uk: NEVER automatically promoted"
+            echo "See the job outcome for Cloudflare staging HTTP verification."
+          } >> "$GITHUB_STEP_SUMMARY"

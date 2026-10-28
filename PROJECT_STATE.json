@@ -628,6 +628,16 @@
     "cloudflareSmokeResult": "success_2026-10-28T15:48:39Z",
     "next": "Owner browser QA of game startup, interactions, sound and save/reload on DaveHub; then design opt-in save migration and independent Stephen distribution if desired"
   },
+  "dh09e": {
+    "phase": "staging_auto_sync_implementation_in_qualification",
+    "pollSchedule": "hourly minute 37 UTC",
+    "sourceReleasePolicy": "Unicorn Valley public main exact SHA requires successful CI push workflow",
+    "ciRevalidation": "check upstream before build and after full DaveHub build",
+    "releaseMarker": "/games/unicorn-valley/davehub-release.json",
+    "approvalBoundary": "staging only while main is still staging; future live main is owner-promoted",
+    "stephen": "same-origin proxy automatically tracks existing public upstream releases; private repo untouched",
+    "status": "PR checks and initial workflow dispatch pending"
+  },
   "dh10": {
     "phase": "dh_10a_b_merged",
     "schemaVersion": 1,
