@@ -3,7 +3,7 @@ const test=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const path=require('node:path');
-const {candidateFromRuns,decide,updateLock,validLock}=require('../scripts/auto-sync-unicorn.cjs');
+const {candidateFromRuns,decide,updateLock,validLock,validateStagingPolicy}=require('../scripts/auto-sync-unicorn.cjs');
 const config=JSON.parse(fs.readFileSync(path.join(__dirname,'../config/game-releases.json'),'utf8'));
 const older=config.games.find(x=>x.id==='unicorn-valley').commit;
 const newer='c'.repeat(40);
@@ -75,4 +75,12 @@ test('published-game build emits a SHA-bound release-marker contract',()=>{
  const bundler=fs.readFileSync(path.join(__dirname,'../scripts/bundle-games.cjs'),'utf8');
  assert.match(bundler,/davehub-release\.json/);
  assert.match(bundler,/release\.sourceCommit!==game\.commit/);
+});
+
+test('staging-only policy blocks accidental later live-domain promotion',()=>{
+ const policy=JSON.parse(fs.readFileSync(path.join(__dirname,'../config/game-auto-sync-policy.json'),'utf8'));
+ assert.equal(validateStagingPolicy(policy),policy);
+ for(const change of [{liveDomainConfigured:true},{autoLivePromotion:true},{stagingBranch:'staging'},{enabled:false}]){
+  assert.throws(()=>validateStagingPolicy({...policy,...change}),/Staging-only auto-sync/);
+ }
 });
