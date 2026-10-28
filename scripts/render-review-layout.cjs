@@ -8,6 +8,7 @@ const fs=require('node:fs');
 const path=require('node:path');
 const {filesFor,escapeHtml}=require('./render-content.cjs');
 const {firstWave}=require('../tools/workshop/first-wave.cjs');
+const worldCss=fs.readFileSync(path.join(__dirname,'../assets/content/worlds.css'),'utf8');
 
 const PREFIX='/previews/dh-08c';
 const PLACEHOLDER='Editorial description withheld pending owner approval. This placeholder is here to check spacing, typography and mobile layout.';
@@ -45,7 +46,7 @@ function landing(data){
  '<meta name="viewport" content="width=device-width,initial-scale=1">'+
  '<meta name="robots" content="noindex,nofollow">'+
  '<title>First-wave page layout review · DaveHub</title>'+
- '<link rel="stylesheet" href="/assets/content/worlds.css"></head><body>'+
+ '<style data-davehub-inline="worlds">'+worldCss+'</style></head><body>'+
  '<div class="sky" aria-hidden="true"></div><div class="shell">'+
  '<header class="top"><a class="brand" href="/"><strong>Dave<span>Hub</span></strong><small>THE CREATIVE UNIVERSE</small></a>'+
  '<a class="home" href="/">← Back to DaveHub</a></header>'+
