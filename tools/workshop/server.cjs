@@ -188,6 +188,7 @@ async function body(req){
 async function serve(req,res){
  if(!allowed(req)){res.writeHead(403);res.end('Access denied');return}
  if(req.method==='GET'&&req.url==='/'){
+  res.setHeader('Set-Cookie','davehub-workshop='+TOKEN+'; HttpOnly; SameSite=Strict; Path=/');
   const html=fs.readFileSync(path.join(__dirname,'index.html'),'utf8').replace('__SESSION_TOKEN__',TOKEN);
   reply(res,200,html,'text/html; charset=utf-8');return;
  }
@@ -196,19 +197,32 @@ async function serve(req,res){
   const kind=name.endsWith('.js')?'text/javascript; charset=utf-8':'text/css; charset=utf-8';
   reply(res,200,fs.readFileSync(path.join(__dirname,name),'utf8'),kind);return;
  }
+ if(req.method==='GET'&&req.url==='/assets/content/worlds.css'){
+  reply(res,200,fs.readFileSync(path.join(__dirname,'../../assets/content/worlds.css'),'utf8'),'text/css; charset=utf-8');return;
+ }
+ if(req.method==='GET'&&(/^\/worlds(?:\/[a-z-]+)?\/?$/.test(req.url)||/^\/creations\/[a-z][a-z0-9-]{2,79}\/?$/.test(req.url))){
+  const cookies=String(req.headers.cookie||'').split(/;\s*/);
+  if(!cookies.includes('davehub-workshop='+TOKEN)){jsonReply(res,403,{error:'Open the private editor before previewing'});return}
+  const key=req.url.replace(/^\/|\/$/g,'')+'/index.html';
+  const html=filesFor(previewCatalogue(readStore()),'',false).get(key);
+  if(!html){jsonReply(res,404,{error:'No such local draft page'});return}
+  const banner='<aside class="preview" role="note"><strong>PRIVATE OWNER REVIEW · NOT PUBLISHED.</strong> This page is rendered from local, unapproved drafts. Descriptions, credits and external links need final approval.</aside>';
+  reply(res,200,html.replace('<div class="shell">','<div class="shell">'+banner),'text/html; charset=utf-8');return;
+ }
  if(!req.url.startsWith('/api/')){res.writeHead(404);res.end('Not found');return}
  if(req.headers['x-workshop-token']!==TOKEN){jsonReply(res,403,{error:'No valid local session'});return}
  if(req.method==='GET'&&req.url==='/api/drafts'){jsonReply(res,200,readStore());return}
  if(req.method==='POST'&&req.url==='/api/import'){
-  const data=await body(req),source=Array.isArray(data)?data:data.candidates;
-  if(!Array.isArray(source)||source.length>250)throw Error('Import must contain at most 250 candidates');
-  const d=readStore();
-  for(const incoming of source){
-   // Never trust an import file's approval flags or editorial status.
-   const clean=cleanCandidate({...incoming,status:'needs_review',ownerApproved:false,approvedOn:'',review:{}});
-   if(!d.candidates.some(x=>x.id===clean.id))d.candidates.push(clean);
-  }
-  writeStore(d);jsonReply(res,200,{count:d.candidates.length});return;
+  const data=await body(req);
+  const source=data?.mode==='candidate_review_only'?toWorkshopImport(data).candidates:Array.isArray(data)?data:data?.candidates;
+  const d=importCandidates(readStore(),source);
+  writeStore({schemaVersion:1,candidates:d.candidates});
+  jsonReply(res,200,{count:d.candidates.length,added:d.added,skipped:d.skipped});return;
+ }
+ if(req.method==='POST'&&req.url==='/api/seed'){
+  const d=importCandidates(readStore(),firstWave);
+  writeStore({schemaVersion:1,candidates:d.candidates});
+  jsonReply(res,200,{count:d.candidates.length,added:d.added,skipped:d.skipped});return;
  }
  if(req.method==='POST'&&req.url==='/api/save'){
   const incoming=await body(req);const c=cleanCandidate(incoming);const d=readStore();
@@ -217,6 +231,8 @@ async function serve(req,res){
    const check=validateCatalogue({schemaVersion:1,items:[makeApproved(c)]});
    if(!check.valid)throw Error('Cannot approve: '+check.errors.join('; '));
   }
+  if(d.candidates.some(x=>x.id!==c.id&&x.slug===c.slug))throw Error('Duplicate public slug: '+c.slug);
+  if(c.sourceUrl&&d.candidates.some(x=>x.id!==c.id&&x.sourceUrl===c.sourceUrl))throw Error('Source URL already belongs to a different record');
   const ix=d.candidates.findIndex(x=>x.id===c.id);
   if(ix<0)d.candidates.push(c);else d.candidates[ix]=c;
   writeStore(d);jsonReply(res,200,{ok:true,count:d.candidates.length});return;
