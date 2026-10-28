@@ -5,6 +5,7 @@ const fs=require('node:fs');
 const path=require('node:path');
 const {cleanCandidate,importCandidates,previewCatalogue,exportReview,makeApproved,HOST}=require('../tools/workshop/server.cjs');
 const {firstWave}=require('../tools/workshop/first-wave.cjs');
+const {readiness}=require('../tools/workshop/review-readiness.cjs');
 const {validateCatalogue}=require('../scripts/content-check.cjs');
 const {filesFor}=require('../scripts/render-content.cjs');
 const checked={rights:true,metadata:true,links:true,media:true};
@@ -141,4 +142,47 @@ test('public content stays empty while the first wave awaits explicit final appr
  const build=fs.readFileSync(path.join(root,'scripts/build-pages.sh'),'utf8');
  assert.ok(!build.includes('cp tools/workshop'));
  assert.ok(!build.includes('first-wave.cjs dist'));
+});
+
+test('first-wave readiness reports all outstanding owner checks without conferring approvals',()=>{
+ const notPrepared=readiness({schemaVersion:1,candidates:[]});
+ assert.equal(notPrepared.total,3);assert.equal(notPrepared.prepared,0);assert.equal(notPrepared.readyForProposal,0);
+ const seeded=importCandidates({schemaVersion:1,candidates:[]},firstWave);
+ const state=readiness(seeded);
+ assert.equal(state.total,3);
+ assert.equal(state.prepared,3);
+ assert.equal(state.readyForProposal,0);
+ for(const item of state.items){
+  assert.equal(item.checked,0);
+  assert.equal(item.readyForProposal,false);
+  assert.ok(item.openChecks.some(x=>/owner sign-off/.test(x)));
+  assert.ok(item.openChecks.some(x=>/Destination links/.test(x)));
+ }
+});
+test('readiness is read-only and flags partially reviewed candidates accurately',()=>{
+ const baseline=importCandidates({schemaVersion:1,candidates:[]},firstWave);
+ const snapshot=JSON.stringify(baseline);
+ const partly={...baseline.candidates[0],review:{rights:true,metadata:true,links:false,media:false}};
+ const state=readiness({candidates:[partly,...baseline.candidates.slice(1)]});
+ assert.equal(state.items[0].checked,2);
+ assert.equal(state.items[0].readyForProposal,false);
+ assert.equal(JSON.stringify(baseline),snapshot,'Readiness must not mutate any candidate');
+ assert.throws(()=>readiness({candidates:'not-an-array'}),/Invalid local candidate store/);
+});
+test('readiness cannot mistake incomplete approvals for a publication proposal',()=>{
+ const original={...firstWave[0],
+  review:{rights:true,metadata:true,links:true,media:true},
+  ownerApproved:false,status:'approved_for_export',approvedOn:''};
+ const state=readiness({candidates:[original]});
+ assert.equal(state.readyForProposal,0);
+ assert.ok(state.items[0].openChecks.some(x=>/owner sign-off/.test(x)));
+});
+test('review dashboard and unsaved-edits handling are included in the local interface',()=>{
+ const root=path.resolve(__dirname,'..');
+ const html=fs.readFileSync(path.join(root,'tools/workshop/index.html'),'utf8');
+ const js=fs.readFileSync(path.join(root,'tools/workshop/app.js'),'utf8');
+ assert.match(html,/id="review-cards"/);
+ assert.match(html,/id="draft-state"/);
+ assert.match(js,/Discard unsaved edits/);
+ assert.match(js,/if\(dirty\)throw Error/);
 });

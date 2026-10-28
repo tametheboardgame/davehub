@@ -13,6 +13,7 @@ const {validateCatalogue,safePublicUrl}=require('../../scripts/content-check.cjs
 const {filesFor}=require('../../scripts/render-content.cjs');
 const {toWorkshopImport}=require('../../scripts/davehub-workshop-import.cjs');
 const {firstWave}=require('./first-wave.cjs');
+const {readiness}=require('./review-readiness.cjs');
 
 const HOST='127.0.0.1';
 const PORT=Number(process.env.DAVEHUB_WORKSHOP_PORT||8765);
@@ -212,6 +213,7 @@ async function serve(req,res){
  if(!req.url.startsWith('/api/')){res.writeHead(404);res.end('Not found');return}
  if(req.headers['x-workshop-token']!==TOKEN){jsonReply(res,403,{error:'No valid local session'});return}
  if(req.method==='GET'&&req.url==='/api/drafts'){jsonReply(res,200,readStore());return}
+ if(req.method==='GET'&&req.url==='/api/readiness'){jsonReply(res,200,readiness(readStore()));return}
  if(req.method==='POST'&&req.url==='/api/import'){
   const data=await body(req);
   const source=data?.mode==='candidate_review_only'?toWorkshopImport(data).candidates:Array.isArray(data)?data:data?.candidates;
@@ -226,6 +228,10 @@ async function serve(req,res){
  }
  if(req.method==='POST'&&req.url==='/api/save'){
   const incoming=await body(req);const c=cleanCandidate(incoming);const d=readStore();
+  // Validate URLs at the first point of persistence, not just publication.
+  // Draft links are displayed for owner testing and must never be executable schemes.
+  if(c.sourceUrl&&!safePublicUrl(c.sourceUrl))throw Error('Unsafe source URL: '+c.id);
+  if(c.linkUrl&&!safePublicUrl(c.linkUrl))throw Error('Unsafe public link URL: '+c.id);
   if(c.status==='approved_for_export'){
    if(!c.ownerApproved||!Object.values(c.review).every(Boolean)||!c.approvedOn)throw Error('Approval requires owner sign-off, date and all review gates');
    const check=validateCatalogue({schemaVersion:1,items:[makeApproved(c)]});
