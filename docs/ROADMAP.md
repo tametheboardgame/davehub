@@ -138,7 +138,7 @@ Initial outside-GitHub creative links suggest additional kinds of records: publi
 ### DH-06D1 — larger upper-body framing (owner review, 28 October 2026)
 
 - Owner requested a much larger Dave, with the head, shoulders, chest and pointing hand dominant; legs can be cropped below the screen.
-- Increased desktop Dave height to 140svh and shifted the bottom to -55svh, keeping the head on screen and cropping the lower half.
+- Increased desktop Dave height up to 155svh (width-limited on narrow desktops) and aligned the top around 14svh, keeping his head visible while cropping the legs below the viewport.
 - Re-aligned transparent video relative to the static still so the gesture stays near, but does not cover, the desktop Explore CTA.
 - Tablet and portrait-mobile rules use upper-body crops; landscape-phone framing remains explicit.
 - Still and motion share geometry and remain noninteractive; Safari, reduced-motion, and playback fallback remain unchanged.
