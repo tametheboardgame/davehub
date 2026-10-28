@@ -11,11 +11,22 @@ const path=require('node:path');
 const {validateConfig}=require('./bundle-games.cjs');
 const root=path.resolve(__dirname,'..');
 const lockPath=path.join(root,'config/game-releases.json');
+const policyPath=path.join(root,'config/game-auto-sync-policy.json');
 const GH='https://api.github.com';
 const UPSTREAM='tametheboardgame/unicorn-valley';
 const CI_NAME='CI';
 const SHA=/^[a-f0-9]{40}$/;
 
+function validateStagingPolicy(policy){
+ if(policy.schemaVersion!==1||policy.enabled!==true||
+    policy.stagingBranch!=='main'||policy.stagingHost!=='davehub.pages.dev'||
+    policy.liveDomainConfigured!==false||policy.autoLivePromotion!==false||
+    policy.upstream?.['unicorn-valley']?.repository!==UPSTREAM||
+    policy.upstream?.['unicorn-valley']?.branch!=='main'||
+    policy.upstream?.['unicorn-valley']?.requiredPushWorkflow!==CI_NAME)
+  throw Error('Staging-only auto-sync is disabled or main is no longer exclusively staging; no automatic production promotion is permitted');
+ return policy;
+}
 function candidateFromRuns(sha,runs){
  if(!SHA.test(sha))throw Error('Invalid public upstream main SHA');
  if(!Array.isArray(runs))throw Error('Missing GitHub CI runs');
@@ -76,6 +87,7 @@ function emit(name,value){
  if(dest)fs.appendFileSync(dest,name+'='+String(value).replace(/[\r\n]/g,'')+'\n');
 }
 async function main(){
+ validateStagingPolicy(JSON.parse(fs.readFileSync(policyPath,'utf8')));
  const cmd=process.argv[2]||'check';
  if(!['check','verify'].includes(cmd))throw Error('Usage: node scripts/auto-sync-unicorn.cjs check|verify');
  const current=JSON.parse(fs.readFileSync(lockPath,'utf8'));
@@ -107,4 +119,4 @@ async function main(){
  console.log('Candidate pinned to successful exact-head upstream CI run '+decision.runUrl);
 }
 if(require.main===module)main().catch(e=>{console.error('FAIL staging game auto-sync: '+e.message);process.exitCode=1});
-module.exports={candidateFromRuns,validLock,decide,updateLock};
+module.exports={candidateFromRuns,validLock,decide,updateLock,validateStagingPolicy};
