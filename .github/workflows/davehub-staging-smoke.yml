@@ -1,0 +1,27 @@
+name: Cloudflare staging HTTP smoke
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/render-content.cjs'
+      - 'scripts/render-review-layout.cjs'
+      - 'scripts/check-cloudflare-staging.cjs'
+      - 'assets/content/worlds.css'
+      - 'assets/content/staging-review.js'
+      - 'scripts/build-pages.sh'
+      - 'content/public/catalogue.json'
+      - '.github/workflows/davehub-staging-smoke.yml'
+permissions:
+  contents: read
+jobs:
+  deployed-pages:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify actual deployed Cloudflare staging pages
+        run: node scripts/check-cloudflare-staging.cjs

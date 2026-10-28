@@ -33,12 +33,12 @@ test('empty canonical catalogue pages include staging bridge but approved and fi
  assert.equal(canonical.items.length,0);
  const empty=filesFor(canonical,'',false);
  for(const name of ['worlds/index.html','worlds/games/index.html','worlds/projects/index.html','worlds/writing/index.html']){
-  assert.match(empty.get(name),/staging-review\.js/,name);
+  assert.match(empty.get(name),/data-davehub-inline="staging"/,name);
  }
  const fictional=JSON.parse(fs.readFileSync(path.join(__dirname,'../content/examples/fictional.json'),'utf8'));
  assert.ok(fictional.items.length>0);
- assert.doesNotMatch(filesFor(fictional,'',false).get('worlds/games/index.html'),/staging-review\.js/);
- assert.doesNotMatch(filesFor(fictional,'/previews/dh-08b',true).get('worlds/index.html'),/staging-review\.js/);
+ assert.doesNotMatch(filesFor(fictional,'',false).get('worlds/games/index.html'),/data-davehub-inline="staging"/);
+ assert.doesNotMatch(filesFor(fictional,'/previews/dh-08b',true).get('worlds/index.html'),/data-davehub-inline="staging"/);
 });
 test('hosted review shows populated areas, explains genuinely empty categories and never leaks live links',()=>{
  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'dh08c-navigation-'));

@@ -58,6 +58,26 @@ node scripts/render-content.cjs content/examples/fictional.json dist/previews/dh
 # It never includes unapproved editorial text, outgoing links or private drafts.
 node scripts/render-review-layout.cjs dist/previews/dh-08c
 
+# An external asset 404 previously left world pages completely unstyled.
+# Verify the deployed HTML itself contains its CSS and the staging redirect.
+node - <<'NODE'
+const fs=require('node:fs');
+const check=(file,markers)=>{
+ const html=fs.readFileSync(file,'utf8');
+ for(const marker of markers)if(!html.includes(marker))throw Error(file+' lacks '+marker);
+};
+check('dist/worlds/games/index.html',[
+ 'data-davehub-inline="worlds"','data-davehub-inline="staging"'
+]);
+check('dist/previews/dh-08c/index.html',[
+ 'data-davehub-inline="worlds"','Unicorn Valley','The Stephen Martin Project'
+]);
+check('dist/previews/dh-08c/worlds/games/index.html',[
+ 'data-davehub-inline="worlds"','DESIGN REVIEW ONLY','Tame The Board Game'
+]);
+console.log('PASS self-contained world-page styling and staging review navigation');
+NODE
+
 # Prototype deployments remain noindex; this is not an access control.
 cat > dist/_headers <<'HEADERS'
 /*
