@@ -13,6 +13,7 @@ const {validateCatalogue,safePublicUrl}=require('../../scripts/content-check.cjs
 const {filesFor}=require('../../scripts/render-content.cjs');
 const {toWorkshopImport}=require('../../scripts/davehub-workshop-import.cjs');
 const {firstWave}=require('./first-wave.cjs');
+const {readiness}=require('./review-readiness.cjs');
 
 const HOST='127.0.0.1';
 const PORT=Number(process.env.DAVEHUB_WORKSHOP_PORT||8765);
@@ -212,6 +213,7 @@ async function serve(req,res){
  if(!req.url.startsWith('/api/')){res.writeHead(404);res.end('Not found');return}
  if(req.headers['x-workshop-token']!==TOKEN){jsonReply(res,403,{error:'No valid local session'});return}
  if(req.method==='GET'&&req.url==='/api/drafts'){jsonReply(res,200,readStore());return}
+ if(req.method==='GET'&&req.url==='/api/readiness'){jsonReply(res,200,readiness(readStore()));return}
  if(req.method==='POST'&&req.url==='/api/import'){
   const data=await body(req);
   const source=data?.mode==='candidate_review_only'?toWorkshopImport(data).candidates:Array.isArray(data)?data:data?.candidates;
