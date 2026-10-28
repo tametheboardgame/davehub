@@ -15,12 +15,15 @@ test('seven landing worlds, an index and one unique page per canonical creation'
  for(const v of VIEWS)assert.ok(files.has('worlds/'+v.id+'/index.html'),v.id);
  for(const item of fixture.items)assert.ok(files.has('creations/'+item.slug+'/index.html'),item.slug);
 });
-test('public catalogue builds empty public pages without fictional creations',()=>{
+test('approved catalogue builds three real project pages, with truly empty Music remaining empty',()=>{
  const pages=filesFor(publicCatalogue,'',false);
- assert.equal(pages.size,8);
+ assert.equal(pages.size,11);
+ const games=pages.get('worlds/games/index.html');
+ assert.match(games,/3 creations in this world/);
+ assert.match(games,/Unicorn Valley/);
+ assert.match(games,/Tame The Board Game/);
  assert.match(pages.get('worlds/music/index.html'),/Nothing has landed here yet/);
- assert.doesNotMatch(pages.get('worlds/music/index.html'),/Last Lightkeeper/);
- assert.doesNotMatch(pages.get('worlds/music/index.html'),/Fictional design demonstration/);
+ assert.doesNotMatch(games,/Fictional design demonstration/);
 });
 test('fictional previews are visibly labelled and use isolated links',()=>{
  const pages=filesFor(fixture,'/previews/dh-08b',true);
