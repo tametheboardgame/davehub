@@ -80,6 +80,7 @@ jobs:
         if: steps.upstream.outputs.action == 'update'
         env:
           EXPECTED_UPSTREAM_SHA: ${{ steps.upstream.outputs.upstream_sha }}
+          EXPECTED_UPSTREAM_CI_RUN: ${{ steps.upstream.outputs.upstream_ci_run }}
         run: node scripts/verify-game-staging-release.cjs
       - name: Report automated staging update
         if: always()
