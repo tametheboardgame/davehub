@@ -39,6 +39,8 @@ node -e "const {validateManifest}=require('./scripts/davehub-manifest.cjs'); con
 # Fail closed: only individually owner-approved records and links enter production.
 node scripts/content-check.cjs content/public/catalogue.json
 node scripts/content-check.cjs content/examples/fictional.json
+# Refuse mismatched live/staging build roles and branch policies before publishing.
+node scripts/dh09d-topology.cjs check
 
 rm -rf dist
 mkdir -p dist/assets/branding dist/assets/homepage dist/assets/characters/dave dist/previews/dh-07c dist/previews/dh-08 dist/previews/dh-08b dist/previews/dh-08c dist/content dist/assets/content
@@ -76,7 +78,7 @@ ROUTES
 
 node scripts/bundle-games.cjs build dist
 node scripts/bundle-games.cjs verify dist
-node --test tests/game-bundles.test.cjs tests/game-auto-sync.test.cjs tests/game-staging-verification.test.cjs tests/game-deployment-health.test.cjs
+node --test tests/game-bundles.test.cjs tests/game-auto-sync.test.cjs tests/game-staging-verification.test.cjs tests/game-deployment-health.test.cjs tests/dh09d-topology.test.cjs
 
 # Both assets must be copied to their own filename; never overwrite CSS with JS.
 # Every generated public page must have styled HTML and explicit owner-approved content.
@@ -102,25 +104,9 @@ console.log('PASS three approved and styled public works, no stale preview redir
 NODE
 
 # Prototype deployments remain noindex; this is not an access control.
-cat > dist/_headers <<'HEADERS'
-/*
-  X-Robots-Tag: noindex, nofollow
-  X-Content-Type-Options: nosniff
-
-/games/unicorn-valley/index.html
-  Cache-Control: no-cache
-
-/games/unicorn-valley/davehub-release.json
-  Cache-Control: no-store
-
-/games/unicorn-valley/assets/*
-  Cache-Control: public, max-age=31536000, immutable
-
-/games/unicorn-valley/audio/*
-  Cache-Control: public, max-age=86400
-
-/games/stephen-martin/*
-  Cache-Control: no-cache
-HEADERS
+# Production headers are indexable, but all staging/preview pages stay noindex.
+# Cloudflare's CF_PAGES_BRANCH and explicit role must match a reviewed topology.
+node scripts/dh09d-topology.cjs headers dist/_headers
+node scripts/dh09d-topology.cjs marker dist/deployment.json
 
 printf 'DaveHub Pages output ready in dist/\n'

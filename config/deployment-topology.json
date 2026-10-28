@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "phase": "pre_cutover",
+  "staging": {
+    "project": "davehub",
+    "hostname": "davehub.pages.dev",
+    "branch": "main"
+  },
+  "production": {
+    "project": "davehub-live",
+    "hostname": "davehub.co.uk",
+    "branch": "main",
+    "configured": false
+  },
+  "automaticGameUpdates": {
+    "branch": "main",
+    "livePromotion": false
+  },
+  "notes": "Transition by reviewed PR only after existing Cloudflare staging project production branch has been changed to staging. Before that, main is still staging. No live Pages project or DNS configured yet."
+}
