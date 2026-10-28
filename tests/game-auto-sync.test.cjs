@@ -84,3 +84,14 @@ test('staging-only policy blocks accidental later live-domain promotion',()=>{
   assert.throws(()=>validateStagingPolicy({...policy,...change}),/Staging-only auto-sync/);
  }
 });
+
+test('explicit same-SHA refresh requires successful CI and avoids repeated commits',async()=>{
+ const release=await decide(config,fetcher(older,[makeRun({head_sha:older,id:123})]),'',true);
+ assert.equal(release.action,'update');
+ const updated=updateLock(config,release);
+ assert.equal(updated.games.find(x=>x.id==='unicorn-valley').version,'main-ci-123');
+ const after=await decide(updated,fetcher(older,[makeRun({head_sha:older,id:123})]),'',true);
+ assert.equal(after.action,'unchanged');
+ const blocked=await decide(config,fetcher(older,[makeRun({head_sha:older,conclusion:'failure'})]),'',true);
+ assert.equal(blocked.action,'blocked');
+});
