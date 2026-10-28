@@ -19,7 +19,7 @@ const setup=phase=>{
  p.liveDomainConfigured=x.production.configured;
  return {x,p};
 };
-test('existing main-as-staging Pages project remains valid until verified cutover',()=>{
+test('staging branch configuration requires explicit staging Cloudflare role',()=>{
  assert.deepEqual(readTopology(),{stagingBranch:'staging',phase:'staging_cutover',liveConfigured:false,paused:false});
  assert.equal(validateStagingPolicy(policy,top),policy);
  assert.equal(buildRole(readTopology(),{CF_PAGES:'1',CF_PAGES_BRANCH:'staging',DAVEHUB_DEPLOY_ROLE:'staging'}),'staging');
@@ -71,9 +71,9 @@ test('staging remains noindex; live may be indexable but never its design previe
 test('deployed release marker binds the Cloudflare project role and exact commit SHA',()=>{
  const sha='a'.repeat(40);
  const current=readTopology();
- const mark=deploymentMarker(current,{CF_PAGES:'1',CF_PAGES_BRANCH:'main',CF_PAGES_COMMIT_SHA:sha});
+ const mark=deploymentMarker(current,{CF_PAGES:'1',CF_PAGES_BRANCH:'staging',DAVEHUB_DEPLOY_ROLE:'staging',CF_PAGES_COMMIT_SHA:sha});
  assert.equal(mark.environment,'staging');
- assert.equal(mark.branch,'main');
+ assert.equal(mark.branch,'staging');
  assert.equal(mark.commit,sha);
  const {x,p}=setup('live');
  const role=validateTopology(x,p);
@@ -81,7 +81,7 @@ test('deployed release marker binds the Cloudflare project role and exact commit
   DAVEHUB_DEPLOY_ROLE:'production',CF_PAGES_COMMIT_SHA:sha});
  assert.equal(prod.environment,'production');
  assert.equal(prod.commit,sha);
- assert.throws(()=>deploymentMarker(current,{CF_PAGES:'1',CF_PAGES_BRANCH:'main'}),/exact commit SHA/);
+ assert.throws(()=>deploymentMarker(current,{CF_PAGES:'1',CF_PAGES_BRANCH:'staging',DAVEHUB_DEPLOY_ROLE:'staging'}),/exact commit SHA/);
  assert.throws(()=>deploymentMarker(current,{CF_PAGES_COMMIT_SHA:'main'}),/Invalid Cloudflare deployment/);
  assert.match(headersFor('production'),/\/deployment.json\n  Cache-Control: no-store/);
 });
