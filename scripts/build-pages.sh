@@ -107,5 +107,6 @@ NODE
 # Production headers are indexable, but all staging/preview pages stay noindex.
 # Cloudflare's CF_PAGES_BRANCH and explicit role must match a reviewed topology.
 node scripts/dh09d-topology.cjs headers dist/_headers
+node scripts/dh09d-topology.cjs marker dist/deployment.json
 
 printf 'DaveHub Pages output ready in dist/\n'
