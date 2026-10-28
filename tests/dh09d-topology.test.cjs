@@ -20,9 +20,10 @@ const setup=phase=>{
  return {x,p};
 };
 test('existing main-as-staging Pages project remains valid until verified cutover',()=>{
- assert.deepEqual(readTopology(),{stagingBranch:'main',phase:'pre_cutover',liveConfigured:false,paused:true});
+ assert.deepEqual(readTopology(),{stagingBranch:'staging',phase:'staging_cutover',liveConfigured:false,paused:false});
  assert.equal(validateStagingPolicy(policy,top),policy);
- assert.equal(buildRole(readTopology(),{CF_PAGES:'1',CF_PAGES_BRANCH:'main'}),'staging');
+ assert.equal(buildRole(readTopology(),{CF_PAGES:'1',CF_PAGES_BRANCH:'staging',DAVEHUB_DEPLOY_ROLE:'staging'}),'staging');
+ assert.throws(()=>buildRole(readTopology(),{CF_PAGES:'1',CF_PAGES_BRANCH:'main'}),/lacks DAVEHUB_DEPLOY_ROLE/);
 });
 test('two independently deployed Pages projects require staging-only auto updates',()=>{
  for(const phase of ['staging_cutover','live']){
