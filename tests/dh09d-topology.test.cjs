@@ -3,7 +3,7 @@ const test=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const path=require('node:path');
-const {validateTopology,readTopology,buildRole,headersFor}=require('../scripts/dh09d-topology.cjs');
+const {validateTopology,readTopology,buildRole,headersFor,deploymentMarker}=require('../scripts/dh09d-topology.cjs');
 const {validateStagingPolicy}=require('../scripts/auto-sync-unicorn.cjs');
 const root=path.resolve(__dirname,'..');
 const top=JSON.parse(fs.readFileSync(path.join(root,'config/deployment-topology.json'),'utf8'));
@@ -65,6 +65,23 @@ test('staging remains noindex; live may be indexable but never its design previe
  assert.match(production,/\/previews\/\*\n  X-Robots-Tag: noindex, nofollow/);
  assert.match(staging,/\/games\/unicorn-valley\/davehub-release.json\n  Cache-Control: no-store/);
  assert.match(production,/\/games\/stephen-martin\/\*/);
+});
+test('deployed release marker binds the Cloudflare project role and exact commit SHA',()=>{
+ const sha='a'.repeat(40);
+ const current=readTopology();
+ const mark=deploymentMarker(current,{CF_PAGES:'1',CF_PAGES_BRANCH:'main',CF_PAGES_COMMIT_SHA:sha});
+ assert.equal(mark.environment,'staging');
+ assert.equal(mark.branch,'main');
+ assert.equal(mark.commit,sha);
+ const {x,p}=setup('live');
+ const role=validateTopology(x,p);
+ const prod=deploymentMarker(role,{CF_PAGES:'1',CF_PAGES_BRANCH:'main',
+  DAVEHUB_DEPLOY_ROLE:'production',CF_PAGES_COMMIT_SHA:sha});
+ assert.equal(prod.environment,'production');
+ assert.equal(prod.commit,sha);
+ assert.throws(()=>deploymentMarker(current,{CF_PAGES:'1',CF_PAGES_BRANCH:'main'}),/exact commit SHA/);
+ assert.throws(()=>deploymentMarker(current,{CF_PAGES_COMMIT_SHA:'main'}),/Invalid Cloudflare deployment/);
+ assert.match(headersFor('production'),/\/deployment.json\n  Cache-Control: no-store/);
 });
 test('scheduled updater can target staging but never hard-code a bot write to live main',()=>{
  const yaml=fs.readFileSync(path.join(root,'.github/workflows/davehub-game-auto-sync.yml'),'utf8');
