@@ -61,15 +61,16 @@ async function api(url,token,fetcher=fetch){
  if(!response.ok)throw Error('GitHub API error '+response.status+' for '+new URL(url).pathname);
  return response.json();
 }
-async function decide(current,fetcher=fetch,token=''){
+async function decide(current,fetcher=fetch,token='',forceRedeploy=false){
  const unicorn=validLock(current);
  const repo=await api(GH+'/repos/'+UPSTREAM+'/branches/main',token,fetcher);
  const sha=repo?.commit?.sha;
  if(!SHA.test(sha||''))throw Error('Invalid upstream branch head');
- if(sha===unicorn.commit)return {action:'unchanged',sha,previous:unicorn.commit};
+ if(sha===unicorn.commit&&!forceRedeploy)return {action:'unchanged',sha,previous:unicorn.commit};
  const runs=await api(GH+'/repos/'+UPSTREAM+'/actions/runs?branch=main&event=push&per_page=50',token,fetcher);
  const candidate=candidateFromRuns(sha,runs.workflow_runs);
  if(!candidate)return{action:'blocked',sha,previous:unicorn.commit,reason:'No successful exact-head upstream CI push run'};
+ if(sha===unicorn.commit&&unicorn.version==='main-ci-'+candidate.runId)return{action:'unchanged',sha,previous:unicorn.commit};
  return{action:'update',sha,previous:unicorn.commit,runId:candidate.runId,runUrl:candidate.url};
 }
 function updateLock(current,decision){
@@ -105,7 +106,7 @@ async function main(){
   console.log('Qualified upstream release rechecked: '+expected+' CI #'+candidate.runId);
   return;
  }
- const decision=await decide(current,fetch,token);
+ const decision=await decide(current,fetch,token,process.env.FORCE_REDEPLOY==='true');
  console.log('Unicorn Valley upstream: '+decision.sha+'; pinned: '+decision.previous+'; decision: '+decision.action);
  emit('action',decision.action);emit('upstream_sha',decision.sha);
  emit('previous_sha',decision.previous);
