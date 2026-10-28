@@ -30,7 +30,7 @@ done
 
 # A private draft must never become a deployed page through a build bypass.
 # Validate both the empty/approved production manifest and fictional test fixtures.
-node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs
+node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs
 node -e "const {validateManifest}=require('./scripts/davehub-manifest.cjs'); const data=require('./davehub.json'); const result=validateManifest(data,'tametheboardgame/davehub');if(!result.valid)throw new Error(result.errors.join('; '));"
 # Fail closed: until the owner approves the three proposals, production cannot include them.
 node scripts/content-check.cjs content/public/catalogue.json
