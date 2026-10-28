@@ -529,10 +529,16 @@
     "ownerAction": "visually review three local pages and two destinations per project, verify rights/credits/links and approve explicitly",
     "reviewReadinessPR": 27,
     "reviewedLinksPR": 28,
+    "cloudFirstReviewPR": 29,
+    "cloudFirstReviewMainCommit": "3c9206162a319f2be351a02359d2cdfa07b6a808",
+    "expectedReviewUrl": "https://davehub.pages.dev/previews/dh-08c/",
+    "reviewPayload": "12 layout-only static pages; no draft synopsis, links, assets, private notes or publication approvals",
+    "deploymentHTTPVerified": false,
+    "ownerReviewDefault": "Cloudflare preview URL plus precise visual QA checklist; no localhost setup requests",
     "reviewedLinksMainCommit": "49d17b3a2df4e7dea5ab73a43eeb9a66018195cb",
     "reviewReadinessMainCommit": "ae5ad0a3909abaa033d9c6efaff4af1d9d63ad02",
     "unresolvedVerification": ["The Stephen Martin Project production URL: owner browser check", "Unicorn Valley gameplay URL: browser playthrough not independently observed", "Tame The Board Game contributor/rights sign-off by owner"],
-    "checks": "PR #28 GitHub Actions: 11 discovery tests, 80 regressions, production build passed",
+    "checks": "PR #29 GitHub Actions: 11 discovery tests, 83 regressions, production build passed",
     "oldUnsafePR": "PR #21 closed unmerged because its proposed catalogue wrongly carried public_approved flags"
   },
   "dh10": {
