@@ -57,6 +57,22 @@ node scripts/render-content.cjs content/examples/fictional.json dist/previews/dh
 # Publicly visible, LAYOUT-ONLY review of three existing public project names.
 # It never includes unapproved editorial text, outgoing links or private drafts.
 node scripts/render-review-layout.cjs dist/previews/dh-08c
+# Each game is independently built from its pinned upstream commit. Static
+# output is deployed under the same DaveHub origin, not embedded via iframe.
+# Fail the entire build if either pinned game cannot be built and verified.
+# Scope Cloudflare Pages Functions to the Stephen Martin game route ONLY.
+# All other DaveHub pages, media and Unicorn Valley remain free static assets.
+cat > dist/_routes.json <<'ROUTES'
+{
+  "version": 1,
+  "include": ["/games/stephen-martin/*"],
+  "exclude": []
+}
+ROUTES
+
+node scripts/bundle-games.cjs build dist
+node scripts/bundle-games.cjs verify dist
+node --test tests/game-bundles.test.cjs
 
 # Both assets must be copied to their own filename; never overwrite CSS with JS.
 # Every generated public page must have styled HTML and explicit owner-approved content.
@@ -86,6 +102,18 @@ cat > dist/_headers <<'HEADERS'
 /*
   X-Robots-Tag: noindex, nofollow
   X-Content-Type-Options: nosniff
+
+/games/unicorn-valley/index.html
+  Cache-Control: no-cache
+
+/games/unicorn-valley/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/games/unicorn-valley/audio/*
+  Cache-Control: public, max-age=86400
+
+/games/stephen-martin/*
+  Cache-Control: no-cache
 HEADERS
 
 printf 'DaveHub Pages output ready in dist/\n'

@@ -10,6 +10,10 @@ on:
       - 'assets/content/worlds.css'
       - 'assets/content/staging-review.js'
       - 'scripts/build-pages.sh'
+      - 'scripts/bundle-games.cjs'
+      - 'scripts/check-game-routes.cjs'
+      - 'config/game-releases.json'
+      - 'functions/games/**'
       - 'content/public/catalogue.json'
       - '.github/workflows/davehub-staging-smoke.yml'
 permissions:
@@ -25,3 +29,5 @@ jobs:
           node-version: '22'
       - name: Verify actual deployed Cloudflare staging pages
         run: node scripts/check-cloudflare-staging.cjs
+      - name: Verify both same-origin games, files and audio on Cloudflare
+        run: node scripts/check-game-routes.cjs

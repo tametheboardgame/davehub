@@ -564,6 +564,30 @@
     "publishedRoutes": ["/worlds/", "/worlds/games/", "/worlds/projects/", "/worlds/writing/", "/creations/unicorn-valley/", "/creations/stephen-martin-project/", "/creations/tame-the-board-game/"],
     "next": "DH-09 pinned independent game builds under /games/... with separate staging/live deployments"
   },
+  "dh09": {
+    "phase": "same_origin_game_routes_in_qualification",
+    "implementationPR": 33,
+    "routes": ["/games/unicorn-valley/", "/games/stephen-martin/"],
+    "unicornValley": {
+      "source": "tametheboardgame/unicorn-valley",
+      "sourceVisibility": "public",
+      "pinnedSha": "473506e229b7710e6f6f42e079e808825279c1e4",
+      "build": "Vite /games/unicorn-valley/ base and rebased public audio/Story Library paths",
+      "output": "dist/games/unicorn-valley/",
+      "packagedFiles": 1113,
+      "packagedApproxMiB": 89
+    },
+    "stephenMartin": {
+      "sourceVisibility": "private",
+      "method": "Cloudflare Pages Function reverse proxy of existing public playable release",
+      "origin": "https://stephen-martin-project.pages.dev/",
+      "functionsRoute": "/games/stephen-martin/*",
+      "dependency": "upstream website remains required; not a pinned independent static bundle"
+    },
+    "gameSaveMigration": "not implemented; original browser localStorage remains at original origins",
+    "validation": "88 site tests, 11 discovery tests and six DH-09 tests passed at PR build; post-merge game HTTP and browser QA outstanding",
+    "liveDomainChange": "none; davehub.co.uk separate Pages project later"
+  },
   "dh10": {
     "phase": "dh_10a_b_merged",
     "schemaVersion": 1,
