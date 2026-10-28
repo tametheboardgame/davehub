@@ -32,6 +32,8 @@ test('all no-op and blocked checks verify the deployed release, including post-m
  assert.match(yaml,/node scripts\/check-pinned-game-deployment\.cjs/);
  assert.match(yaml,/cancel-in-progress: false/);
  const build=fs.readFileSync(path.join(__dirname,'../scripts/build-pages.sh'),'utf8');
- assert.match(build,/\/games\/unicorn-valley\/davehub-release\.json/);
- assert.match(build,/Cache-Control: no-store/);
+ assert.match(build,/node scripts\/dh09d-topology\.cjs headers dist\/_headers/);
+ const generator=fs.readFileSync(path.join(__dirname,'../scripts/dh09d-topology.cjs'),'utf8');
+ assert.match(generator,/Cache-Control: no-store/);
+ assert.match(generator,/\/games\/unicorn-valley\/davehub-release\.json/);
 });
