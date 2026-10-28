@@ -135,10 +135,12 @@ test('preview cannot render unsafe external URLs or injected markup',()=>{
  assert.ok(html.includes('&lt;script&gt;'));
  assert.throws(()=>importCandidates({candidates:[]},[{...firstWave[0],linkUrl:'javascript:alert(1)'}]),/Unsafe primary link URL/);
 });
-test('public content stays empty while the first wave awaits explicit final approval',()=>{
+test('owner-approved first-wave records are the only published additions',()=>{
  const root=path.resolve(__dirname,'..');
  const publicData=JSON.parse(fs.readFileSync(path.join(root,'content/public/catalogue.json'),'utf8'));
- assert.equal(publicData.items.length,0,'Owner has not approved publication of the three projects');
+ assert.equal(publicData.items.length,3);
+ assert.ok(publicData.items.every(i=>i.publication?.status==='public_approved'));
+ assert.ok(publicData.items.every(i=>i.media?.length===0));
  const build=fs.readFileSync(path.join(root,'scripts/build-pages.sh'),'utf8');
  assert.ok(!build.includes('cp tools/workshop'));
  assert.ok(!build.includes('first-wave.cjs dist'));
