@@ -8,8 +8,7 @@
       "build": "upstream-proxy",
       "version": "public-playable-origin-proxy-not-pinned-build",
       "catalogueId": "stephen-martin-project",
-      "upstream": "https://stephen-martin-project.pages.dev/",
-      "sourceCommitAtReview": "5eaa876a45393c8bb06ec0378dbfd5e1eec10aef"
+      "upstream": "https://stephen-martin-project.pages.dev/"
     },
     {
       "id": "unicorn-valley",
