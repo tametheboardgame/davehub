@@ -32,10 +32,10 @@ test('bot-driven hourly staging workflow is gated, builds before committing and 
  assert.match(workflow,/node scripts\/auto-sync-unicorn\.cjs check/);
  assert.match(workflow,/sh scripts\/build-pages\.sh/);
  assert.match(workflow,/node scripts\/auto-sync-unicorn\.cjs verify/);
- assert.match(workflow,/git push origin HEAD:refs\/heads\/main/);
+ assert.match(workflow,/git push origin "HEAD:refs\/heads\/\$TARGET_BRANCH"/);
  assert.match(workflow,/upstream CI #\$\{EXPECTED_UPSTREAM_CI_RUN\}/);
  assert.doesNotMatch(workflow,/\$\{EXPECTED_UPSTREAM_CI\}/);
  assert.match(workflow,/node scripts\/verify-game-staging-release\.cjs/);
- assert.match(workflow,/git rev-parse origin\/main/);
+ assert.match(workflow,/git rev-parse "origin\/\$TARGET_BRANCH"/);
  assert.doesNotMatch(workflow,/github\.com\/tametheboardgame\/stephen-martin-project\.git/);
 });
