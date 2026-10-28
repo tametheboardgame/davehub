@@ -58,9 +58,10 @@ test('every hosted page has a review notice and none contains unapproved first-w
   assert.match(BANNER,/NOT PUBLISHED CONTENT/); // Notice content must be explicit.
  }finally{fs.rmSync(dir,{recursive:true,force:true})}
 });
-test('public catalogue remains empty regardless of the hosted review generation',()=>{
+test('layout-only review stays separate after explicit first-wave publication',()=>{
  const catalogue=JSON.parse(fs.readFileSync(path.join(__dirname,'../content/public/catalogue.json'),'utf8'));
- assert.deepEqual(catalogue,{schemaVersion:1,items:[]});
+ assert.equal(catalogue.schemaVersion,1);
+ assert.equal(catalogue.items.length,3);
  const build=fs.readFileSync(path.join(__dirname,'../scripts/build-pages.sh'),'utf8');
  assert.match(build,/dist\/previews\/dh-08c/);
  assert.match(build,/node scripts\/render-review-layout.cjs/);
