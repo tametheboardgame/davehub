@@ -145,8 +145,11 @@ function renderMusical(data,item,root){
 function renderWork(data,item,root,preview){
  const views='<div class="chips">'+item.views.map(v=>'<a'+attr('href',viewUrl(root,v))+'>'+esc(VIEWS.find(x=>x.id===v)?.title||v)+'</a>').join('')+'</div>';
  const out=[];
+ const primary=item.links?.find(l=>l.kind==='play')||item.links?.find(l=>l.kind==='official')||null;
+ const launch=primary?'<div class="hero-actions"><a class="primary-launch" href="'+esc(primary.url)+'" rel="noopener noreferrer" target="_blank">'+esc(primary.kind==='play'?'Play now':'Visit original website')+' <span aria-hidden="true">↗</span></a>'+
+  '<span class="outside-note">Opens the existing '+esc(primary.kind==='play'?'playable game':'website')+' in a new tab. First-party DaveHub hosting is a separate project.</span></div>':'';
  out.push('<div class="work-head"><p class="eyebrow">✦ '+esc(friendlyKind(item).toUpperCase())+' · '+esc(dateLabel(item))+'</p>'+
-  '<h2>'+esc(item.title)+'</h2><p class="work-synopsis">'+esc(item.synopsis)+'</p>'+views+'</div>');
+  '<h2>'+esc(item.title)+'</h2><p class="work-synopsis">'+esc(item.synopsis)+'</p>'+views+launch+'</div>');
  if(item.views.includes('unfinished'))out.push('<div class="shelved">An archived creative fragment — no plans or promises to finish it.</div>');
  if(item.workType==='musical')out.push(renderMusical(data,item,root));
  else{
@@ -155,7 +158,7 @@ function renderWork(data,item,root,preview){
    '<div class="cards">'+linked.map(x=>card(x.item,root,relName(x.rel)+' · '+x.item.synopsis)).join('')+'</div>',
    'FOLLOW THE THREAD'));
  }
- if(item.links?.length)out.push(section('Official links','<div class="outlinks">'+item.links.map(l=>'<a href="'+esc(l.url)+'" rel="noopener noreferrer" target="_blank">'+esc(l.label)+' <span aria-hidden="true">↗</span></a>').join('')+'</div>','OUTSIDE DAVEHUB'));
+ if(item.links?.length)out.push(section('More links','<div class="outlinks">'+item.links.map(l=>'<a href="'+esc(l.url)+'" rel="noopener noreferrer" target="_blank">'+esc(l.label)+' <span aria-hidden="true">↗</span></a>').join('')+'</div>','OUTSIDE DAVEHUB'));
  if(item.media?.length)out.push(section('Approved media','<div class="outlinks">'+item.media.map(m=>'<a href="'+esc(m.url)+'" rel="noopener noreferrer" target="_blank">'+esc(m.title)+' <span aria-hidden="true">↗</span></a>').join('')+'</div>','MEDIA & ARTIFACTS'));
  out.push('<a class="ghost"'+attr('href',worldIndex(root))+'>← Explore more creative worlds</a>');
  return shell({title:item.title,kicker:'CREATION / '+friendlyKind(item),lead:'A path through the connected DaveHub universe.',body:join(out),root,preview});

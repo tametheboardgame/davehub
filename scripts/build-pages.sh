@@ -32,7 +32,7 @@ done
 # Validate both the empty/approved production manifest and fictional test fixtures.
 node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs
 node -e "const {validateManifest}=require('./scripts/davehub-manifest.cjs'); const data=require('./davehub.json'); const result=validateManifest(data,'tametheboardgame/davehub');if(!result.valid)throw new Error(result.errors.join('; '));"
-# Fail closed: until the owner approves the three proposals, production cannot include them.
+# Fail closed: only individually owner-approved records and links enter production.
 node scripts/content-check.cjs content/public/catalogue.json
 node scripts/content-check.cjs content/examples/fictional.json
 
@@ -49,7 +49,7 @@ cp prototypes/dh-08/index.html dist/previews/dh-08/index.html
 cp content/examples/fictional.json dist/previews/dh-08/catalogue.json
 cp content/public/catalogue.json dist/content/catalogue.json
 cp assets/content/worlds.css dist/assets/content/
-cp assets/content/staging-review.js dist/assets/content/worlds.css
+cp assets/content/staging-review.js dist/assets/content/
 # Both live and fictional pages come from the same validated template generator.
 # Never copy example items into dist/worlds or dist/creations.
 node scripts/render-content.cjs content/public/catalogue.json dist '' public
@@ -58,24 +58,27 @@ node scripts/render-content.cjs content/examples/fictional.json dist/previews/dh
 # It never includes unapproved editorial text, outgoing links or private drafts.
 node scripts/render-review-layout.cjs dist/previews/dh-08c
 
-# An external asset 404 previously left world pages completely unstyled.
-# Verify the deployed HTML itself contains its CSS and the staging redirect.
+# Both assets must be copied to their own filename; never overwrite CSS with JS.
+# Every generated public page must have styled HTML and explicit owner-approved content.
 node - <<'NODE'
 const fs=require('node:fs');
-const check=(file,markers)=>{
+const check=(file,markers,excluded=[])=>{
  const html=fs.readFileSync(file,'utf8');
  for(const marker of markers)if(!html.includes(marker))throw Error(file+' lacks '+marker);
+ for(const marker of excluded)if(html.includes(marker))throw Error(file+' unexpectedly contains '+marker);
 };
+check('dist/assets/content/worlds.css',['.world-tile','.work-card','.primary-launch'],['const loc = window.location']);
+check('dist/assets/content/staging-review.js',["loc.hostname !== 'davehub.pages.dev'"],['.world-tile{']);
 check('dist/worlds/games/index.html',[
- 'data-davehub-inline="worlds"','data-davehub-inline="staging"'
-]);
+ 'data-davehub-inline="worlds"','Unicorn Valley','The Stephen Martin Project','Tame The Board Game'
+],['data-davehub-inline="staging"','Nothing has landed here yet']);
+for(const slug of ['unicorn-valley','stephen-martin-project','tame-the-board-game']){
+ check('dist/creations/'+slug+'/index.html',['data-davehub-inline="worlds"','class="primary-launch"'],['DESIGN REVIEW ONLY']);
+}
 check('dist/previews/dh-08c/index.html',[
  'data-davehub-inline="worlds"','Unicorn Valley','The Stephen Martin Project'
 ]);
-check('dist/previews/dh-08c/worlds/games/index.html',[
- 'data-davehub-inline="worlds"','DESIGN REVIEW ONLY','Tame The Board Game'
-]);
-console.log('PASS self-contained world-page styling and staging review navigation');
+console.log('PASS three approved and styled public works, no stale preview redirect and no swapped CSS/JS assets');
 NODE
 
 # Prototype deployments remain noindex; this is not an access control.

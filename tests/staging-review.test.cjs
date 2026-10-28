@@ -28,16 +28,16 @@ test('live and other hosts never route to unapproved design previews',()=>{
   assert.deepEqual(navigate('davehub.pages.dev',pathValue),[],pathValue);
  }
 });
-test('empty canonical catalogue pages include staging bridge but approved and fictional pages do not',()=>{
+test('approved real catalogue pages never redirect to the design-only staging preview',()=>{
  const canonical=JSON.parse(fs.readFileSync(path.join(__dirname,'../content/public/catalogue.json'),'utf8'));
- assert.equal(canonical.items.length,0);
- const empty=filesFor(canonical,'',false);
+ assert.equal(canonical.items.length,3);
+ const pages=filesFor(canonical,'',false);
  for(const name of ['worlds/index.html','worlds/games/index.html','worlds/projects/index.html','worlds/writing/index.html']){
-  assert.match(empty.get(name),/data-davehub-inline="staging"/,name);
+  assert.doesNotMatch(pages.get(name),/data-davehub-inline="staging"/,name);
+  assert.doesNotMatch(pages.get(name),/DESIGN REVIEW ONLY/,name);
  }
+ assert.match(pages.get('worlds/games/index.html'),/The Stephen Martin Project/);
  const fictional=JSON.parse(fs.readFileSync(path.join(__dirname,'../content/examples/fictional.json'),'utf8'));
- assert.ok(fictional.items.length>0);
- assert.doesNotMatch(filesFor(fictional,'',false).get('worlds/games/index.html'),/data-davehub-inline="staging"/);
  assert.doesNotMatch(filesFor(fictional,'/previews/dh-08b',true).get('worlds/index.html'),/data-davehub-inline="staging"/);
 });
 test('hosted review shows populated areas, explains genuinely empty categories and never leaks live links',()=>{

@@ -91,3 +91,11 @@ h1{font-size:clamp(39px,6.5vw,76px);line-height:1.02;letter-spacing:-.056em;marg
 .demo-invitation p:not(.eyebrow){margin:0;color:var(--soft);line-height:1.65;max-width:690px}
 .demo-invitation .ghost{margin:20px 0 0;background:rgba(255,210,129,.12)}
 .demo-invitation .ghost:hover,.demo-invitation .ghost:focus-visible{background:rgba(255,210,129,.23)}
+
+/* DH-08D: approved first-wave launches stay visibly inside DaveHub until
+   the visitor explicitly opens the existing external game or website. */
+.hero-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:24px}
+.primary-launch{display:inline-flex;align-items:center;gap:9px;border-radius:14px;padding:15px 22px;text-decoration:none;background:#ffcf79;color:#0c1a37;font-weight:900;border:2px solid #ffdfab;box-shadow:0 7px 25px #0007}
+.primary-launch:hover,.primary-launch:focus-visible{background:#ffe4aa;transform:translateY(-1px)}
+.outside-note{max-width:425px;color:#c8d7e9;font-size:12px;line-height:1.55}
+@media(max-width:680px){.primary-launch{justify-content:center;width:100%}.hero-actions{align-items:stretch}}
