@@ -55,3 +55,15 @@ test('DH-06D transparent Dave motion remains decorative with an accessible stati
  assert.ok(fs.existsSync(asset),'transparent animation exists');
  assert.ok(fs.statSync(asset).size > 10000,'animation is not empty');
 });
+
+test('DH-06D enlarged Dave uses a shared upper-body crop with static fallback',()=>{
+ const css=fs.readFileSync(path.join(root,'styles.css'),'utf8');
+ assert.match(css,/--dave-height:\s*140svh/);
+ assert.match(css,/bottom:\s*-55svh/);
+ assert.match(css,/--dave-height:\s*118svh/);
+ assert.match(css,/--dave-height:\s*102svh/);
+ assert.match(css,/\.dave-stage__still,\s*\.dave-stage__motion/);
+ assert.match(css,/\.dave-stage__motion\s*\{\s*left:\s*calc\(var\(--dave-height\)\s*\*\s*\.16\)/);
+ assert.match(css,/\.dave-stage\s*\{[\s\S]*?pointer-events:\s*none/);
+ assert.match(css,/\.dave-stage--motion-ready\s+\.dave-stage__still\s*\{\s*opacity:\s*0/);
+});
