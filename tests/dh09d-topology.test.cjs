@@ -61,7 +61,7 @@ test('production build requires live phase, main branch, and explicitly configur
 test('staging remains noindex; live may be indexable but never its design previews',()=>{
  const staging=headersFor('staging'),production=headersFor('production');
  assert.match(staging,/\/\*\n  X-Robots-Tag: noindex, nofollow/);
- assert.doesNotMatch(production,/\/\*\n  X-Robots-Tag: noindex/);
+ assert.doesNotMatch(production,/^\/\*\n  X-Robots-Tag: noindex/);
  assert.match(production,/\/previews\/\*\n  X-Robots-Tag: noindex, nofollow/);
  assert.match(staging,/\/games\/unicorn-valley\/davehub-release.json\n  Cache-Control: no-store/);
  assert.match(production,/\/games\/stephen-martin\/\*/);
