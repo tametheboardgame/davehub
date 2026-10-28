@@ -1,7 +1,7 @@
 # DH-10 — DaveHub Ready repository markers and read-only ingestion
 
 **Started:** 28 October 2026  
-**Status:** v1 manifest validator, discovery scanner and recurring review report implemented in draft; not yet merged or independently tested against all remote repositories.
+**Status:** DH-10A/B merged to `main` in PR #24 (`d4b652b`); 11 discovery tests and 42 site regression tests passed in GitHub Actions. Initial live scan (28 October 2026) found 3 enabled, 9 disabled/absent and 0 errors across 12 eligible public repositories. The three merged source markers are Stephen Martin, Ordinary Universe and Octo-Marathon. Unicorn Valley #338 awaits final CI. Import into the local Content Workshop (PR #21) and editorial approval remain separate.
 
 ## The rule
 
@@ -59,7 +59,7 @@ Unknown fields fail validation (including any misleading `approvedForPublication
 
 ## Initial source-repository opt-in PRs
 
-The following **four** manifest proposals were created on 28 October 2026. All remain **draft** until owner review and the central scanner goes live:
+The following **four** manifest proposals were created on 28 October 2026. Three have merged; Unicorn Valley remains under final review. Their publication approval remains separate:
 
 | Repo | PR | Proposed category views |
 |---|---|---|
@@ -68,7 +68,7 @@ The following **four** manifest proposals were created on 28 October 2026. All r
 | `ordinary-universe` | [#11](https://github.com/tametheboardgame/ordinary-universe/pull/11) | Writing, Projects, Experiments |
 | `octo-maraton-ideas` | [#5](https://github.com/tametheboardgame/octo-maraton-ideas/pull/5) | Projects, Memory Lane |
 
-These PRs change only the root `davehub.json` metadata and **do not add** publishing automation to those repositories.
+These PRs change only the root `davehub.json` metadata and **do not add** publishing automation to those repositories. Their individual statuses are authoritative on GitHub.
 
 ### Fleet inventory
 
