@@ -14,11 +14,13 @@ The future launch will use **two separate Cloudflare Pages projects connected to
 
 ## Cloudflare-first owner reviews (DH-08C4)
 
-DaveHub owner review uses hosted staging previews by default, **not local server commands**. The public-safe, layout-only first-wave demonstration is built at `/previews/dh-08c/`, containing three project names, placeholder descriptions and no unapproved game/blog links or private editorial drafts. The real catalogue remains empty. See [hosted review workflow](docs/DH08C4_HOSTED_REVIEW_WORKFLOW.md) for the URL, QA checklist and Cloudflare Access constraints.
+DaveHub owner review uses hosted staging previews by default, **not local server commands**. The public-safe, layout-only first-wave demonstration is built at `/previews/dh-08c/`, containing three project names, placeholder descriptions and no unapproved game/blog links or private editorial drafts. This historical design-only preview remains available but the normal Games/Projects/Writing destinations now use **three explicitly approved first-wave records**. See [first publication record](docs/DH08D_FIRST_THREE_PUBLISHED_PROJECTS.md).
 
-## DH-08C: three first-wave creations awaiting owner approval
+## DH-08D: three approved creations available through DaveHub
 
-The **private local Content Workshop** can prepare Unicorn Valley, The Stephen Martin Project and Tame The Board Game, review their descriptions/credits/links and preview their real DaveHub pages on `127.0.0.1:8765`. The three entries are **unapproved nominations only** and are absent from the deployed catalogue. Discovery reports can be imported with safe duplicate handling. Publication is forbidden until a new explicit owner-approved catalogue PR. [First-wave review guide](docs/DH08C_PRIVATE_FIRST_WAVE_REVIEW.md).
+**Unicorn Valley**, **The Stephen Martin Project** and the collaborative **Tame The Board Game** blog have owner-approved text/link listings in `content/public/catalogue.json`. They appear in the usual Games, Projects, Writing and Memory Lane destinations with individual `/creations/<slug>/` pages. Both games have prominent links to their existing playable sites; first-party `/games/<slug>/` hosting remains a future DH-09 milestone. The blog credits both David and Miriam. No artwork, recordings, or WordPress posts are mirrored. [Publication scope and tests](docs/DH08D_FIRST_THREE_PUBLISHED_PROJECTS.md).
+
+The earlier local Content Workshop remains optional for future nominations, not the default owner review method; browser-based Cloudflare staging reviews are the standard.
 
 ## DH-10D: Default-off marker in every managed new repository
 
@@ -34,7 +36,7 @@ Creative repositories can opt in by adding a public-safe, root-level `davehub.js
 
 ## Status
 
-**DH-07 illustrated homepage and discovery navigation locked, merged and deployed to Cloudflare Pages on 27 October 2026. DH-08 publishing controls are in development.** The owner has purchased **davehub.co.uk** as the primary domain; DNS and hosting are not configured. The owner has selected Concept 1 as the primary visual reference; final foreground art and character motion remain open. The approved static homepage, mystical Explore directory and fictional content-world test pages are deployed. The real published-work catalogue remains empty pending explicit item approvals.
+**DH-07 illustrated homepage and discovery navigation locked, merged and deployed to Cloudflare Pages on 27 October 2026. DH-08 publishing controls are in development.** The owner has purchased **davehub.co.uk** as the primary domain; DNS and hosting are not configured. The owner has selected Concept 1 as the primary visual reference; final foreground art and character motion remain open. The approved static homepage, mystical Explore directory and fictional content-world test pages are deployed. The first three project listings have explicit owner publication approval; all future works still require individual review.
 
 ## North star
 
@@ -59,13 +61,13 @@ The approved logo and background are repository assets. DH-06D adds an owner-sup
 ## DH-08B: Shared creative-world pages (review branch)
 
 - [Shared content-page architecture](docs/DH08B_SHARED_CONTENT_PAGES.md): single renderer generating seven catalogue views plus unique deep-linked creation pages.
-- Real approved entries are rendered from the validated `content/public/catalogue.json`; currently **empty**. The fictional musical/script/song example renders separately at `/previews/dh-08b/worlds/` on the branch.
+- Real approved entries are rendered from the validated `content/public/catalogue.json`; it now includes **three approved works**. The fictional musical/script/song example renders separately at `/previews/dh-08b/worlds/` on the branch.
 - Explore DaveHub now opens the new `/worlds/` experience directly, and each floating island leads to its own content world; the redundant intermediate pop-up has been removed. Empty public worlds link to an explicitly fictional walkthrough.
 
 ## DH-08: Safe creative catalogue (in development)
 
 - [DaveHub Ready publication contract](docs/DH08_PUBLICATION_CONTRACT.md): owner-nominated sources, rights reviews and human-approved publication only.
-- `content/public/catalogue.json` contains **zero real works** until explicitly approved. `content/examples/fictional.json` is a separate test fixture.
+- `content/public/catalogue.json` contains **three explicitly approved first-wave records**; future works remain gated. `content/examples/fictional.json` is a separate test fixture.
 - `node --test tests/content.test.cjs` and `node scripts/content-check.cjs content/public/catalogue.json` verify content safety, including rejection of unexpected private/draft fields. The Cloudflare build runs both automatically.
 - `/previews/dh-08/` is a read-only fictional-content demonstration on the branch, not an importer or publishing UI.
 
