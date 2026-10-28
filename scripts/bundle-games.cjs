@@ -21,7 +21,7 @@ function validateConfig(lock=config){
  if(lock.schemaVersion!==1||!Array.isArray(lock.games)||lock.games.length!==2)throw Error('Expected exactly two pinned games');
  const ids=new Set(),outputPaths=new Set();
  for(const g of lock.games){
-  if(!GAME.test(g.id)||ids.has(g.id)||g.output!=='games/'+g.id||
+  if(!GAME.test(g.id)||!GAME.test(g.catalogueId)||ids.has(g.id)||g.output!=='games/'+g.id||
     outputPaths.has(g.output)||!REPO.test(g.repository)||!SHA.test(g.commit)||
     !['static-node','vite-subpath'].includes(g.build))throw Error('Invalid or duplicate game lock entry');
   ids.add(g.id);outputPaths.add(g.output);
