@@ -95,9 +95,9 @@
     "DH-09 first-party game hosting and staging/live plan"
   ],
   "next": [
-    "Verify Cloudflare and manifest scanner tests on draft PR",
-    "Owner reviews four creative marker PRs and source classifications",
-    "Merge/read-only scanner and run manual GitHub Actions discovery report",
+    "DH-10 scanner merged: monitor weekly read-only reports and reject unapproved publications",
+    "Unicorn Valley PR #338 must pass final verification before its opt-in merge",
+    "Inspect generated candidate artifacts and integrate with private Content Workshop after PR #21 approval",
     "Connect validated candidates to private Content Workshop review queue, never direct public catalogue",
     "Continue standalone game releases and DH-09 path-compatible bundling"
   ],
@@ -517,7 +517,7 @@
     "review_required": true
   },
   "dh10": {
-    "phase": "dh_10a_b_review",
+    "phase": "dh_10a_b_merged",
     "schemaVersion": 1,
     "marker": "davehub.json",
     "enabledMeans": "candidate metadata discovery only; no public release permission",
@@ -529,9 +529,11 @@
       "ordinary-universe": 11,
       "octo-maraton-ideas": 5
     },
-    "scannerBranch": "feature/dh-10-repository-discovery",
+    "scannerMainCommit": "d4b652b3500acab9f344a3a4f9214ad8d2eee944",
+    "verifiedSourceOptIns": ["stephen-martin-project", "ordinary-universe", "octo-maraton-ideas"],
+    "unicornValleyReview": "PR #338 corrected; final CI pending",
     "publicCandidateApproval": "not granted",
-    "contentWorkshopIntegration": "not yet implemented",
+    "contentWorkshopIntegration": "validated unapproved import converter merged; local editor PR #21 remains draft",
     "domainChange": "none"
   }
 }
