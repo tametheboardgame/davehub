@@ -4,11 +4,12 @@
     {
       "id": "stephen-martin",
       "repository": "tametheboardgame/stephen-martin-project",
-      "commit": "5eaa876a45393c8bb06ec0378dbfd5e1eec10aef",
       "output": "games/stephen-martin",
-      "build": "static-node",
-      "version": "owner-accepted-main-2026-10-28",
-      "catalogueId": "stephen-martin-project"
+      "build": "upstream-proxy",
+      "version": "public-playable-origin-proxy-not-pinned-build",
+      "catalogueId": "stephen-martin-project",
+      "upstream": "https://stephen-martin-project.pages.dev/",
+      "sourceCommitAtReview": "5eaa876a45393c8bb06ec0378dbfd5e1eec10aef"
     },
     {
       "id": "unicorn-valley",
