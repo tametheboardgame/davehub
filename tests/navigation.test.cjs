@@ -46,7 +46,7 @@ test('fictional content and back links remain within preview paths',()=>{
 
 test('DH-06D transparent Dave motion remains decorative with an accessible static fallback',()=>{
  assert.match(html,/id="dave-stage-motion"/);
- assert.match(html,/assets\\/characters\\/dave\\/dave-animation-v1\\.webm/);
+ assert.ok(html.includes('assets/characters/dave/dave-animation-v1.webm'));
  assert.match(html,/dave-stage__still/);
  assert.match(js,/prefers-reduced-motion/);
  assert.match(js,/saveData/);
