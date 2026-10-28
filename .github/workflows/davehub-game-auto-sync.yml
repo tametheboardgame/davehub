@@ -48,7 +48,7 @@ jobs:
           FORCE_REDEPLOY: ${{ inputs.force_redeploy || false }}
         run: node scripts/auto-sync-unicorn.cjs check
       - name: Check existing pinned release actually reached Cloudflare
-        if: github.event_name == 'schedule' && steps.upstream.outputs.action != 'update'
+        if: steps.upstream.outputs.action != 'update'
         run: node scripts/check-pinned-game-deployment.cjs
       - name: Build and qualify the entire candidate DaveHub + games release
         if: steps.upstream.outputs.action == 'update'
