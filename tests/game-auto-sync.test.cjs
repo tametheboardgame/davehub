@@ -39,10 +39,14 @@ test('already qualified unchanged upstream main is a true no-op without extra CI
  assert.throws(()=>updateLock(qualified,decision),/No approved upstream update/);
 });
 test('initial legacy release pin triggers one-time exact-head CI qualification canary',async()=>{
- const candidate=await decide(config,fetcher(older,[makeRun({head_sha:older,id:123})]));
+ // The updater changes the release lock before it runs the full test suite.
+ // Construct a stable legacy fixture rather than relying on the current file.
+ const legacy=structuredClone(config);
+ legacy.games.find(x=>x.id==='unicorn-valley').version='main-snapshot-fixture';
+ const candidate=await decide(legacy,fetcher(older,[makeRun({head_sha:older,id:123})]));
  assert.equal(candidate.action,'update');
- assert.equal(updateLock(config,candidate).games.find(x=>x.id==='unicorn-valley').version,'main-ci-123');
- const blocked=await decide(config,fetcher(older,[makeRun({head_sha:older,conclusion:'failure'})]));
+ assert.equal(updateLock(legacy,candidate).games.find(x=>x.id==='unicorn-valley').version,'main-ci-123');
+ const blocked=await decide(legacy,fetcher(older,[makeRun({head_sha:older,conclusion:'failure'})]));
  assert.equal(blocked.action,'blocked');
 });
 test('CI pending, failure, cancelled, PR-only and wrong branch cannot automatically deploy',async()=>{
