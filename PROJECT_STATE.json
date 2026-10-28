@@ -1,8 +1,8 @@
 {
   "project": "DaveHub",
   "updated": "2026-10-28",
-  "status": "dh09e_auto_game_sync_operational_staging_only",
-  "current_work_package": "DH-09",
+  "status": "dh09d_staging_branch_created_pre_cutover_pr",
+  "current_work_package": "DH-09D",
   "completed": [
     "DH-00A",
     "DH-00B",
@@ -674,5 +674,25 @@
     "publicCandidateApproval": "not granted",
     "contentWorkshopIntegration": "Workshop retained for future unapproved candidates; first three published by explicit owner permission in PR #32",
     "domainChange": "none"
+  },
+  "dh09d": {
+    "phase": "phase_a_preparation",
+    "stagingBranchCreated": true,
+    "stagingBranch": "staging",
+    "existingPagesProject": "davehub",
+    "existingPagesProductionBranch": "main",
+    "existingStagingHost": "davehub.pages.dev",
+    "futureLivePagesProject": "davehub-live",
+    "futureLiveProductionBranch": "main",
+    "futureLiveHost": "davehub.co.uk",
+    "liveDomainConnected": false,
+    "cloudflareSettingsChanged": false,
+    "deploymentTopology": "config/deployment-topology.json",
+    "currentTopologyPhase": "pre_cutover",
+    "cutoverGuardScript": "scripts/dh09d-topology.cjs",
+    "releaseIdentityEndpoint": "/deployment.json",
+    "stageOnlyBotBranchSelection": "policy validated; presently main until Cloudflare production branch is switched",
+    "rolloutInstructions": "docs/DH09D_CUTOVER_EXECUTION.md",
+    "next": "CI validate and merge pre-cutover guard; fast-forward staging to its vetted commit; Cloudflare Phase B remains manual/authorised"
   }
 }
