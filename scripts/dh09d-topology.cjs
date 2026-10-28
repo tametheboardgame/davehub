@@ -22,7 +22,8 @@ function validateTopology(topology,gamePolicy){
  const live=topology.phase==='live';
  if(st.branch!==expected||prod.configured!==live||
     topology.automaticGameUpdates?.branch!==expected||
-    topology.automaticGameUpdates.livePromotion!==false)
+    topology.automaticGameUpdates.livePromotion!==false||
+    typeof topology.automaticGameUpdates.paused!=='boolean')
   throw Error('Unsafe deployment branch or automatic live promotion configuration');
  if(!gamePolicy||gamePolicy.schemaVersion!==1||gamePolicy.enabled!==true||
     gamePolicy.stagingHost!=='davehub.pages.dev'||
@@ -30,7 +31,7 @@ function validateTopology(topology,gamePolicy){
     gamePolicy.autoLivePromotion!==false||
     gamePolicy.liveDomainConfigured!==live)
   throw Error('Auto-sync policy differs from deployment topology; refusing split');
- return {stagingBranch:expected,phase:topology.phase,liveConfigured:live};
+ return {stagingBranch:expected,phase:topology.phase,liveConfigured:live,paused:topology.automaticGameUpdates.paused};
 }
 function readTopology(){
  return validateTopology(JSON.parse(fs.readFileSync(TOP,'utf8')),
@@ -91,7 +92,7 @@ function deploymentMarker(topology,env={}){
 }
 function publishOutputs(value){
  const output=process.env.GITHUB_OUTPUT;
- if(output)fs.appendFileSync(output,'branch='+value.stagingBranch+'\nphase='+value.phase+'\n');
+ if(output)fs.appendFileSync(output,'branch='+value.stagingBranch+'\nphase='+value.phase+'\npaused='+value.paused+'\n');
 }
 if(require.main===module){
  try{
