@@ -8,6 +8,10 @@ on:
       - 'davehub.json'
       - 'scripts/davehub-*.cjs'
       - 'tests/davehub-discovery.test.cjs'
+      - 'tests/workshop.test.cjs'
+      - 'tools/workshop/**'
+      - 'scripts/build-pages.sh'
+      - 'content/public/catalogue.json'
       - '.github/workflows/davehub-discovery.yml'
   push:
     branches: [main]
@@ -15,6 +19,10 @@ on:
       - 'davehub.json'
       - 'scripts/davehub-*.cjs'
       - 'tests/davehub-discovery.test.cjs'
+      - 'tests/workshop.test.cjs'
+      - 'tools/workshop/**'
+      - 'scripts/build-pages.sh'
+      - 'content/public/catalogue.json'
       - '.github/workflows/davehub-discovery.yml'
 permissions:
   contents: read
