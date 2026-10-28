@@ -16,6 +16,14 @@ The future launch will use **two separate Cloudflare Pages projects connected to
 
 DaveHub owner review uses hosted staging previews by default, **not local server commands**. The public-safe, layout-only first-wave demonstration is built at `/previews/dh-08c/`, containing three project names, placeholder descriptions and no unapproved game/blog links or private editorial drafts. This historical design-only preview remains available but the normal Games/Projects/Writing destinations now use **three explicitly approved first-wave records**. See [first publication record](docs/DH08D_FIRST_THREE_PUBLISHED_PROJECTS.md).
 
+## DH-09: Play games within DaveHub (staging qualification)
+
+DaveHub's first-party routes are `/games/unicorn-valley/` and `/games/stephen-martin/`. Unicorn Valley is bundled as an **immutable compiled static release** from its public GitHub source; Stephen Martin uses a **restricted same-origin Cloudflare Pages proxy** to the existing public playable site because its GitHub source repository is private. Both stay on DaveHub's hostname, and the originals remain accessible. The private repository is not made public or copied.
+
+**Save-data warning:** browser progress stored on either original game hostname cannot automatically transfer to `davehub.pages.dev`; the old saves remain untouched. The future live `davehub.co.uk` domain will have separate origin storage until migration is implemented.
+
+The two independent game codebases and future staging/live deployment remain separate. Full [technical and acceptance plan](docs/DH09_SAME_ORIGIN_GAMES.md).
+
 ## DH-08D: three approved creations available through DaveHub
 
 **Unicorn Valley**, **The Stephen Martin Project** and the collaborative **Tame The Board Game** blog have owner-approved text/link listings in `content/public/catalogue.json`. They appear in the usual Games, Projects, Writing and Memory Lane destinations with individual `/creations/<slug>/` pages. Both games have prominent links to their existing playable sites; first-party `/games/<slug>/` hosting remains a future DH-09 milestone. The blog credits both David and Miriam. No artwork, recordings, or WordPress posts are mirrored. [Publication scope and tests](docs/DH08D_FIRST_THREE_PUBLISHED_PROJECTS.md).
