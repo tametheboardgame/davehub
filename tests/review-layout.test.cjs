@@ -37,6 +37,8 @@ test('every hosted page has a review notice and none contains unapproved first-w
   for(const name of paths){
    const html=fs.readFileSync(name,'utf8');
    assert.ok(html.includes('DESIGN REVIEW ONLY')||html.includes('DESIGN REVIEW'));
+   assert.match(html,/<style data-davehub-inline="worlds">/);
+   assert.match(html,/\.world-tile\{/);
    assert.equal(html.includes('public_approved'),false);
    assert.equal(html.includes('ownerApproved'),false);
    assert.equal(html.includes('href="https://'),false);
