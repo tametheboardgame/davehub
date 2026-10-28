@@ -28,6 +28,8 @@ jobs:
           node-version: '22'
       - name: Validate manifest contract and scanner
         run: node --test tests/davehub-discovery.test.cjs
+      - name: Build entire DaveHub site with content and navigation regressions
+        run: sh scripts/build-pages.sh
       - name: Discover public repositories with explicit DaveHub markers
         env:
           GITHUB_TOKEN: ${{ github.token }}
