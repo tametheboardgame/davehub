@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer">
+<title>DaveHub | Private Content Workshop</title>
+<link rel="stylesheet" href="/style.css">
+<script src="/app.js" defer></script>
+</head>
+<body data-token="__SESSION_TOKEN__">
+<div class="shell">
+<header class="top"><div class="brand">Dave<span>Hub</span><small>PRIVATE CONTENT WORKSHOP</small></div>
+ <p class="local"><span aria-hidden="true">●</span> LOCAL-ONLY · NOT THE PUBLIC SITE</p></header>
+<main>
+<section class="intro"><p class="eyebrow">DH-08C / OWNER REVIEW</p><h1>Prepare the next creation.</h1>
+ <p>Prepare Unicorn Valley, The Stephen Martin Project and Tame The Board Game as unapproved drafts. Their actual DaveHub page designs can be previewed on this computer; nothing is committed to the public catalogue or published automatically.</p></section>
+<div class="privacy">The GitHub repo and Cloudflare pages are public. <strong>Do not paste secrets or employer data here.</strong> This tool runs on 127.0.0.1, stores review drafts under your user profile, and generates a proposed JSON file only after explicit approval.</div>
+<div class="toolbar">
+ <button type="button" id="seed-first-wave">Prepare the agreed three</button>
+ <label class="filepick">Import a discovery report or candidate list<input type="file" id="import-file" accept=".json,application/json"></label>
+ <button type="button" id="new-record">New creation</button>
+ <a class="preview-link" id="preview-worlds" href="/worlds/" target="_blank" rel="noopener noreferrer">Preview local worlds</a>
+ <a class="preview-link" id="preview-page" href="#" target="_blank" rel="noopener noreferrer">Preview selected page</a>
+ <button type="button" class="export" id="export-approved">Export approved proposal</button>
+</div>
+<div class="layout"><aside aria-label="Candidate catalogue">
+  <div class="sidehead"><h2>Editorial queue</h2><p id="count">Loading</p></div>
+  <div class="queue" id="queue"></div></aside>
+<section class="editor" aria-labelledby="editor-title"><h2 id="editor-title">Select a creation</h2>
+<form id="edit-form">
+<div class="fields">
+<label>Stable ID <input name="id" id="id" required pattern="[a-z][a-z0-9-]{2,79}" placeholder="my-project"></label>
+<label>Public URL slug <input name="slug" id="slug" pattern="[a-z][a-z0-9-]{2,79}" placeholder="my-project"></label>
+<label class="span2">Title <input name="title" id="title" required maxlength="180"></label>
+<label>Record type <select name="recordType" id="record-type"><option value="work">Creative work</option><option value="organisation">Publisher / organisation</option><option value="music_identity">Music artist / identity</option><option value="release">Album / release</option><option value="artifact">Script scene / artifact</option></select></label>
+<label>Format <select name="workType" id="work-type"><option value="book">Book</option><option value="script">Script</option><option value="musical">Musical</option><option value="song">Song</option><option value="game">Game</option><option value="physical_build">Physical build</option><option value="software">Software</option><option value="idea">Idea</option><option value="other">Other / blog</option></select></label>
+<label>Release format (when applicable) <select id="release-kind"><option value="album">Album</option><option value="single">Single</option><option value="edition">Edition</option><option value="playable">Playable release</option><option value="other">Other release</option></select></label>
+<label>Artifact format (when applicable) <select id="artifact-kind"><option value="script_scene">Script scene</option><option value="concept">Concept</option><option value="development_note">Development note</option><option value="lyrics">Lyrics</option><option value="demo">Demo</option><option value="artwork">Artwork</option><option value="excerpt">Excerpt</option><option value="other">Other artifact</option></select></label>
+<label>Lifecycle <select name="lifecycle" id="lifecycle"><option value="active">Active</option><option value="completed">Completed</option><option value="idea">Idea</option><option value="permanently_shelved">Permanently shelved</option><option value="abandoned">Abandoned</option></select></label>
+<fieldset class="span2"><legend>Which worlds should this appear in?</legend><div class="checks" id="views">
+<label><input type="checkbox" value="projects"> Projects</label><label><input type="checkbox" value="writing"> Writing</label>
+<label><input type="checkbox" value="games"> Games</label><label><input type="checkbox" value="experiments"> Experiments</label>
+<label><input type="checkbox" value="music"> Music</label><label><input type="checkbox" value="unfinished"> Unfinished Shelf</label>
+<label><input type="checkbox" value="memory-lane"> Memory Lane</label></div></fieldset>
+<label class="span2">Public-facing description <textarea id="synopsis" rows="5" maxlength="1400" placeholder="What is this creation, and why would someone explore it?"></textarea></label>
+<label>Original source URL (optional) <input type="url" id="source-url" placeholder="https://example.com/"></label>
+<label>Source kind <select id="source-kind"><option value="official">Official website</option><option value="repository">GitHub repository</option><option value="streaming">Streaming platform</option><option value="retailer">Retailer / ISBN listing</option><option value="archive">Historical archive</option><option value="other">Other public source</option></select></label>
+<label>Primary public link (optional) <input type="url" id="link-url" placeholder="https://example.com/"></label>
+<label>Link label <input id="link-label" placeholder="Read / Play / Listen"></label>
+<label>Link type <select id="link-kind"><option value="official">Official</option><option value="play">Play</option><option value="read">Read</option><option value="streaming">Listen</option><option value="repository">Source repository</option><option value="retailer">Buy / retailer</option><option value="other">Other</option></select></label>
+<label>Editorial stage <select id="status"><option value="nominated">Nominated</option><option value="needs_review">Needs review</option><option value="ready_for_owner_approval">Ready for approval</option><option value="approved_for_export">Approved for export</option><option value="withdrawn">Withdrawn</option></select></label>
+<label class="span2">Private editorial notes — never exported <textarea id="notes" rows="4" placeholder="What needs verification? Rights, permissions, attribution, missing links..."></textarea></label>
+</div>
+<fieldset class="approval"><legend>Owner approval checklist</legend><p>The three prepared proposals begin unapproved. Only approve material you have individually checked for public release. Linking to a collaborator's work is not permission to copy their media.</p>
+<div class="checks">
+<label><input type="checkbox" id="check-rights"> Rights and contributors checked</label>
+<label><input type="checkbox" id="check-meta"> Title and synopsis approved</label>
+<label><input type="checkbox" id="check-links"> All outgoing links verified</label>
+<label><input type="checkbox" id="check-media"> Media scope reviewed (none copied in this version)</label>
+<label><input type="checkbox" id="owner-approved"> <strong>I approve this record for export to a public GitHub review</strong></label>
+</div></fieldset>
+<div class="actions"><button type="submit">Save local draft</button><p id="message" role="status"></p></div>
+</form>
+</section></div>
+<section class="help"><h2>How publication works</h2><p>Use <strong>Export approved proposal</strong> to download a validation-checked catalogue. Inspect and merge that proposal into the existing approved catalogue through a GitHub pull request, then allow Cloudflare to deploy. Export does not commit anything, and unapproved items stay on this computer. Keep backups of your local workshop data.</p></section>
+</main>
+<footer>DaveHub · Work locally · Review publicly · Publish deliberately</footer>
+</div></body></html>

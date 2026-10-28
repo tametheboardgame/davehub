@@ -18,6 +18,7 @@ function toWorkshopImport(report){
    lifecycle:item.lifecycle,views:[...item.views],synopsis:item.description,
    sourceUrl:source,sourceKind:'repository',
    linkUrl:link,linkLabel:item.links.play?'Play the game':item.links.homepage?'Visit the website':'View source repository',
+   linkKind:item.links.play?'play':item.links.homepage?'official':'repository',
    status:'needs_review',notes:'',review:{rights:false,metadata:false,links:false,media:false},
    ownerApproved:false,approvedOn:''
   };

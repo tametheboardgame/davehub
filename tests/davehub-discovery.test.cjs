@@ -99,6 +99,7 @@ test('scanner output imports to private Workshop without publication approval',a
  assert.equal(c.review.metadata,false);
  assert.equal(c.linkUrl,'https://unicorn-valley.pages.dev/');
  assert.equal(c.sourceKind,'repository');
+ assert.equal(c.linkKind,'play');
 });
 test('Workshop importer rejects report not marked review-only',()=>{
  const report={schemaVersion:1,mode:'approved',candidates:[]};
