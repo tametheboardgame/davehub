@@ -79,7 +79,9 @@ function show(c){
  $('lifecycle').value=c.lifecycle||'active';$('synopsis').value=c.synopsis||'';
  $('source-url').value=c.sourceUrl||'';$('link-url').value=c.linkUrl||'';
  $('source-kind').value=c.sourceKind||'official';$('link-kind').value=c.linkKind||'official';
- $('link-label').value=c.linkLabel||'';$('status').value=c.status||'nominated';
+ $('link-label').value=c.linkLabel||'';
+ $('extra-link-url').value=c.extraLinkUrl||'';$('extra-link-label').value=c.extraLinkLabel||'';
+ $('extra-link-kind').value=c.extraLinkKind||'official';$('status').value=c.status||'nominated';
  $('notes').value=c.notes||'';
  document.querySelectorAll('#views input').forEach(x=>{x.checked=(c.views||[]).includes(x.value)});
  $('check-rights').checked=!!c.review?.rights;
@@ -109,6 +111,7 @@ function toCandidate(){
   sourceKind:$('source-kind').value,
   linkUrl:$('link-url').value.trim(),
   linkLabel:$('link-label').value.trim(),linkKind:$('link-kind').value,
+  extraLinkUrl:$('extra-link-url').value.trim(),extraLinkLabel:$('extra-link-label').value.trim(),extraLinkKind:$('extra-link-kind').value,
   status:$('status').value,
   notes:$('notes').value.trim(),
   review:{
