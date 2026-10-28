@@ -28,6 +28,8 @@
 
 The default-branch GitHub updater reads `automaticGameUpdates.paused=true` from the validated deployment topology and **does not check or push a game pin** while Phase B is being prepared. Leave this hold enabled until the existing Pages project successfully builds from `staging`, and the main-branch orchestrator has switched to targeting `staging`. The old game remains playable during this hold. This prevents a scheduled updater from writing to `main` while `main` is being reserved for the future live project.
 
+**Stage-branch activation PR:** The GitHub `staging` branch now has a separately reviewed activation candidate with `phase=staging_cutover`, the active branch `staging`, and a policy-locked `DAVEHUB_DEPLOY_ROLE=staging` build. It must be merged to `staging` **before** the corresponding Cloudflare Pages production-branch switch. The default `main` GitHub updater remains frozen until the staging deployment is verified; no site changes are made by merely preparing or merging this PR while Cloudflare still uses `main`.
+
 ## Phase B — move the existing Cloudflare site to staging
 
 This step involves account-level Cloudflare changes, so it is a separate, explicitly checked handoff. It must be completed before creating/activating the live site.
