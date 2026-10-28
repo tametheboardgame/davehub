@@ -3,6 +3,19 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '17 8 * * 1'
+  pull_request:
+    paths:
+      - 'davehub.json'
+      - 'scripts/davehub-*.cjs'
+      - 'tests/davehub-discovery.test.cjs'
+      - '.github/workflows/davehub-discovery.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'davehub.json'
+      - 'scripts/davehub-*.cjs'
+      - 'tests/davehub-discovery.test.cjs'
+      - '.github/workflows/davehub-discovery.yml'
 permissions:
   contents: read
 jobs:
@@ -32,5 +45,6 @@ jobs:
             reports/davehub-workshop-import.json
           if-no-files-found: ignore
           retention-days: 7
-# This workflow makes NO commits, pull requests, deployments or site catalogue changes.
+# This workflow validates PR changes, runs once on initial main integration, and then weekly or on demand.
+# It makes NO commits, pull requests, deployments or site catalogue changes.
 # Its artifact contains only explicitly public source-repository metadata.
