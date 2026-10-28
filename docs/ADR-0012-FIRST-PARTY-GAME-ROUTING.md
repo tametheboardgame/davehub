@@ -1,24 +1,38 @@
-# DH-09 / ADR-0012 — One DaveHub site, game paths on both domains
+# DH-09 / ADR-0012 — One game path contract, separate staging and live deployments
 
 **Date:** 27 October 2026  
-**Status:** Proposed, revised after owner clarification: `pages.dev` paths must work **before** the custom domain is configured. Design + packaging foundation only; no live game URLs or DNS were changed.
+**Status:** Proposed, revised for two distinct environments on 28 October 2026. The owner wants the **exact** `davehub.pages.dev` hostname to remain a test/development site after `davehub.co.uk` launches. Design + packaging foundation only; no live game URLs, DNS or Cloudflare project settings have been changed.
 
 ## Accepted user-facing URL contract
 
-One Cloudflare Pages project should serve **the same file paths** on both hostnames:
+Two **separate Cloudflare Pages projects** should serve **the same file paths** on different Git branches/builds:
 
-| Right now | Later, after attaching the custom domain |
+| Permanent staging/testing (existing Pages project) | Public live (new Pages project once custom domain is ready) |
 |---|---|
 | `https://davehub.pages.dev/` | `https://davehub.co.uk/` |
 | `https://davehub.pages.dev/worlds/games/` | `https://davehub.co.uk/worlds/games/` |
 | `https://davehub.pages.dev/games/unicorn-valley/` | `https://davehub.co.uk/games/unicorn-valley/` |
 | `https://davehub.pages.dev/games/stephen-martin/` | `https://davehub.co.uk/games/stephen-martin/` |
 
-No external redirects, iframe wrappers or host-specific hardcoded links. When the custom domain is attached, **no rebuilding, game-path changes or duplicate game deployments** are required. Pages continues to serve the `*.pages.dev` hostname unless the owner explicitly configures a redirect or an access restriction.
+No external redirects, iframe wrappers or host-specific hardcoded play links. **The paths and asset layout stay identical, but the versions may differ**: staging can contain work awaiting review while live is pinned to the approved release. The two Pages projects each build/deploy their own assembled artifact; this is intentional release-environment separation, not two divergent codebases.
 
 The previous path-specific Workers Static Assets routing proposal is **superseded for this project**: custom-domain Worker routes cannot be relied on to also control the Cloudflare-owned `davehub.pages.dev` hostname.
 
 Cloudflare documentation: https://developers.cloudflare.com/pages/configuration/custom-domains/ and https://developers.cloudflare.com/pages/configuration/build-configuration/.
+
+## Cloudflare deployment environments
+
+1. **Staging (reuse existing `davehub` Pages project):** switch its production branch from `main` to a new persistent `staging` branch **at the cutover**, leaving its default hostname `davehub.pages.dev`. Before this change, keep using existing feature-branch previews; do not switch branches prematurely.
+2. **Live (create second Pages project, e.g. `davehub-live`):** connect it to the *same* GitHub repository, production branch `main`, using exactly the same DaveHub build command/output directory, with `davehub.co.uk` attached as its custom domain. The live project will also have its own provider-assigned `*.pages.dev` hostname; plan canonical URLs and duplicate-content handling rather than assuming it can be removed.
+3. **Release flow:** `feature/*` → isolated Cloudflare preview/CI → reviewed PR into `staging` → staging QA (all games, paths, audio, navigation) → explicit owner approval → reviewed promotion PR into `main` → live deployment verification. Branch protection should require checks and review for `main`; never auto-merge `staging` into `main` merely because the staging build passed.
+4. **Partial releases:** if staging contains multiple features and only some are approved, curate a release PR with the specific approved commits/build artifacts. Do not blindly merge all staged changes.
+5. **Static game bundles:** both environments use the same `/games/<slug>/` URL-prefix contract but can pin different reviewed release SHAs. A newer stage game version does not automatically replace the live version.
+6. **Public preview safety:** `davehub.pages.dev` is publicly reachable by default; `noindex` is not authentication. Do not put private drafts, secrets or unapproved media on staging. Use a proper Cloudflare access-control design if the user later requires private previews; do not assume ordinary Pages preview Access settings protect the production `*.pages.dev` hostname.
+7. **Before launch:** verify staging and live have distinct deployment IDs/commits, and that publishing to staging does not update the custom domain. Verify promotion, rollback, game saves, TLS, cache headers and 404 fallbacks on both hosts.
+
+Cloudflare docs confirm that the default `project.pages.dev` address and custom domain of a **single** project track its production branch. Two projects can be connected to one Git repository, each with its own production branch: https://developers.cloudflare.com/pages/configuration/preview-deployments/ , https://developers.cloudflare.com/pages/configuration/monorepos/ , and https://developers.cloudflare.com/pages/configuration/branch-build-controls/ .
+
+**Lower-setup alternative:** retain one Pages project, use `staging.davehub.pages.dev` (a permanent `staging` branch alias) for testing and `davehub.pages.dev` + `davehub.co.uk` for live. This is simpler, but does **not** meet the owner's preference for keeping the exact root `davehub.pages.dev` as testing.
 
 ## Publishing architecture
 
@@ -80,7 +94,7 @@ The content catalogue retains editorial `/creations/unicorn-valley/` and `/creat
 
 - Both games will share the **DaveHub browser origin**; namespace localStorage/IndexedDB keys by game and confirm one game cannot mistakenly read/write the other's progress.
 - Progress already saved on `unicorn-valley.pages.dev` or `stephen-martin-project.pages.dev` will **not** automatically appear on `davehub.pages.dev`; provide an opt-in import/export where practical or explain that users are starting fresh.
-- Progress at `davehub.pages.dev` will likewise not automatically migrate to `davehub.co.uk` because custom domains are different browser origins, even though the site paths are identical. This requires a separate opt-in save-transfer plan before switching the advertised host.
+- Progress at `davehub.pages.dev` will likewise not automatically migrate to `davehub.co.uk` because they are different browser origins, even though both host identical paths. **This is helpful** for preventing staging saves from contaminating live tests, but anyone wishing to transfer progress needs an opt-in export/import flow. Games on one host still need namespaced save keys.
 - Do not copy unapproved collaborator material, musical recordings or historical archive sources to the bundled site just because source repositories are public.
 
 ## Implementation sequence
@@ -91,7 +105,7 @@ The content catalogue retains editorial `/creations/unicorn-valley/` and `/creat
 
 **DH-09C — Unicorn Valley dual-build compatibility.** Correct Vite/asset base configuration, pin a proven subpath release, package and test under `davehub.pages.dev/games/unicorn-valley/` while its original `unicorn-valley.pages.dev` build keeps working.
 
-**DH-09D — Attach `davehub.co.uk`.** Add/verify Cloudflare DNS zone and TLS, connect domain to **the same** Pages project, choose a canonical host and plan save migration. No game-code or game-hosting changes.
+**DH-09D — Split staging and live at domain cutover.** Preserve existing `davehub.pages.dev` as the staging Pages project's production hostname; create a second Pages project connected to `main` and attach `davehub.co.uk` with verified DNS and TLS. Point staging project at `staging` after establishing a known-good baseline, then verify independent deployments and rollback. No game URL-path changes.
 
 **DH-09E — Independent release promotion.** Source repos can offer a new verified bundle by PR/dispatch and require approval before changing the DaveHub pinned release manifest. A change in one game does not force rebuilding the other game's source; DaveHub publishes the previously approved assets for the other.
 
@@ -99,4 +113,4 @@ The content catalogue retains editorial `/creations/unicorn-valley/` and `/creat
 
 **No Play link may point at a DaveHub games URL until its full build is actually deployed and verified at that route.** Existing third-party play links remain until independently verified first-party paths are available. This document alone does not constitute working game hosting.
 
-The DNS/custom-domain setup can happen much later. Build and test at `davehub.pages.dev` now, and both hosts get the same paths after the domain is attached.
+The DNS/custom-domain setup can happen much later. Build/test game paths at `davehub.pages.dev` now. When the domain is ready, **split into staging and live projects** so each hostname has the same paths but an independently controlled release. Never attach `davehub.co.uk` to the existing staging project's main/production deployment and expect a test/live separation.
