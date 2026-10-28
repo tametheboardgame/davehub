@@ -5,6 +5,12 @@
 const fs=require('node:fs');
 const path=require('node:path');
 const {validateCatalogue}=require('./content-check.cjs');
+// These two small, first-party resources are inlined at build time so a missing
+// Cloudflare asset route cannot degrade world pages to unstyled HTML or suppress
+// the staging review navigation. There are no external scripts or imports.
+const worldCss=fs.readFileSync(path.join(__dirname,'../assets/content/worlds.css'),'utf8');
+const stagingReviewJs=fs.readFileSync(path.join(__dirname,'../assets/content/staging-review.js'),'utf8');
+if(worldCss.includes('</style>')||stagingReviewJs.includes('</script>'))throw Error('Unsafe inline asset delimiter');
 const VIEWS=[
   {id:'projects',title:'Projects',subtitle:'Things that escaped the idea stage.',mark:'◈'},
   {id:'writing',title:'Writing',subtitle:'Books, stories, scripts and peculiar uses of words.',mark:'✎'},
@@ -43,8 +49,8 @@ function shell({title,kicker,lead,body,root,preview=false,reviewRedirectEligible
  '<meta name="robots" content="noindex,nofollow">'+
  '<meta name="color-scheme" content="dark">'+
  '<title>'+esc(title)+' · DaveHub</title>'+
- '<link rel="stylesheet" href="/assets/content/worlds.css">'+
- (reviewRedirectEligible?'<script defer src="/assets/content/staging-review.js"></script>':'')+
+ '<style data-davehub-inline="worlds">'+worldCss+'</style>'+
+ (reviewRedirectEligible?'<script data-davehub-inline="staging">'+stagingReviewJs+'</script>':'')+
  '</head><body><a class="skip" href="#main">Skip to content</a>'+
  '<div class="sky" aria-hidden="true"></div>'+
  '<div class="shell">'+
