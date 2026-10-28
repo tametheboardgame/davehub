@@ -106,4 +106,14 @@ cat > dist/_headers <<'HEADERS'
   Cache-Control: no-cache
 HEADERS
 
+# Scope Cloudflare Pages Functions to the Stephen Martin game route ONLY.
+# All other DaveHub pages, media and Unicorn Valley remain free static assets.
+cat > dist/_routes.json <<'ROUTES'
+{
+  "version": 1,
+  "include": ["/games/stephen-martin/*"],
+  "exclude": []
+}
+ROUTES
+
 printf 'DaveHub Pages output ready in dist/\n'
