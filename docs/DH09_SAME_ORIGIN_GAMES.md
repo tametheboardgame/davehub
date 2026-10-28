@@ -58,7 +58,7 @@ If a new commit qualifies, the workflow updates only `config/game-releases.json`
 
 Stephen Martin **already tracks new publicly deployed game files automatically** through the fixed-origin Cloudflare Pages proxy. It does not need a DaveHub rebuild, and the private source repository stays private. This does *not* guarantee that an unfinished or broken upstream deployment will be rolled back. A future pinned public release artifact can replace the proxy if fully independent staged versions are required.
 
-For diagnosing updates, use GitHub Actions → **DaveHub staging game auto-sync**. An unchanged or blocked run makes no commits and does not rebuild 89 MB of assets. `workflow_dispatch` includes a one-time `force_redeploy` option for qualifying and testing the **current** upstream SHA, with no gameplay source changes. If the workflow cannot push due to branch protection, it fails visibly; do not bypass branch rules or add personal access tokens.
+For diagnosing updates, use GitHub Actions → **DaveHub staging game auto-sync**. An unchanged or blocked run makes no commits and does not rebuild 89 MB of assets, but still verifies that Cloudflare serves the exact pinned SHA and release version. This health check also runs for the initial workflow push activation, not only on an hourly schedule. `workflow_dispatch` includes a one-time `force_redeploy` option for qualifying and testing the **current** upstream SHA, with no gameplay source changes. If the workflow cannot push due to branch protection, it fails visibly; do not bypass branch rules or add personal access tokens.
 
 ## Version update procedure
 
