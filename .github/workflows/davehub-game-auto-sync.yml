@@ -74,7 +74,7 @@ jobs:
             echo "::error::No candidate release change was prepared."
             exit 1
           fi
-          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m "chore(DH-09E): sync Unicorn Valley staging to ${EXPECTED_UPSTREAM_SHA} (upstream CI #${EXPECTED_UPSTREAM_CI})"
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m "chore(DH-09E): sync Unicorn Valley staging to ${EXPECTED_UPSTREAM_SHA} (upstream CI #${EXPECTED_UPSTREAM_CI_RUN})"
           git push origin HEAD:refs/heads/main
       - name: Verify the new exact SHA and gameplay files on Cloudflare staging
         if: steps.upstream.outputs.action == 'update'
