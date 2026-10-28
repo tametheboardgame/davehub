@@ -23,14 +23,18 @@ test('old modal hashes are redirected to the appropriate deep links',()=>{
   assert.ok(js.includes(name),name);
  assert.match(js,/location\.replace\('\/worlds\/'\)/);
 });
-test('approved empty worlds offer a clearly-labelled route to the fictional preview',()=>{
+test('approved creative works populate the normal worlds, not the mock-up review paths',()=>{
  const pages=filesFor(publicManifest,'',false);
  const index=pages.get('worlds/index.html');
+ const games=pages.get('worlds/games/index.html');
  const writing=pages.get('worlds/writing/index.html');
- assert.match(index,/href="\/previews\/dh-08b\/worlds\/"/);
- assert.match(index,/fictional example/);
- assert.match(writing,/href="\/previews\/dh-08b\/worlds\/writing\/"/);
- assert.match(writing,/Nothing has landed here yet/);
+ assert.match(index,/3 creations/);
+ assert.match(games,/Unicorn Valley/);
+ assert.match(games,/The Stephen Martin Project/);
+ assert.match(games,/Tame The Board Game/);
+ assert.match(writing,/Tame The Board Game/);
+ assert.doesNotMatch(index,/staging-review\.js|data-davehub-inline="staging"/);
+ assert.doesNotMatch(games,/Nothing has landed here yet/);
  assert.doesNotMatch(index,/The Last Lightkeeper/);
 });
 test('fictional content and back links remain within preview paths',()=>{
