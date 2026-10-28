@@ -9,6 +9,7 @@
 const fs=require('node:fs');
 const path=require('node:path');
 const {validateConfig}=require('./bundle-games.cjs');
+const {validateTopology}=require('./dh09d-topology.cjs');
 const root=path.resolve(__dirname,'..');
 const lockPath=path.join(root,'config/game-releases.json');
 const policyPath=path.join(root,'config/game-auto-sync-policy.json');
@@ -17,14 +18,16 @@ const UPSTREAM='tametheboardgame/unicorn-valley';
 const CI_NAME='CI';
 const SHA=/^[a-f0-9]{40}$/;
 
-function validateStagingPolicy(policy){
- if(policy.schemaVersion!==1||policy.enabled!==true||
-    policy.stagingBranch!=='main'||policy.stagingHost!=='davehub.pages.dev'||
-    policy.liveDomainConfigured!==false||policy.autoLivePromotion!==false||
+function validateStagingPolicy(policy,topology=JSON.parse(fs.readFileSync(path.join(root,'config/deployment-topology.json'),'utf8'))){
+ if(policy?.schemaVersion!==1||policy.enabled!==true||
+    policy.stagingHost!=='davehub.pages.dev'||policy.autoLivePromotion!==false||
     policy.upstream?.['unicorn-valley']?.repository!==UPSTREAM||
     policy.upstream?.['unicorn-valley']?.branch!=='main'||
     policy.upstream?.['unicorn-valley']?.requiredPushWorkflow!==CI_NAME)
-  throw Error('Staging-only auto-sync is disabled or main is no longer exclusively staging; no automatic production promotion is permitted');
+  throw Error('Staging-only auto-sync policy invalid; refusing any automatic promotion');
+ // Never allow the bot to continue writing main after the live split.
+ // The separate topology document and game policy must agree exactly.
+ validateTopology(topology,policy);
  return policy;
 }
 function candidateFromRuns(sha,runs){
