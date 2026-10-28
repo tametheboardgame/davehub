@@ -11,6 +11,7 @@ const {validateCatalogue}=require('./content-check.cjs');
 const worldCss=fs.readFileSync(path.join(__dirname,'../assets/content/worlds.css'),'utf8');
 const stagingReviewJs=fs.readFileSync(path.join(__dirname,'../assets/content/staging-review.js'),'utf8');
 if(worldCss.includes('</style>')||stagingReviewJs.includes('</script>'))throw Error('Unsafe inline asset delimiter');
+const GAME_LAUNCHES=new Map(require('../config/game-releases.json').games.map(g=>[g.catalogueId,'/'+g.output+'/']));
 const VIEWS=[
   {id:'projects',title:'Projects',subtitle:'Things that escaped the idea stage.',mark:'◈'},
   {id:'writing',title:'Writing',subtitle:'Books, stories, scripts and peculiar uses of words.',mark:'✎'},
@@ -146,8 +147,12 @@ function renderWork(data,item,root,preview){
  const views='<div class="chips">'+item.views.map(v=>'<a'+attr('href',viewUrl(root,v))+'>'+esc(VIEWS.find(x=>x.id===v)?.title||v)+'</a>').join('')+'</div>';
  const out=[];
  const primary=item.links?.find(l=>l.kind==='play')||item.links?.find(l=>l.kind==='official')||null;
- const launch=primary?'<div class="hero-actions"><a class="primary-launch" href="'+esc(primary.url)+'" rel="noopener noreferrer" target="_blank">'+esc(primary.kind==='play'?'Play now':'Visit original website')+' <span aria-hidden="true">↗</span></a>'+
-  '<span class="outside-note">Opens the existing '+esc(primary.kind==='play'?'playable game':'website')+' in a new tab. First-party DaveHub hosting is a separate project.</span></div>':'';
+ const firstParty=GAME_LAUNCHES.get(item.id);
+ const launchHref=firstParty||primary?.url||null;
+ const sameOrigin=Boolean(firstParty);
+ const launch=launchHref?'<div class="hero-actions"><a class="primary-launch" href="'+esc(launchHref)+'"'+(sameOrigin?'':' rel="noopener noreferrer" target="_blank"')+'>'+
+  esc(sameOrigin?'Play on DaveHub':primary.kind==='play'?'Play now':'Visit original website')+' <span aria-hidden="true">↗</span></a>'+
+  '<span class="outside-note">'+(sameOrigin?'This game runs directly on DaveHub. Browser saves from the old standalone game website do not automatically transfer.':'Opens the existing website in a new tab.')+'</span></div>':'';
  out.push('<div class="work-head"><p class="eyebrow">✦ '+esc(friendlyKind(item).toUpperCase())+' · '+esc(dateLabel(item))+'</p>'+
   '<h2>'+esc(item.title)+'</h2><p class="work-synopsis">'+esc(item.synopsis)+'</p>'+views+launch+'</div>');
  if(item.views.includes('unfinished'))out.push('<div class="shelved">An archived creative fragment — no plans or promises to finish it.</div>');
