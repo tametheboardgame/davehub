@@ -9,8 +9,11 @@ const publicCatalogue=JSON.parse(fs.readFileSync(path.join(root,'content/public/
 const examples=JSON.parse(fs.readFileSync(path.join(root,'content/examples/fictional.json'),'utf8'));
 const clone=x=>structuredClone(x);
 const change=fn=>{const c=clone(examples);fn(c);return validateCatalogue(c);};
-test('empty public catalogue is valid and contains no owner works',()=>{
- assert.deepEqual(validateCatalogue(publicCatalogue),{valid:true,errors:[],count:0});
+test('three explicitly owner-approved works form the published catalogue',()=>{
+ assert.deepEqual(validateCatalogue(publicCatalogue),{valid:true,errors:[],count:3});
+ assert.deepEqual(new Set(publicCatalogue.items.map(x=>x.id)),new Set(['unicorn-valley','stephen-martin-project','tame-the-board-game']));
+ assert.ok(publicCatalogue.items.every(x=>x.publication.status==='public_approved'&&x.publication.approvedOn==='2026-10-28'));
+ assert.ok(publicCatalogue.items.every(x=>x.media.length===0),'No game/WordPress media is republished');
 });
 test('all fictional example records validate as a linked collection',()=>{
  assert.deepEqual(validateCatalogue(examples),{valid:true,errors:[],count:7});
