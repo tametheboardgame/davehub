@@ -23,10 +23,16 @@
  <a class="preview-link" id="preview-page" href="#" target="_blank" rel="noopener noreferrer">Preview selected page</a>
  <button type="button" class="export" id="export-approved">Export approved proposal</button>
 </div>
+<section class="readiness" aria-labelledby="review-heading">
+  <div class="review-head"><div><p class="eyebrow">FIRST-WAVE / OWNER CHECK</p><h2 id="review-heading">Three projects, one review queue</h2>
+  <p>Each listing stays unpublished. These cards show what remains to check before you can even export a publication proposal.</p></div>
+  <strong id="review-progress" aria-live="polite">Loading review status</strong></div>
+  <div id="review-cards" class="review-cards"></div>
+</section>
 <div class="layout"><aside aria-label="Candidate catalogue">
   <div class="sidehead"><h2>Editorial queue</h2><p id="count">Loading</p></div>
   <div class="queue" id="queue"></div></aside>
-<section class="editor" aria-labelledby="editor-title"><h2 id="editor-title">Select a creation</h2>
+<section class="editor" aria-labelledby="editor-title"><h2 id="editor-title">Select a creation</h2><p id="draft-state" class="draft-state" role="status">Select a saved draft to begin.</p>
 <form id="edit-form">
 <div class="fields">
 <label>Stable ID <input name="id" id="id" required pattern="[a-z][a-z0-9-]{2,79}" placeholder="my-project"></label>
