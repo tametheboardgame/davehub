@@ -42,6 +42,8 @@ This step involves account-level Cloudflare changes, so it is a separate, explic
 
 If the branch is changed before the policy is ready, the build is intentionally blocked. Recover by returning the existing Pages production branch to `main`, removing the new deployment-role variable, and restoring the previous known-good deployment. Do not bypass the role check.
 
+**Default-main orchestrator activation PR:** Prepared separately. It changes the main-branch default GitHub Actions policy to `staging_cutover`, selects `staging` for all automatic game pins, and releases the temporary hold. **Do not merge this PR** until the existing Cloudflare Pages `davehub` project has deployed `staging`, the live `/deployment.json` reports the exact `staging` commit, and both games pass HTTP and browser checks. A premature merge may make Cloudflare's old `main` project fail production builds and could send a scheduled bot to the wrong branch.
+
 ## Phase C — create an independent production Pages project
 
 **Do not do this without explicit owner approval for public go-live.**
