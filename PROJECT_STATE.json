@@ -20,7 +20,7 @@
     "DH-08B direct home/island navigation to generated creative worlds awaiting browser review",
     "DH-08B shared page layout and fictional musical storytelling review",
     "DH-08C private draft/review workflow planning",
-    "DH-06D transparent Dave animation integrated on review branch; awaiting visual sign-off"
+    "DH-06D1 owner-requested enlarged upper-body Dave framing on review branch; preview awaiting visual sign-off"
   ],
   "next": [
     "Verify DH-08B Cloudflare preview and musical navigation across desktop/mobile",
@@ -129,7 +129,8 @@
   },
   "last_verified": {
     "scope": "DH-08B homepage integration fix",
-    "result": "Homepage CTA now links to /worlds/ and each of four islands links to category URLs; retired old modal UI; legacy hashes redirect to generated routes; public zero-content index links clearly to isolated fictional walkthrough. Added five navigation tests, Cloudflare build to verify."
+    "result": "Homepage CTA now links to /worlds/ and each of four islands links to category URLs; retired old modal UI; legacy hashes redirect to generated routes; public zero-content index links clearly to isolated fictional walkthrough. Added five navigation tests, Cloudflare build to verify.",
+    "animation_review": "DH-06D1 CSS changes on feature/dh-06d-transparent-dave-animation: desktop 140svh/-55svh, tablet 118svh/-43svh, mobile 102svh/-30svh; motion and still share crop; browser visual review pending"
   },
   "domain": {
     "primary": "davehub.co.uk",
