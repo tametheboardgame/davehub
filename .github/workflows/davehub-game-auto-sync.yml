@@ -34,9 +34,19 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 35
     steps:
+      # The default-branch workflow is the orchestrator. Only the reviewed
+      # topology policy decides which separate branch receives staging writes.
       - uses: actions/checkout@v4
         with:
           ref: main
+          fetch-depth: 0
+      - name: Resolve safe staging target from policy
+        id: target
+        run: node scripts/dh09d-topology.cjs select
+      - name: Check out the selected staging branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.target.outputs.branch }}
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
@@ -65,11 +75,13 @@ jobs:
         env:
           EXPECTED_UPSTREAM_SHA: ${{ steps.upstream.outputs.upstream_sha }}
           EXPECTED_UPSTREAM_CI_RUN: ${{ steps.upstream.outputs.upstream_ci_run }}
+          TARGET_BRANCH: ${{ steps.target.outputs.branch }}
         run: |
           set -eu
-          git fetch origin main --quiet
-          test "$(git rev-parse origin/main)" = "$(git rev-parse HEAD)" || {
-            echo "::error::DaveHub main changed during staging qualification. Retry on the next hourly run."
+          case "$TARGET_BRANCH" in main|staging) ;; *) echo "::error::Unsafe target branch"; exit 1;; esac
+          git fetch origin "$TARGET_BRANCH" --quiet
+          test "$(git rev-parse "origin/$TARGET_BRANCH")" = "$(git rev-parse HEAD)" || {
+            echo "::error::DaveHub staging branch changed during qualification. Retry on the next hourly run."
             exit 1
           }
           test "$(git status --porcelain | wc -l)" -gt 0
@@ -79,7 +91,7 @@ jobs:
             exit 1
           fi
           git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m "chore(DH-09E): sync Unicorn Valley staging to ${EXPECTED_UPSTREAM_SHA} (upstream CI #${EXPECTED_UPSTREAM_CI_RUN})"
-          git push origin HEAD:refs/heads/main
+          git push origin "HEAD:refs/heads/$TARGET_BRANCH"
       - name: Verify the new exact SHA and gameplay files on Cloudflare staging
         if: steps.upstream.outputs.action == 'update'
         env:
