@@ -16,7 +16,7 @@ test('two unique immutable source commits and matching canonical content records
  for(const g of releases){
   assert.match(g.repository,/^tametheboardgame\//);
   if(g.build==='vite-subpath')assert.match(g.commit,/^[0-9a-f]{40}$/);
-  else { assert.equal(g.build,'upstream-proxy');assert.match(g.sourceCommitAtReview,/^[0-9a-f]{40}$/); }
+  else { assert.equal(g.build,'upstream-proxy');assert.equal(g.upstream,'https://stephen-martin-project.pages.dev/'); }
   assert.ok(catalogue.items.some(i=>i.id===g.catalogueId&&i.publication.status==='public_approved'));
   assert.equal(g.output,'games/'+g.id);
  }
