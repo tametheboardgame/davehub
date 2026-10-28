@@ -65,7 +65,7 @@ function landing(data){
 }
 function renderReview(out){
  const data=safeLayoutData();
- const entries=filesFor(data,PREFIX,false);
+ const entries=filesFor(data,PREFIX,'review');
  const generated=new Map([['index.html',landing(data)]]);
  for(const [name,html]of entries)generated.set(name,decorate(html));
  for(const [name,html]of generated){

@@ -29,6 +29,18 @@ GitHub Actions tests the build output, not Cloudflare's remote deployment. A Pag
 
 Cloudflare branch previews are public unless **Cloudflare Access** protects them. Therefore **the first-wave editable Content Workshop drafts and actual unapproved descriptions remain outside any Cloudflare deployment**. Private review of actual copy requires an authenticated Access-protected workflow and its access policy to be verified first. Do not try to fake access control with a JavaScript password or obscure path.
 
+## DH-08C5: Staging homepage and world navigation correction
+
+The first hosted review was generated correctly but **not reachable through the normal homepage islands and Explore destinations**: the canonical public catalogue was intentionally empty and those links rendered empty areas. This was an integration error, not missing editorial approval.
+
+With the DH-08C5 staging bridge, when and only when the browser hostname is exactly `davehub.pages.dev` and the approved canonical catalogue is still empty, visits to `/worlds/` and the seven `/worlds/<category>/` paths are redirected to their matching **design-only** paths under `/previews/dh-08c/`. The root homepage and the destination paths themselves remain unchanged. The future `davehub.co.uk` live domain never redirects. Once approved content exists, the build omits the staging redirect.
+
+Design-review destinations now show three named cards across the relevant categories: Games (three including the board-game blog), Projects (two games), Writing and Memory Lane (the blog). Categories without a first-wave nominee show a clear explanation and navigation back to populated review areas instead of a misleading blank live-catalogue message.
+
+This does **not** add or approve any actual work. The public catalogue remains empty. The review cards display title-only project references, generic placeholder text, no live play/blog links, no media, no private notes, and no publication approval flags. A public `pages.dev` hostname is **not** access-controlled. An authenticated system is still required before showing the owner's full unpublished editorial text on the web.
+
+**Owner QA:** On `https://davehub.pages.dev/`, click the Games and Projects islands (or Explore). They should navigate to the first-wave design-only views with named project cards, not empty public categories. Writing and Memory Lane should show the board-game blog. Experiments/Music/Unfinished should explain the first wave has no nominations and link to other views. Review visual presentation on desktop/mobile. If the links still point to blank areas, confirm the latest Cloudflare Pages deployment contains the merged commit; GitHub Actions build success is not a Cloudflare HTTP deployment confirmation.
+
 ## Future workflow
 
 - Changes to staging -> CI -> Cloudflare preview URL -> owner gets URL and precise QA checklist.

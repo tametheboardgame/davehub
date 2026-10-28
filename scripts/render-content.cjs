@@ -36,7 +36,7 @@ function sortEntries(arr,view){
  if(view==='memory-lane')return copy.sort((a,b)=>(a.period?.fromYear??9999)-(b.period?.fromYear??9999)||a.title.localeCompare(b.title));
  return copy.sort((a,b)=>a.title.localeCompare(b.title));
 }
-function shell({title,kicker,lead,body,root,preview=false}){
+function shell({title,kicker,lead,body,root,preview=false,reviewRedirectEligible=false}){
  const nav=VIEWS.map(v=>'<a'+attr('href',viewUrl(root,v.id))+'>'+esc(v.title)+'</a>').join('');
  return '<!doctype html>\n<html lang="en-GB"><head><meta charset="utf-8">'+
  '<meta name="viewport" content="width=device-width,initial-scale=1">'+
@@ -44,6 +44,7 @@ function shell({title,kicker,lead,body,root,preview=false}){
  '<meta name="color-scheme" content="dark">'+
  '<title>'+esc(title)+' · DaveHub</title>'+
  '<link rel="stylesheet" href="/assets/content/worlds.css">'+
+ (reviewRedirectEligible?'<script defer src="/assets/content/staging-review.js"></script>':'')+
  '</head><body><a class="skip" href="#main">Skip to content</a>'+
  '<div class="sky" aria-hidden="true"></div>'+
  '<div class="shell">'+
@@ -51,7 +52,7 @@ function shell({title,kicker,lead,body,root,preview=false}){
  '<a class="home" href="/">← Back to the islands</a></header>'+
  '<nav class="trail" aria-label="Content destinations"><a'+attr('href',worldIndex(root))+'>All worlds</a>'+nav+'</nav>'+
  '<main id="main"><div class="intro"><div class="eyebrow">✦ '+esc(kicker)+'</div><h1>'+esc(title)+'</h1><p class="lead">'+esc(lead)+'</p></div>'+
- (preview?'<div class="preview"><strong>Fictional design demonstration.</strong> All names and stories here are invented. No real work has been published by this preview.</div>':'')+
+ (preview===true?'<div class="preview"><strong>Fictional design demonstration.</strong> All names and stories here are invented. No real work has been published by this preview.</div>':'')+
  body+'</main><footer class="footer">Somewhere between an idea and a very bad idea. · <a href="/">DaveHub</a></footer></div></body></html>';
 }
 function card(item,root,subtitle){
@@ -75,6 +76,11 @@ function demoInvitation(view){
  '<a class="ghost"'+attr('href',target)+'>Explore the fictional example ↗</a></aside>';
 }
 function emptyState(root,view,preview){
+ if(preview==='review'){
+  return '<div class="empty"><div class="orb">✧</div><h2>No first-wave candidate in this area.</h2>'+
+   '<p>This design review only includes three proposed creations. Games, Projects, Writing and Memory Lane have sample cards; nothing is approved for public publication.</p>'+
+   '<a class="ghost"'+attr('href',worldIndex(root))+'>Explore the populated review areas →</a></div>';
+ }
  return '<div class="empty"><div class="orb">✧</div><h2>Nothing has landed here yet.</h2>'+
  '<p>DaveHub is ready for its first approved creations. This is an empty destination, not a promise that something is coming soon.</p>'+
  '<a class="ghost"'+attr('href',worldIndex(root))+'>Explore the other worlds →</a></div>'+
@@ -86,7 +92,7 @@ function renderIndex(data,root,preview){
   return '<a class="world-tile"'+attr('href',viewUrl(root,v.id))+'><span class="symbol">'+esc(v.mark)+'</span>'+
    '<strong>'+esc(v.title)+'</strong><span>'+esc(v.subtitle)+'</span><em>'+(n?n+' '+(n===1?'creation':'creations'):'Open this world')+' ↗</em></a>';
  }).join('\n')+'</div>';
- return shell({title:'Every world has a doorway',kicker:'EXPLORE / CREATIVE WORLDS',lead:'Follow an idea into music, writing, games, forgotten experiments and beyond. One creation can belong to several worlds.',body:(!preview && !data.items.length?demoInvitation(): '')+blocks,root,preview});
+ return shell({title:'Every world has a doorway',kicker:'EXPLORE / CREATIVE WORLDS',lead:'Follow an idea into music, writing, games, forgotten experiments and beyond. One creation can belong to several worlds.',body:(!preview && !data.items.length?demoInvitation(): '')+blocks,root,preview,reviewRedirectEligible:!preview&&!data.items.length&&root===''});
 }
 function renderView(data,root,view,preview){
  const v=VIEWS.find(x=>x.id===view);
@@ -95,7 +101,7 @@ function renderView(data,root,view,preview){
    ? '<p class="found">'+works.length+' '+(works.length===1?'creation':'creations')+' in this world</p>'+linkList(works,root)
    : emptyState(root,view,preview);
  const caveat=view==='unfinished'?'<p class="quiet">The Unfinished Shelf is an archive, not a list of things that will be completed.</p>':'';
- return shell({title:v.title,kicker:'WORLD / '+v.id.toUpperCase().replaceAll('-',' '),lead:v.subtitle,body:section('Discover the creations',feature,'EXPLORE THIS WORLD')+caveat,root,preview});
+ return shell({title:v.title,kicker:'WORLD / '+v.id.toUpperCase().replaceAll('-',' '),lead:v.subtitle,body:section('Discover the creations',feature,'EXPLORE THIS WORLD')+caveat,root,preview,reviewRedirectEligible:!preview&&!data.items.length&&root===''});
 }
 function related(data,item){
  const out=new Map();
