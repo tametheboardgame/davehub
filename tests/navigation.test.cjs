@@ -43,3 +43,15 @@ test('fictional content and back links remain within preview paths',()=>{
  assert.match(musical,/class="home" href="\/"/);
  assert.doesNotMatch(index,/href="\/#explore"/);
 });
+
+test('DH-06D transparent Dave motion remains decorative with an accessible static fallback',()=>{
+ assert.match(html,/id="dave-stage-motion"/);
+ assert.match(html,/assets\\/characters\\/dave\\/dave-animation-v1\\.webm/);
+ assert.match(html,/dave-stage__still/);
+ assert.match(js,/prefers-reduced-motion/);
+ assert.match(js,/saveData/);
+ assert.match(js,/staticFallback/);
+ const asset=path.join(root,'assets/characters/dave/dave-animation-v1.webm');
+ assert.ok(fs.existsSync(asset),'transparent animation exists');
+ assert.ok(fs.statSync(asset).size > 10000,'animation is not empty');
+});

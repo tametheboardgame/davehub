@@ -28,7 +28,7 @@ The experience should reward exploration without making it difficult to find a s
 
 The static homepage is at repository root (`index.html`, `styles.css`, `main.js`, `catalogue.js`). Use `sh scripts/build-pages.sh` to create the curated `dist/` output for Cloudflare Pages. Cloudflare GitHub integration is active; the project is deployed at the existing `davehub.pages.dev` hostname, with branch previews on PRs. Details: [Cloudflare Pages setup](docs/CLOUDFLARE_PAGES.md).
 
-The approved logo and background are repository assets; illustrated Dave remains intentionally absent pending a separate design review.
+The approved logo and background are repository assets. DH-06D adds an owner-supplied transparent Giant Dave animation, with the approved still retained for reduced-motion, data-saver and unsupported browsers. This motion experiment requires visual review before merging.
 
 ## DH-08B: Shared creative-world pages (review branch)
 

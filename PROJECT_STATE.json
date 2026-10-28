@@ -1,6 +1,6 @@
 {
   "project": "DaveHub",
-  "updated": "2026-10-27",
+  "updated": "2026-10-28",
   "status": "dh_08b_shared_world_pages_in_review",
   "current_work_package": "DH-08B",
   "completed": [
@@ -20,7 +20,7 @@
     "DH-08B direct home/island navigation to generated creative worlds awaiting browser review",
     "DH-08B shared page layout and fictional musical storytelling review",
     "DH-08C private draft/review workflow planning",
-    "DH-06 owner-led Giant Dave animation"
+    "DH-06D transparent Dave animation integrated on review branch; awaiting visual sign-off"
   ],
   "next": [
     "Verify DH-08B Cloudflare preview and musical navigation across desktop/mobile",
@@ -431,5 +431,16 @@
     "demo_gateway": "/previews/dh-08b/worlds/",
     "old_explore_modal": "retired on DH-08B branch",
     "navigation_tests": 5
+  },
+  "dh06d": {
+    "status": "feature_branch_review",
+    "branch": "feature/dh-06d-transparent-dave-animation",
+    "asset": "assets/characters/dave/dave-animation-v1.webm",
+    "source": "Owner-supplied transparent MOV",
+    "source_frames": 121,
+    "web_asset_size_bytes": 289843,
+    "web_asset_sha256": "1ed2277df5316b5b7f3c2ac2747e69d1492e011d5605ac4af37043bfaf072ead",
+    "fallback": "assets/characters/dave/dave-static-v1.webp",
+    "review_required": true
   }
 }

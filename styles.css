@@ -334,7 +334,7 @@ html, body { height: 100%; width: 100%; overflow: hidden; }
   pointer-events: none;
   left: calc(50% - var(--dave-explore-half-width) - var(--dave-to-cta-gap) - var(--dave-height) * var(--dave-visible-reach));
 }
-.dave-stage__still {
+.dave-stage__still, .dave-stage__motion {
   position: absolute;
   display: block;
   height: var(--dave-height);
@@ -349,25 +349,25 @@ html, body { height: 100%; width: 100%; overflow: hidden; }
 }
 @media (min-width: 1750px) {
   .dave-stage { --dave-height: 90svh; }
-  .dave-stage__still { bottom: -25svh; }
+  .dave-stage__still, .dave-stage__motion { bottom: -25svh; }
 }
 @media (max-width: 900px) {
   /* On narrower screens, there is physically insufficient horizontal space
      for Dave to stand fully beside a centred button: use portrait framing. */
   .dave-stage { left: 0; --dave-height: 78svh; }
-  .dave-stage__still { left: -4vw; bottom: -13svh; }
+  .dave-stage__still, .dave-stage__motion { left: -4vw; bottom: -13svh; }
 }
 @media (max-width: 640px) {
   .dave-stage { width: 52vw; --dave-height: 65svh; }
-  .dave-stage__still { left: -5vw; bottom: -12svh; filter: drop-shadow(0 7px 16px rgba(3,8,29,.55)); }
+  .dave-stage__still, .dave-stage__motion { left: -5vw; bottom: -12svh; filter: drop-shadow(0 7px 16px rgba(3,8,29,.55)); }
 }
 @media (max-width: 380px) {
   .dave-stage { --dave-height: 64svh; }
-  .dave-stage__still { left: -6vw; bottom: -12svh; }
+  .dave-stage__still, .dave-stage__motion { left: -6vw; bottom: -12svh; }
 }
 @media (max-height: 430px) and (orientation: landscape) {
   .dave-stage { left: 0; --dave-height: 89svh; }
-  .dave-stage__still { left: 1vw; bottom: -28svh; }
+  .dave-stage__still, .dave-stage__motion { left: 1vw; bottom: -28svh; }
 }
 
 /* DH-07E — The explorer is a magical portal into the SAME approved island-world
@@ -534,4 +534,13 @@ html, body { height: 100%; width: 100%; overflow: hidden; }
   .world-directory__item--collection { min-height: 84px; border-radius: 16px; }
   .world-directory__item--collection::after { border-radius: 12px; }
   .world-dialog__eyebrow { font-size: 9px; letter-spacing: .12em; }
+}
+
+/* DH-06D: aligned transparent video overlays the approved static fallback. */
+.dave-stage__motion { opacity: 0; transition: opacity .2s ease; }
+.dave-stage--motion-ready .dave-stage__motion { opacity: 1; }
+.dave-stage--motion-ready .dave-stage__still { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .dave-stage__motion { display: none; }
+  .dave-stage__still { opacity: 1 !important; }
 }
