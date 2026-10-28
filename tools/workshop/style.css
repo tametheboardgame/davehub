@@ -22,3 +22,6 @@ fieldset{border:1px solid #d9c19354;border-radius:13px;padding:14px}legend{font-
 @media(max-width:900px){.layout{grid-template-columns:1fr}.queue{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:610px){.top{display:block}.local{display:inline-block;margin:15px 0 0}.fields{grid-template-columns:1fr}.span2{grid-column:auto}.checks{grid-template-columns:1fr}.toolbar button,.filepick{width:100%;justify-content:center}.queue{grid-template-columns:1fr}.shell{width:calc(100% - 24px)}.editor,aside,.help{padding:18px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important}}
+
+.preview-link{background:#25405f;border:1px solid #a8cbe77a;color:#fff;text-decoration:none;border-radius:12px;padding:12px 18px;font-weight:800;display:inline-flex;align-items:center}
+.preview-link:hover{background:#365b80}.preview-link[aria-disabled=true]{opacity:.55}
