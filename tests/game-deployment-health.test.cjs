@@ -28,9 +28,10 @@ test('no-op hourly monitor fails visibly if Cloudflare still serves old version'
 });
 test('all no-op and blocked checks verify the deployed release, including post-merge activation',()=>{
  const yaml=fs.readFileSync(path.join(__dirname,'../.github/workflows/davehub-game-auto-sync.yml'),'utf8');
- assert.match(yaml,/if: steps\.upstream\.outputs\.action != 'update'/);
+ assert.match(yaml,/if: steps\.target\.outputs\.paused != 'true' && steps\.upstream\.outputs\.action != 'update'/);
  assert.match(yaml,/node scripts\/check-pinned-game-deployment\.cjs/);
  assert.match(yaml,/cancel-in-progress: false/);
+ assert.match(yaml,/if: steps.target.outputs.paused != 'true'/);
  const build=fs.readFileSync(path.join(__dirname,'../scripts/build-pages.sh'),'utf8');
  assert.match(build,/node scripts\/dh09d-topology\.cjs headers dist\/_headers/);
  const generator=fs.readFileSync(path.join(__dirname,'../scripts/dh09d-topology.cjs'),'utf8');
