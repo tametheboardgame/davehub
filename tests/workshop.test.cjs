@@ -3,7 +3,7 @@ const test=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const path=require('node:path');
-const {cleanCandidate,importCandidates,previewCatalogue,exportReview,makeApproved,HOST}=require('../tools/workshop/server.cjs');
+const {cleanCandidate,importCandidates,previewCatalogue,exportReview,makeApproved,publicLinks,HOST}=require('../tools/workshop/server.cjs');
 const {firstWave}=require('../tools/workshop/first-wave.cjs');
 const {readiness}=require('../tools/workshop/review-readiness.cjs');
 const {validateCatalogue}=require('../scripts/content-check.cjs');
@@ -185,4 +185,43 @@ test('review dashboard and unsaved-edits handling are included in the local inte
  assert.match(html,/id="draft-state"/);
  assert.match(js,/Discard unsaved edits/);
  assert.match(js,/if\(dirty\)throw Error/);
+});
+
+test('all three first-wave previews have two distinct and attributed destination links',()=>{
+ const preview=previewCatalogue(importCandidates({candidates:[]},firstWave));
+ const mapping=new Map(preview.items.map(i=>[i.id,i]));
+ for(const id of ['unicorn-valley','stephen-martin-project']){
+  const links=mapping.get(id).links;
+  assert.equal(links.length,2);
+  assert.equal(links[0].kind,'play');
+  assert.equal(links[1].kind,'repository');
+  assert.match(links[1].url,/github\.com\/tametheboardgame\//);
+ }
+ const blog=mapping.get('tame-the-board-game');
+ assert.equal(blog.links.length,2);
+ assert.equal(blog.links[1].url,'https://tametheboardgame.com/about/');
+ assert.equal(blog.links[1].label,"Meet the blog's co-creators");
+ assert.equal(blog.links[1].kind,'read');
+ assert.ok(preview.items.every(i=>!('publication' in i)));
+});
+test('additional links are validated on draft save and cannot contain unsafe URLs',()=>{
+ const source=firstWave[0];
+ assert.throws(()=>cleanCandidate({...source,extraLinkUrl:'javascript:alert(1)',extraLinkLabel:'Danger'}),/Unsafe additional link URL/);
+ assert.throws(()=>cleanCandidate({...source,extraLinkUrl:'https://example.org/',extraLinkLabel:''}),/Additional link needs a label/);
+ assert.throws(()=>cleanCandidate({...source,extraLinkLabel:'Orphan link'}),/needs a URL/);
+ assert.throws(()=>cleanCandidate({...source,extraLinkUrl:'https://example.org/',extraLinkLabel:'Valid',extraLinkKind:'javascript'}),/Invalid public link kind/);
+});
+test('duplicate source links do not render twice and no source permissions are inferred',()=>{
+ const item=cleanCandidate({...firstWave[0],extraLinkUrl:firstWave[0].sourceUrl,extraLinkLabel:'Same repository',extraLinkKind:'repository'});
+ const links=publicLinks(item);
+ assert.equal(links.length,2);
+ assert.equal(links.filter(l=>l.url===firstWave[0].sourceUrl).length,1);
+ assert.equal(item.ownerApproved,false);
+});
+test('owner-approved exporter preserves manually reviewed additional links without deploying them',()=>{
+ const example=firstWave.find(x=>x.id==='tame-the-board-game');
+ const approved=makeApproved({...example,status:'approved_for_export',ownerApproved:true,approvedOn:'2026-10-28',review:{rights:true,metadata:true,links:true,media:true}});
+ assert.equal(approved.links.length,2);
+ assert.equal(approved.links[1].kind,'read');
+ assert.equal(approved.links[1].url,'https://tametheboardgame.com/about/');
 });
