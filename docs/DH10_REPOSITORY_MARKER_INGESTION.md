@@ -79,7 +79,8 @@ The GitHub account exposes **19** repositories (at the initial 28 October scan).
 - `scripts/davehub-manifest.cjs`: validates marker structure, recognised taxonomy, explicit source repository identity and safe links.
 - `scripts/davehub-discover.cjs`: enumerates **public, non-forked, non-archived** repositories under a known GitHub owner, reads `davehub.json` on each default branch, validates enabled manifests, then emits a **review-only** report.
 - `tests/davehub-discovery.test.cjs`: tests valid/disabled/invalid manifests, missing files, invalid URLs, categories, editorial review state and source identity.
-- `.github/workflows/davehub-discovery.yml`: on-demand and Monday morning discovery. **Read-only** permissions, emits an Actions artifact `davehub-ready-discovery` with a 7-day retention period. No commits, PRs, merge, publishing or Cloudflare deploy.
+- `scripts/davehub-workshop-import.cjs`: converts valid discovery results into a **private Content Workshop-compatible JSON import**. Every item starts `needs_review`, with `ownerApproved:false` and all four review flags off. It is not an approved public manifest.
+- `.github/workflows/davehub-discovery.yml`: on-demand and Monday morning discovery. **Read-only** permissions, emits an Actions artifact `davehub-ready-discovery` containing both discovery report and unapproved Workshop import, with 7-day retention. No commits, PRs, merge, publishing or Cloudflare deploy.
 - `davehub.json` on DaveHub itself is **disabled**; infrastructure should not create a self-referential portfolio entry.
 - `scripts/build-pages.sh` runs manifest validation and tests to prevent a schema regression.
 
@@ -88,6 +89,7 @@ Run on a machine with Node 22 and outbound public GitHub access:
 ```sh
 node --test tests/davehub-discovery.test.cjs
 node scripts/davehub-discover.cjs --owner tametheboardgame --out reports/davehub-discovery.json
+node scripts/davehub-workshop-import.cjs reports/davehub-discovery.json reports/davehub-workshop-import.json
 ```
 
 It may use `GITHUB_TOKEN` for API rate limits and is restricted to the source owner’s publicly visible repos. It does **not** need write credentials, access to private repositories or secrets. Don't include private repos in a public discovery report. The GitHub Actions artifact in a public repository may be publicly discoverable: **manifest contents must be public-safe**.
@@ -98,7 +100,7 @@ The report's candidates are marked `reviewStatus: needs_owner_review` and `publi
 
 1. Start with repositories explicitly intended for DaveHub. Seed `enabled:true` markers on **Unicorn Valley** and **The Stephen Martin Project** for owner review, plus other clearly public creative repos if approved. Do not bypass specific character/audio/likeness rights or first-party game release QA.
 2. Missing marker already behaves exactly like `enabled:false`. For a uniform repo fleet, add a **two-field disabled manifest** to remaining repos via reviewed PRs, but do not reconfigure sensitive/operational repos automatically.
-3. Once the published catalogue/editorial workflow has been reconciled, connect the review report into the Content Workshop’s candidate queue. Match by immutable `sourceRepository` plus `id`; do not copy raw README text or script files and don't overwrite manual editorial notes.
+3. Use the generated `davehub-workshop-import.json` in the DH-08C Content Workshop (still an unmerged draft PR as of this phase); importing creates local **unapproved** candidates. After editorial workflow reconciliation, a connected reviewer queue can remove the manual artifact-import step. Match by immutable `sourceRepository` plus `id`; do not copy raw README text or script files and don't overwrite manual editorial notes.
 4. Implement change detection: compare a canonical hash of validated public marker fields and the source default-branch commit. Identical run = no-op; changed marker = fresh editor review, not silent auto-publish.
 5. Implement milestone suggestions only when `updates.proposeMilestones:true` **and** a trusted release source is supplied. Propose meaningful game releases/features, not every commit, CI run or daily chore.
 6. Preserve the future [DH-09 staging/live split](DH09_DOMAIN_LAUNCH_RUNBOOK.md). Auto-discovery **never** pushes straight to either staging or live. Approved site changes still follow feature PR → staging preview → owner promotion → live.
