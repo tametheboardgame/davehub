@@ -17,6 +17,9 @@ on:
       - 'tests/game-bundles.test.cjs'
       - 'config/game-releases.json'
       - 'config/game-auto-sync-policy.json'
+      - 'config/deployment-topology.json'
+      - 'scripts/dh09d-topology.cjs'
+      - 'tests/dh09d-topology.test.cjs'
       - 'scripts/auto-sync-unicorn.cjs'
       - 'scripts/verify-game-staging-release.cjs'
       - 'tests/game-auto-sync.test.cjs'
@@ -30,7 +33,7 @@ on:
       - 'content/public/catalogue.json'
       - '.github/workflows/davehub-discovery.yml'
   push:
-    branches: [main]
+    branches: [main, staging]
     paths:
       - 'davehub.json'
       - 'scripts/davehub-*.cjs'
@@ -44,6 +47,9 @@ on:
       - 'tests/game-bundles.test.cjs'
       - 'config/game-releases.json'
       - 'config/game-auto-sync-policy.json'
+      - 'config/deployment-topology.json'
+      - 'scripts/dh09d-topology.cjs'
+      - 'tests/dh09d-topology.test.cjs'
       - 'scripts/auto-sync-unicorn.cjs'
       - 'scripts/verify-game-staging-release.cjs'
       - 'tests/game-auto-sync.test.cjs'
