@@ -73,6 +73,22 @@ function headersFor(role){
  '/games/stephen-martin/*\n  Cache-Control: no-cache\n';
  return initial+restricted+game;
 }
+function deploymentMarker(topology,env={}){
+ const role=buildRole(topology,env);
+ const sha=env.CF_PAGES_COMMIT_SHA||null;
+ if(sha!==null&&!/^[a-f0-9]{40}$/.test(sha))throw Error('Invalid Cloudflare deployment commit SHA');
+ if(env.CF_PAGES&&['staging','production'].includes(role)&&!sha)
+  throw Error('Cloudflare production deployment must expose its exact commit SHA');
+ return {
+  schemaVersion:1,
+  environment:role,
+  branch:env.CF_PAGES_BRANCH||null,
+  commit:sha,
+  stagingHost:'davehub.pages.dev',
+  productionHost:'davehub.co.uk',
+  phase:topology.phase
+ };
+}
 function publishOutputs(value){
  const output=process.env.GITHUB_OUTPUT;
  if(output)fs.appendFileSync(output,'branch='+value.stagingBranch+'\nphase='+value.phase+'\n');
@@ -88,7 +104,13 @@ if(require.main===module){
    fs.writeFileSync(process.argv[3]||path.join(root,'dist/_headers'),headersFor(role));
    console.log('Generated '+role+' security/cache/indexing headers');
   }
-  else throw Error('Usage: node scripts/dh09d-topology.cjs check|select|headers [output]');
+  else if(mode==='marker'){
+   const output=process.argv[3]||path.join(root,'dist/deployment.json');
+   const result=deploymentMarker(topology,process.env);
+   fs.writeFileSync(output,JSON.stringify(result,null,2)+'\n');
+   console.log('Generated '+result.environment+' release marker for '+(result.branch||'non-Cloudflare-build'));
+  }
+  else throw Error('Usage: node scripts/dh09d-topology.cjs check|select|headers|marker [output]');
  }catch(err){console.error('DH-09D topology guard failed: '+err.message);process.exitCode=1}
 }
-module.exports={validateTopology,readTopology,buildRole,headersFor};
+module.exports={validateTopology,readTopology,buildRole,headersFor,deploymentMarker};
