@@ -114,3 +114,10 @@ test('Stephen proxy forwards only GET to fixed public origin and strips cookies'
   assert.equal(post.status,405);
  }finally{globalThis.fetch=originalFetch}
 });
+
+test('Cloudflare Pages build runs pinned Node 22 instead of a legacy default',()=>{
+ const version=fs.readFileSync(path.join(root,'.node-version'),'utf8').trim();
+ assert.match(version,/^22\.23\.2$/);
+ const build=fs.readFileSync(path.join(root,'scripts/build-pages.sh'),'utf8');
+ assert.match(build,/DH-09 needs Node >=20\.19/);
+});

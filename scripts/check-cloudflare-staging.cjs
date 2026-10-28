@@ -8,8 +8,8 @@ const checks=[
  {path:'/worlds/games/',required:['<style data-davehub-inline="worlds">','Unicorn Valley','The Stephen Martin Project','Tame The Board Game','3 creations in this world'],forbidden:['data-davehub-inline="staging"','DESIGN REVIEW ONLY']},
  {path:'/worlds/projects/',required:['<style data-davehub-inline="worlds">','Unicorn Valley','The Stephen Martin Project']},
  {path:'/worlds/writing/',required:['<style data-davehub-inline="worlds">','Tame The Board Game']},
- {path:'/creations/unicorn-valley/',required:['<style data-davehub-inline="worlds">','Unicorn Valley','Play now','unicorn-valley.pages.dev','View development repository'],forbidden:['DESIGN REVIEW ONLY']},
- {path:'/creations/stephen-martin-project/',required:['<style data-davehub-inline="worlds">','The Stephen Martin Project','Play now','stephen-martin-project.pages.dev'],forbidden:['DESIGN REVIEW ONLY']},
+ {path:'/creations/unicorn-valley/',required:['<style data-davehub-inline="worlds">','Unicorn Valley','Play on DaveHub','href="/games/unicorn-valley/"','unicorn-valley.pages.dev','View development repository'],forbidden:['DESIGN REVIEW ONLY']},
+ {path:'/creations/stephen-martin-project/',required:['<style data-davehub-inline="worlds">','The Stephen Martin Project','Play on DaveHub','href="/games/stephen-martin/"','stephen-martin-project.pages.dev'],forbidden:['DESIGN REVIEW ONLY']},
  {path:'/creations/tame-the-board-game/',required:['<style data-davehub-inline="worlds">','Tame The Board Game','Miriam','tametheboardgame.com/about/'],forbidden:['DESIGN REVIEW ONLY']},
  {path:'/previews/dh-08c/',required:['<style data-davehub-inline="worlds">','DESIGN REVIEW ONLY','Three creations. One new home.']}
 ];
@@ -27,7 +27,7 @@ async function inspect(url,required,forbidden=[]){
  return html.length;
 }
 async function main(){
- const attempts=9,wait=15000;
+ const attempts=4,wait=10000;
  for(let n=1;n<=attempts;n++){
   try{
    const results=[];

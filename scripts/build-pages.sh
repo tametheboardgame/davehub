@@ -4,6 +4,10 @@ set -eu
 
 cd "$(dirname "$0")/.."
 
+# Vite 8 and TypeScript 7 in the pinned Unicorn Valley release need modern
+# Node. Make Cloudflare failures explicit instead of deploying stale output.
+node -e "const v=process.versions.node.split('.').map(Number);if(v[0]<20||(v[0]===20&&v[1]<19)){console.error('DH-09 needs Node >=20.19 (Cloudflare .node-version pins 22.23.2); current '+process.version);process.exit(1)}console.log('DaveHub game build runtime: Node '+process.version)"
+
 for asset in \
   index.html \
   styles.css \
