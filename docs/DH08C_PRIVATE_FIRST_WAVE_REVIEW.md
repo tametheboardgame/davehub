@@ -1,4 +1,6 @@
-# DH-08C: first three creation pages, private owner review
+# DH-08C: first three creation pages, private owner review (historical)
+
+**Superseded after explicit owner approval on 28 October 2026.** The original review-only state described below is retained as history; the current three-entry public catalogue and approval scope are documented in [DH-08D](DH08D_FIRST_THREE_PUBLISHED_PROJECTS.md).
 
 **Status:** Built for review; **publication is NOT approved**. This phase deliberately replaces the unsafe direct-public-catalogue proposal in older PR #21. The canonical `content/public/catalogue.json` remains `{"schemaVersion":1,"items":[]}`.
 
