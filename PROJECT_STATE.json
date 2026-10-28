@@ -1,7 +1,7 @@
 {
   "project": "DaveHub",
   "updated": "2026-10-28",
-  "status": "dh09d_staging_branch_created_pre_cutover_pr",
+  "status": "dh09d_phase_a_repository_split_prepared",
   "current_work_package": "DH-09D",
   "completed": [
     "DH-00A",
@@ -676,7 +676,7 @@
     "domainChange": "none"
   },
   "dh09d": {
-    "phase": "phase_a_preparation",
+    "phase": "phase_a_complete_cloudflare_handoff_pending",
     "stagingBranchCreated": true,
     "stagingBranch": "staging",
     "existingPagesProject": "davehub",
@@ -693,6 +693,10 @@
     "releaseIdentityEndpoint": "/deployment.json",
     "stageOnlyBotBranchSelection": "policy validated; presently main until Cloudflare production branch is switched",
     "rolloutInstructions": "docs/DH09D_CUTOVER_EXECUTION.md",
-    "next": "CI validate and merge pre-cutover guard; fast-forward staging to its vetted commit; Cloudflare Phase B remains manual/authorised"
+    "next": "Cloudflare existing Pages project `davehub` must be switched from main to staging only in coordinated Phase B; no domain/DNS changes until independent live project and release approval.",
+    "guardPR": 44,
+    "guardPRMergedCommit": "ba102dd8af7d7c58970322fa1d839ae5f710a1ff",
+    "ci": "11 discovery tests + 88 site tests + 30 game/deployment tests passed; full pinned Unicorn static game built",
+    "stagingBranchSyncedToReviewedMain": true
   }
 }
