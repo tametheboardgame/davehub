@@ -134,3 +134,12 @@ Initial outside-GitHub creative links suggest additional kinds of records: publi
 - Disable video for `prefers-reduced-motion`, Save-Data, iOS, Safari and playback failures.
 - Acceptance: Cloudflare branch preview; verify transparency and position on Chrome/Edge desktop and mobile, Safari static fallback, all navigation working, no oversized downloads.
 - Status: code and asset prepared on feature branch for review. Do not merge until owner confirms appearance.
+
+### DH-06D1 — larger upper-body framing (owner review, 28 October 2026)
+
+- Owner requested a much larger Dave, with the head, shoulders, chest and pointing hand dominant; legs can be cropped below the screen.
+- Increased desktop Dave height to 140svh and shifted the bottom to -55svh, keeping the head on screen and cropping the lower half.
+- Re-aligned transparent video relative to the static still so the gesture stays near, but does not cover, the desktop Explore CTA.
+- Tablet and portrait-mobile rules use upper-body crops; landscape-phone framing remains explicit.
+- Still and motion share geometry and remain noninteractive; Safari, reduced-motion, and playback fallback remain unchanged.
+- Added CSS layout regression assertions. Review Cloudflare branch preview at desktop, tablet and mobile before merging.
