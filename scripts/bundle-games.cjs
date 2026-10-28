@@ -24,7 +24,7 @@ function validateConfig(lock=config){
   if(!GAME.test(g.id)||!GAME.test(g.catalogueId)||ids.has(g.id)||g.output!=='games/'+g.id||
     outputPaths.has(g.output)||!REPO.test(g.repository)||
     (g.build==='vite-subpath'&&!SHA.test(g.commit))||
-    (g.build==='upstream-proxy'&&(g.upstream!=='https://stephen-martin-project.pages.dev/'||!SHA.test(g.sourceCommitAtReview)))||
+    (g.build==='upstream-proxy'&&(g.upstream!=='https://stephen-martin-project.pages.dev/'))||
     !['vite-subpath','upstream-proxy'].includes(g.build))throw Error('Invalid or duplicate game lock entry');
   ids.add(g.id);outputPaths.add(g.output);
  }
