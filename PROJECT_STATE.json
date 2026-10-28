@@ -1,7 +1,7 @@
 {
   "project": "DaveHub",
   "updated": "2026-10-28",
-  "status": "dh_08b_shared_world_pages_in_review",
+  "status": "dh_08c_private_owner_review_ready",
   "current_work_package": "DH-08B",
   "completed": [
     "DH-00A",
@@ -527,7 +527,10 @@
     "publicCatalogueItems": 0,
     "publicationApproval": "not_granted",
     "ownerAction": "visually review three local pages, verify rights/credits/links and approve explicitly",
-    "checks": "PR #26 GitHub Actions: 11 discovery tests, 72 regressions, production build passed",
+    "reviewReadinessPR": 27,
+    "reviewReadinessMainCommit": "ae5ad0a3909abaa033d9c6efaff4af1d9d63ad02",
+    "unresolvedVerification": ["The Stephen Martin Project production URL: owner browser check", "Unicorn Valley gameplay URL: browser playthrough not independently observed", "Tame The Board Game contributor/rights sign-off by owner"],
+    "checks": "PR #27 GitHub Actions: 11 discovery tests, 76 regressions, production build passed",
     "oldUnsafePR": "PR #21 closed unmerged because its proposed catalogue wrongly carried public_approved flags"
   },
   "dh10": {
@@ -545,9 +548,9 @@
     },
     "scannerMainCommit": "d4b652b3500acab9f344a3a4f9214ad8d2eee944",
     "verifiedSourceOptIns": ["stephen-martin-project", "ordinary-universe", "octo-maraton-ideas"],
-    "unicornValleyReview": "PR #338 corrected; final CI pending",
+    "unicornValleyReview": "PR #338 remains open; final CI 40688838665 failed two Chess Academy Chromium browser tests; opt-in not merged",
     "publicCandidateApproval": "not granted",
-    "contentWorkshopIntegration": "validated unapproved import converter merged; local editor PR #21 remains draft",
+    "contentWorkshopIntegration": "private local Content Workshop integrated in main via PR #26; first-wave owner dashboard via PR #27; no public catalogue records",
     "domainChange": "none"
   }
 }
