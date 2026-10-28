@@ -14,6 +14,8 @@ test('Cloudflare same-origin release marker confirms the exact pinned SHA',async
  assert.equal(result.matched,true);
  assert.equal(result.version,'main-ci-123');
  assert.equal((await inspect('b'.repeat(40),json(release))).matched,false);
+ assert.equal((await inspect(sha,json(release),'main-ci-999')).matched,false,'stale version with identical SHA must fail');
+ assert.equal((await inspect(sha,json(release),'main-ci-123')).matched,true);
 });
 test('release verification fails on HTML fallback, wrong project or invalid marker',async()=>{
  const release={schemaVersion:1,game:'unicorn-valley',sourceRepository:'tametheboardgame/unicorn-valley',sourceCommit:sha};

@@ -7,7 +7,7 @@ const {once}=require('./check-game-routes.cjs');
 const URL='https://davehub.pages.dev/games/unicorn-valley/davehub-release.json';
 const SHA=/^[a-f0-9]{40}$/;
 function pause(ms){return new Promise(done=>setTimeout(done,ms))}
-async function inspect(expected,fetcher=fetch){
+async function inspect(expected,fetcher=fetch,expectedVersion=''){
  if(!SHA.test(expected))throw Error('Invalid expected release SHA');
  const response=await fetcher(URL+'?sha='+expected,{redirect:'follow',
   headers:{'cache-control':'no-cache','user-agent':'DaveHub-upstream-sync-verifier/1.0'},
@@ -19,25 +19,29 @@ async function inspect(expected,fetcher=fetch){
  if(body.schemaVersion!==1||body.game!=='unicorn-valley'||body.sourceRepository!=='tametheboardgame/unicorn-valley')
   throw Error('Unexpected/untrusted release marker');
  if(!SHA.test(body.sourceCommit||''))throw Error('Unverifiable release SHA');
- return {actual:body.sourceCommit,matched:body.sourceCommit===expected,version:body.version};
+ return {actual:body.sourceCommit,matched:body.sourceCommit===expected&&(!expectedVersion||body.version===expectedVersion),version:body.version};
 }
 async function main(){
- const expected=process.env.EXPECTED_UPSTREAM_SHA||'';
- if(!SHA.test(expected))throw Error('EXACT upstream SHA is required');
+ const lock=JSON.parse(require('node:fs').readFileSync(require('node:path').join(__dirname,'../config/game-releases.json'),'utf8'));
+ const pinned=lock.games.find(x=>x.id==='unicorn-valley');
+ const expected=process.env.EXPECTED_UPSTREAM_SHA||pinned?.commit||'';
+ const version=process.env.EXPECTED_UPSTREAM_CI_RUN?'main-ci-'+process.env.EXPECTED_UPSTREAM_CI_RUN:pinned?.version||'';
+ if(!SHA.test(expected)||!/^main-ci-\d+$/.test(version)&&!/^main-snapshot-[\d-]+$/.test(version))
+  throw Error('Exact upstream SHA and qualified game release version are required');
  let lastError='';
- for(let i=1;i<=24;i++){
+ for(let i=1;i<=48;i++){
   try{
-   const result=await inspect(expected);
+   const result=await inspect(expected,fetch,version);
    if(result.matched){
     console.log('Cloudflare is serving Unicorn Valley '+expected+' ('+result.version+')');
     await once();
     console.log('PASS: same-origin browser game HTML, JS, CSS, audio/image resources and pinned SHA checked on real Cloudflare staging');
     return;
    }
-   lastError='stale SHA '+result.actual;
+   lastError='stale release: expected '+expected+' ('+version+'), received '+result.actual+' ('+result.version+')';
   }catch(err){lastError=err.message}
-  console.log('Cloudflare staging attempt '+i+'/24: '+lastError);
-  if(i<24)await pause(15000);
+  console.log('Cloudflare staging attempt '+i+'/48: '+lastError);
+  if(i<48)await pause(15000);
  }
  throw Error('Cloudflare did not publish the qualified game '+expected+' within the verification window; last state: '+lastError);
 }

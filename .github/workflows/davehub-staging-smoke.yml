@@ -13,6 +13,7 @@ on:
       - '.node-version'
       - 'scripts/bundle-games.cjs'
       - 'scripts/check-game-routes.cjs'
+      - 'scripts/verify-game-staging-release.cjs'
       - 'config/game-releases.json'
       - 'config/game-auto-sync-policy.json'
       - 'scripts/auto-sync-unicorn.cjs'
@@ -27,7 +28,7 @@ permissions:
 jobs:
   deployed-pages:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 17
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -37,3 +38,5 @@ jobs:
         run: node scripts/check-cloudflare-staging.cjs
       - name: Verify both same-origin games, files and audio on Cloudflare
         run: node scripts/check-game-routes.cjs
+      - name: Verify exact published game SHA and release version on Cloudflare
+        run: node scripts/verify-game-staging-release.cjs
