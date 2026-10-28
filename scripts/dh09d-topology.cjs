@@ -66,7 +66,7 @@ function headersFor(role){
  const initial='/*\n'+(role==='production'?'':noindex)+common;
  // The live website may be indexed; no preview design lab should be.
  const restricted=role==='production'?'\n/previews/*\n'+noindex+common:'';
- const game='\n/games/unicorn-valley/index.html\n  Cache-Control: no-cache\n\n'+
+ const game='\n/deployment.json\n  Cache-Control: no-store\n\n/games/unicorn-valley/index.html\n  Cache-Control: no-cache\n\n'+
  '/games/unicorn-valley/davehub-release.json\n  Cache-Control: no-store\n\n'+
  '/games/unicorn-valley/assets/*\n  Cache-Control: public, max-age=31536000, immutable\n\n'+
  '/games/unicorn-valley/audio/*\n  Cache-Control: public, max-age=86400\n\n'+
