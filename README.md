@@ -6,6 +6,12 @@ DaveHub is an eccentric, publicly accessible home for games, writing, music, int
 
 It is emphatically **not** a CV, developer portfolio, professional marketing site or generic blog template. The website itself should be an original, playful project.
 
+## Staging and production domain policy (locked)
+
+The future launch will use **two separate Cloudflare Pages projects connected to the same GitHub repository**. The existing `davehub.pages.dev` hostname remains the permanent **staging/test** environment (persistent `staging` branch once the cutover is ready), and the future `davehub.co.uk` website will use a **new live Pages project** deploying the reviewed `main` branch. Routes such as `/games/stephen-martin/` and `/games/unicorn-valley/` will work on both hosts, but each environment can run a different approved version. A live release requires explicit owner approval; staging changes never automatically deploy to production.
+
+**When setting up the custom domain, start with [the DH-09 domain launch runbook](docs/DH09_DOMAIN_LAUNCH_RUNBOOK.md).** It includes the two-project Cloudflare configuration, the branch promotion process, DNS/TLS steps, QA and rollback checks, and save-data warnings. Do not attach `davehub.co.uk` to the existing Pages staging project or switch its production branch prematurely. The domain is not configured yet.
+
 ## Status
 
 **DH-07 illustrated homepage and discovery navigation locked, merged and deployed to Cloudflare Pages on 27 October 2026. DH-08 publishing controls are in development.** The owner has purchased **davehub.co.uk** as the primary domain; DNS and hosting are not configured. The owner has selected Concept 1 as the primary visual reference; final foreground art and character motion remain open. The approved static homepage, mystical Explore directory and fictional content-world test pages are deployed. The real published-work catalogue remains empty pending explicit item approvals.
