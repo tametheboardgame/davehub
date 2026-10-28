@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "phase": "pre_cutover",
+  "phase": "staging_cutover",
   "staging": {
     "project": "davehub",
     "hostname": "davehub.pages.dev",
-    "branch": "main"
+    "branch": "staging"
   },
   "production": {
     "project": "davehub-live",
@@ -13,9 +13,9 @@
     "configured": false
   },
   "automaticGameUpdates": {
-    "branch": "main",
+    "branch": "staging",
     "livePromotion": false,
-    "paused": true
+    "paused": false
   },
-  "notes": "DH-09D cutover hold active: no scheduled game pin writes until existing Pages project moves to staging and both branch policy files agree. Staging and production remain the same pre-cutover website until verified."
+  "notes": "Staging branch is ready to be Cloudflare project davehub production branch. GitHub main remains paused; the future live domain is NOT configured and this branch does not publish to main."
 }
