@@ -12,6 +12,10 @@ The future launch will use **two separate Cloudflare Pages projects connected to
 
 **When setting up the custom domain, start with [the DH-09 domain launch runbook](docs/DH09_DOMAIN_LAUNCH_RUNBOOK.md).** It includes the two-project Cloudflare configuration, the branch promotion process, DNS/TLS steps, QA and rollback checks, and save-data warnings. Do not attach `davehub.co.uk` to the existing Pages staging project or switch its production branch prematurely. The domain is not configured yet.
 
+## Cloudflare-first owner reviews (DH-08C4)
+
+DaveHub owner review uses hosted staging previews by default, **not local server commands**. The public-safe, layout-only first-wave demonstration is built at `/previews/dh-08c/`, containing three project names, placeholder descriptions and no unapproved game/blog links or private editorial drafts. The real catalogue remains empty. See [hosted review workflow](docs/DH08C4_HOSTED_REVIEW_WORKFLOW.md) for the URL, QA checklist and Cloudflare Access constraints.
+
 ## DH-08C: three first-wave creations awaiting owner approval
 
 The **private local Content Workshop** can prepare Unicorn Valley, The Stephen Martin Project and Tame The Board Game, review their descriptions/credits/links and preview their real DaveHub pages on `127.0.0.1:8765`. The three entries are **unapproved nominations only** and are absent from the deployed catalogue. Discovery reports can be imported with safe duplicate handling. Publication is forbidden until a new explicit owner-approved catalogue PR. [First-wave review guide](docs/DH08C_PRIVATE_FIRST_WAVE_REVIEW.md).
