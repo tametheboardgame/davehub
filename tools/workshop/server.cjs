@@ -226,6 +226,10 @@ async function serve(req,res){
  }
  if(req.method==='POST'&&req.url==='/api/save'){
   const incoming=await body(req);const c=cleanCandidate(incoming);const d=readStore();
+  // Validate URLs at the first point of persistence, not just publication.
+  // Draft links are displayed for owner testing and must never be executable schemes.
+  if(c.sourceUrl&&!safePublicUrl(c.sourceUrl))throw Error('Unsafe source URL: '+c.id);
+  if(c.linkUrl&&!safePublicUrl(c.linkUrl))throw Error('Unsafe public link URL: '+c.id);
   if(c.status==='approved_for_export'){
    if(!c.ownerApproved||!Object.values(c.review).every(Boolean)||!c.approvedOn)throw Error('Approval requires owner sign-off, date and all review gates');
    const check=validateCatalogue({schemaVersion:1,items:[makeApproved(c)]});
