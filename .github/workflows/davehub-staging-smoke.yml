@@ -2,7 +2,7 @@ name: Cloudflare staging HTTP smoke
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [main, staging]
     paths:
       - 'scripts/render-content.cjs'
       - 'scripts/render-review-layout.cjs'
@@ -16,6 +16,9 @@ on:
       - 'scripts/verify-game-staging-release.cjs'
       - 'config/game-releases.json'
       - 'config/game-auto-sync-policy.json'
+      - 'config/deployment-topology.json'
+      - 'scripts/dh09d-topology.cjs'
+      - 'tests/dh09d-topology.test.cjs'
       - 'scripts/auto-sync-unicorn.cjs'
       - 'scripts/verify-game-staging-release.cjs'
       - 'tests/game-auto-sync.test.cjs'
@@ -36,9 +39,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Identify actual staging branch before testing its public URL
+        id: target
+        run: node scripts/dh09d-topology.cjs select
       - name: Verify actual deployed Cloudflare staging pages
+        if: github.ref_name == steps.target.outputs.branch || github.event_name == 'workflow_dispatch'
         run: node scripts/check-cloudflare-staging.cjs
       - name: Verify both same-origin games, files and audio on Cloudflare
+        if: github.ref_name == steps.target.outputs.branch || github.event_name == 'workflow_dispatch'
         run: node scripts/check-game-routes.cjs
       - name: Verify exact published game SHA and release version on Cloudflare
+        if: github.ref_name == steps.target.outputs.branch || github.event_name == 'workflow_dispatch'
         run: node scripts/verify-game-staging-release.cjs
