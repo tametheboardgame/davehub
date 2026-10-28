@@ -12,6 +12,10 @@ The future launch will use **two separate Cloudflare Pages projects connected to
 
 **When setting up the custom domain, start with [the DH-09 domain launch runbook](docs/DH09_DOMAIN_LAUNCH_RUNBOOK.md).** It includes the two-project Cloudflare configuration, the branch promotion process, DNS/TLS steps, QA and rollback checks, and save-data warnings. Do not attach `davehub.co.uk` to the existing Pages staging project or switch its production branch prematurely. The domain is not configured yet.
 
+## DH-10D: Default-off marker in every managed new repository
+
+Create new repositories through `node scripts/davehub-new-repo.cjs NAME` (defaults private). Its first Git commit includes a root `davehub.json` with `{"schemaVersion":1,"enabled":false}`. For an existing repository missing the file, use `node scripts/davehub-new-repo.cjs --repair NAME`; an existing manifest is never overwritten. The Monday discovery audit reports newly created **public** repos missing the marker. Private repositories created outside the helper cannot be checked by that read-only GitHub Action. See [DH-10D repository bootstrap](docs/DH10D_REPOSITORY_BOOTSTRAP.md).
+
 ## DH-10: DaveHub Ready repository discovery (v1 merged)
 
 Creative repositories can opt in by adding a public-safe, root-level `davehub.json` with `enabled: true`, project title, description, type, lifecycle, categories and approved external links. A missing or disabled manifest excludes that repository. A weekly/on-demand **read-only** scanner prepares a review report, never publishes or copies source assets automatically.
