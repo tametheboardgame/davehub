@@ -83,7 +83,7 @@ No domain, DNS, production branch, Cloudflare project or live URL has been chang
 
 ## Pointers for future work
 
-- Design and game bundling: [DH-09 ADR-0012](ADR-0012-FIRST-PARTY-GAME-ROUTING.md), [draft PR #22](https://github.com/tametheboardgame/davehub/pull/22).
+- Design and game bundling: [DH-09 ADR-0012 (draft in PR #22)](https://github.com/tametheboardgame/davehub/blob/design/dh-09-first-party-game-routing/docs/ADR-0012-FIRST-PARTY-GAME-ROUTING.md), [draft PR #22](https://github.com/tametheboardgame/davehub/pull/22).
 - Content publication controls: [DH-08 publication contract](DH08_PUBLICATION_CONTRACT.md).
 - Current Cloudflare Pages setup: [Cloudflare guide](CLOUDFLARE_PAGES.md) — this older guide describes the single-project *pre-launch* state, and must not override this runbook's **two-project** production decision.
 - Cloudflare references: [Custom domains](https://developers.cloudflare.com/pages/configuration/custom-domains/), [Branch build controls](https://developers.cloudflare.com/pages/configuration/branch-build-controls/), [Preview deployments](https://developers.cloudflare.com/pages/configuration/preview-deployments/).
