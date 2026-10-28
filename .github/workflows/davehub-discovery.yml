@@ -1,0 +1,52 @@
+name: DaveHub Ready repository discovery
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 8 * * 1'
+  pull_request:
+    paths:
+      - 'davehub.json'
+      - 'scripts/davehub-*.cjs'
+      - 'tests/davehub-discovery.test.cjs'
+      - '.github/workflows/davehub-discovery.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'davehub.json'
+      - 'scripts/davehub-*.cjs'
+      - 'tests/davehub-discovery.test.cjs'
+      - '.github/workflows/davehub-discovery.yml'
+permissions:
+  contents: read
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate manifest contract and scanner
+        run: node --test tests/davehub-discovery.test.cjs
+      - name: Build entire DaveHub site with content and navigation regressions
+        run: sh scripts/build-pages.sh
+      - name: Discover public repositories with explicit DaveHub markers
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/davehub-discover.cjs --owner tametheboardgame --out reports/davehub-discovery.json
+      - name: Prepare private Content Workshop import (unapproved)
+        if: success()
+        run: node scripts/davehub-workshop-import.cjs reports/davehub-discovery.json reports/davehub-workshop-import.json
+      - name: Upload review-only discovery report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: davehub-ready-discovery
+          path: |
+            reports/davehub-discovery.json
+            reports/davehub-workshop-import.json
+          if-no-files-found: ignore
+          retention-days: 7
+# This workflow validates PR changes, runs once on initial main integration, and then weekly or on demand.
+# It makes NO commits, pull requests, deployments or site catalogue changes.
+# Its artifact contains only explicitly public source-repository metadata.

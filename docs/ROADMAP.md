@@ -47,8 +47,15 @@
 | DH-09 | Single-project ingestion pilot | One approved creative game becomes a project page + reviewed update through preview/merge | Planned |
 | DH-09A–C | First-party games | Independently built game releases staged as `/games/<slug>/` under the DaveHub Pages output; real game deployment/QA still required | Design and packaging foundation on draft PR #22 |
 | DH-09D | Production-domain cutover, permanent staging | Preserve `davehub.pages.dev` for testing; separate live Pages project on `main` serves `davehub.co.uk`, with explicit owner-led promotions | **Runbook locked; implementation only when domain is configured** |
+| DH-10A | DaveHub Ready repository manifests | Root `davehub.json`, validated metadata, categories and opt-in/opt-out semantics | **Implemented on draft PR; tests and approval pending** |
+| DH-10B | Read-only repository discovery | Public-only scanner, weekly/manual GitHub Actions report, candidate review queue | **Scanner implemented on draft PR; Content Workshop queue integration next** |
+| DH-10C | Editorial integration and milestone proposals | Owner-approved catalogue publishing, revisions/withdrawals, major-release-only suggestions | Planned; no auto-publication |
 | DH-10 | Automated development stories | Significant approved project events become concise draft human-readable stories, not routine posts | Planned |
 | DH-11 | Extend feeds and content types | Approved books/music/ideas/experiments and other capture channels, no duplicate catalogues | Planned |
+
+## DH-10 DaveHub Ready repository discovery (28 October 2026)
+
+A [versioned root-level `davehub.json` contract](DH10_REPOSITORY_MARKER_INGESTION.md) lets creative repositories opt into DaveHub's read-only discovery process, with categories (multi-view), lifecycle, title, public-safe synopsis, links and optional major-milestone suggestions. Missing or `enabled:false` = disabled. A recurring and on-demand GitHub workflow scans the owner's public repos and prepares **unpublished review candidates**, not automatic site deployments. Four creative source repos have draft opt-in PRs (Unicorn Valley, Stephen Martin, Ordinary Universe, Octo-Marathon); a disabled marker is proposed for DaveHub itself. The other 14 repos remain excluded by default. The next gate is owner review and integration with the private editor; nothing reaches the staging/live catalogue without normal editorial approval.
 
 ## DH-09D domain launch and staging decision (28 October 2026)
 

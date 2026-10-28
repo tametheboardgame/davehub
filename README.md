@@ -12,6 +12,14 @@ The future launch will use **two separate Cloudflare Pages projects connected to
 
 **When setting up the custom domain, start with [the DH-09 domain launch runbook](docs/DH09_DOMAIN_LAUNCH_RUNBOOK.md).** It includes the two-project Cloudflare configuration, the branch promotion process, DNS/TLS steps, QA and rollback checks, and save-data warnings. Do not attach `davehub.co.uk` to the existing Pages staging project or switch its production branch prematurely. The domain is not configured yet.
 
+## DH-10: DaveHub Ready opt-in repository manifests (draft)
+
+Creative repositories can opt in by adding a public-safe, root-level `davehub.json` with `enabled: true`, project title, description, type, lifecycle, categories and approved external links. A missing or disabled manifest excludes that repository. A weekly/on-demand **read-only** scanner prepares a review report, never publishes or copies source assets automatically.
+
+- [Repository marker schema, initial PR rollout and review policy](docs/DH10_REPOSITORY_MARKER_INGESTION.md)
+- Source metadata is **not** an editorial permission grant. This is opt-in *discovery* only. Public catalogue changes still need a reviewed proposal and owner approval.
+- The source repos for Unicorn Valley, Stephen Martin, The Ordinary Universe and Octo-Marathon have draft opt-in PRs; sensitive/operational repos remain excluded by default.
+
 ## Status
 
 **DH-07 illustrated homepage and discovery navigation locked, merged and deployed to Cloudflare Pages on 27 October 2026. DH-08 publishing controls are in development.** The owner has purchased **davehub.co.uk** as the primary domain; DNS and hosting are not configured. The owner has selected Concept 1 as the primary visual reference; final foreground art and character motion remain open. The approved static homepage, mystical Explore directory and fictional content-world test pages are deployed. The real published-work catalogue remains empty pending explicit item approvals.
