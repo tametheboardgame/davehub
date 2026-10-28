@@ -36,7 +36,7 @@ async function discover({owner=DEFAULT_OWNER,fetchFn=fetch,token='',maxPages=5}=
   let content;
   try{content=await getJson(fetchFn,endpoint,token)}
   catch(e){details.push({repository:source,status:'fetch_error',errors:[e.message]});continue}
-  if(content===null){details.push({repository:source,status:'absent'});continue}
+  if(content===null){details.push({repository:source,status:'absent',...(typeof r.created_at==='string'?{createdAt:r.created_at}:{})});continue}
   if(content.type!=='file'||content.encoding!=='base64'||typeof content.content!=='string'){
    details.push({repository:source,status:'invalid',errors:['manifest file encoding unexpected']});continue
   }
