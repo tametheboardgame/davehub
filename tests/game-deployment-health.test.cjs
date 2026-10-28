@@ -26,9 +26,9 @@ test('no-op hourly monitor fails visibly if Cloudflare still serves old version'
  await assert.rejects(()=>checkPinned(fake(pin.version,'a'.repeat(40))),/STAGING OUT OF SYNC/);
  await assert.rejects(()=>checkPinned(fake(pin.version,pin.sha,404)),/Release marker HTTP 404/);
 });
-test('hourly scheduled checks run even when latest upstream CI is blocked or unchanged',()=>{
+test('all no-op and blocked checks verify the deployed release, including post-merge activation',()=>{
  const yaml=fs.readFileSync(path.join(__dirname,'../.github/workflows/davehub-game-auto-sync.yml'),'utf8');
- assert.match(yaml,/github\.event_name == 'schedule' && steps\.upstream\.outputs\.action != 'update'/);
+ assert.match(yaml,/if: steps\.upstream\.outputs\.action != 'update'/);
  assert.match(yaml,/node scripts\/check-pinned-game-deployment\.cjs/);
  assert.match(yaml,/cancel-in-progress: false/);
  const build=fs.readFileSync(path.join(__dirname,'../scripts/build-pages.sh'),'utf8');
