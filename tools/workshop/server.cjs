@@ -30,6 +30,7 @@ const TYPES=['book','script','musical','song','game','physical_build','software'
 const VIEWS=['projects','writing','games','experiments','music','unfinished','memory-lane'];
 const STATUSES=['nominated','needs_review','ready_for_owner_approval','approved_for_export','withdrawn'];
 const ID=/^[a-z][a-z0-9-]{2,79}$/;
+const LINK_KINDS=new Set(['official','play','read','streaming','repository','retailer','other']);
 function ensureStore(){
  fs.mkdirSync(DIR,{recursive:true,mode:0o700});
  if(!fs.existsSync(FILE)){fs.writeFileSync(FILE,JSON.stringify(BASE,null,2)+'\n',{mode:0o600,flag:'wx'})}
@@ -72,6 +73,9 @@ function cleanCandidate(input){
   linkUrl:typeof input.linkUrl==='string'?input.linkUrl.trim():'',
   linkLabel:typeof input.linkLabel==='string'?input.linkLabel.trim():'',
   linkKind:input.linkKind||'official',
+  extraLinkUrl:typeof input.extraLinkUrl==='string'?input.extraLinkUrl.trim():'',
+  extraLinkLabel:typeof input.extraLinkLabel==='string'?input.extraLinkLabel.trim():'',
+  extraLinkKind:input.extraLinkKind||'official',
   notes:typeof input.notes==='string'?input.notes.trim():'',
   review:{
    rights:input.review?.rights===true,
@@ -86,7 +90,13 @@ function cleanCandidate(input){
  if(c.synopsis.length>1400)throw Error('Synopsis too long');
  if(!['idea','active','completed','permanently_shelved','abandoned'].includes(c.lifecycle))throw Error('Unknown lifecycle');
  if(c.views.includes('unfinished')&&!['permanently_shelved','abandoned'].includes(c.lifecycle))throw Error('Unfinished Shelf requires shelved/abandoned lifecycle');
- if((c.sourceUrl&&c.sourceUrl.length>2048)||(c.linkUrl&&c.linkUrl.length>2048))throw Error('URL too long');
+ if((c.sourceUrl&&c.sourceUrl.length>2048)||(c.linkUrl&&c.linkUrl.length>2048)||(c.extraLinkUrl&&c.extraLinkUrl.length>2048))throw Error('URL too long');
+ if(c.sourceUrl&&!safePublicUrl(c.sourceUrl))throw Error('Unsafe source URL');
+ if(c.linkUrl&&!safePublicUrl(c.linkUrl))throw Error('Unsafe primary link URL');
+ if(c.extraLinkUrl&&!safePublicUrl(c.extraLinkUrl))throw Error('Unsafe additional link URL');
+ if(!LINK_KINDS.has(c.linkKind)||!LINK_KINDS.has(c.extraLinkKind))throw Error('Invalid public link kind');
+ if(c.extraLinkUrl&&(!c.extraLinkLabel||c.extraLinkLabel.length>100))throw Error('Additional link needs a label (max 100 characters)');
+ if(!c.extraLinkUrl&&c.extraLinkLabel)throw Error('Additional link label needs a URL');
  if(c.notes.length>3000)throw Error('Notes too long');
  // No covert extra keys survive cleaning (e.g. unpublished lyrics).
  return c;
@@ -113,6 +123,20 @@ function importCandidates(store,input){
  }
  return {schemaVersion:1,candidates:next,added:stats.added,skipped:stats.skipped};
 }
+/* Preserve independently reviewable links. A public repository source can
+ * double as a second link, but identical URLs never appear twice.
+ */
+function publicLinks(c){
+ const links=[];
+ const add=(kind,label,url)=>{
+  if(!url||links.some(x=>x.url===url))return;
+  links.push({kind,label,url});
+ };
+ add(c.linkKind||'official',c.linkLabel||'Explore the original',c.linkUrl);
+ add(c.extraLinkKind||'official',c.extraLinkLabel,c.extraLinkUrl);
+ if(c.sourceKind==='repository')add('repository','View development repository',c.sourceUrl);
+ return links;
+}
 /* Local preview records deliberately have NO publication/approval field. */
 function previewCatalogue(store){
  const candidates=store.candidates.filter(c=>c.status!=='withdrawn');
@@ -130,7 +154,7 @@ function previewCatalogue(store){
    ...(v.recordType==='artifact'?{artifactKind:v.artifactKind}:{}),
    lifecycle:v.lifecycle,synopsis:v.synopsis||'Description awaiting editorial review.',
    views:[...v.views],sources:v.sourceUrl?[{kind:v.sourceKind,url:v.sourceUrl}]:[],
-   links:v.linkUrl?[{kind:v.linkKind,label:v.linkLabel||'Explore the original',url:v.linkUrl}]:[],
+   links:publicLinks(v),
    media:[],relations:[]
   };
  });
@@ -149,7 +173,7 @@ function makeApproved(candidate){
   lifecycle:c.lifecycle,synopsis:c.synopsis,
   views:c.views,
   sources:c.sourceUrl?[{kind:c.sourceKind,url:c.sourceUrl}]:[{kind:'owner_attestation'}],
-  links:c.linkUrl?[{kind:c.linkKind,label:c.linkLabel||'Explore the original',url:c.linkUrl}]:[],
+  links:publicLinks(c),
   media:[],relations:[],
   publication:{status:'public_approved',approvedBy:'owner',approvedOn:c.approvedOn,
    rightsReviewed:c.review.rights,metadataReviewed:c.review.metadata,linksReviewed:c.review.links,mediaReviewed:c.review.media}
@@ -262,7 +286,7 @@ function start(port=PORT,host=HOST){
   server.listen(port,host,()=>resolve(server));
  });
 }
-module.exports={start,cleanCandidate,importCandidates,previewCatalogue,exportReview,readStore,makeApproved,HOST,PORT};
+module.exports={start,cleanCandidate,importCandidates,previewCatalogue,exportReview,readStore,makeApproved,publicLinks,HOST,PORT};
 if(require.main===module){
  start().then(()=>{console.log('Local DaveHub Content Workshop: http://'+HOST+':'+PORT);console.log('Private drafts stored at: '+FILE);console.log('This server does not publish anything. Ctrl+C to stop.');}).catch(e=>{console.error(e);process.exit(1)});
 }

@@ -75,6 +75,11 @@ test('local preview, seeded proposals, duplicate imports and export gate work en
   assert.equal(bypass.status,400,'Saving an unapproved draft must also reject unsafe links');
   const after=await (await fetch(base+'/api/drafts',{headers})).json();
   assert.equal(after.candidates[0].sourceUrl,data.candidates[0].sourceUrl,'Rejected edit must not persist');
+  const unsafeExtra=await fetch(base+'/api/save',{
+    method:'POST',headers,
+    body:JSON.stringify({...data.candidates[0],extraLinkUrl:'javascript:alert(1)',extraLinkLabel:'Click'})
+  });
+  assert.equal(unsafeExtra.status,400,'Additional links must be safe even before final approval');
   const preview=await fetch(base+'/creations/unicorn-valley/',{headers:{Cookie:cookie}});
   assert.equal(preview.status,200);
   const page=await preview.text();
@@ -82,6 +87,11 @@ test('local preview, seeded proposals, duplicate imports and export gate work en
   assert.match(page,/unicorn-valley\.pages\.dev/);
   assert.equal(page.includes('Fictional design demonstration.'),false);
   assert.equal(page.includes('public_approved'),false);
+  assert.match(page,/View development repository/);
+  assert.match(page,/github\.com\/tametheboardgame\/unicorn-valley/);
+  const blogPreview=await fetch(base+'/creations/tame-the-board-game/',{headers:{Cookie:cookie}});
+  assert.equal(blogPreview.status,200);
+  assert.match(await blogPreview.text(),/Meet the blog&#39;s co-creators/);
   const world=await fetch(base+'/worlds/games/',{headers:{Cookie:cookie}});
   assert.equal(world.status,200);
   assert.match(await world.text(),/The Stephen Martin Project/);

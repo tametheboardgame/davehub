@@ -77,6 +77,9 @@ const firstWave=[
     "linkUrl": "https://tametheboardgame.com/",
     "linkLabel": "Visit Tame The Board Game",
     "linkKind": "official",
+    "extraLinkUrl": "https://tametheboardgame.com/about/",
+    "extraLinkLabel": "Meet the blog's co-creators",
+    "extraLinkKind": "read",
     "status": "needs_review",
     "notes": "Verify co-creator Miriam's credit, About link and wording. No articles or media may be copied.",
     "review": {
