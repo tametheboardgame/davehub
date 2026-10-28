@@ -530,6 +530,10 @@
     "reviewReadinessPR": 27,
     "reviewedLinksPR": 28,
     "cloudFirstReviewPR": 29,
+    "stagingWorldsFixPR": 30,
+    "stagingWorldsFixMainCommit": "b0b3040c72418503c8e40c091ba58848ff1b678a",
+    "stagingWorldsReviewRedirect": "davehub.pages.dev /worlds/* to /previews/dh-08c/worlds/* when catalogue empty; never on live hostname",
+    "stagingPreviewSections": {"games": 3, "projects": 2, "writing": 1, "memory-lane": 1},
     "cloudFirstReviewMainCommit": "3c9206162a319f2be351a02359d2cdfa07b6a808",
     "expectedReviewUrl": "https://davehub.pages.dev/previews/dh-08c/",
     "reviewPayload": "12 layout-only static pages; no draft synopsis, links, assets, private notes or publication approvals",
@@ -538,7 +542,7 @@
     "reviewedLinksMainCommit": "49d17b3a2df4e7dea5ab73a43eeb9a66018195cb",
     "reviewReadinessMainCommit": "ae5ad0a3909abaa033d9c6efaff4af1d9d63ad02",
     "unresolvedVerification": ["The Stephen Martin Project production URL: owner browser check", "Unicorn Valley gameplay URL: browser playthrough not independently observed", "Tame The Board Game contributor/rights sign-off by owner"],
-    "checks": "PR #29 GitHub Actions: 11 discovery tests, 83 regressions, production build passed",
+    "checks": "PR #30 GitHub Actions: 11 discovery tests, 88 site regressions, production build passed",
     "oldUnsafePR": "PR #21 closed unmerged because its proposed catalogue wrongly carried public_approved flags"
   },
   "dh10": {
