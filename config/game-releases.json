@@ -7,7 +7,8 @@
       "commit": "5eaa876a45393c8bb06ec0378dbfd5e1eec10aef",
       "output": "games/stephen-martin",
       "build": "static-node",
-      "version": "owner-accepted-main-2026-10-28"
+      "version": "owner-accepted-main-2026-10-28",
+      "catalogueId": "stephen-martin-project"
     },
     {
       "id": "unicorn-valley",
@@ -15,7 +16,8 @@
       "commit": "473506e229b7710e6f6f42e079e808825279c1e4",
       "output": "games/unicorn-valley",
       "build": "vite-subpath",
-      "version": "main-snapshot-2026-10-28"
+      "version": "main-snapshot-2026-10-28",
+      "catalogueId": "unicorn-valley"
     }
   ]
 }
