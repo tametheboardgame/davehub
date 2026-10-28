@@ -320,7 +320,7 @@ html, body { height: 100%; width: 100%; overflow: hidden; }
    canvas reaches farther right than the motion asset, so the video gets a
    separate horizontal alignment within the same stage. */
 .dave-stage {
-  --dave-height: 140svh;
+  --dave-height: min(155svh, calc((50vw - 235px) / .34));
   --dave-explore-half-width: 212.5px; /* half of the 425px desktop Explore CTA */
   --dave-to-cta-gap: 16px;
   --dave-visible-reach: .58; /* still-image rightmost visible reach, per height */
@@ -339,15 +339,15 @@ html, body { height: 100%; width: 100%; overflow: hidden; }
   width: auto;
   max-width: none;
   left: 0;
-  bottom: -55svh;
+  bottom: calc(86svh - var(--dave-height)); /* head stays about 14% below top */
   object-fit: contain;
   pointer-events: none;
   user-select: none;
   filter: drop-shadow(0 14px 25px rgba(1, 8, 28, .62)) drop-shadow(7px 0 15px rgba(64, 145, 235, .18));
 }
 /* The video contains less horizontal artwork than the static WebP. */
-.dave-stage__motion { left: calc(var(--dave-height) * .16); }
-@media (max-width: 900px) {
+.dave-stage__motion { left: calc(var(--dave-height) * .115); }
+@media (max-width: 1100px) {
   /* Portrait-style framing on tablets, while keeping navigation clickable. */
   .dave-stage { left: 0; --dave-height: 118svh; width: 62vw; }
   .dave-stage__still, .dave-stage__motion { left: -4vw; bottom: -43svh; }
