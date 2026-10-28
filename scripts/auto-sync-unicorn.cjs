@@ -66,7 +66,7 @@ async function decide(current,fetcher=fetch,token='',forceRedeploy=false){
  const repo=await api(GH+'/repos/'+UPSTREAM+'/branches/main',token,fetcher);
  const sha=repo?.commit?.sha;
  if(!SHA.test(sha||''))throw Error('Invalid upstream branch head');
- if(sha===unicorn.commit&&!forceRedeploy)return {action:'unchanged',sha,previous:unicorn.commit};
+ if(sha===unicorn.commit&&!forceRedeploy&&/^main-ci-\d+$/.test(unicorn.version))return {action:'unchanged',sha,previous:unicorn.commit};
  const runs=await api(GH+'/repos/'+UPSTREAM+'/actions/runs?branch=main&event=push&per_page=50',token,fetcher);
  const candidate=candidateFromRuns(sha,runs.workflow_runs);
  if(!candidate)return{action:'blocked',sha,previous:unicorn.commit,reason:'No successful exact-head upstream CI push run'};

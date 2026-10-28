@@ -31,10 +31,19 @@ test('an exact-head successful upstream main push CI permits staged promotion',a
  assert.deepEqual(updated.games.find(x=>x.id==='stephen-martin'),config.games.find(x=>x.id==='stephen-martin'));
  assert.equal(config.games.find(x=>x.id==='unicorn-valley').commit,older);
 });
-test('unchanged upstream main is a true no-op without requesting extra CI metadata',async()=>{
- const decision=await decide(config,fetcher(older,[]));
+test('already qualified unchanged upstream main is a true no-op without extra CI queries',async()=>{
+ const qualified=structuredClone(config);
+ qualified.games.find(x=>x.id==='unicorn-valley').version='main-ci-123';
+ const decision=await decide(qualified,fetcher(older,[]));
  assert.equal(decision.action,'unchanged');
- assert.throws(()=>updateLock(config,decision),/No approved upstream update/);
+ assert.throws(()=>updateLock(qualified,decision),/No approved upstream update/);
+});
+test('initial legacy release pin triggers one-time exact-head CI qualification canary',async()=>{
+ const candidate=await decide(config,fetcher(older,[makeRun({head_sha:older,id:123})]));
+ assert.equal(candidate.action,'update');
+ assert.equal(updateLock(config,candidate).games.find(x=>x.id==='unicorn-valley').version,'main-ci-123');
+ const blocked=await decide(config,fetcher(older,[makeRun({head_sha:older,conclusion:'failure'})]));
+ assert.equal(blocked.action,'blocked');
 });
 test('CI pending, failure, cancelled, PR-only and wrong branch cannot automatically deploy',async()=>{
  const bad=[
