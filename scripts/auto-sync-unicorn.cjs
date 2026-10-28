@@ -79,16 +79,21 @@ async function main(){
  const cmd=process.argv[2]||'check';
  if(!['check','verify'].includes(cmd))throw Error('Usage: node scripts/auto-sync-unicorn.cjs check|verify');
  const current=JSON.parse(fs.readFileSync(lockPath,'utf8'));
- const decision=await decide(current,fetch,process.env.GITHUB_TOKEN||'');
+ const token=process.env.GITHUB_TOKEN||'';
  const expected=process.env.EXPECTED_UPSTREAM_SHA||'';
  if(cmd==='verify'){
-  if(decision.action==='blocked'||(expected&&decision.sha!==expected))
-   throw Error('Upstream main or its exact-head CI no longer matches approved candidate');
-  if(decision.action==='unchanged'&&current.games.find(g=>g.id==='unicorn-valley').commit!==expected)
-   throw Error('No matching approved candidate to verify');
-  console.log('Upstream candidate rechecked: '+decision.sha);
+  if(!SHA.test(expected)||current.games.find(g=>g.id==='unicorn-valley').commit!==expected)
+   throw Error('The exact candidate SHA differs from the reviewed release lock');
+  const upstream=await api(GH+'/repos/'+UPSTREAM+'/branches/main',token);
+  if(upstream?.commit?.sha!==expected)throw Error('Upstream main moved during qualification');
+  const runs=await api(GH+'/repos/'+UPSTREAM+'/actions/runs?branch=main&event=push&per_page=50',token);
+  const candidate=candidateFromRuns(expected,runs.workflow_runs);
+  if(!candidate||String(candidate.runId)!==process.env.EXPECTED_UPSTREAM_CI_RUN)
+   throw Error('Upstream exact-head CI qualification changed during the DaveHub build');
+  console.log('Qualified upstream release rechecked: '+expected+' CI #'+candidate.runId);
   return;
  }
+ const decision=await decide(current,fetch,token);
  console.log('Unicorn Valley upstream: '+decision.sha+'; pinned: '+decision.previous+'; decision: '+decision.action);
  emit('action',decision.action);emit('upstream_sha',decision.sha);
  emit('previous_sha',decision.previous);
