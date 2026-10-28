@@ -45,8 +45,14 @@
 | DH-08B | Render approved catalogue into actual site | Seven themed world pages, shared musical/detail templates and direct homepage/island navigation; fictional preview gateway; public catalogue empty | **Implemented on review branch; owner flow review pending** |
 | DH-08 | DaveHub Ready publication contract | Explicit approved project onboarding, source collection, draft review, provenance, withdrawal and security gates | Planned after DH-07 |
 | DH-09 | Single-project ingestion pilot | One approved creative game becomes a project page + reviewed update through preview/merge | Planned |
+| DH-09A–C | First-party games | Independently built game releases staged as `/games/<slug>/` under the DaveHub Pages output; real game deployment/QA still required | Design and packaging foundation on draft PR #22 |
+| DH-09D | Production-domain cutover, permanent staging | Preserve `davehub.pages.dev` for testing; separate live Pages project on `main` serves `davehub.co.uk`, with explicit owner-led promotions | **Runbook locked; implementation only when domain is configured** |
 | DH-10 | Automated development stories | Significant approved project events become concise draft human-readable stories, not routine posts | Planned |
 | DH-11 | Extend feeds and content types | Approved books/music/ideas/experiments and other capture channels, no duplicate catalogues | Planned |
+
+## DH-09D domain launch and staging decision (28 October 2026)
+
+**Locked owner requirement:** `davehub.pages.dev` must remain the permanent staging/testing domain after `davehub.co.uk` launches. Staging and live must use **two independent Cloudflare Pages projects connected to the same DaveHub Git repository**, deploying the same path layout but independently controlled versions: existing Pages project → persistent `staging` branch; new live Pages project → protected `main` branch plus `davehub.co.uk` custom domain. No automatic staging-to-live promotion. The exact domain/DNS/TLS, branch-switch, game regression and rollback checklist is committed to [the permanent DH-09 domain launch runbook](DH09_DOMAIN_LAUNCH_RUNBOOK.md). **Do not switch current Pages branches or configure the domain yet.**
 
 ## DH-08B homepage navigation integration (27 October 2026)
 
