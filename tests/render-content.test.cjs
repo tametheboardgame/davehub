@@ -66,9 +66,12 @@ test('disk renderer isolates real and fictional outputs',()=>{
   const demo=path.join(temp,'preview');
   const one=renderToDisk(path.join(root,'content/public/catalogue.json'),live,'',false);
   const two=renderToDisk(path.join(root,'content/examples/fictional.json'),demo,'/previews/dh-08b',true);
-  assert.equal(one.creations,0);
+  assert.equal(one.creations,3);
   assert.equal(two.creations,fixture.items.length);
   assert.ok(fs.existsSync(path.join(live,'worlds/music/index.html')));
+  assert.ok(fs.existsSync(path.join(live,'creations/unicorn-valley/index.html')));
+  assert.ok(fs.existsSync(path.join(live,'creations/stephen-martin-project/index.html')));
+  assert.ok(fs.existsSync(path.join(live,'creations/tame-the-board-game/index.html')));
   assert.ok(!fs.existsSync(path.join(live,'creations/last-lightkeeper/index.html')));
   assert.ok(fs.existsSync(path.join(demo,'creations/last-lightkeeper/index.html')));
  } finally{fs.rmSync(temp,{recursive:true,force:true})}
