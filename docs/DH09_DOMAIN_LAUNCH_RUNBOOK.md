@@ -2,6 +2,8 @@
 
 **Recorded:** 28 October 2026  
 **Decision:** Approved architectural requirement, **not implemented**.  
+**Phase A implementation started 28 October 2026:** permanent `staging` Git branch created; policy-aware CI, staging/live release-role checks and exact deployment markers are prepared. The existing Cloudflare branch and DNS remain unchanged. See [cutover execution](DH09D_CUTOVER_EXECUTION.md) for the safe activation order. 
+
 **Owner's requirement:** Keep **`https://davehub.pages.dev/` as the permanent test/staging website**, even after **`https://davehub.co.uk/` becomes the public website**. Every site/game path works on both domains. Staging changes must **not** go live automatically.
 
 > **Do not configure the custom domain on the existing `davehub` Pages project.** A custom domain attached to that project's production deployment would serve the same version as `davehub.pages.dev` and defeat our staging/live separation.
