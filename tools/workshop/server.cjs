@@ -9,7 +9,10 @@ const fs=require('node:fs');
 const os=require('node:os');
 const path=require('node:path');
 const crypto=require('node:crypto');
-const {validateCatalogue}=require('../../scripts/content-check.cjs');
+const {validateCatalogue,safePublicUrl}=require('../../scripts/content-check.cjs');
+const {filesFor}=require('../../scripts/render-content.cjs');
+const {toWorkshopImport}=require('../../scripts/davehub-workshop-import.cjs');
+const {firstWave}=require('./first-wave.cjs');
 
 const HOST='127.0.0.1';
 const PORT=Number(process.env.DAVEHUB_WORKSHOP_PORT||8765);
@@ -87,6 +90,52 @@ function cleanCandidate(input){
  // No covert extra keys survive cleaning (e.g. unpublished lyrics).
  return c;
 }
+
+/* All source nominations lose approval flags. Existing edits are retained and
+ * collisions are rejected atomically, not silently overwritten.
+ */
+function importCandidates(store,input){
+ if(!store||!Array.isArray(store.candidates)||!Array.isArray(input)||input.length>250)throw Error('Invalid import candidate list');
+ const next=[...store.candidates],stats={added:0,skipped:0};
+ for(const incoming of input){
+  const c=cleanCandidate({...incoming,status:'needs_review',ownerApproved:false,approvedOn:'',review:{}});
+  if(c.sourceUrl&&!safePublicUrl(c.sourceUrl))throw Error('Unsafe source URL: '+c.id);
+  if(c.linkUrl&&!safePublicUrl(c.linkUrl))throw Error('Unsafe link URL: '+c.id);
+  const byId=next.find(x=>x.id===c.id);
+  if(byId){
+   if(byId.sourceUrl&&c.sourceUrl&&byId.sourceUrl!==c.sourceUrl)throw Error('Conflicting source for existing ID: '+c.id);
+   stats.skipped++;continue;
+  }
+  if(next.some(x=>x.slug===c.slug))throw Error('Duplicate public slug: '+c.slug);
+  if(c.sourceUrl&&next.some(x=>x.sourceUrl===c.sourceUrl))throw Error('Source URL already belongs to a different record: '+c.sourceUrl);
+  next.push(c);stats.added++;
+ }
+ return {schemaVersion:1,candidates:next,added:stats.added,skipped:stats.skipped};
+}
+/* Local preview records deliberately have NO publication/approval field. */
+function previewCatalogue(store){
+ const candidates=store.candidates.filter(c=>c.status!=='withdrawn');
+ const seen=new Set();
+ const items=candidates.map(c=>{
+  const v=cleanCandidate(c);
+  if(seen.has(v.slug))throw Error('Duplicate slug in local preview: '+v.slug);
+  seen.add(v.slug);
+  if(v.sourceUrl&&!safePublicUrl(v.sourceUrl))throw Error('Unsafe local preview source URL: '+v.id);
+  if(v.linkUrl&&!safePublicUrl(v.linkUrl))throw Error('Unsafe local preview link URL: '+v.id);
+  return {
+   id:v.id,slug:v.slug,title:v.title,recordType:v.recordType,
+   ...(v.recordType==='work'?{workType:v.workType}:{}),
+   ...(v.recordType==='release'?{releaseKind:v.releaseKind}:{}),
+   ...(v.recordType==='artifact'?{artifactKind:v.artifactKind}:{}),
+   lifecycle:v.lifecycle,synopsis:v.synopsis||'Description awaiting editorial review.',
+   views:[...v.views],sources:v.sourceUrl?[{kind:v.sourceKind,url:v.sourceUrl}]:[],
+   links:v.linkUrl?[{kind:v.linkKind,label:v.linkLabel||'Explore the original',url:v.linkUrl}]:[],
+   media:[],relations:[]
+  };
+ });
+ return {schemaVersion:1,items};
+}
+
 function makeApproved(candidate){
  const c=cleanCandidate(candidate);
  if(c.status!=='approved_for_export'||!c.ownerApproved||!Object.values(c.review).every(Boolean))throw Error(c.id+' not explicitly approved');
@@ -191,7 +240,7 @@ function start(port=PORT,host=HOST){
   server.listen(port,host,()=>resolve(server));
  });
 }
-module.exports={start,cleanCandidate,exportReview,readStore,makeApproved,HOST,PORT};
+module.exports={start,cleanCandidate,importCandidates,previewCatalogue,exportReview,readStore,makeApproved,HOST,PORT};
 if(require.main===module){
  start().then(()=>{console.log('Local DaveHub Content Workshop: http://'+HOST+':'+PORT);console.log('Private drafts stored at: '+FILE);console.log('This server does not publish anything. Ctrl+C to stop.');}).catch(e=>{console.error(e);process.exit(1)});
 }
