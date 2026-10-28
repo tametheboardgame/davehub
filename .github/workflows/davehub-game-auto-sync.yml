@@ -1,5 +1,13 @@
 name: DaveHub staging game auto-sync
 on:
+  # Starts the very first qualified canary immediately after integration.
+  # The bot only changes config/game-releases.json, which is NOT a push trigger.
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/davehub-game-auto-sync.yml'
+      - 'scripts/auto-sync-unicorn.cjs'
+      - 'config/game-auto-sync-policy.json'
   schedule:
     - cron: '37 * * * *'
   workflow_dispatch:
