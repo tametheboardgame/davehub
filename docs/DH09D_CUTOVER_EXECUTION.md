@@ -28,6 +28,8 @@
 
 The default-branch GitHub updater reads `automaticGameUpdates.paused=true` from the validated deployment topology and **does not check or push a game pin** while Phase B is being prepared. Leave this hold enabled until the existing Pages project successfully builds from `staging`, and the main-branch orchestrator has switched to targeting `staging`. The old game remains playable during this hold. This prevents a scheduled updater from writing to `main` while `main` is being reserved for the future live project.
 
+**Stage-branch activation PR:** The GitHub `staging` branch now has a separately reviewed activation candidate with `phase=staging_cutover`, the active branch `staging`, and a policy-locked `DAVEHUB_DEPLOY_ROLE=staging` build. It must be merged to `staging` **before** the corresponding Cloudflare Pages production-branch switch. The default `main` GitHub updater remains frozen until the staging deployment is verified; no site changes are made by merely preparing or merging this PR while Cloudflare still uses `main`.
+
 ## Phase B — move the existing Cloudflare site to staging
 
 This step involves account-level Cloudflare changes, so it is a separate, explicitly checked handoff. It must be completed before creating/activating the live site.
@@ -37,7 +39,8 @@ This step involves account-level Cloudflare changes, so it is a separate, explic
 3. Prepare the matching main-branch change so its default-branch scheduled GitHub updater *reads* the new target `staging`. After this transition the bot must not write `main`, even before the public site exists.
 4. Cloudflare **Workers & Pages → existing `davehub` project → Settings → Builds → Branch control**: switch the **production branch** to `staging`. In **Production environment variables**, set `DAVEHUB_DEPLOY_ROLE=staging`; leave this variable unset on preview deployments. Keep the existing build command `sh scripts/build-pages.sh`, output `dist`, Node `.node-version`.
 5. Restrict automatic preview builds to explicitly needed branches (or disable them). No production-domain custom domain on the staging project. Trigger a staging deployment and wait for a clean build.
-6. Verify `https://davehub.pages.dev/deployment.json` reports `environment=staging`, `branch=staging`, and the expected SHA. Check `/worlds/games/`, both `/games/` routes, images/audio, source-version marker, title screens, save/reload and mobile.
+6. After changing Cloudflare, commit a small `config/dh09d-staging-verification.json` file to `staging` with `{ "expectedStagingCommit": "<previous staged deployment SHA>" }`, using a commit subject beginning `[CF-Pages-Skip]`. The GitHub Actions workflow **DH-09D verify the Cloudflare staging branch handoff** will run read-only, confirm `https://davehub.pages.dev/deployment.json` reports `environment=staging`, `branch=staging`, `phase=staging_cutover` and the exact expected SHA, then verify every published section and both playable games. The verification-only GitHub commit is deliberately skipped by Cloudflare to avoid rebuilding the 89 MB game bundle.
+7. Verify `https://davehub.pages.dev/deployment.json` reports `environment=staging`, `branch=staging`, and the expected SHA. Check `/worlds/games/`, both `/games/` routes, images/audio, source-version marker, title screens, save/reload and mobile.
 7. Make a harmless, reviewed staging-only change. Ensure it appears on `davehub.pages.dev` but that no production site has been created/updated.
 
 If the branch is changed before the policy is ready, the build is intentionally blocked. Recover by returning the existing Pages production branch to `main`, removing the new deployment-role variable, and restoring the previous known-good deployment. Do not bypass the role check.

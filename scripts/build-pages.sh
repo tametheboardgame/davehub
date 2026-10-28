@@ -78,7 +78,7 @@ ROUTES
 
 node scripts/bundle-games.cjs build dist
 node scripts/bundle-games.cjs verify dist
-node --test tests/game-bundles.test.cjs tests/game-auto-sync.test.cjs tests/game-staging-verification.test.cjs tests/game-deployment-health.test.cjs tests/dh09d-topology.test.cjs
+node --test tests/game-bundles.test.cjs tests/game-auto-sync.test.cjs tests/game-staging-verification.test.cjs tests/game-deployment-health.test.cjs tests/dh09d-topology.test.cjs tests/dh09d-cutover-verification.test.cjs
 
 # Both assets must be copied to their own filename; never overwrite CSS with JS.
 # Every generated public page must have styled HTML and explicit owner-approved content.
