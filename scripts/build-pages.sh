@@ -30,14 +30,14 @@ done
 
 # A private draft must never become a deployed page through a build bypass.
 # Validate both the empty/approved production manifest and fictional test fixtures.
-node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs
+node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs
 node -e "const {validateManifest}=require('./scripts/davehub-manifest.cjs'); const data=require('./davehub.json'); const result=validateManifest(data,'tametheboardgame/davehub');if(!result.valid)throw new Error(result.errors.join('; '));"
 # Fail closed: until the owner approves the three proposals, production cannot include them.
 node scripts/content-check.cjs content/public/catalogue.json
 node scripts/content-check.cjs content/examples/fictional.json
 
 rm -rf dist
-mkdir -p dist/assets/branding dist/assets/homepage dist/assets/characters/dave dist/previews/dh-07c dist/previews/dh-08 dist/previews/dh-08b dist/content dist/assets/content
+mkdir -p dist/assets/branding dist/assets/homepage dist/assets/characters/dave dist/previews/dh-07c dist/previews/dh-08 dist/previews/dh-08b dist/previews/dh-08c dist/content dist/assets/content
 
 cp index.html styles.css main.js catalogue.js dist/
 cp assets/branding/davehub-logo-faithful.svg dist/assets/branding/
@@ -53,6 +53,9 @@ cp assets/content/worlds.css dist/assets/content/worlds.css
 # Never copy example items into dist/worlds or dist/creations.
 node scripts/render-content.cjs content/public/catalogue.json dist '' public
 node scripts/render-content.cjs content/examples/fictional.json dist/previews/dh-08b /previews/dh-08b fictional
+# Publicly visible, LAYOUT-ONLY review of three existing public project names.
+# It never includes unapproved editorial text, outgoing links or private drafts.
+node scripts/render-review-layout.cjs dist/previews/dh-08c
 
 # Prototype deployments remain noindex; this is not an access control.
 cat > dist/_headers <<'HEADERS'
