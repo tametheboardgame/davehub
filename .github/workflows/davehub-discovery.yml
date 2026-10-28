@@ -37,6 +37,9 @@ jobs:
       - name: Prepare private Content Workshop import (unapproved)
         if: success()
         run: node scripts/davehub-workshop-import.cjs reports/davehub-discovery.json reports/davehub-workshop-import.json
+      - name: Audit new public repositories for default-off DaveHub markers
+        if: success()
+        run: node scripts/davehub-audit.cjs reports/davehub-discovery.json
       - name: Upload review-only discovery report
         if: always()
         uses: actions/upload-artifact@v4
