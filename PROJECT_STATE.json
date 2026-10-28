@@ -1,7 +1,7 @@
 {
   "project": "DaveHub",
   "updated": "2026-10-28",
-  "status": "dh_09_same_origin_games_deployed_http_verified",
+  "status": "dh09e_auto_game_sync_operational_staging_only",
   "current_work_package": "DH-09",
   "completed": [
     "DH-00A",
@@ -200,8 +200,8 @@
     "remote_status": "connected"
   },
   "last_verified": {
-    "scope": "DH-09 same-origin games HTTP verification",
-    "result": "Both /games/* URLs served real game HTML and required JS/CSS/media from DaveHub staging origin at 2026-10-28T15:48:39Z; GitHub Actions smoke #40719683462. This does not prove full gameplay paths.",
+    "scope": "DH-09E first automatic game release and no-op health verification",
+    "result": "Cloudflare Pages served pinned Unicorn Valley SHA 473506e2 with version main-ci-40093204337 on live davehub.pages.dev. HTTP smoke 40728639308 and post-monitor smoke 40729189325 passed, no-op GitHub updater run 40729189306 checked actual remote SHA/version. 2026-10-28 16:46 GMT. Full browser gameplay/save migration remains separate.",
     "animation_review": "DH-06D1 CSS changes on feature/dh-06d-transparent-dave-animation: desktop up to 155svh with 14svh top, tablet 118svh/-43svh, mobile 102svh/-30svh; motion and still share crop; browser visual review pending"
   },
   "domain": {
@@ -629,14 +629,27 @@
     "next": "Owner browser QA of game startup, interactions, sound and save/reload on DaveHub; then design opt-in save migration and independent Stephen distribution if desired"
   },
   "dh09e": {
-    "phase": "staging_auto_sync_implementation_in_qualification",
+    "phase": "operational_end_to_end_verified",
     "pollSchedule": "hourly minute 37 UTC",
     "sourceReleasePolicy": "Unicorn Valley public main exact SHA requires successful CI push workflow",
     "ciRevalidation": "check upstream before build and after full DaveHub build",
     "releaseMarker": "/games/unicorn-valley/davehub-release.json",
     "approvalBoundary": "staging only while main is still staging; future live main is owner-promoted",
     "stephen": "same-origin proxy automatically tracks existing public upstream releases; private repo untouched",
-    "status": "PR checks and initial workflow dispatch pending"
+    "status": "GitHub auto-sync build and bot commit succeeded; Cloudflare exact-SHA/version HTTP smoke passed; no-op health validation passed",
+    "ownerApprovedScope": "automatic releases to davehub.pages.dev staging only; never to davehub.co.uk",
+    "unicornPinnedCommit": "473506e229b7710e6f6f42e079e808825279c1e4",
+    "unicornReleaseVersion": "main-ci-40093204337",
+    "githubAutoSyncBuildRun": 40724080045,
+    "cloudflareExactReleaseVerifiedRun": 40728639308,
+    "noopHealthVerifiedRun": 40729189306,
+    "postMergeSiteAndGamesVerifiedRun": 40729189325,
+    "monitoringPR": 41,
+    "initialNoopValidationPR": 43,
+    "recoveryIssue": 42,
+    "recoveryIssueStatus": "closed_resolved_2026-10-28",
+    "cloudflareBuildSkipForMonitoringCommits": true,
+    "next": "Future successful Unicorn Valley main commits sync hourly to staging subject to exact CI and full build. Stephen Martin proxy follows its public deployment. Production custom-domain promotion remains manual."
   },
   "dh10": {
     "phase": "dh_10a_b_merged",
