@@ -14,7 +14,8 @@
   },
   "automaticGameUpdates": {
     "branch": "main",
-    "livePromotion": false
+    "livePromotion": false,
+    "paused": true
   },
-  "notes": "Transition by reviewed PR only after existing Cloudflare staging project production branch has been changed to staging. Before that, main is still staging. No live Pages project or DNS configured yet."
+  "notes": "DH-09D cutover hold active: no scheduled game pin writes until existing Pages project moves to staging and both branch policy files agree. Staging and production remain the same pre-cutover website until verified."
 }
