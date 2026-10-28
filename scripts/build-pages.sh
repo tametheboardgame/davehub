@@ -60,6 +60,16 @@ node scripts/render-review-layout.cjs dist/previews/dh-08c
 # Each game is independently built from its pinned upstream commit. Static
 # output is deployed under the same DaveHub origin, not embedded via iframe.
 # Fail the entire build if either pinned game cannot be built and verified.
+# Scope Cloudflare Pages Functions to the Stephen Martin game route ONLY.
+# All other DaveHub pages, media and Unicorn Valley remain free static assets.
+cat > dist/_routes.json <<'ROUTES'
+{
+  "version": 1,
+  "include": ["/games/stephen-martin/*"],
+  "exclude": []
+}
+ROUTES
+
 node scripts/bundle-games.cjs build dist
 node scripts/bundle-games.cjs verify dist
 node --test tests/game-bundles.test.cjs
@@ -105,15 +115,5 @@ cat > dist/_headers <<'HEADERS'
 /games/stephen-martin/*
   Cache-Control: no-cache
 HEADERS
-
-# Scope Cloudflare Pages Functions to the Stephen Martin game route ONLY.
-# All other DaveHub pages, media and Unicorn Valley remain free static assets.
-cat > dist/_routes.json <<'ROUTES'
-{
-  "version": 1,
-  "include": ["/games/stephen-martin/*"],
-  "exclude": []
-}
-ROUTES
 
 printf 'DaveHub Pages output ready in dist/\n'
