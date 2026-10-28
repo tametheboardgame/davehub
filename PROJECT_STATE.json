@@ -1,8 +1,8 @@
 {
   "project": "DaveHub",
   "updated": "2026-10-28",
-  "status": "dh_08c_private_owner_review_ready",
-  "current_work_package": "DH-08B",
+  "status": "dh_08d_first_three_published_on_staging",
+  "current_work_package": "DH-09",
   "completed": [
     "DH-00A",
     "DH-00B",
@@ -190,8 +190,8 @@
     "DH-07B: determine per-musical script vs listen-first ordering and media/lyrics rights before publishing actual works"
   ],
   "deployment": {
-    "status": "pages_live_reported_by_owner_url_not_verified",
-    "url": null
+    "status": "cloudflare_staging_http_verified_2026-10-28T15:14:06Z",
+    "url": "https://davehub.pages.dev/"
   },
   "repository": {
     "full_name": "tametheboardgame/davehub",
@@ -232,7 +232,7 @@
   "hosting": {
     "preferred_candidate": "Cloudflare Pages",
     "decision_status": "selected_for_visual_previews",
-    "deployed": "reported_by_owner_unverified",
+    "deployed": "cloudflare_http_verified_2026-10-28T15:14:06Z",
     "git_branch": "main",
     "build_command": "sh scripts/build-pages.sh",
     "output_directory": "dist",
@@ -468,11 +468,11 @@
     "docs": "docs/DH07E_GIANT_DAVE_MYSTIC_PORTAL.md"
   },
   "dh08": {
-    "state": "dh_08a_merged_dh_08b_branch_pending_owner_approval",
+    "state": "dh_08d_three_approved_creations_live",
     "branch": "feature/dh-08-publication-contract",
     "document": "docs/DH08_PUBLICATION_CONTRACT.md",
     "source_of_truth": "content/public/catalogue.json",
-    "public_owner_work_count": 0,
+    "public_owner_work_count": 3,
     "fictional_demo": "prototypes/dh-08/index.html",
     "checks": [
       "14 Node tests",
@@ -485,7 +485,7 @@
     ],
     "no_automatic_publication": true,
     "no_api_costs": true,
-    "real_content_approval": "not granted",
+    "real_content_approval": "three_first_wave_text_link_records_approved_2026-10-28",
     "dh08a_merged_commit": "d1b4ec0d6971aa3178fae019c217e423b6b15151",
     "dh08b_branch": "feature/dh-08b-shared-world-pages",
     "dh08b_design_doc": "docs/DH08B_SHARED_CONTENT_PAGES.md",
@@ -524,9 +524,9 @@
     "reviewUI": "local-only Content Workshop on 127.0.0.1:8765",
     "realPagePreview": "local session-only rendering using approved DaveHub templates",
     "scannerImport": "read-only DH-10 reports; duplicate-safe and never auto-approved",
-    "publicCatalogueItems": 0,
-    "publicationApproval": "not_granted",
-    "ownerAction": "visually review three local pages and two destinations per project, verify rights/credits/links and approve explicitly",
+    "publicCatalogueItems": 3,
+    "publicationApproval": "owner_approved_2026-10-28_for_three_text_link_listings_only",
+    "ownerAction": "review three live DaveHub pages; first-party game hosting is future DH-09 work",
     "reviewReadinessPR": 27,
     "reviewedLinksPR": 28,
     "cloudFirstReviewPR": 29,
@@ -547,9 +547,22 @@
     "ownerReviewDefault": "Cloudflare preview URL plus precise visual QA checklist; no localhost setup requests",
     "reviewedLinksMainCommit": "49d17b3a2df4e7dea5ab73a43eeb9a66018195cb",
     "reviewReadinessMainCommit": "ae5ad0a3909abaa033d9c6efaff4af1d9d63ad02",
-    "unresolvedVerification": ["The Stephen Martin Project production URL: owner browser check", "Unicorn Valley gameplay URL: browser playthrough not independently observed", "Tame The Board Game contributor/rights sign-off by owner"],
-    "checks": "PR #30 GitHub Actions: 11 discovery tests, 88 site regressions, production build passed",
+    "unresolvedVerification": ["Full interactive game browser playthrough remains unverified", "First-party /games/... hosting and save-data continuity remain DH-09 work"],
+    "checks": "PR #32: 88 site tests, 11 discovery tests, three external HTTP 200; Cloudflare smoke 40713803794 PASSED eight paths",
     "oldUnsafePR": "PR #21 closed unmerged because its proposed catalogue wrongly carried public_approved flags"
+  },
+  "dh08d": {
+    "phase": "published_and_cloudflare_http_verified",
+    "approvalScope": "three text/link listings only; no source code, media, scripts, voice or article republishing",
+    "approvalDate": "2026-10-28",
+    "catalogueItems": ["unicorn-valley", "stephen-martin-project", "tame-the-board-game"],
+    "publicationPR": 32,
+    "mainCommit": "fe8872a28540fba80d62fbe59184e0684bdd18e8",
+    "externalDestinations": "all three returned HTTP 200 in GitHub Actions",
+    "cloudflareSmokeRun": 40713803794,
+    "cloudflareSmokeResult": "success_2026-10-28T15:14:06Z",
+    "publishedRoutes": ["/worlds/", "/worlds/games/", "/worlds/projects/", "/worlds/writing/", "/creations/unicorn-valley/", "/creations/stephen-martin-project/", "/creations/tame-the-board-game/"],
+    "next": "DH-09 pinned independent game builds under /games/... with separate staging/live deployments"
   },
   "dh10": {
     "phase": "dh_10a_b_merged",
@@ -568,7 +581,7 @@
     "verifiedSourceOptIns": ["stephen-martin-project", "ordinary-universe", "octo-maraton-ideas"],
     "unicornValleyReview": "PR #338 remains open; final CI 40688838665 failed two Chess Academy Chromium browser tests; opt-in not merged",
     "publicCandidateApproval": "not granted",
-    "contentWorkshopIntegration": "private local Content Workshop integrated in main via PR #26; first-wave owner dashboard via PR #27; no public catalogue records",
+    "contentWorkshopIntegration": "Workshop retained for future unapproved candidates; first three published by explicit owner permission in PR #32",
     "domainChange": "none"
   }
 }
