@@ -1,0 +1,24 @@
+:root{color-scheme:dark;font-family:'Segoe UI','Aptos',system-ui,sans-serif;background:#080f29;color:#f9f0e0}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 66% 4%,#2c4b6f 0,transparent 48%),#080f29}
+button,input,textarea,select{font:inherit}button{cursor:pointer}a{color:#ffdc9c}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #ffd494;outline-offset:3px}
+.shell{width:min(1290px,calc(100% - 38px));margin:auto}.top{padding:23px 0;border-bottom:1px solid #e9ca9247;display:flex;justify-content:space-between;gap:15px;align-items:center}
+.brand{font-size:27px;font-weight:950;letter-spacing:-.05em}.brand span{color:#ffcc73}.brand small{display:block;font-size:10px;letter-spacing:.16em;color:#b8c9e8;margin-top:2px;font-weight:800}
+.local{font-size:11px;color:#ffdf9e;font-weight:850;letter-spacing:.12em;border:1px solid #ddba7675;background:#1b2f47;border-radius:30px;padding:10px 15px}.local span{color:#91ebbf}
+.intro{max-width:820px;margin:30px 0 15px}.eyebrow{letter-spacing:.18em;font-size:11px;font-weight:900;color:#ffdb9f}.intro h1{font-size:clamp(35px,5vw,56px);margin:7px 0 12px;letter-spacing:-.045em}.intro p:not(.eyebrow){color:#d6e1ee;line-height:1.6;font-size:17px}
+.privacy{background:#1a2d4a;border:1px solid #ffda8a70;border-radius:14px;padding:15px 19px;line-height:1.55;color:#dbe6f3;max-width:1000px}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;margin:23px 0}.toolbar>button,.filepick,.actions button{background:#244268;border:1px solid #a9cbe77a;color:white;border-radius:12px;padding:12px 19px;cursor:pointer;font-weight:800;display:inline-flex;align-items:center}.toolbar>button:hover,.filepick:hover,.actions button:hover{background:#345c89}
+.toolbar .export{background:#edc67b;color:#152038;border-color:#ffe2ac}.toolbar .export:hover{background:#ffe0a1}
+.filepick input{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}.filepick:focus-within{outline:3px solid #ffdc9c;outline-offset:4px}
+.layout{display:grid;grid-template-columns:minmax(240px,300px) minmax(0,1fr);gap:20px;align-items:start}
+aside,.editor,.help{border:1px solid #c6daf348;background:linear-gradient(145deg,#182f54eb,#0b1939f0);border-radius:23px;padding:25px}
+.sidehead h2,.editor h2,.help h2{font-size:26px;margin:0 0 8px;letter-spacing:-.03em}.sidehead p{font-size:12px;color:#b3ccdd;margin:0 0 18px}
+.queue{display:grid;gap:7px}.queueitem{display:flex;text-align:left;flex-direction:column;gap:5px;border:1px solid #a7c3df42;padding:12px 14px;border-radius:12px;background:#102440;color:#f8edda}.queueitem:hover,.queueitem.active{border-color:#f5cf8d;background:#294d74}.queueitem span{color:#9eb6ce;font-size:11px;text-transform:uppercase;letter-spacing:.08em}.queue .none{color:#c0d0e3;font-size:13px;line-height:1.5}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}label{display:grid;gap:6px;font-size:13px;font-weight:700;color:#f7e6c9}.span2{grid-column:span 2}
+input:not([type=checkbox]),select,textarea{width:100%;border:1px solid #bbd5ed72;background:#0a1934;color:#fdf6e9;border-radius:9px;padding:12px 13px;min-width:0}textarea{resize:vertical;line-height:1.5}
+fieldset{border:1px solid #d9c19354;border-radius:13px;padding:14px}legend{font-weight:850;color:#ffdfa7;padding:0 8px}
+.checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.checks label{display:flex;align-items:flex-start;gap:9px;line-height:1.4;font-weight:600;color:#d7e2f2;cursor:pointer}.checks input{width:17px;height:17px;flex:0 0 17px;accent-color:#ffcd7a;margin:1px 0 0}
+.approval{margin:19px 0;padding:19px}.approval p{line-height:1.55;color:#cddbec;font-size:13px}.actions{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.actions p{margin:0;color:#abdec8;font-size:13px;line-height:1.45}.actions .error{color:#ffb8a9}
+.help{margin:26px 0}.help p{color:#d2dff0;line-height:1.7;max-width:1000px}footer{border-top:1px solid #a8bdd84a;color:#a2b3cf;padding:30px 0;font-size:12px}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.queue{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:610px){.top{display:block}.local{display:inline-block;margin:15px 0 0}.fields{grid-template-columns:1fr}.span2{grid-column:auto}.checks{grid-template-columns:1fr}.toolbar button,.filepick{width:100%;justify-content:center}.queue{grid-template-columns:1fr}.shell{width:calc(100% - 24px)}.editor,aside,.help{padding:18px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important}}
