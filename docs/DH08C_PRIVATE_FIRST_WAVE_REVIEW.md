@@ -10,6 +10,8 @@
 | The Stephen Martin Project | Games and Projects | [Existing game](https://stephen-martin-project.pages.dev/) | Adult comedy; check playable URL and individual rights around artwork, voice and likeness; no media copied |
 | Tame The Board Game | Games, Writing, Memory Lane | [Collaborative website](https://tametheboardgame.com/) | Credits must recognise Miriam's co-creation and contributions; no articles/media copied |
 
+All first-wave review pages now display **two explicit links**: the original game Play destination plus its public source repository for each game, and the blog homepage plus the [About/contributor-credit page](https://tametheboardgame.com/about/) for Tame The Board Game. The Workshop exposes an editable additional-link URL/label/type field and validates it even in private drafts. No additional media has been copied.
+
 These descriptions, credits and links are **proposals**. They live in `tools/workshop/first-wave.cjs`, not the deployed catalogue. They carry `status:"needs_review"`, `ownerApproved:false`, four false review gates, and no approval date. The old PR #21 contains publication-shaped records and must **not** be merged without removing that implicit approval.
 
 ## How to review the real DaveHub page designs safely
