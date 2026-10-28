@@ -72,6 +72,21 @@ function makeVitePublicPathsSubpathSafe(sourceDir,prefix){
  console.log('Rebased '+changes+'/'+files+' Unicorn Valley source files for '+prefix);
  return changes;
 }
+/* Story Library JSON copied verbatim by Vite's public/ handling is not
+ * transformed by Vite BASE_URL. Rebase those text catalogues in the built
+ * output, without touching hashed JavaScript/CSS bundles.
+ */
+function rebasePublishedTextFiles(dist,prefix){
+ let changed=0;
+ visit(dist,name=>{
+  if(!/\.(?:json|md|html)$/.test(name))return;
+  const original=fs.readFileSync(name,'utf8');
+  const next=original.replace(ROOT_ASSET,(_m,q,kind)=>q+prefix+kind+'/');
+  if(next!==original){fs.writeFileSync(name,next);changed++;}
+ });
+ console.log('Rebased '+changed+' published Unicorn Valley Story Library/catalogue text files');
+ return changed;
+}
 function verifyIndex(dir,id){
  const index=path.join(dir,'index.html');
  if(!fs.existsSync(index))throw Error('Missing game index.html: '+id);
@@ -125,6 +140,7 @@ function buildGame(game,sourceDir,outputDir){
   run('npm',['exec','--','vite','build','--base=/games/'+game.id+'/','--manifest'],sourceDir);
  }
  const source=path.join(sourceDir,'dist');
+ if(game.build==='vite-subpath')rebasePublishedTextFiles(source,'/games/'+game.id+'/');
  verifyIndex(source,game.id);
  const target=path.join(outputDir,game.output);
  fs.mkdirSync(path.dirname(target),{recursive:true});
@@ -168,4 +184,4 @@ if(require.main===module){
   if(mode==='build')bundle(out);else checkOnly(out);
  }catch(err){console.error('FAIL DH-09 game bundling:',err.stack||err.message);process.exitCode=1}
 }
-module.exports={validateConfig,makeVitePublicPathsSubpathSafe,verifyIndex,checkOnly};
+module.exports={validateConfig,makeVitePublicPathsSubpathSafe,rebasePublishedTextFiles,verifyIndex,checkOnly};
