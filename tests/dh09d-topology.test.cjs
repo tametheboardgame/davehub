@@ -14,12 +14,13 @@ const setup=phase=>{
  x.staging.branch=phase==='pre_cutover'?'main':'staging';
  x.production.configured=phase==='live';
  x.automaticGameUpdates.branch=x.staging.branch;
+ x.automaticGameUpdates.paused=false;
  p.stagingBranch=x.staging.branch;
  p.liveDomainConfigured=x.production.configured;
  return {x,p};
 };
 test('existing main-as-staging Pages project remains valid until verified cutover',()=>{
- assert.deepEqual(readTopology(),{stagingBranch:'main',phase:'pre_cutover',liveConfigured:false});
+ assert.deepEqual(readTopology(),{stagingBranch:'main',phase:'pre_cutover',liveConfigured:false,paused:true});
  assert.equal(validateStagingPolicy(policy,top),policy);
  assert.equal(buildRole(readTopology(),{CF_PAGES:'1',CF_PAGES_BRANCH:'main'}),'staging');
 });
@@ -90,4 +91,5 @@ test('scheduled updater can target staging but never hard-code a bot write to li
  assert.match(yaml,/TARGET_BRANCH: \$\{\{ steps.target.outputs.branch \}\}/);
  assert.match(yaml,/git push origin "HEAD:refs\/heads\/\$TARGET_BRANCH"/);
  assert.doesNotMatch(yaml,/git push origin HEAD:refs\/heads\/main/);
+ assert.match(yaml,/if: steps.target.outputs.paused != 'true'/);
 });
