@@ -24,6 +24,10 @@
 
 **Exit:** two branches exist; actual Cloudflare configuration and game update behaviour have not changed. This is the current implementation boundary.
 
+### Cutover hold is enabled
+
+The default-branch GitHub updater reads `automaticGameUpdates.paused=true` from the validated deployment topology and **does not check or push a game pin** while Phase B is being prepared. Leave this hold enabled until the existing Pages project successfully builds from `staging`, and the main-branch orchestrator has switched to targeting `staging`. The old game remains playable during this hold. This prevents a scheduled updater from writing to `main` while `main` is being reserved for the future live project.
+
 ## Phase B — move the existing Cloudflare site to staging
 
 This step involves account-level Cloudflare changes, so it is a separate, explicitly checked handoff. It must be completed before creating/activating the live site.
