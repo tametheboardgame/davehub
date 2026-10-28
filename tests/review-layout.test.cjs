@@ -53,7 +53,7 @@ test('every hosted page has a review notice and none contains unapproved first-w
   assert.match(index,/Games layout/);
   assert.match(index,/Memory Lane layout/);
   assert.match(index,/NOT PUBLISHED CONTENT/);
-  assert.match(BANNER,/nothing approved/i); // Notice content must be explicit.
+  assert.match(BANNER,/NOT PUBLISHED CONTENT/); // Notice content must be explicit.
  }finally{fs.rmSync(dir,{recursive:true,force:true})}
 });
 test('public catalogue remains empty regardless of the hosted review generation',()=>{
