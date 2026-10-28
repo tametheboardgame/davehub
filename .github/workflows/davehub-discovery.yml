@@ -11,6 +11,8 @@ on:
       - 'tests/workshop.test.cjs'
       - 'tools/workshop/**'
       - 'scripts/build-pages.sh'
+      - 'scripts/render-review-layout.cjs'
+      - 'tests/review-layout.test.cjs'
       - 'content/public/catalogue.json'
       - '.github/workflows/davehub-discovery.yml'
   push:
@@ -22,6 +24,8 @@ on:
       - 'tests/workshop.test.cjs'
       - 'tools/workshop/**'
       - 'scripts/build-pages.sh'
+      - 'scripts/render-review-layout.cjs'
+      - 'tests/review-layout.test.cjs'
       - 'content/public/catalogue.json'
       - '.github/workflows/davehub-discovery.yml'
 permissions:
