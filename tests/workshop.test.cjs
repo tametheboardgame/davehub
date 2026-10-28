@@ -41,7 +41,7 @@ test('approved proposal validates as the shared public catalogue',()=>{
 });
 test('unsafe external links fail review/export',()=>{
  const item={...example,linkUrl:'http://127.0.0.1/intranet'};
- assert.throws(()=>exportReview({candidates:[item]}),/Export blocked/);
+ assert.throws(()=>exportReview({candidates:[item]}),/Unsafe primary link URL/);
 });
 test('IDs and views must pass validation',()=>{
  assert.throws(()=>cleanCandidate({...example,id:'../something'}),/Invalid ID/);
@@ -133,7 +133,7 @@ test('preview cannot render unsafe external URLs or injected markup',()=>{
  const html=filesFor(manifest,'',false).get('creations/unicorn-valley/index.html');
  assert.equal(html.includes('<script>alert'),false);
  assert.ok(html.includes('&lt;script&gt;'));
- assert.throws(()=>importCandidates({candidates:[]},[{...firstWave[0],linkUrl:'javascript:alert(1)'}]),/Unsafe link/);
+ assert.throws(()=>importCandidates({candidates:[]},[{...firstWave[0],linkUrl:'javascript:alert(1)'}]),/Unsafe primary link URL/);
 });
 test('public content stays empty while the first wave awaits explicit final approval',()=>{
  const root=path.resolve(__dirname,'..');
