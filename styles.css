@@ -313,23 +313,21 @@ html, body { height: 100%; width: 100%; overflow: hidden; }
   .world-directory__item { min-height: 91px; }
 }
 
-/* DH-07E — Static, transparent Giant Dave. This slot also hosts the future animation.
-   Keep Dave behind the links and the hero copy; never intercept pointer/focus events. */
-/* Dave is geometrically tethered to the left edge of the centred Explore CTA.
-   The visible illustration reaches ~58% of its rendered height from its image's
-   left edge (remaining width is transparent padding). This lets the 24px gap
-   stay consistent when viewport width changes instead of pinning Dave to x=0. */
+/* DH-06D — Giant Dave is a foreground host, not a full-body sprite.
+   Enlarge the upper torso and let the legs disappear below the viewport.
+   The same crop applies to the still and video; all links remain above Dave. */
+/* Desktop placement is tethered to the Explore CTA. Static Dave's transparent
+   canvas reaches farther right than the motion asset, so the video gets a
+   separate horizontal alignment within the same stage. */
 .dave-stage {
-  /* Scale down on narrower desktop widths rather than letting the figure
-     disappear beyond the left edge while staying tethered to the CTA. */
-  --dave-height: min(88svh, calc((50vw - 212.5px - 24px + 16px) / .58));
-  --dave-explore-half-width: 212.5px; /* half of .explore-button's 425px desktop width */
-  --dave-to-cta-gap: 24px;
-  --dave-visible-reach: .58;
+  --dave-height: 140svh;
+  --dave-explore-half-width: 212.5px; /* half of the 425px desktop Explore CTA */
+  --dave-to-cta-gap: 16px;
+  --dave-visible-reach: .58; /* still-image rightmost visible reach, per height */
   position: absolute;
   z-index: 1;
   inset: 0 auto 0 0;
-  width: min(46vw, 740px);
+  width: min(65vw, 1000px);
   overflow: visible;
   pointer-events: none;
   left: calc(50% - var(--dave-explore-half-width) - var(--dave-to-cta-gap) - var(--dave-height) * var(--dave-visible-reach));
@@ -341,33 +339,31 @@ html, body { height: 100%; width: 100%; overflow: hidden; }
   width: auto;
   max-width: none;
   left: 0;
-  bottom: -24svh;
+  bottom: -55svh;
   object-fit: contain;
   pointer-events: none;
   user-select: none;
   filter: drop-shadow(0 14px 25px rgba(1, 8, 28, .62)) drop-shadow(7px 0 15px rgba(64, 145, 235, .18));
 }
-@media (min-width: 1750px) {
-  .dave-stage { --dave-height: 90svh; }
-  .dave-stage__still, .dave-stage__motion { bottom: -25svh; }
-}
+/* The video contains less horizontal artwork than the static WebP. */
+.dave-stage__motion { left: calc(var(--dave-height) * .16); }
 @media (max-width: 900px) {
-  /* On narrower screens, there is physically insufficient horizontal space
-     for Dave to stand fully beside a centred button: use portrait framing. */
-  .dave-stage { left: 0; --dave-height: 78svh; }
-  .dave-stage__still, .dave-stage__motion { left: -4vw; bottom: -13svh; }
+  /* Portrait-style framing on tablets, while keeping navigation clickable. */
+  .dave-stage { left: 0; --dave-height: 118svh; width: 62vw; }
+  .dave-stage__still, .dave-stage__motion { left: -4vw; bottom: -43svh; }
 }
 @media (max-width: 640px) {
-  .dave-stage { width: 52vw; --dave-height: 65svh; }
-  .dave-stage__still, .dave-stage__motion { left: -5vw; bottom: -12svh; filter: drop-shadow(0 7px 16px rgba(3,8,29,.55)); }
+  /* Show Dave's head, shoulder and pointing gesture, not the full legs. */
+  .dave-stage { width: 60vw; --dave-height: 102svh; }
+  .dave-stage__still, .dave-stage__motion { left: -7vw; bottom: -30svh; filter: drop-shadow(0 7px 16px rgba(3,8,29,.55)); }
 }
 @media (max-width: 380px) {
-  .dave-stage { --dave-height: 64svh; }
-  .dave-stage__still, .dave-stage__motion { left: -6vw; bottom: -12svh; }
+  .dave-stage { --dave-height: 100svh; }
+  .dave-stage__still, .dave-stage__motion { left: -8vw; bottom: -29svh; }
 }
 @media (max-height: 430px) and (orientation: landscape) {
-  .dave-stage { left: 0; --dave-height: 89svh; }
-  .dave-stage__still, .dave-stage__motion { left: 1vw; bottom: -28svh; }
+  .dave-stage { left: 0; --dave-height: 140svh; }
+  .dave-stage__still, .dave-stage__motion { left: 1vw; bottom: -54svh; }
 }
 
 /* DH-07E — The explorer is a magical portal into the SAME approved island-world
