@@ -20,6 +20,8 @@ on:
       - 'scripts/verify-game-staging-release.cjs'
       - 'tests/game-auto-sync.test.cjs'
       - 'tests/game-staging-verification.test.cjs'
+      - 'tests/game-deployment-health.test.cjs'
+      - 'scripts/check-pinned-game-deployment.cjs'
       - 'functions/games/**'
       - 'content/public/catalogue.json'
       - '.github/workflows/davehub-staging-smoke.yml'
