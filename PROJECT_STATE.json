@@ -516,6 +516,20 @@
     "fallback": "assets/characters/dave/dave-static-v1.webp",
     "review_required": true
   },
+  "dh08c": {
+    "phase": "private_owner_review_ready",
+    "implementationPR": 26,
+    "mainMerge": "758204e077c1d164923bcfdc12c7f5f38b6b727e",
+    "firstWave": ["unicorn-valley", "stephen-martin-project", "tame-the-board-game"],
+    "reviewUI": "local-only Content Workshop on 127.0.0.1:8765",
+    "realPagePreview": "local session-only rendering using approved DaveHub templates",
+    "scannerImport": "read-only DH-10 reports; duplicate-safe and never auto-approved",
+    "publicCatalogueItems": 0,
+    "publicationApproval": "not_granted",
+    "ownerAction": "visually review three local pages, verify rights/credits/links and approve explicitly",
+    "checks": "PR #26 GitHub Actions: 11 discovery tests, 72 regressions, production build passed",
+    "oldUnsafePR": "PR #21 closed unmerged because its proposed catalogue wrongly carried public_approved flags"
+  },
   "dh10": {
     "phase": "dh_10a_b_merged",
     "schemaVersion": 1,
