@@ -48,6 +48,9 @@ function show(c){
  $('check-links').checked=!!c.review?.links;
  $('check-media').checked=!!c.review?.media;
  $('owner-approved').checked=!!c.ownerApproved;
+ const saved=drafts.some(x=>x.id===c.id);
+ $('preview-page').href=saved?'/creations/'+encodeURIComponent(c.slug||c.id)+'/':'#';
+ $('preview-page').setAttribute('aria-disabled',saved?'false':'true');
  message('Local draft loaded. No public changes have been made.');
  drawQueue();
 }
@@ -77,6 +80,16 @@ function toCandidate(){
  };
  return c;
 }
+$('seed-first-wave').addEventListener('click',async()=>{
+ try{
+  const r=await (await api('POST','seed',{})).json();
+  await load();
+  message('Three agreed projects prepared locally: '+r.added+' added, '+r.skipped+' already present. No approval granted and nothing published.');
+ }catch(err){message(err.message,true)}
+});
+$('preview-page').addEventListener('click',e=>{
+ if($('preview-page').getAttribute('aria-disabled')==='true'){e.preventDefault();message('Save this draft locally before previewing.',true)}
+});
 $('new-record').addEventListener('click',()=>{
  show({id:'',title:'',slug:'',workType:'other',lifecycle:'active',synopsis:'',views:['projects'],status:'nominated',review:{},ownerApproved:false,notes:''});
  $('id').focus();
@@ -94,10 +107,9 @@ $('import-file').addEventListener('change',async e=>{
  try{
   if(file.size>1024*1024)throw Error('Import file too large (limit: 1MB)');
   const content=JSON.parse(await file.text());
-  const candidates=Array.isArray(content)?content:content.candidates;
-  if(!Array.isArray(candidates))throw Error('Expected a candidates array');
-  const r=await (await api('POST','import',{candidates})).json();
-  await load();message('Imported locally. All imported items require fresh owner review. '+r.count+' total candidates.');
+  if(!Array.isArray(content)&&(!content||!Array.isArray(content.candidates)))throw Error('Expected a discovery report or candidates array');
+  const r=await (await api('POST','import',content)).json();
+  await load();message('Imported '+r.added+' new drafts; '+r.skipped+' duplicates retained without modification. '+r.count+' in local review queue. None approved.');
  }catch(err){message(err.message,true)}
  e.target.value='';
 });
