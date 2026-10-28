@@ -16,6 +16,10 @@ The future launch will use **two separate Cloudflare Pages projects connected to
 
 DaveHub owner review uses hosted staging previews by default, **not local server commands**. The public-safe, layout-only first-wave demonstration is built at `/previews/dh-08c/`, containing three project names, placeholder descriptions and no unapproved game/blog links or private editorial drafts. This historical design-only preview remains available but the normal Games/Projects/Writing destinations now use **three explicitly approved first-wave records**. See [first publication record](docs/DH08D_FIRST_THREE_PUBLISHED_PROJECTS.md).
 
+## DH-09D: Independent staging and public live deployment
+
+The permanent GitHub `staging` branch has been created. Cloudflare's existing `davehub.pages.dev` Pages project **still deploys main until the reviewed cutover**, while a separate future `davehub-live` Pages project will eventually deploy the approved `main` branch to `davehub.co.uk`. Infrastructure checks now validate build role, branch, policies, indexing and exact commit identity before public deployment. Automatic game sync will switch to the `staging` branch **only after the Cloudflare staging production branch is migrated**; no live-domain changes occur during Phase A. See [DH-09D cutover execution](docs/DH09D_CUTOVER_EXECUTION.md).
+
 ## DH-09E: Automatic game updates to staging
 
 **Unicorn Valley** has an hourly updater: after `main` completes its exact-commit CI successfully, DaveHub rebuilds and tests the pinned source, advances the staging lock and checks that Cloudflare actually serves that SHA. No update or failed upstream CI means no rebuild. **Stephen Martin** follows its existing public Pages deployment via the same-origin proxy without a DaveHub rebuild. No private source access. This is staging automation only, never automatic `davehub.co.uk` promotion. See [automatic update details](docs/DH09_SAME_ORIGIN_GAMES.md#automatic-staging-updates-dh-09e).
