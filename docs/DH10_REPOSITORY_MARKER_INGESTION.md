@@ -57,6 +57,23 @@ This is a **candidate-nomination contract**, never a self-issued publication app
 
 Unknown fields fail validation (including any misleading `approvedForPublication`, `instructions`, `assetsToCopy`, `apiKey` or `scripts`). Every URL must be public HTTPS with no credentials, local/private hostname or IP literal. The schema rejects arbitrary JSON instructions and permits no source-provided command execution.
 
+## Initial source-repository opt-in PRs
+
+The following **four** manifest proposals were created on 28 October 2026. All remain **draft** until owner review and the central scanner goes live:
+
+| Repo | PR | Proposed category views |
+|---|---|---|
+| `unicorn-valley` | [#338](https://github.com/tametheboardgame/unicorn-valley/pull/338) | Games, Projects |
+| `stephen-martin-project` | [#92](https://github.com/tametheboardgame/stephen-martin-project/pull/92) | Games, Projects |
+| `ordinary-universe` | [#11](https://github.com/tametheboardgame/ordinary-universe/pull/11) | Writing, Projects, Experiments |
+| `octo-maraton-ideas` | [#5](https://github.com/tametheboardgame/octo-maraton-ideas/pull/5) | Projects, Memory Lane |
+
+These PRs change only the root `davehub.json` metadata and **do not add** publishing automation to those repositories.
+
+### Fleet inventory
+
+The GitHub account exposes **19** repositories (at the initial 28 October scan). Four opt-in proposals are above; `davehub` itself opts out; the remaining **14** repositories currently have no marker and are therefore treated as disabled. Later, create two-field `enabled:false` markers via individual reviewed PRs for uniformity if desirable. Do not silently modify sensitive, operational, employer-related, fitness or financial data repositories.
+
 ## v1 discovery engine
 
 - `scripts/davehub-manifest.cjs`: validates marker structure, recognised taxonomy, explicit source repository identity and safe links.
