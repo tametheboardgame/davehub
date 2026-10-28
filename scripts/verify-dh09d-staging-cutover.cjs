@@ -22,6 +22,7 @@ function validateDeployment(record,expected){
  return record;
 }
 async function inspectDeployment(expected,fetcher=fetch){
+ if(!SHA.test(expected))throw Error('Expected verified staging SHA must be a 40-digit Git commit');
  const response=await fetcher(HOST+'/deployment.json?cutover='+expected,{
   headers:{'Cache-Control':'no-cache','User-Agent':'DH09D-Branch-Cutover-Verifier/1.0'},
   redirect:'follow',signal:AbortSignal.timeout(15000)
