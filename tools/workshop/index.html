@@ -13,11 +13,14 @@
  <p class="local"><span aria-hidden="true">●</span> LOCAL-ONLY · NOT THE PUBLIC SITE</p></header>
 <main>
 <section class="intro"><p class="eyebrow">DH-08C / OWNER REVIEW</p><h1>Prepare the next creation.</h1>
- <p>Review one work at a time. Drafts stay on this computer, outside your public Git repository. Nothing is published automatically.</p></section>
+ <p>Prepare Unicorn Valley, The Stephen Martin Project and Tame The Board Game as unapproved drafts. Their actual DaveHub page designs can be previewed on this computer; nothing is committed to the public catalogue or published automatically.</p></section>
 <div class="privacy">The GitHub repo and Cloudflare pages are public. <strong>Do not paste secrets or employer data here.</strong> This tool runs on 127.0.0.1, stores review drafts under your user profile, and generates a proposed JSON file only after explicit approval.</div>
 <div class="toolbar">
- <label class="filepick">Import candidate list<input type="file" id="import-file" accept=".json,application/json"></label>
+ <button type="button" id="seed-first-wave">Prepare the agreed three</button>
+ <label class="filepick">Import a discovery report or candidate list<input type="file" id="import-file" accept=".json,application/json"></label>
  <button type="button" id="new-record">New creation</button>
+ <a class="preview-link" id="preview-worlds" href="/worlds/" target="_blank" rel="noopener noreferrer">Preview local worlds</a>
+ <a class="preview-link" id="preview-page" href="#" target="_blank" rel="noopener noreferrer">Preview selected page</a>
  <button type="button" class="export" id="export-approved">Export approved proposal</button>
 </div>
 <div class="layout"><aside aria-label="Candidate catalogue">
@@ -48,7 +51,7 @@
 <label>Editorial stage <select id="status"><option value="nominated">Nominated</option><option value="needs_review">Needs review</option><option value="ready_for_owner_approval">Ready for approval</option><option value="approved_for_export">Approved for export</option><option value="withdrawn">Withdrawn</option></select></label>
 <label class="span2">Private editorial notes — never exported <textarea id="notes" rows="4" placeholder="What needs verification? Rights, permissions, attribution, missing links..."></textarea></label>
 </div>
-<fieldset class="approval"><legend>Owner approval checklist</legend><p>Only approve material you have individually checked for public release. Linking to a collaborator's work is not permission to copy their media.</p>
+<fieldset class="approval"><legend>Owner approval checklist</legend><p>The three prepared proposals begin unapproved. Only approve material you have individually checked for public release. Linking to a collaborator's work is not permission to copy their media.</p>
 <div class="checks">
 <label><input type="checkbox" id="check-rights"> Rights and contributors checked</label>
 <label><input type="checkbox" id="check-meta"> Title and synopsis approved</label>
