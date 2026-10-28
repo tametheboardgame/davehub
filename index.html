@@ -34,10 +34,14 @@
     <div class="world-colour" aria-hidden="true"></div>
     <div class="world-shade" aria-hidden="true"></div>
 
-    <!-- Reserved for the independent illustrated Dave animation later. -->
+    <!-- DH-06D: the transparent motion clip replaces Dave's static pose when supported. -->
     <div class="dave-stage" id="dave-stage" aria-hidden="true">
       <img class="dave-stage__still" src="assets/characters/dave/dave-static-v1.webp"
            width="989" height="1448" alt="" loading="eager" decoding="async">
+      <video class="dave-stage__motion" id="dave-stage-motion"
+             width="480" height="854" muted playsinline preload="none" aria-hidden="true">
+        <source src="assets/characters/dave/dave-animation-v1.webm" type="video/webm; codecs=vp9">
+      </video>
     </div>
 
     <header class="page-top">

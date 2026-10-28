@@ -12,6 +12,7 @@ for asset in \
   assets/branding/davehub-logo-faithful.svg \
   assets/homepage/floating-islands-background.png \
   assets/characters/dave/dave-static-v1.webp \
+  assets/characters/dave/dave-animation-v1.webm \
   prototypes/dh-07c/index.html \
   prototypes/dh-08/index.html \
   content/public/catalogue.json \
@@ -40,6 +41,7 @@ cp index.html styles.css main.js catalogue.js dist/
 cp assets/branding/davehub-logo-faithful.svg dist/assets/branding/
 cp assets/homepage/floating-islands-background.png dist/assets/homepage/
 cp assets/characters/dave/dave-static-v1.webp dist/assets/characters/dave/
+cp assets/characters/dave/dave-animation-v1.webm dist/assets/characters/dave/
 cp prototypes/dh-07c/index.html dist/previews/dh-07c/index.html
 cp prototypes/dh-08/index.html dist/previews/dh-08/index.html
 cp content/examples/fictional.json dist/previews/dh-08/catalogue.json

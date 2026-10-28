@@ -129,3 +129,23 @@ Initial outside-GitHub creative links suggest additional kinds of records: publi
 - Development should use small reviewable work packages, tests and preview links after an actual deployment.
 - Update `PROJECT_STATE.json` and this roadmap at each completed work package.
 - Publication of another project's source, asset or private content requires separate approval.
+
+
+## DH-06D — transparent illustrated Dave homepage animation (review)
+
+- Owner supplied a five-second 720×1280 QuickTime animation with a confirmed genuine alpha channel, 121 source frames; the source MOV stays outside the public web build.
+- Optimised browser motion asset: VP9 WebM with alpha, 480×854, 24 fps, 289,843 bytes, SHA-256 `1ed2277df5316b5b7f3c2ac2747e69d1492e011d5605ac4af37043bfaf072ead`.
+- Integrate into the existing `#dave-stage`, preserving responsive positioning and the approved WebP still as fallback.
+- Motion is decorative, silent, noninteractive and does not intercept pointer events. Avoid perpetual 5-second repetition; pause between gestures.
+- Disable video for `prefers-reduced-motion`, Save-Data, iOS, Safari and playback failures.
+- Acceptance: Cloudflare branch preview; verify transparency and position on Chrome/Edge desktop and mobile, Safari static fallback, all navigation working, no oversized downloads.
+- Status: code and asset prepared on feature branch for review. Do not merge until owner confirms appearance.
+
+### DH-06D1 — larger upper-body framing (owner review, 28 October 2026)
+
+- Owner requested a much larger Dave, with the head, shoulders, chest and pointing hand dominant; legs can be cropped below the screen.
+- Increased desktop Dave height up to 155svh (width-limited on narrow desktops) and aligned the top around 14svh, keeping his head visible while cropping the legs below the viewport.
+- Re-aligned transparent video relative to the static still so the gesture stays near, but does not cover, the desktop Explore CTA.
+- Tablet and portrait-mobile rules use upper-body crops; landscape-phone framing remains explicit.
+- Still and motion share geometry and remain noninteractive; Safari, reduced-motion, and playback fallback remain unchanged.
+- Added CSS layout regression assertions. Review Cloudflare branch preview at desktop, tablet and mobile before merging.
