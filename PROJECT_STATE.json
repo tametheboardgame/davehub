@@ -130,7 +130,7 @@
   "last_verified": {
     "scope": "DH-08B homepage integration fix",
     "result": "Homepage CTA now links to /worlds/ and each of four islands links to category URLs; retired old modal UI; legacy hashes redirect to generated routes; public zero-content index links clearly to isolated fictional walkthrough. Added five navigation tests, Cloudflare build to verify.",
-    "animation_review": "DH-06D1 CSS changes on feature/dh-06d-transparent-dave-animation: desktop 140svh/-55svh, tablet 118svh/-43svh, mobile 102svh/-30svh; motion and still share crop; browser visual review pending"
+    "animation_review": "DH-06D1 CSS changes on feature/dh-06d-transparent-dave-animation: desktop up to 155svh with 14svh top, tablet 118svh/-43svh, mobile 102svh/-30svh; motion and still share crop; browser visual review pending"
   },
   "domain": {
     "primary": "davehub.co.uk",
