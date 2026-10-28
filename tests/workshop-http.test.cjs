@@ -49,6 +49,10 @@ test('local preview, seeded proposals, duplicate imports and export gate work en
   const cookie=root.headers.get('set-cookie')?.split(';')[0];
   assert.ok(token&&cookie,'Private editor must issue a session');
   const headers={'X-Workshop-Token':token,'Content-Type':'application/json'};
+  const before=await fetch(base+'/api/readiness',{headers});
+  assert.equal(before.status,200);
+  const emptyReview=await before.json();
+  assert.equal(emptyReview.prepared,0);assert.equal(emptyReview.readyForProposal,0);
   const seed=await fetch(base+'/api/seed',{method:'POST',headers,body:'{}'});
   assert.equal(seed.status,200);
   assert.deepEqual((({added,skipped,count})=>({added,skipped,count}))(await seed.json()),{added:3,skipped:0,count:3});
@@ -58,6 +62,19 @@ test('local preview, seeded proposals, duplicate imports and export gate work en
   const data=await drafts.json();
   assert.equal(data.candidates.length,3);
   assert.ok(data.candidates.every(c=>!c.ownerApproved&&c.status==='needs_review'));
+  const review=await fetch(base+'/api/readiness',{headers});
+  assert.equal(review.status,200);
+  const readiness=await review.json();
+  assert.equal(readiness.prepared,3);
+  assert.equal(readiness.readyForProposal,0);
+  assert.ok(readiness.items.every(item=>item.checked===0&&item.openChecks.length>=4));
+  const bypass=await fetch(base+'/api/save',{
+    method:'POST',headers,
+    body:JSON.stringify({...data.candidates[0],sourceUrl:'javascript:alert(1)',status:'needs_review'})
+  });
+  assert.equal(bypass.status,400,'Saving an unapproved draft must also reject unsafe links');
+  const after=await (await fetch(base+'/api/drafts',{headers})).json();
+  assert.equal(after.candidates[0].sourceUrl,data.candidates[0].sourceUrl,'Rejected edit must not persist');
   const preview=await fetch(base+'/creations/unicorn-valley/',{headers:{Cookie:cookie}});
   assert.equal(preview.status,200);
   const page=await preview.text();
