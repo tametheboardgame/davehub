@@ -30,7 +30,7 @@ done
 
 # A private draft must never become a deployed page through a build bypass.
 # Validate both the empty/approved production manifest and fictional test fixtures.
-node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs
+node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs
 node -e "const {validateManifest}=require('./scripts/davehub-manifest.cjs'); const data=require('./davehub.json'); const result=validateManifest(data,'tametheboardgame/davehub');if(!result.valid)throw new Error(result.errors.join('; '));"
 # Fail closed: until the owner approves the three proposals, production cannot include them.
 node scripts/content-check.cjs content/public/catalogue.json
@@ -48,7 +48,8 @@ cp prototypes/dh-07c/index.html dist/previews/dh-07c/index.html
 cp prototypes/dh-08/index.html dist/previews/dh-08/index.html
 cp content/examples/fictional.json dist/previews/dh-08/catalogue.json
 cp content/public/catalogue.json dist/content/catalogue.json
-cp assets/content/worlds.css dist/assets/content/worlds.css
+cp assets/content/worlds.css dist/assets/content/
+cp assets/content/staging-review.js dist/assets/content/worlds.css
 # Both live and fictional pages come from the same validated template generator.
 # Never copy example items into dist/worlds or dist/creations.
 node scripts/render-content.cjs content/public/catalogue.json dist '' public
