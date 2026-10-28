@@ -22,8 +22,10 @@ function validateConfig(lock=config){
  const ids=new Set(),outputPaths=new Set();
  for(const g of lock.games){
   if(!GAME.test(g.id)||!GAME.test(g.catalogueId)||ids.has(g.id)||g.output!=='games/'+g.id||
-    outputPaths.has(g.output)||!REPO.test(g.repository)||!SHA.test(g.commit)||
-    !['static-node','vite-subpath'].includes(g.build))throw Error('Invalid or duplicate game lock entry');
+    outputPaths.has(g.output)||!REPO.test(g.repository)||
+    (g.build==='vite-subpath'&&!SHA.test(g.commit))||
+    (g.build==='upstream-proxy'&&(g.upstream!=='https://stephen-martin-project.pages.dev/'||!SHA.test(g.sourceCommitAtReview)))||
+    !['vite-subpath','upstream-proxy'].includes(g.build))throw Error('Invalid or duplicate game lock entry');
   ids.add(g.id);outputPaths.add(g.output);
  }
  if(!ids.has('stephen-martin')||!ids.has('unicorn-valley'))throw Error('Both agreed games are required');
@@ -111,8 +113,8 @@ function getPinnedSource(game,temp){
  return dir;
 }
 function buildGame(game,sourceDir,outputDir){
- if(game.build==='static-node')run('npm',['run','build'],sourceDir);
- else {
+ if(game.build!=='vite-subpath')throw Error('Only pinned Vite distributions are built locally');
+ {
   run('npm',['ci','--no-audit','--no-fund'],sourceDir);
   run('npm',['run','audio:catalogue'],sourceDir);
   run('npm',['run','story:catalogue'],sourceDir);
@@ -132,17 +134,26 @@ function buildGame(game,sourceDir,outputDir){
 }
 function checkOnly(directory){
  for(const game of validateConfig()){
+  if(game.build==='upstream-proxy'){
+   const proxy=path.join(root,'functions/games',game.id,'[[path]].js');
+   if(!fs.existsSync(proxy))throw Error('Public-origin game proxy missing: '+game.id);
+   const routes=JSON.parse(fs.readFileSync(path.join(directory,'_routes.json'),'utf8'));
+   if(routes.version!==1||routes.include.length!==1||routes.include[0]!=='/games/stephen-martin/*')
+    throw Error('Cloudflare Pages Functions routes must be confined to Stephen Martin only');
+   continue;
+  }
   const where=path.join(directory,game.output);
   if(!fs.existsSync(where))throw Error('Game output missing: '+game.output);
   verifyIndex(where,game.id);
  }
- console.log('PASS all same-origin DaveHub game bundles');
+ console.log('PASS pinned Unicorn Valley bundle and scoped Stephen Martin same-origin proxy');
 }
 function bundle(out){
  const games=validateConfig();
  const temp=fs.mkdtempSync(path.join(os.tmpdir(),'davehub-pinned-games-'));
  try{
   for(const game of games){
+   if(game.build==='upstream-proxy')continue;
    const dir=getPinnedSource(game,temp);
    buildGame(game,dir,out);
   }
