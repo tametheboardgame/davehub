@@ -60,7 +60,7 @@ dist/
       public/assets/...
 ```
 
-The existing Cloudflare Pages project deploys that **single** `dist/` tree. Paths are domain-relative, so both `davehub.pages.dev` and future `davehub.co.uk` work identically.
+Each Pages project deploys its **own build of the same `dist/` tree layout**, from its configured branch. Paths are domain-relative, so `davehub.pages.dev` (staging) and `davehub.co.uk` (live) behave identically for a given release but are free to run different reviewed revisions.
 
 A version-pinned release manifest should record each included source repository, exact **main commit SHA**, bundle version/SHA-256, complete inventory count and maximum asset size. **Never download floating `main` during public builds:** game updates should only reach DaveHub after a reviewed game-release promotion. Avoid committing privately sourced content, authentication tokens or giant generated bundles to DaveHub source history. Game build/download automation still needs a subsequent implementation phase and an explicit release-artifact mechanism.
 
