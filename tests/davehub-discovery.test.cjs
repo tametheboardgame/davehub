@@ -3,6 +3,7 @@ const test=require('node:test');
 const assert=require('node:assert/strict');
 const {validateManifest,toReviewCandidate}=require('../scripts/davehub-manifest.cjs');
 const {discover}=require('../scripts/davehub-discover.cjs');
+const {toWorkshopImport}=require('../scripts/davehub-workshop-import.cjs');
 const source='tametheboardgame/unicorn-valley';
 const good={
  schemaVersion:1,enabled:true,id:'unicorn-valley',title:'Unicorn Valley',
@@ -85,4 +86,21 @@ test('scanner ignores archived, forked and private repos even if API returns the
  ];
  const r=await discover({fetchFn:async url=>url.includes('/users/')?{status:200,ok:true,json:async()=>list}:{status:404,ok:false,json:async()=>({})}});
  assert.equal(r.counts.scanned,1);
+});
+
+test('scanner output imports to private Workshop without publication approval',async()=>{
+ const report=await discover({fetchFn:fakeApi(['unicorn-valley'],{'unicorn-valley':good})});
+ const imported=toWorkshopImport(report);
+ assert.equal(imported.candidates.length,1);
+ const c=imported.candidates[0];
+ assert.equal(c.status,'needs_review');
+ assert.equal(c.ownerApproved,false);
+ assert.equal(c.review.rights,false);
+ assert.equal(c.review.metadata,false);
+ assert.equal(c.linkUrl,'https://unicorn-valley.pages.dev/');
+ assert.equal(c.sourceKind,'repository');
+});
+test('Workshop importer rejects report not marked review-only',()=>{
+ const report={schemaVersion:1,mode:'approved',candidates:[]};
+ assert.throws(()=>toWorkshopImport(report),/Invalid read-only/);
 });
