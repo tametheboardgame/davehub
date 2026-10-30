@@ -34,7 +34,7 @@ done
 
 # A private draft must never become a deployed page through a build bypass.
 # Validate both the empty/approved production manifest and fictional test fixtures.
-node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs
+node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs tests/dh10c-editorial.test.cjs
 node -e "const {validateManifest}=require('./scripts/davehub-manifest.cjs'); const data=require('./davehub.json'); const result=validateManifest(data,'tametheboardgame/davehub');if(!result.valid)throw new Error(result.errors.join('; '));"
 # Fail closed: only individually owner-approved records and links enter production.
 node scripts/content-check.cjs content/public/catalogue.json
@@ -63,6 +63,9 @@ node scripts/render-content.cjs content/examples/fictional.json dist/previews/dh
 # Publicly visible, LAYOUT-ONLY review of three existing public project names.
 # It never includes unapproved editorial text, outgoing links or private drafts.
 node scripts/render-review-layout.cjs dist/previews/dh-08c
+# The review desk reads public GitHub markers in the browser and writes nothing.
+# Never bundle the local Content Workshop or unapproved editorial descriptions.
+node scripts/render-editorial-review.cjs dist/review
 # Each game is independently built from its pinned upstream commit. Static
 # output is deployed under the same DaveHub origin, not embedded via iframe.
 # Fail the entire build if either pinned game cannot be built and verified.
