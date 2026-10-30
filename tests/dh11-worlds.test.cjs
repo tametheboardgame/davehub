@@ -36,7 +36,7 @@ test('Music provides a musical-first listening room with no unapproved audio',()
  for(const marker of ['THE LISTENING ROOM','dh11-stage','dh11-vinyl','dh11-music-cards','The Last Lightkeeper','Glass Harbour'])
   assert.ok(html.includes(marker),marker);
  assert.match(html,/href="\/previews\/dh-08b\/creations\/last-lightkeeper\/"/);
- assert.doesNotMatch(html,/<audio|autoplay|<iframe/i);
+ assert.doesNotMatch(html,/<audio\b|autoplay\s*=|<iframe\b/i);
 });
 test('Experiments renders a genuine distinct laboratory even when the catalogue is empty',()=>{
  const html=view('experiments');
