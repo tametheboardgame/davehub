@@ -15,7 +15,7 @@
 
 1. Open `https://davehub.pages.dev/review/` and look at currently opted-in public projects. A GitHub API rate-limit warning has a link to the weekly discovery report.
 2. Open the **Prepare a publication proposal** link. Sign in to GitHub if required, and select **Run workflow** on the `staging` branch.
-3. Select **publish**, **revise** or **withdraw**. Copy the source repository name (for example `tametheboardgame/ordinary-universe`) and ID from the review page.
+3. Select **publish**, **revise** or **withdraw**. Copy the source repository name (as shown on the review page) and ID from the review page.
 4. For publish/revise, supply a **fully public and explicitly approved synopsis**. Optional `categories` accepts recognised comma-separated world IDs (for example `writing,projects,experiments`). Omit to use the source marker's categories.
 5. The form must include confirmation `I APPROVE THIS PUBLICATION PROPOSAL` and four true attestations for contributor/rights, title/synopsis/category metadata, working destination/source links and media review. **No images or recordings are copied by this version.**
 6. The workflow fetches the public marker at the current source default branch, validates the candidate and prepares a diff to `content/public/catalogue.json`. It writes to **a PR branch**, never directly to `staging`.
@@ -38,7 +38,9 @@ Browser discovery uses unauthenticated GitHub public API endpoints. GitHub rate 
 
 ## Next slices of DH-10C
 
-- Review and (after explicit owner approval) publish **The Ordinary Universe** and **October Film Marathon** as the first new content proposals.
+- Use the first future *owner-nominated, publication-ready* project to prove the full proposal → review → merge → staging cycle. There is currently no approved first candidate.
+- **The Ordinary Universe / The Ordinary Verse** remains intentionally excluded until the owner declares it ready; its source `davehub.json` is disabled.
+- **October Film Marathon / Octo-Marathon** is not intended for DaveHub; its source `davehub.json` is disabled. Do not re-propose it for publication.
 - Create convenient GitHub issue-form/editor front-end if owner feedback shows the workflow dispatch form is cumbersome.
 - Build safe, reviewed media upload and external creative-work intake for books/music/other work without a GitHub repo.
 - Track source manifest changes as *suggestions* only; never silently overwrite approved content.
