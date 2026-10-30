@@ -34,6 +34,11 @@ on:
       - 'scripts/render-review-layout.cjs'
       - 'tests/review-layout.test.cjs'
       - 'content/public/catalogue.json'
+      - 'scripts/render-editorial-review.cjs'
+      - 'scripts/check-dh10c-staging.cjs'
+      - 'tests/dh10c-editorial.test.cjs'
+      - 'tests/dh10c-hosted-http.test.cjs'
+      - 'assets/editorial/**'
       - '.github/workflows/davehub-discovery.yml'
   push:
     branches: [main, staging]
@@ -67,6 +72,11 @@ on:
       - 'scripts/render-review-layout.cjs'
       - 'tests/review-layout.test.cjs'
       - 'content/public/catalogue.json'
+      - 'scripts/render-editorial-review.cjs'
+      - 'scripts/check-dh10c-staging.cjs'
+      - 'tests/dh10c-editorial.test.cjs'
+      - 'tests/dh10c-hosted-http.test.cjs'
+      - 'assets/editorial/**'
       - '.github/workflows/davehub-discovery.yml'
 permissions:
   contents: read
