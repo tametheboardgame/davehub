@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "enabled": true,
-  "stagingBranch": "main",
+  "stagingBranch": "staging",
   "stagingHost": "davehub.pages.dev",
   "liveDomainConfigured": false,
   "autoLivePromotion": false,
@@ -13,5 +13,5 @@
       "poll": "hourly"
     }
   },
-  "notes": "DH-09E: main is temporarily Cloudflare staging. Before configuring davehub.co.uk/live main, change stagingBranch and update Cloudflare staging project accordingly; never auto-promote games to live."
+  "notes": "Default main-branch GitHub scheduler now targets staging branch only after Cloudflare staged cutover verification. No future public live promotion on main is automatic."
 }

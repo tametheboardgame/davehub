@@ -93,7 +93,7 @@ test('published-game build emits a SHA-bound release-marker contract',()=>{
 test('staging-only policy blocks accidental later live-domain promotion',()=>{
  const policy=JSON.parse(fs.readFileSync(path.join(__dirname,'../config/game-auto-sync-policy.json'),'utf8'));
  assert.equal(validateStagingPolicy(policy),policy);
- for(const change of [{liveDomainConfigured:true},{autoLivePromotion:true},{stagingBranch:'staging'},{enabled:false}]){
+ for(const change of [{liveDomainConfigured:true},{autoLivePromotion:true},{stagingBranch:'main'},{enabled:false}]){
   assert.throws(()=>validateStagingPolicy({...policy,...change}),/auto-sync|Auto-sync policy differs|Unsafe deployment/i);
  }
 });
