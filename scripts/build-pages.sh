@@ -22,9 +22,12 @@ for asset in \
   content/public/catalogue.json \
   content/examples/fictional.json \
   assets/content/worlds.css \
+  assets/content/dh11-worlds.css \
   scripts/render-content.cjs \
+  scripts/render-dh11-worlds.cjs \
   tests/render-content.test.cjs \
-  tests/navigation.test.cjs
+  tests/navigation.test.cjs \
+  tests/dh11-worlds.test.cjs
 do
   if [ ! -s "$asset" ]; then
     printf 'Missing or empty required file: %s\n' "$asset" >&2
@@ -34,7 +37,7 @@ done
 
 # A private draft must never become a deployed page through a build bypass.
 # Validate both the empty/approved production manifest and fictional test fixtures.
-node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs tests/dh10c-editorial.test.cjs tests/dh10c-hosted-http.test.cjs
+node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/dh11-worlds.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs tests/dh10c-editorial.test.cjs tests/dh10c-hosted-http.test.cjs
 node -e "const {validateManifest}=require('./scripts/davehub-manifest.cjs'); const data=require('./davehub.json'); const result=validateManifest(data,'tametheboardgame/davehub');if(!result.valid)throw new Error(result.errors.join('; '));"
 # Fail closed: only individually owner-approved records and links enter production.
 node scripts/content-check.cjs content/public/catalogue.json
@@ -54,7 +57,7 @@ cp prototypes/dh-07c/index.html dist/previews/dh-07c/index.html
 cp prototypes/dh-08/index.html dist/previews/dh-08/index.html
 cp content/examples/fictional.json dist/previews/dh-08/catalogue.json
 cp content/public/catalogue.json dist/content/catalogue.json
-cp assets/content/worlds.css dist/assets/content/
+cp assets/content/worlds.css assets/content/dh11-worlds.css dist/assets/content/
 cp assets/content/staging-review.js dist/assets/content/
 # Both live and fictional pages come from the same validated template generator.
 # Never copy example items into dist/worlds or dist/creations.
@@ -103,6 +106,13 @@ for(const slug of ['unicorn-valley','stephen-martin-project','tame-the-board-gam
 check('dist/previews/dh-08c/index.html',[
  'data-davehub-inline="worlds"','Unicorn Valley','The Stephen Martin Project'
 ]);
+for(const world of ['writing','music','experiments','unfinished','memory-lane']){
+ const live='dist/worlds/'+world+'/index.html';
+ const demo='dist/previews/dh-08b/worlds/'+world+'/index.html';
+ check(live,['dh11-world--'+world,'data-davehub-inline="worlds"'],['The Last Lightkeeper','The Clock of Tomorrow','Glass Harbour','Fictional design demonstration']);
+ check(demo,['dh11-world--'+world,'Fictional design demonstration']);
+}
+console.log('PASS DH-11 five public-safe creative world layouts and separate fictional demos');
 console.log('PASS three approved and styled public works, no stale preview redirect and no swapped CSS/JS assets');
 NODE
 
