@@ -1,7 +1,7 @@
 {
   "project": "DaveHub",
   "updated": "2026-10-28",
-  "status": "dh09d_main_scheduler_activation_held_for_cloudflare_verification",
+  "status": "dh09d_phase_b_staging_cloudflare_cutover_verified",
   "current_work_package": "DH-09D",
   "completed": [
     "DH-00A",
@@ -200,9 +200,9 @@
     "remote_status": "connected"
   },
   "last_verified": {
-    "scope": "DH-09E first automatic game release and no-op health verification",
-    "result": "Cloudflare Pages served pinned Unicorn Valley SHA 473506e2 with version main-ci-40093204337 on live davehub.pages.dev. HTTP smoke 40728639308 and post-monitor smoke 40729189325 passed, no-op GitHub updater run 40729189306 checked actual remote SHA/version. 2026-10-28 16:46 GMT. Full browser gameplay/save migration remains separate.",
-    "animation_review": "DH-06D1 CSS changes on feature/dh-06d-transparent-dave-animation: desktop up to 155svh with 14svh top, tablet 118svh/-43svh, mobile 102svh/-30svh; motion and still share crop; browser visual review pending"
+    "scope": "DH-09D Cloudflare production-branch migration from main to staging",
+    "result": "Verified davehub.pages.dev/deployment.json environment=staging, branch=staging, phase=staging_cutover, SHA 97baa4e4...; HTTP acceptance for both games, project pages and pinned Unicorn release passed GitHub #41104539053. First main-scheduled updater after PR #47 targeted staging and no-op passed #41104830463 on 2026-10-30.",
+    "date": "2026-10-30"
   },
   "domain": {
     "primary": "davehub.co.uk",
@@ -634,7 +634,7 @@
     "sourceReleasePolicy": "Unicorn Valley public main exact SHA requires successful CI push workflow",
     "ciRevalidation": "check upstream before build and after full DaveHub build",
     "releaseMarker": "/games/unicorn-valley/davehub-release.json",
-    "approvalBoundary": "staging only while main is still staging; future live main is owner-promoted",
+    "approvalBoundary": "staging branch and davehub.pages.dev only; future main/live domain requires manual approved promotion",
     "stephen": "same-origin proxy automatically tracks existing public upstream releases; private repo untouched",
     "status": "GitHub auto-sync build and bot commit succeeded; Cloudflare exact-SHA/version HTTP smoke passed; no-op health validation passed",
     "ownerApprovedScope": "automatic releases to davehub.pages.dev staging only; never to davehub.co.uk",
@@ -649,7 +649,9 @@
     "recoveryIssue": 42,
     "recoveryIssueStatus": "closed_resolved_2026-10-28",
     "cloudflareBuildSkipForMonitoringCommits": true,
-    "next": "Future successful Unicorn Valley main commits sync hourly to staging subject to exact CI and full build. Stephen Martin proxy follows its public deployment. Production custom-domain promotion remains manual."
+    "next": "Future successful Unicorn Valley main commits sync hourly to staging subject to exact CI and full build. Stephen Martin proxy follows its public deployment. Production custom-domain promotion remains manual.",
+    "stagingBranch": "staging",
+    "lastCutoverHealthRun": 41104830463
   },
   "dh10": {
     "phase": "dh_10a_b_merged",
@@ -676,29 +678,40 @@
     "domainChange": "none"
   },
   "dh09d": {
-    "phase": "phase_b_main_orchestrator_activation_held",
+    "phase": "phase_b_complete_production_not_started",
     "stagingBranchCreated": true,
     "stagingBranch": "staging",
     "existingPagesProject": "davehub",
-    "existingPagesProductionBranch": "main",
+    "existingPagesProductionBranch": "staging",
     "existingStagingHost": "davehub.pages.dev",
     "futureLivePagesProject": "davehub-live",
     "futureLiveProductionBranch": "main",
     "futureLiveHost": "davehub.co.uk",
     "liveDomainConnected": false,
-    "cloudflareSettingsChanged": false,
+    "cloudflareSettingsChanged": true,
     "deploymentTopology": "config/deployment-topology.json",
-    "currentTopologyPhase": "pre_cutover",
+    "currentTopologyPhase": "staging_cutover",
     "cutoverGuardScript": "scripts/dh09d-topology.cjs",
     "releaseIdentityEndpoint": "/deployment.json",
     "stageOnlyBotBranchSelection": "policy validated; presently main until Cloudflare production branch is switched",
     "rolloutInstructions": "docs/DH09D_CUTOVER_EXECUTION.md",
-    "next": "Do not merge main activation until Cloudflare existing davehub production deploy proves staging branch, staging environment marker exact SHA and gameplay",
+    "next": "Phase C is separately approved owner-led public launch: prepare live-role main release, create distinct davehub-live Pages project, domain/DNS/TLS verification and branch protection; NEVER attach live domain to davehub staging project.",
     "guardPR": 44,
     "guardPRMergedCommit": "ba102dd8af7d7c58970322fa1d839ae5f710a1ff",
     "ci": "11 discovery tests + 88 site tests + 30 game/deployment tests passed; full pinned Unicorn static game built",
-    "stagingBranchSyncedToReviewedMain": true,
+    "stagingBranchSyncedToReviewedMain": false,
     "mainAutoSyncPaused": false,
-    "targetBranch": "staging"
+    "targetBranch": "staging",
+    "cloudflareProductionRole": "staging",
+    "stagingDeployedCommit": "97baa4e4f08ecaddab4a2371b223faf0409ab384",
+    "stagingIdentityVerificationRun": 41104539053,
+    "stagingIdentityVerification": "success_2026-10-30T18:10Z",
+    "stagingAssetVerification": "both same-origin games, HTML/JS/CSS/audio/image and creation links passed",
+    "mainOrchestratorPR": 47,
+    "mainOrchestratorMergedCommit": "867b73c70e468958d04e2267714ef29b6619a0f9",
+    "gameAutoSyncTargetBranch": "staging",
+    "gameAutoSyncNoopVerificationRun": 41104830463,
+    "gameAutoSyncNoopVerification": "success_2026-10-30T18:12Z; target staging; exact deployed game SHA/version match",
+    "productionPagesProjectConfigured": false
   }
 }
