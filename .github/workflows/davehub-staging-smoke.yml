@@ -5,6 +5,9 @@ on:
     branches: [main, staging]
     paths:
       - 'scripts/render-content.cjs'
+      - 'scripts/render-dh11-worlds.cjs'
+      - 'assets/content/dh11-worlds.css'
+      - 'tests/dh11-worlds.test.cjs'
       - 'scripts/render-editorial-review.cjs'
       - 'scripts/check-dh10c-staging.cjs'
       - 'assets/editorial/**'
