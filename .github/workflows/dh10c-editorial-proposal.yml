@@ -1,0 +1,121 @@
+name: DH-10C owner-reviewed catalogue proposal
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: Action (creates a review PR, never publishes directly)
+        type: choice
+        options: [publish, revise, withdraw]
+        default: publish
+        required: true
+      source_repository:
+        description: Public source repository, e.g. tametheboardgame/ordinary-universe
+        type: string
+        required: true
+      project_id:
+        description: Exact project ID from public davehub.json
+        type: string
+        required: true
+      public_synopsis:
+        description: Public-facing text (required for publish/revise; no private drafts)
+        type: string
+        required: false
+      categories:
+        description: Comma-separated world names, or leave blank to use manifest categories
+        type: string
+        required: false
+      confirmation:
+        description: Type exactly I APPROVE THIS PUBLICATION PROPOSAL
+        type: string
+        required: true
+      rights_reviewed:
+        description: I have reviewed ownership, credits and rights
+        type: boolean
+        required: true
+        default: false
+      metadata_reviewed:
+        description: I have reviewed title, public text and classification
+        type: boolean
+        required: true
+        default: false
+      links_reviewed:
+        description: I have verified public links and source identity
+        type: boolean
+        required: true
+        default: false
+      media_reviewed:
+        description: I confirm no unapproved media will be copied
+        type: boolean
+        required: true
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: dh10c-editorial-proposals
+  cancel-in-progress: false
+
+jobs:
+  propose:
+    if: github.repository == 'tametheboardgame/davehub' && github.actor == 'tametheboardgame' && github.ref == 'refs/heads/staging'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: staging
+          persist-credentials: true
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+      - name: Set UTC owner-review date
+        id: date
+        run: echo "today=$(date -u +%F)" >> "$GITHUB_OUTPUT"
+      - name: Create owner-reviewed validated catalogue change (not published)
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          EDITORIAL_OPERATION: ${{ inputs.operation }}
+          EDITORIAL_ID: ${{ inputs.project_id }}
+          EDITORIAL_SOURCE: ${{ inputs.source_repository }}
+          EDITORIAL_SYNOPSIS: ${{ inputs.public_synopsis }}
+          EDITORIAL_CATEGORIES: ${{ inputs.categories }}
+          EDITORIAL_CONFIRMATION: ${{ inputs.confirmation }}
+          REVIEW_RIGHTS: ${{ inputs.rights_reviewed }}
+          REVIEW_METADATA: ${{ inputs.metadata_reviewed }}
+          REVIEW_LINKS: ${{ inputs.links_reviewed }}
+          REVIEW_MEDIA: ${{ inputs.media_reviewed }}
+          EDITORIAL_DATE: ${{ steps.date.outputs.today }}
+        run: node scripts/dh10c-editorial-proposal.cjs
+      - name: Validate full public catalogue; only one intended record changes
+        run: |
+          set -eu
+          node scripts/content-check.cjs content/public/catalogue.json
+          git diff --exit-code -- . ':!content/public/catalogue.json'
+          test -n "$(git diff --name-only -- content/public/catalogue.json)"
+      - name: Open a staging publication review PR (never merge automatically)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OPERATION: ${{ inputs.operation }}
+          PROJECT_ID: ${{ inputs.project_id }}
+          SOURCE_REPOSITORY: ${{ inputs.source_repository }}
+          RUN_NUMBER: ${{ github.run_id }}
+        run: |
+          set -eu
+          branch="review/dh10c-${PROJECT_ID}-${RUN_NUMBER}"
+          git switch -c "$branch"
+          git add content/public/catalogue.json
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m "review(DH-10C): ${OPERATION} ${PROJECT_ID} (owner approval required)"
+          git push origin "HEAD:refs/heads/$branch"
+          body="Owner-initiated DH-10C proposal for ${PROJECT_ID} from ${SOURCE_REPOSITORY}.
+
+          Publication is **NOT** active until the owner reviews this exact diff, all checks pass and this PR is merged into \`staging\`. No media assets or private source have been imported. Confirm credits, rights, categories and working links before merging. To withdraw a previously published project, use a separate owner-reviewed withdrawal PR.
+
+          Source GitHub Actions run: https://github.com/tametheboardgame/davehub/actions/runs/${{ github.run_id }}"
+          if ! gh pr create --repo tametheboardgame/davehub --base staging --head "$branch" --title "DH-10C: ${OPERATION} ${PROJECT_ID} (review required)" --body "$body"; then
+            echo "::error::GitHub Actions could push the review branch but could not open the PR. Check Settings > Actions > General > Workflow permissions > Allow GitHub Actions to create and approve pull requests."
+            echo "Open a PR manually at https://github.com/tametheboardgame/davehub/compare/staging...$branch"
+            exit 1
+          fi

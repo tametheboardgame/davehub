@@ -38,6 +38,10 @@ The two independent game codebases and future staging/live deployment remain sep
 
 The earlier local Content Workshop remains optional for future nominations, not the default owner review method; browser-based Cloudflare staging reviews are the standard.
 
+## DH-10C: Hosted editorial review and publication proposals
+
+Use `https://davehub.pages.dev/review/` to see opted-in **public** creative repositories and their current DaveHub listing status. For actual changes, use the [DH-10C authenticated GitHub Actions proposal workflow](.github/workflows/dh10c-editorial-proposal.yml) to propose a new publication, revision or withdrawal. The workflow requires owner/editorial sign-off, validates the upstream public marker and current catalogue, and creates a **review PR against staging**. It never automatically publishes, and no private draft text or media is copied into the hosted review page. See [the operating guide](docs/DH10C_HOSTED_EDITORIAL_WORKFLOW.md).
+
 ## DH-10D: Default-off marker in every managed new repository
 
 Create new repositories through `node scripts/davehub-new-repo.cjs NAME` (defaults private). Its first Git commit includes a root `davehub.json` with `{"schemaVersion":1,"enabled":false}`. For an existing repository missing the file, use `node scripts/davehub-new-repo.cjs --repair NAME`; an existing manifest is never overwritten. The Monday discovery audit reports newly created **public** repos missing the marker. Private repositories created outside the helper cannot be checked by that read-only GitHub Action. See [DH-10D repository bootstrap](docs/DH10D_REPOSITORY_BOOTSTRAP.md).
