@@ -6,7 +6,7 @@ Status: staging-only implementation; no new source project or public catalogue r
 
 The approved DaveHub homepage, Games world, project listing pages, same-origin games and Cloudflare staging/live separation remain unchanged. Each of the other five existing routes now has a separate visual language, backed exclusively by the same validated catalogue:
 
-- **Writing**, /worlds/writing/: an illustrated paper manuscript and a responsive reading-desk index. Canonical titles and synopses are the only live data.
+- **Writing**, /worlds/writing/: **The Manuscript Hoard**, an immersive disorderly den of layered approved manuscripts, loose fragments, notebooks, scripts and concealed pages. The five piles organise the approved catalogue without turning it into a neat card grid. Native expandable controls let the visitor rummage beneath the uppermost manuscript; only approved titles, links and synopses appear. Fictional examples remain preview-only.
 - **Music**, /worlds/music/: illustrated vinyl and equaliser, a musical-first featured record, and linked song, script/scene and release cards. No audio autoplay, embeds or unapproved files.
 - **Experiments**, /worlds/experiments/: a CSS apparatus over a grid, specimen-workbench introductions and approved experiment cards when available. The machine is labelled as decorative, not a claim of an actual project.
 - **The Unfinished Shelf**, /worlds/unfinished/: an archive shelf with book spines and fragment captions. Explicitly no tasks, completion metrics or promises to resume the work.
@@ -37,3 +37,13 @@ The Cloudflare Pages build runs tests/dh11-worlds.test.cjs alongside all earlier
 ## Follow-up design phase
 
 After this visual baseline, build first-class musical **creation-detail** pages with explicit narrative, tracks, characters, scripts, credits and releases from approved linked records. Do not confuse concept-only musicals with albums, or assume song recordings can be embedded. Later, add approved book/music/older-project intake without duplicating the catalogue.
+
+## DH-11A: The Manuscript Hoard (30 October 2026)
+
+The Writing room now appears as a chaotic manuscript den rather than a library or a standard project grid. Five piles provide a predictable source order: On top of the pile, Loose fragments, Notes from stranger worlds, Characters & scenes, and Things nearly lost. Items are grouped deterministically by record kind and lifecycle; this changes presentation only, not approval status, ownership, source data or category assignment.
+
+The uppermost approved item in a pile is an individually linked, accessible manuscript object. Where a pile contains more than one approved entry, a native HTML details/summary control labelled 'Rummage beneath this pile' reveals the rest. The HTML remains accessible with JavaScript disabled and keyboard-only navigation. Every approved Writing item appears once. Decorative paper stacks, coffee rings, scraps and stationery are CSS-only, hidden from assistive technology and never masquerade as real publications.
+
+The visual composition uses deliberate variation in rotation, layering, paper edges and object type. Desktop shows a staggered five-zone paper field; narrow screens switch to full-width ordered piles with minimal rotation, readable text, a visible focus outline and no horizontal scrolling. Reduced-motion preferences disable movement. All links continue using the existing canonical /creations/ routes; fictional data stays below /previews/dh-08b/.
+
+**Acceptance:** GitHub Actions must pass the full site build, the expanded writing render tests and same-origin game regressions. Staging Cloudflare HTTP smoke must pass before requesting owner visual review. Do not update or launch the production domain. The currently approved writing listing is Tame The Board Game; the interface must show no unrelated private or unapproved manuscripts.
