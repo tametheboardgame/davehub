@@ -1,8 +1,8 @@
 {
   "project": "DaveHub",
   "updated": "2026-10-28",
-  "status": "dh09d_staging_activation_candidate_ready",
-  "current_work_package": "DH-09D",
+  "status": "dh10c_hosted_editorial_foundation_in_qualification",
+  "current_work_package": "DH-10C",
   "completed": [
     "DH-00A",
     "DH-00B",
@@ -699,5 +699,29 @@
     "ci": "11 discovery tests + 88 site tests + 30 game/deployment tests passed; full pinned Unicorn static game built",
     "stagingBranchSyncedToReviewedMain": true,
     "autoUpdaterOnMainFrozen": true
+  },
+  "dh10c": {
+    "phase": "hosted_review_and_owner_authenticated_proposals_in_qualification",
+    "stagingOnly": true,
+    "liveDomainConfigured": false,
+    "hostedReviewPath": "/review/",
+    "proposalWorkflow": ".github/workflows/dh10c-editorial-proposal.yml",
+    "proposalEngine": "scripts/dh10c-editorial-proposal.cjs",
+    "operations": [
+      "publish",
+      "revise",
+      "withdraw"
+    ],
+    "proposalDestination": "owner-reviewed PR against staging; no direct catalogue push or merge",
+    "sourceLimit": "only public, enabled, validated root davehub.json markers from known owner",
+    "privateEditorialStorage": "not implemented; never expose private drafts on Pages",
+    "mediaImport": "none; approved media requires later explicitly reviewed implementation",
+    "defaultBranchWorkflowEntry": "workflow-only main PR needed for GitHub Actions Run workflow visibility",
+    "approvalState": "no additional creative works published during implementation",
+    "firstCandidateSuggestions": [
+      "ordinary-universe",
+      "octo-maraton-ideas"
+    ],
+    "next": "Pass full staging CI, merge hosted review workflow, mirror workflow entry on GitHub default branch without touching live-domain configuration, then owner review first two candidate synopses"
   }
 }
