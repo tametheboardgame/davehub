@@ -1,12 +1,12 @@
 # DH-09D — Safe two-project staging/live cutover execution
 
-**Phase A started 28 October 2026.** This file is the operational sequence. The existing website remains on `davehub.pages.dev`; `davehub.co.uk` is **not** connected to a Cloudflare Pages project. Do not use the existing Pages project for the custom domain.
+**Phase B completed and verified 30 October 2026.** The existing Pages project `davehub` now serves the GitHub `staging` branch at `davehub.pages.dev`. The future `davehub.co.uk` site is **not** configured, and `main` remains reserved for separately approved production releases. Earlier steps below are retained as the execution/rollback record. Do not use the existing Pages project for the custom domain.
 
 ## Verified groundwork
 
 - GitHub repository: `tametheboardgame/davehub`.
 - Permanent `staging` branch created from the known-good `main` site; changes to either branch are independently traceable.
-- Existing Pages project `davehub` still treats `main` as its production branch until Cloudflare settings are explicitly changed.
+- Existing Pages project `davehub` now treats `staging` as its production branch, verified by [deployment #41104539053](https://github.com/tametheboardgame/davehub/actions/runs/41104539053) on 30 October 2026. This line originally described the pre-cutover position.
 - Two game routes stay identical on both domains: `/games/unicorn-valley/` and `/games/stephen-martin/`.
 - The immutable Unicorn release lock remains `main-ci-40093204337` at source `473506e...`; the Stephen game still uses the scoped public-origin proxy.
 - GitHub automation now obtains its *write* branch from `config/deployment-topology.json` and the matching game policy. It is never allowed to silently update a live `main` branch after the split.
@@ -43,6 +43,17 @@ This step involves account-level Cloudflare changes, so it is a separate, explic
 If the branch is changed before the policy is ready, the build is intentionally blocked. Recover by returning the existing Pages production branch to `main`, removing the new deployment-role variable, and restoring the previous known-good deployment. Do not bypass the role check.
 
 **Default-main orchestrator activation PR:** Prepared separately. It changes the main-branch default GitHub Actions policy to `staging_cutover`, selects `staging` for all automatic game pins, and releases the temporary hold. **Do not merge this PR** until the existing Cloudflare Pages `davehub` project has deployed `staging`, the live `/deployment.json` reports the exact `staging` commit, and both games pass HTTP and browser checks. A premature merge may make Cloudflare's old `main` project fail production builds and could send a scheduled bot to the wrong branch.
+
+## Phase B verification record (30 October 2026)
+
+- Existing Cloudflare Pages project: `davehub`, production branch `staging`, production build variable `DAVEHUB_DEPLOY_ROLE=staging`.
+- First actual staging production deployment: Git SHA `97baa4e4f08ecaddab4a2371b223faf0409ab384`, Cloudflare Pages check **success**.
+- `/deployment.json`: exact identity `environment=staging`, `branch=staging`, `phase=staging_cutover`, `commit=97baa4e4...`. Verified remotely by [DH-09D acceptance workflow](https://github.com/tametheboardgame/davehub/actions/runs/41104539053).
+- Both playable game routes, their HTML, JS, CSS, Unicorn Valley audio, Stephen Martin artwork and DaveHub creation links returned expected live HTTP responses.
+- The independent game release marker returned pinned Unicorn source commit `473506e2...` and version `main-ci-40093204337`.
+- GitHub default-branch auto-sync was re-targeted to `staging` via approved [PR #47](https://github.com/tametheboardgame/davehub/pull/47). First resumed [no-change/health run #41104830463](https://github.com/tametheboardgame/davehub/actions/runs/41104830463) passed, selected `staging`, and made no release changes.
+- The later GitHub cutover documentation commits use `[CF-Pages-Skip]`; the verified Cloudflare staging version is not expected to contain those commits. `main` is now intentionally independent.
+- No production Cloudflare project or custom domain has been created. Public launch is still an explicitly approved Phase C step.
 
 ## Phase C — create an independent production Pages project
 
