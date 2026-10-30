@@ -1,7 +1,7 @@
 {
   "project": "DaveHub",
   "updated": "2026-10-28",
-  "status": "dh10c_hosted_editorial_foundation_in_qualification",
+  "status": "dh10c_hosted_editorial_foundation_deployed",
   "current_work_package": "DH-10C",
   "completed": [
     "DH-00A",
@@ -701,7 +701,7 @@
     "autoUpdaterOnMainFrozen": true
   },
   "dh10c": {
-    "phase": "hosted_review_and_owner_authenticated_proposals_in_qualification",
+    "phase": "hosted_public_safe_review_operational_first_candidate_pending",
     "stagingOnly": true,
     "liveDomainConfigured": false,
     "hostedReviewPath": "/review/",
@@ -722,6 +722,14 @@
       "ordinary-universe",
       "octo-maraton-ideas"
     ],
-    "next": "Pass full staging CI, merge hosted review workflow, mirror workflow entry on GitHub default branch without touching live-domain configuration, then owner review first two candidate synopses"
+    "next": "Owner inspect hosted review and approve actual public synopsis/credits for Octo-Marathon. Manual GitHub workflow dispatch and review PR not yet end-to-end tested.",
+    "stagingPR": 48,
+    "defaultBranchWorkflowPR": 49,
+    "remoteSmokePR": 50,
+    "cloudflareVerifiedRun": 41120428437,
+    "cloudflareVerified": "live /review/ HTTP 200 and public-safe styling/links, both game HTML/JS/CSS/media and existing creation pages passed on 2026-10-30",
+    "defaultBranchWorkflowRegistered": true,
+    "catalogueChanges": "none, three approved creations remain",
+    "candidatePublicState": "octo-maraton-ideas public enabled with ID octo-marathon; ordinary-universe repository is private and excluded from public discovery"
   }
 }
