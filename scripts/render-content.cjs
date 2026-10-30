@@ -5,10 +5,12 @@
 const fs=require('node:fs');
 const path=require('node:path');
 const {validateCatalogue}=require('./content-check.cjs');
+const {renderCreativeWorld,CREATIVE_VIEWS}=require('./render-dh11-worlds.cjs');
 // These two small, first-party resources are inlined at build time so a missing
 // Cloudflare asset route cannot degrade world pages to unstyled HTML or suppress
 // the staging review navigation. There are no external scripts or imports.
-const worldCss=fs.readFileSync(path.join(__dirname,'../assets/content/worlds.css'),'utf8');
+const worldCss=fs.readFileSync(path.join(__dirname,'../assets/content/worlds.css'),'utf8')+'\n'+
+  fs.readFileSync(path.join(__dirname,'../assets/content/dh11-worlds.css'),'utf8');
 const stagingReviewJs=fs.readFileSync(path.join(__dirname,'../assets/content/staging-review.js'),'utf8');
 if(worldCss.includes('</style>')||stagingReviewJs.includes('</script>'))throw Error('Unsafe inline asset delimiter');
 const GAME_LAUNCHES=new Map(require('../config/game-releases.json').games.map(g=>[g.catalogueId,'/'+g.output+'/']));
@@ -43,8 +45,8 @@ function sortEntries(arr,view){
  if(view==='memory-lane')return copy.sort((a,b)=>(a.period?.fromYear??9999)-(b.period?.fromYear??9999)||a.title.localeCompare(b.title));
  return copy.sort((a,b)=>a.title.localeCompare(b.title));
 }
-function shell({title,kicker,lead,body,root,preview=false,reviewRedirectEligible=false}){
- const nav=VIEWS.map(v=>'<a'+attr('href',viewUrl(root,v.id))+'>'+esc(v.title)+'</a>').join('');
+function shell({title,kicker,lead,body,root,preview=false,reviewRedirectEligible=false,theme=''}){
+ const nav=VIEWS.map(v=>'<a'+attr('href',viewUrl(root,v.id))+(v.id===theme?' aria-current="page"':'')+'>'+esc(v.title)+'</a>').join('');
  return '<!doctype html>\n<html lang="en-GB"><head><meta charset="utf-8">'+
  '<meta name="viewport" content="width=device-width,initial-scale=1">'+
  '<meta name="robots" content="noindex,nofollow">'+
@@ -52,7 +54,7 @@ function shell({title,kicker,lead,body,root,preview=false,reviewRedirectEligible
  '<title>'+esc(title)+' · DaveHub</title>'+
  '<style data-davehub-inline="worlds">'+worldCss+'</style>'+
  (reviewRedirectEligible?'<script data-davehub-inline="staging">'+stagingReviewJs+'</script>':'')+
- '</head><body><a class="skip" href="#main">Skip to content</a>'+
+ '</head><body'+(CREATIVE_VIEWS.has(theme)?' class="dh11-theme dh11-theme--'+esc(theme)+'"':'')+'><a class="skip" href="#main">Skip to content</a>'+
  '<div class="sky" aria-hidden="true"></div>'+
  '<div class="shell">'+
  '<header class="top"><a class="brand" href="/"><strong>Dave<span>Hub</span></strong><small>THE CREATIVE UNIVERSE</small></a>'+
@@ -104,11 +106,12 @@ function renderIndex(data,root,preview){
 function renderView(data,root,view,preview){
  const v=VIEWS.find(x=>x.id===view);
  const works=sortEntries(data.items.filter(i=>i.views.includes(view)),view);
+ const immersive=renderCreativeWorld({view,works,root,preview,card,dateLabel});
  const feature=works.length
    ? '<p class="found">'+works.length+' '+(works.length===1?'creation':'creations')+' in this world</p>'+linkList(works,root)
    : emptyState(root,view,preview);
- const caveat=view==='unfinished'?'<p class="quiet">The Unfinished Shelf is an archive, not a list of things that will be completed.</p>':'';
- return shell({title:v.title,kicker:'WORLD / '+v.id.toUpperCase().replaceAll('-',' '),lead:v.subtitle,body:section('Discover the creations',feature,'EXPLORE THIS WORLD')+caveat,root,preview,reviewRedirectEligible:!preview&&!data.items.length&&root===''});
+ const body=immersive||section('Discover the creations',feature,'EXPLORE THIS WORLD');
+ return shell({title:v.title,kicker:'WORLD / '+v.id.toUpperCase().replaceAll('-',' '),lead:v.subtitle,body,root,preview,theme:immersive?view:'',reviewRedirectEligible:!preview&&!data.items.length&&root===''});
 }
 function related(data,item){
  const out=new Map();
