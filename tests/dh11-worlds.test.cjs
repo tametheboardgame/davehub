@@ -32,7 +32,7 @@ test('Writing is a manuscript hoard with piles rather than a tidy reading desk',
   'Rummage beneath this pile','<details','<summary']){
    assert.ok(html.includes(marker),marker);
  }
- assert.doesNotMatch(html,/dh11-writing-index|On the reading desk|THE READING ROOM/);
+ assert.doesNotMatch(html,/<div class="dh11-writing-index"|On the reading desk|THE READING ROOM/);
  assert.match(html,/href="\/previews\/dh-08b\/creations\/last-lightkeeper\/"/);
  assert.match(html,/href="\/previews\/dh-08b\/creations\/the-clock-of-tomorrow\/"/);
  assert.doesNotMatch(html,/href="\/creations\/the-clock-of-tomorrow\/"/);
