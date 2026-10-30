@@ -61,6 +61,10 @@
 | DH-10 | Automated development stories | Significant approved project events become concise draft human-readable stories, not routine posts | Planned |
 | DH-11 | Build distinct creative worlds and later extend content types | Theme-specific Writing, Music, Experiments, Unfinished Shelf and Memory Lane rooms from the validated catalogue; public/fictional separation, responsive layouts, no new content approvals | **Layouts implemented for staging review on feature/dh11-creative-world-layouts; browser visual approval and CI required before sign-off.** Later content ingestion remains planned. |
 
+## DH-11A Writing: The Manuscript Hoard (30 October 2026)
+
+The owner rejected the tidy reading-desk concept. The new Writing world is a warm, chaotic manuscript den with paper piles, notebooks, fragments, CSS-only clutter and native 'rummage beneath' controls. Approved works remain linked through their existing creation pages; a single approved item appears just once, deeper items are keyboard-discoverable, and fictional demonstrations remain isolated. Responsive and reduced-motion tests are included. See [DH-11 visual layouts](DH11_CREATIVE_WORLD_LAYOUTS.md). Cloudflare staging and owner visual approval are the next gates.
+
 ## DH-11 visual worlds (30 October 2026)
 
 The five non-game creative destinations now have dedicated CSS-only responsive layouts driven solely by the existing validated catalogue. Writing is a reading room; Music is a record-stage listening room; Experiments is a specimen workshop; The Unfinished Shelf is an intentional archive; Memory Lane is a chronology allowing approximate/unknown years. Fictional examples remain under /previews/dh-08b/ and never enter the live catalogue. Do not use The Ordinary Universe/Ordinary Verse or Octo-Marathon as candidates. See [DH-11 layouts and acceptance plan](DH11_CREATIVE_WORLD_LAYOUTS.md). Musical detail-page enrichment, approved media and actual new content are later stages. No live-domain work.
