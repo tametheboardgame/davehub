@@ -5,6 +5,10 @@ on:
     branches: [main, staging]
     paths:
       - 'scripts/render-content.cjs'
+      - 'scripts/render-editorial-review.cjs'
+      - 'scripts/check-dh10c-staging.cjs'
+      - 'assets/editorial/**'
+      - 'tests/dh10c-editorial.test.cjs'
       - 'scripts/render-review-layout.cjs'
       - 'scripts/check-cloudflare-staging.cjs'
       - 'assets/content/worlds.css'
@@ -51,3 +55,6 @@ jobs:
       - name: Verify exact published game SHA and release version on Cloudflare
         if: github.ref_name == steps.target.outputs.branch || github.event_name == 'workflow_dispatch'
         run: node scripts/verify-game-staging-release.cjs
+      - name: Verify hosted DH-10C editorial review desk on real Cloudflare
+        if: github.ref_name == steps.target.outputs.branch || github.event_name == 'workflow_dispatch'
+        run: node scripts/check-dh10c-staging.cjs
