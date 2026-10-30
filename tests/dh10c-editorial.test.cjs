@@ -118,7 +118,7 @@ test('fetches public source from exact owner GitHub API, never arbitrary links',
  assert.equal(seen.length,2);
  assert.equal(seen[0].url,'https://api.github.com/repos/'+source);
  assert.equal(seen[1].options.redirect,'error');
- assert.throws(()=>fetchSource('other/ordinary-universe',fake),/Expected one public creative repository/);
+ await assert.rejects(()=>fetchSource('other/ordinary-universe',fake),/Expected one public creative repository/);
  const bad=async()=>({ok:true,status:200,json:async()=>({full_name:source,owner:{login:'tametheboardgame'},private:true,default_branch:'main'})});
  await assert.rejects(()=>fetchSource(source,bad),/verified public/);
 });
