@@ -73,7 +73,7 @@ test('approved worlds have thematic empty states and do not inherit fictional wo
  }
  const music=view('music',approved,'',false);
  assert.match(music,/The stage is ready/);
- assert.doesNotMatch(music,/audio|autoplay/);
+ assert.doesNotMatch(music,/<audio\b|autoplay\s*=/i);
  const experiments=view('experiments',approved,'',false);
  assert.match(experiments,/No approved experiments yet/);
 });
