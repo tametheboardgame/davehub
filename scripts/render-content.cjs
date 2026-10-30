@@ -106,7 +106,9 @@ function renderIndex(data,root,preview){
 function renderView(data,root,view,preview){
  const v=VIEWS.find(x=>x.id===view);
  const works=sortEntries(data.items.filter(i=>i.views.includes(view)),view);
- const immersive=renderCreativeWorld({view,works,root,preview,card,dateLabel});
+ // Preserve the older DH-08C layout-only review as a fixed historical proof.
+ // DH-11 themes apply to real worlds and the separated fictional DH-08B demo.
+ const immersive=preview==='review'?null:renderCreativeWorld({view,works,root,preview,card,dateLabel});
  const feature=works.length
    ? '<p class="found">'+works.length+' '+(works.length===1?'creation':'creations')+' in this world</p>'+linkList(works,root)
    : emptyState(root,view,preview);
