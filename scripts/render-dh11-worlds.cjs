@@ -38,6 +38,7 @@ function hoardKind(item){
     ['excerpt','other','demo'].includes(item.artifactKind))return 'fragments';
  if(['concept','development_note'].includes(item.artifactKind))return 'worlds';
  if(['script_scene','lyrics'].includes(item.artifactKind))return 'scenes';
+ if(['book','script','musical','other'].includes(item.workType))return 'top';
  return 'lost';
 }
 function hoardPaper(item,root,shape,index){
