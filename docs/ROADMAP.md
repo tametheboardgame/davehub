@@ -57,7 +57,7 @@
 | DH-10A | DaveHub Ready repository manifests | Root `davehub.json`, validated metadata, categories and opt-in/opt-out semantics | **Merged to main; three source opt-ins merged, Unicorn Valley #338 awaiting final CI** |
 | DH-10B | Read-only repository discovery | Public-only scanner, weekly/manual GitHub Actions report, candidate review queue | **Merged and verified; 11 scanner tests and 42 site regressions passed; live scan found 3 candidates with 0 errors. Content Workshop integration next** |
 | DH-10D | Default-off new repository bootstrap | New repositories created through a safe GitHub CLI helper start with `davehub.json` disabled in the first commit; scheduled discovery flags missing markers on new public repos | **Merged PR #25 (`1a2285a`); validated GitHub CLI helper and default-off marker; public-repo audit, with private external-creation limitation documented** |
-| DH-10C | Editorial integration and milestone proposals | Owner-approved catalogue publishing, revisions/withdrawals, major-release-only suggestions | Planned; no auto-publication |
+| DH-10C | Hosted editorial integration | Public-safe discovery queue at `/review/`; owner-only GitHub Actions publication/revision/withdrawal proposals; staging PR and catalogue validation, no automatic merge | **Hosted workflow foundation implemented; review CI and publication form activation pending** |
 | DH-10 | Automated development stories | Significant approved project events become concise draft human-readable stories, not routine posts | Planned |
 | DH-11 | Extend feeds and content types | Approved books/music/ideas/experiments and other capture channels, no duplicate catalogues | Planned |
 
