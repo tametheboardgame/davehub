@@ -1,7 +1,7 @@
 # DH-11C — The Manuscript Hoard: textured 3D production roadmap
 
 **Status:** Proposed implementation plan, prepared 31 October 2026. **Approval:** the owner selected the detailed planning option, **not** yet approval of particular textures, models, camera changes, public publishing or promotion.  
-**Current reference:** Working, owner-liked [DH-11C.2 geometry prototype](/previews/dh-11c/room/) in Cloudflare staging; cabinet mechanics [DH-11C.1](/previews/dh-11c/cabinet/).  
+**Current reference:** Working, owner-liked [DH-11C.2 geometry prototype](https://davehub.pages.dev/previews/dh-11c/room/) in Cloudflare staging; cabinet mechanics [DH-11C.1](https://davehub.pages.dev/previews/dh-11c/cabinet/).  
 **Architecture rule:** [ADR-0012](DECISIONS/ADR-0012.md) is mandatory. *Build the world properly, then make it beautiful.*  
 **Target:** Rich, coherent, stylised 3D adventure-style Writing world; first production-quality world in DaveHub, later a reusable foundation for distinct worlds.
 
