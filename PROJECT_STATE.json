@@ -757,5 +757,71 @@
       "/previews/dh-11c/room/"
     ],
     "liveDomainChange": "none"
+  },
+  "dh11_3d_production": {
+    "planStatus": "detailed_roadmap_committed_option_a_selected",
+    "scope": "Writing / The Manuscript Hoard 3D world",
+    "foundation": "DH-11C.2 owner-liked and Cloudflare-verified mechanics prototype",
+    "architectureDecision": "ADR-0012",
+    "documentation": "docs/DH11C_3D_PRODUCTION_ROADMAP.md",
+    "currentGate": "DH-11C.3A art direction, existing geometry/camera audit and asset inventory",
+    "milestones": [
+      {
+        "id": "DH-11C.3",
+        "phase": "Art direction and room asset bible",
+        "status": "planned",
+        "approval": "owner approves style/materials and camera compositions"
+      },
+      {
+        "id": "DH-11C.4",
+        "phase": "Blender/GLB source and rigged models",
+        "status": "planned",
+        "approval": "coherent geometry and mechanism tests"
+      },
+      {
+        "id": "DH-11C.5",
+        "phase": "Textures/UVs/material atlas",
+        "status": "planned",
+        "approval": "owner visual review of cabinet-first textured vertical slice"
+      },
+      {
+        "id": "DH-11C.6",
+        "phase": "Lighting, atmosphere and animation",
+        "status": "planned",
+        "approval": "accessibility and measured browser performance"
+      },
+      {
+        "id": "DH-11C.7",
+        "phase": "Deep interactions and approved-only content",
+        "status": "planned",
+        "approval": "editorial isolation and navigation parity"
+      },
+      {
+        "id": "DH-11C.8",
+        "phase": "QA and controlled Writing-world staging integration",
+        "status": "planned",
+        "approval": "explicit owner review, CI, hosted QA and rollback"
+      },
+      {
+        "id": "DH-11C.9",
+        "phase": "Shared world-engine components",
+        "status": "optional_post_v1"
+      }
+    ],
+    "priorRoutes": {
+      "roomPrototype": "/previews/dh-11c/room/",
+      "cabinetPrototype": "/previews/dh-11c/cabinet/",
+      "existingWriting": "/worlds/writing/"
+    },
+    "scopeLimits": [
+      "staging only",
+      "existing Writing site unchanged until owner sign-off",
+      "no new publication approval",
+      "games unchanged",
+      "davehub.co.uk unconfigured",
+      "reuse real geometry, not AI image-state compositing"
+    ],
+    "implementationStarted": false,
+    "next": "DH-11C.3A art bible / scene inventory, then cabinet-first model export proof"
   }
 }
