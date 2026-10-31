@@ -20,6 +20,13 @@ for asset in \
   prototypes/dh-07c/index.html \
   prototypes/dh-08/index.html \
   prototypes/dh-11c-cabinet/index.html \
+  prototypes/dh-11c-room/index.html \
+  prototypes/dh-11c-room/room.css \
+  prototypes/dh-11c-room/room-plan.js \
+  prototypes/dh-11c-room/room.js \
+  prototypes/dh-11c-room/vendor/three-r159.module.min.js \
+  prototypes/dh-11c-room/vendor/THREE-LICENSE.txt \
+  tests/dh11c-room.test.cjs \
   prototypes/dh-11c-cabinet/cabinet.css \
   prototypes/dh-11c-cabinet/cabinet-math.js \
   prototypes/dh-11c-cabinet/cabinet.js \
@@ -46,7 +53,7 @@ done
 
 # A private draft must never become a deployed page through a build bypass.
 # Validate both the empty/approved production manifest and fictional test fixtures.
-node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/dh11-worlds.test.cjs tests/dh11c-cabinet-geometry.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs tests/dh10c-editorial.test.cjs tests/dh10c-hosted-http.test.cjs
+node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/dh11-worlds.test.cjs tests/dh11c-cabinet-geometry.test.cjs tests/dh11c-room.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs tests/dh10c-editorial.test.cjs tests/dh10c-hosted-http.test.cjs
 node -e "const {validateManifest}=require('./scripts/davehub-manifest.cjs'); const data=require('./davehub.json'); const result=validateManifest(data,'tametheboardgame/davehub');if(!result.valid)throw new Error(result.errors.join('; '));"
 # Fail closed: only individually owner-approved records and links enter production.
 node scripts/content-check.cjs content/public/catalogue.json
@@ -55,7 +62,7 @@ node scripts/content-check.cjs content/examples/fictional.json
 node scripts/dh09d-topology.cjs check
 
 rm -rf dist
-mkdir -p dist/assets/worlds/writing dist/assets/branding dist/assets/homepage dist/assets/characters/dave dist/previews/dh-07c dist/previews/dh-08 dist/previews/dh-08b dist/previews/dh-08c dist/previews/dh-11c/cabinet dist/content dist/assets/content
+mkdir -p dist/assets/worlds/writing dist/assets/branding dist/assets/homepage dist/assets/characters/dave dist/previews/dh-07c dist/previews/dh-08 dist/previews/dh-08b dist/previews/dh-08c dist/previews/dh-11c/cabinet dist/previews/dh-11c/room/vendor dist/content dist/assets/content
 
 cp index.html styles.css main.js catalogue.js dist/
 cp assets/branding/davehub-logo-faithful.svg dist/assets/branding/
@@ -65,6 +72,8 @@ cp assets/characters/dave/dave-animation-v1.webm dist/assets/characters/dave/
 cp prototypes/dh-07c/index.html dist/previews/dh-07c/index.html
 cp prototypes/dh-08/index.html dist/previews/dh-08/index.html
 cp prototypes/dh-11c-cabinet/index.html prototypes/dh-11c-cabinet/cabinet.css prototypes/dh-11c-cabinet/cabinet-math.js prototypes/dh-11c-cabinet/cabinet.js dist/previews/dh-11c/cabinet/
+cp prototypes/dh-11c-room/index.html prototypes/dh-11c-room/room.css prototypes/dh-11c-room/room-plan.js prototypes/dh-11c-room/room.js dist/previews/dh-11c/room/
+cp prototypes/dh-11c-room/vendor/three-r159.module.min.js prototypes/dh-11c-room/vendor/THREE-LICENSE.txt dist/previews/dh-11c/room/vendor/
 cp content/examples/fictional.json dist/previews/dh-08/catalogue.json
 cp content/public/catalogue.json dist/content/catalogue.json
 cp assets/content/worlds.css assets/content/dh11-worlds.css dist/assets/content/
@@ -116,6 +125,7 @@ for(const slug of ['unicorn-valley','stephen-martin-project','tame-the-board-gam
 }
 check('dist/worlds/writing/index.html',['data-scene="manuscript-hoard"','room-stage-image','data-room-target="desk"','data-room-target="cabinet"','data-room-target="bin"','data-room-target="bookcase"','data-room-target="typewriter"','Tame The Board Game'],['The Last Lightkeeper','The Clock of Tomorrow']);
 check('dist/previews/dh-08b/worlds/writing/index.html',['data-scene="manuscript-hoard"','Fictional design demonstration','The Last Lightkeeper']);
+check('dist/previews/dh-11c/room/index.html',['DH-11C.2','id="room-canvas"','room.js','room-plan.js','object-list']);
 check('dist/previews/dh-11c/cabinet/index.html',['id="cabinet-model"','id="cabinet-slots"','cabinet-math.js','cabinet.js','cabinet.css']);
 check('dist/previews/dh-08c/index.html',[
  'data-davehub-inline="worlds"','Unicorn Valley','The Stephen Martin Project'
