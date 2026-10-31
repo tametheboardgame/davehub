@@ -4,6 +4,7 @@
  * The fictional example build is isolated under /previews/dh-08b.
  */
 const CREATIVE_VIEWS = new Set(['writing','music','experiments','unfinished','memory-lane']);
+const {renderWritingScene}=require('./render-writing-scene.cjs');
 const copy = {
   writing: {kicker:'THE MANUSCRIPT HOARD',heading:'A room where stories have taken over',
     detail:'Stories, scraps, scripts, loose fragments and worlds that escaped their folders. Nothing is filed properly. That is part of the point.'},
@@ -24,74 +25,6 @@ const intro = (view,count)=>'<div class="dh11-introduction">'+kicker(copy[view].
   '<h2>'+quote(copy[view].heading)+'</h2><p>'+quote(copy[view].detail)+'</p>'+
   '<span class="dh11-count">'+count+' '+(count===1?'creation':'creations')+' on display</span></div>';
 const blank = (message,root)=>'<div class="dh11-no-works"><span aria-hidden="true">✧</span><p>'+quote(message)+'</p>'+emptyLink(root)+'</div>';
-/* DH-11A: deliberately chaotic visual discovery, but predictable, keyboard-
- * accessible HTML. Native details reveal buried works without any JavaScript. */
-const HOARD_PILES=[
- {id:'top',title:'On top of the pile',hint:'The manuscript everyone keeps moving out of the way.',shape:'bundle'},
- {id:'fragments',title:'Loose fragments',hint:'Pages that escaped their folders.',shape:'scrap'},
- {id:'worlds',title:'Notes from stranger worlds',hint:'Maps, myths and things scrawled in margins.',shape:'notebook'},
- {id:'scenes',title:'Characters & scenes',hint:'Voices arguing somewhere between the pages.',shape:'script'},
- {id:'lost',title:'Things nearly lost',hint:'A drawer full of interesting strays.',shape:'envelope'}
-];
-function hoardKind(item){
- if(['permanently_shelved','abandoned'].includes(item.lifecycle)||item.workType==='song'||
-    ['excerpt','other','demo'].includes(item.artifactKind))return 'fragments';
- if(['concept','development_note'].includes(item.artifactKind))return 'worlds';
- if(['script_scene','lyrics'].includes(item.artifactKind))return 'scenes';
- if(['book','script','musical','other'].includes(item.workType))return 'top';
- return 'lost';
-}
-function hoardPaper(item,root,shape,index){
- const label=item.workType||item.artifactKind||item.releaseKind||item.recordType;
- return '<a class="dh11-manuscript dh11-manuscript--'+shape+' dh11-manuscript--variant-'+index%3+'" href="'+root+
-  '/creations/'+encodeURIComponent(item.slug)+'/" aria-label="Open '+quote(item.title)+'">'+
-  '<span class="dh11-manuscript-corner" aria-hidden="true"></span>'+
-  '<span class="dh11-manuscript-stamp">'+quote(label.replaceAll('_',' '))+'</span>'+
-  '<strong>'+quote(item.title)+'</strong><span class="dh11-manuscript-copy">'+quote(item.synopsis)+'</span>'+
-  '<span class="dh11-manuscript-open">Pull this out <span aria-hidden="true">↗</span></span></a>';
-}
-function hoardPile(pile,items,root){
- const [front,...buried]=items;
- const surface=front?hoardPaper(front,root,pile.shape,0):
-  '<div class="dh11-hoard-blank" aria-hidden="true"><span></span><span></span><span></span></div>';
- const deeper=buried.length?
-  '<details class="dh11-hoard-rummage"><summary>Rummage beneath this pile <span>'+buried.length+' more</span></summary>'+
-  '<div class="dh11-hoard-underpages">'+buried.map((item,i)=>hoardPaper(item,root,
-    ['scrap','script','notebook'][i%3],i+1)).join('')+'</div></details>':
-  (!front?'<p class="dh11-hoard-empty">No approved writing in this pile.</p>':'');
- return '<section class="dh11-hoard-pile dh11-hoard-pile--'+pile.id+'" aria-labelledby="dh11-pile-'+pile.id+'">'+
-  '<div class="dh11-hoard-pile-label"><span class="dh11-hoard-pile-number" aria-hidden="true">✳</span>'+
-  '<div><h3 id="dh11-pile-'+pile.id+'">'+quote(pile.title)+'</h3><p>'+quote(pile.hint)+'</p></div></div>'+
-  '<div class="dh11-hoard-stack"><span class="dh11-hoard-backpage" aria-hidden="true"></span>'+
-  '<span class="dh11-hoard-backpage dh11-hoard-backpage--two" aria-hidden="true"></span>'+surface+'</div>'+
-  deeper+'</section>';
-}
-function writing(works,root){
- const grouped=new Map(HOARD_PILES.map(p=>[p.id,[]]));
- const feature=works.find(x=>!['permanently_shelved','abandoned'].includes(x.lifecycle)&&
-  ['book','script','musical','other'].includes(x.workType))||works[0];
- if(feature)grouped.get('top').push(feature);
- for(const item of works)if(item!==feature)grouped.get(hoardKind(item)).push(item);
- const decoration='<div class="dh11-hoard-atmosphere" aria-hidden="true"><span class="dh11-hoard-lamp"></span>'+
-  '<span class="dh11-hoard-floating-page dh11-hoard-floating-page--one"></span>'+
-  '<span class="dh11-hoard-floating-page dh11-hoard-floating-page--two"></span>'+
-  '<span class="dh11-hoard-ink"></span></div>';
- return '<div class="dh11-hoard-room">'+decoration+
-  '<div class="dh11-hoard-entrance"><div class="dh11-hoard-welcome">'+kicker('THERE IS A SYSTEM HERE. PROBABLY.')+
-  '<h3>The paper has won.</h3><p>Manuscripts on the desk. Characters in the margins. Entire worlds underneath the coffee cups. '+
-  'Have a rummage and see what turns up.</p>'+
-  '<a class="dh11-hoard-start" href="#dh11-writing-piles">Start rummaging <span aria-hidden="true">↓</span></a></div>'+
-  '<div class="dh11-hoard-illustration" aria-hidden="true"><div class="dh11-hoard-books"></div>'+
-  '<span class="dh11-hoard-scrap dh11-hoard-scrap--a"></span><span class="dh11-hoard-scrap dh11-hoard-scrap--b"></span>'+
-  '<span class="dh11-hoard-scrap dh11-hoard-scrap--c"></span><span class="dh11-hoard-scrap dh11-hoard-scrap--d"></span>'+
-  '<span class="dh11-hoard-coffee"></span></div></div>'+
-  '<div class="dh11-hoard-separator"><span>THE PILES · FOLLOW WHAT CATCHES YOUR EYE</span>'+
-  '<span>'+works.length+' approved '+(works.length===1?'piece':'pieces')+'</span></div>'+
-  '<div class="dh11-hoard-piles" id="dh11-writing-piles">'+HOARD_PILES.map(p=>hoardPile(p,grouped.get(p.id),root)).join('')+'</div>'+
-  '<div class="dh11-hoard-exit"><div class="dh11-hoard-paperclip" aria-hidden="true"></div>'+
-  '<p>These are the things that have made it into the archive. Plenty more paper exists offstage, but none of it appears here until approved.</p>'+
-  emptyLink(root)+'</div></div>';
-}
 function music(works,root,card){
  const primary=works.find(w=>w.workType==='musical'||w.recordType==='music_identity')||works[0];
  const others=works.filter(w=>w!==primary);
@@ -148,8 +81,8 @@ function memory(works,root,dateLabel){
 }
 function renderCreativeWorld({view,works,root,preview,card,dateLabel}){
  if(!CREATIVE_VIEWS.has(view))return null;
+ if(view==='writing')return renderWritingScene(works,root,preview);
  const content={
-  writing:()=>writing(works,root,card),
   music:()=>music(works,root,card),
   experiments:()=>experiments(works,root,card,preview),
   unfinished:()=>unfinished(works,root,dateLabel),
