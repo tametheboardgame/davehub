@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="color-scheme" content="dark">
+<title>Enter the 3D Manuscript Hoard | DaveHub DH-11C.2</title>
+<link rel="stylesheet" href="./room.css">
+<script defer src="./room-plan.js"></script>
+<script type="module" src="./room.js"></script>
+</head>
+<body>
+<a href="#scene-nav" class="skip">Skip 3D scene and explore objects with buttons</a>
+<div class="page">
+<header class="topbar">
+  <a class="brand" href="/">Dave<span>Hub</span></a>
+  <div class="project-id"><span class="tag">DH-11C.2 / PROTOTYPE</span><strong>THE MANUSCRIPT HOARD</strong></div>
+  <a class="back-to-islands" href="/worlds/writing/">← Existing Writing world</a>
+</header>
+<main>
+ <section class="arrival" aria-label="Three-dimensional room prototype">
+  <div class="title-group">
+    <p class="overline">ENTER THE WRITING ISLAND</p>
+    <h1>A room full of improbable things.</h1>
+    <p>Everything in this room has its own position, depth and shape. Click the furniture to investigate, or use the object selector beneath the scene.</p>
+  </div>
+  <div class="canvas-frame" id="scene-frame">
+   <canvas id="room-canvas" aria-hidden="true"></canvas>
+   <div class="scene-fallback" id="scene-fallback" role="alert" hidden>3D rendering is unavailable in this browser. You can still explore the objects using the controls below.</div>
+   <div class="frame-topline"><span class="room-led"><i></i> ONE SHARED 3D WORLD</span><span id="camera-label">OVERVIEW CAMERA</span></div>
+   <div class="reticle" aria-hidden="true"></div>
+   <div class="scene-bottomline"><span>Click objects to approach them</span><span class="scene-advice">Esc / Return: back to room</span></div>
+  </div>
+  <div class="control-strip">
+   <div class="location-line"><span class="location-icon" aria-hidden="true">✦</span><div><strong id="place-name">The Manuscript Hoard</strong><span id="place-description">An actual 3D study. Explore its objects.</span></div></div>
+   <button type="button" id="home-button" class="home-button" disabled>← Whole room</button>
+  </div>
+  <nav class="scene-nav" id="scene-nav" aria-label="Explore the room">
+    <div class="scene-nav-title"><span>CHOOSE AN OBJECT</span><small>These buttons work without precise clicking in the 3D scene.</small></div>
+    <div class="scene-object-list" id="object-list">
+      <button type="button" data-focus="desk">Writing desk</button>
+      <button type="button" data-focus="cabinet">Filing cabinet</button>
+      <button type="button" data-focus="bookcase">Bookcase</button>
+      <button type="button" data-focus="typewriter">Typewriter</button>
+      <button type="button" data-focus="bin">Overflowing bin</button>
+      <button type="button" data-focus="window">Floating-islands window</button>
+      <button type="button" data-focus="door">Exit door</button>
+    </div>
+  </nav>
+  <section class="interaction-tray" id="interaction-tray" aria-labelledby="interaction-title" hidden>
+   <div class="interaction-intro"><span class="overline">OBJECT INSPECTION</span><h2 id="interaction-title">Explore</h2><p id="interaction-copy"></p></div>
+   <div class="interaction-actions" id="interaction-actions"></div>
+   <div class="interaction-status" id="interaction-status" role="status" aria-live="polite"></div>
+  </section>
+ </section>
+ <aside class="prototype-note">
+  <div class="prototype-number">02</div>
+  <div><h2>Mechanics before decoration.</h2><p>Walls, desk, bookcase, cabinet drawers, typewriter, bin, window and door are all genuine 3D geometry in one coordinate system. This is a prototype of navigation and scale, not an approved replacement for the existing illustrated room. No unpublished writing or fictional source data is present.</p></div>
+  <a href="/previews/dh-11c/cabinet/">See the original cabinet test ↗</a>
+ </aside>
+</main>
+<footer>DaveHub development scene / Cloudflare staging only / No catalogue or production changes.</footer>
+</div>
+<noscript><p class="noscript">This prototype requires JavaScript and WebGL. The existing <a href="/worlds/writing/">Writing world</a> is unaffected.</p></noscript>
+</body>
+</html>
