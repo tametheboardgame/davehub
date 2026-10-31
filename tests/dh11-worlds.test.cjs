@@ -22,53 +22,53 @@ test('all five creative destinations get distinct, accessible theme landmarks',(
  }
  assert.equal(new Set(['dh11-writing-layout','dh11-stage','dh11-laboratory','dh11-shelf-room','dh11-timeline']).size,5);
 });
-test('Writing is a manuscript hoard with piles rather than a tidy reading desk',()=>{
+test('Writing is an explorable scene with five object interactions and an exit',()=>{
  const html=view('writing');
- for(const marker of ['THE MANUSCRIPT HOARD','The paper has won.','dh11-hoard-room',
-  'dh11-hoard-illustration','Start rummaging','id="dh11-writing-piles"',
-  'On top of the pile','Loose fragments','Notes from stranger worlds',
-  'Characters &amp; scenes','Things nearly lost','dh11-manuscript--bundle',
-  'dh11-manuscript--scrap','dh11-manuscript--notebook','dh11-manuscript--script',
-  'Rummage beneath this pile','<details','<summary']){
-   assert.ok(html.includes(marker),marker);
+ for(const marker of ['data-scene="manuscript-hoard"','The Manuscript Hoard',
+  'room-stage-image','manuscript-room-v1.avif','room-navigation','room-pan',
+  'room-dialog','<dialog','<script data-davehub-inline="room">',
+  'data-room-target="desk"','data-room-target="cabinet"','data-room-target="bin"',
+  'data-room-target="bookcase"','data-room-target="typewriter"',
+  'data-room-panel="desk"','data-room-panel="cabinet"','data-room-panel="bin"',
+  'data-room-panel="bookcase"','data-room-panel="typewriter"','class="room-hotspot room-hotspot--exit"']){
+  assert.ok(html.includes(marker),marker);
  }
- assert.doesNotMatch(html,/<div class="dh11-writing-index"|On the reading desk|THE READING ROOM/);
- assert.match(html,/href="\/previews\/dh-08b\/creations\/last-lightkeeper\/"/);
- assert.match(html,/href="\/previews\/dh-08b\/creations\/the-clock-of-tomorrow\/"/);
- assert.doesNotMatch(html,/href="\/creations\/the-clock-of-tomorrow\/"/);
+ assert.doesNotMatch(html,/<div class="dh11-hoard-room"|<div class="intro"/);
+ assert.match(html,/href="\/"/);
+ assert.match(html,/role="region" aria-label="Illustrated Writing island/);
 });
-test('Writing preserves every approved creation once, regardless of how deeply it is buried',()=>{
+test('Writing binds every approved work to exactly one close-up; no duplicate cards or fake titles',()=>{
  const html=view('writing');
- const writingItems=fixture.items.filter(x=>x.views.includes('writing'));
- const links=[...html.matchAll(/href="\/previews\/dh-08b\/creations\/([^/]+)\/"/g)]
-   .map(m=>m[1]);
- assert.equal(links.length,writingItems.length);
- assert.equal(new Set(links).size,writingItems.length);
- assert.deepEqual(new Set(links),new Set(writingItems.map(x=>x.slug)));
- assert.ok((html.match(/<details class="dh11-hoard-rummage">/g)||[]).length>=2);
- assert.ok((html.match(/<summary>/g)||[]).length>=2);
- assert.match(html,/aria-labelledby="dh11-pile-fragments"/);
- assert.match(html,/aria-labelledby="dh11-pile-worlds"/);
+ const writing=fixture.items.filter(i=>i.views.includes('writing'));
+ const links=[...html.matchAll(/href="\/previews\/dh-08b\/creations\/([^/]+)\/"/g)].map(m=>m[1]);
+ assert.deepEqual(new Set(links),new Set(writing.map(x=>x.slug)));
+ assert.equal(links.length,writing.length);
+ assert.match(html,/data-room-panel="desk"/);
+ assert.match(html,/data-room-panel="bin"/);
+ assert.match(html,/data-room-panel="bookcase"/);
+ assert.match(html,/data-room-panel="typewriter"/);
+ assert.match(html,/Fictional design demonstration/);
+ assert.doesNotMatch(html,/href="\/creations\/last-lightkeeper\/"/);
 });
-test('Writing handles a truly empty catalogue and one existing approved work without fake links',()=>{
- const empty=view('writing',{schemaVersion:1,items:[]},'',false);
- assert.match(empty,/0 approved pieces/);
- assert.match(empty,/No approved writing in this pile/);
- assert.match(empty,/dh11-hoard-blank/);
- assert.doesNotMatch(empty,/href="\/creations\//);
+test('Writing with one real approved item does not leak unpublished books',()=>{
  const live=view('writing',approved,'',false);
  assert.match(live,/Tame The Board Game/);
- assert.match(live,/1 approved piece/);
+ assert.match(live,/1 approved piece hidden here/);
  assert.match(live,/href="\/creations\/tame-the-board-game\/"/);
  assert.doesNotMatch(live,/The Last Lightkeeper|The Clock of Tomorrow|Glass Harbour/);
- assert.doesNotMatch(live,/<details class="dh11-hoard-rummage">/);
+ const empty=view('writing',{schemaVersion:1,items:[]},'',false);
+ assert.match(empty,/0 approved pieces hidden here/);
+ assert.match(empty,/The desk is buried beneath paper/);
+ assert.doesNotMatch(empty,/href="\/creations\//);
 });
-test('Writing resists malicious source content even inside buried pages',()=>{
- const altered=structuredClone(fixture);
- altered.items.find(x=>x.id==='lightkeeper-making-notes').title='<script>alert(1)</script>';
- const html=view('writing',altered);
+test('Writing scene keeps source names escaped, preserving a real keyboard-accessible route',()=>{
+ const data=structuredClone(fixture);
+ data.items.find(w=>w.id==='lightkeeper-making-notes').title='<script>alert(1)</script>';
+ const html=view('writing',data);
  assert.match(html,/&lt;script&gt;alert\(1\)&lt;\/script&gt;/);
  assert.doesNotMatch(html,/<script>alert\(1\)<\/script>/);
+ assert.match(html,/<button type="button" class="room-dialog-close"/);
+ assert.match(html,/aria-label="Return to DaveHub islands"/);
 });
 test('Music provides a musical-first listening room with no unapproved audio',()=>{
  const html=view('music');
