@@ -13,7 +13,8 @@ const view=(name,data=fixture,root='/previews/dh-08b',preview=true)=>
 test('all five creative destinations get distinct, accessible theme landmarks',()=>{
  for(const name of ['writing','music','experiments','unfinished','memory-lane']){
   const page=view(name);
-  assert.match(page,new RegExp('class="dh11-theme dh11-theme--'+name+'"'),name);
+  if(name==='writing')assert.match(page,/class="dh11-theme dh11-theme--writing room-mode"/);
+  else assert.match(page,new RegExp('class="dh11-theme dh11-theme--'+name+'"'),name);
   assert.match(page,new RegExp('class="dh11-world dh11-world--'+name+'"'),name);
   if(name==='writing')assert.match(page,/class="room-navigation"/);
   else assert.match(page,new RegExp('href="/previews/dh-08b/worlds/'+name+'/" aria-current="page"'),name);
