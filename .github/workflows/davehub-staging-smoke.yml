@@ -17,6 +17,8 @@ on:
       - 'assets/content/worlds.css'
       - 'assets/content/staging-review.js'
       - 'scripts/build-pages.sh'
+      - 'prototypes/dh-11c-cabinet/**'
+      - 'tests/dh11c-cabinet-geometry.test.cjs'
       - '.node-version'
       - 'scripts/bundle-games.cjs'
       - 'scripts/check-game-routes.cjs'
