@@ -58,3 +58,8 @@ Six spatial hotspots align with objects visible in the artwork: desk (featured w
 On narrow screens the scene is horizontally pannable to preserve the actual illustration, with a labelled set of object controls as a direct accessible alternative. Production and fictional builds share the same code. Approved catalogue data is used in /worlds/writing/; invented samples only appear under /previews/dh-08b/worlds/writing/ with a visible disclaimer. The historic DH-08C comparison preview remains unchanged.
 
 This is a vertical slice for the Writing island, not a content publication approval. No changes to davehub.co.uk, live production, game routes or source repository markers.
+
+
+## Next milestone: DH-11C.1 — The Living Filing Cabinet
+
+The owner-approved interaction and asset brief is recorded in [DH11C1_LIVING_FILING_CABINET.md](DH11C1_LIVING_FILING_CABINET.md). This replaces the idea of treating the filing cabinet as another generic panel. Generate a separately layered cabinet close-up first and seek asset approval before implementing physical drawer and folder interactions; preserve catalogue safety and staging-only development.
