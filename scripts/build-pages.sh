@@ -23,8 +23,12 @@ for asset in \
   content/examples/fictional.json \
   assets/content/worlds.css \
   assets/content/dh11-worlds.css \
+  assets/worlds/writing/manuscript-room-v1.avif \
+  assets/worlds/writing/room.css \
+  assets/worlds/writing/room.js \
   scripts/render-content.cjs \
   scripts/render-dh11-worlds.cjs \
+  scripts/render-writing-scene.cjs \
   tests/render-content.test.cjs \
   tests/navigation.test.cjs \
   tests/dh11-worlds.test.cjs
@@ -46,7 +50,7 @@ node scripts/content-check.cjs content/examples/fictional.json
 node scripts/dh09d-topology.cjs check
 
 rm -rf dist
-mkdir -p dist/assets/branding dist/assets/homepage dist/assets/characters/dave dist/previews/dh-07c dist/previews/dh-08 dist/previews/dh-08b dist/previews/dh-08c dist/content dist/assets/content
+mkdir -p dist/assets/worlds/writing dist/assets/branding dist/assets/homepage dist/assets/characters/dave dist/previews/dh-07c dist/previews/dh-08 dist/previews/dh-08b dist/previews/dh-08c dist/content dist/assets/content
 
 cp index.html styles.css main.js catalogue.js dist/
 cp assets/branding/davehub-logo-faithful.svg dist/assets/branding/
@@ -59,6 +63,7 @@ cp content/examples/fictional.json dist/previews/dh-08/catalogue.json
 cp content/public/catalogue.json dist/content/catalogue.json
 cp assets/content/worlds.css assets/content/dh11-worlds.css dist/assets/content/
 cp assets/content/staging-review.js dist/assets/content/
+cp assets/worlds/writing/manuscript-room-v1.avif dist/assets/worlds/writing/
 # Both live and fictional pages come from the same validated template generator.
 # Never copy example items into dist/worlds or dist/creations.
 node scripts/render-content.cjs content/public/catalogue.json dist '' public
@@ -103,6 +108,8 @@ check('dist/worlds/games/index.html',[
 for(const slug of ['unicorn-valley','stephen-martin-project','tame-the-board-game']){
  check('dist/creations/'+slug+'/index.html',['data-davehub-inline="worlds"','class="primary-launch"'],['DESIGN REVIEW ONLY']);
 }
+check('dist/worlds/writing/index.html',['data-scene="manuscript-hoard"','room-stage-image','data-room-target="desk"','data-room-target="cabinet"','data-room-target="bin"','data-room-target="bookcase"','data-room-target="typewriter"','Tame The Board Game'],['The Last Lightkeeper','The Clock of Tomorrow']);
+check('dist/previews/dh-08b/worlds/writing/index.html',['data-scene="manuscript-hoard"','Fictional design demonstration','The Last Lightkeeper']);
 check('dist/previews/dh-08c/index.html',[
  'data-davehub-inline="worlds"','Unicorn Valley','The Stephen Martin Project'
 ]);
