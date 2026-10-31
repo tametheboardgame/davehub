@@ -15,7 +15,8 @@ test('all five creative destinations get distinct, accessible theme landmarks',(
   const page=view(name);
   if(name==='writing')assert.match(page,/class="dh11-theme dh11-theme--writing room-mode"/);
   else assert.match(page,new RegExp('class="dh11-theme dh11-theme--'+name+'"'),name);
-  assert.match(page,new RegExp('class="dh11-world dh11-world--'+name+'"'),name);
+  if(name==='writing')assert.match(page,/class="dh11-world dh11-world--writing room-world"/);
+  else assert.match(page,new RegExp('class="dh11-world dh11-world--'+name+'"'),name);
   if(name==='writing')assert.match(page,/class="room-navigation"/);
   else assert.match(page,new RegExp('href="/previews/dh-08b/worlds/'+name+'/" aria-current="page"'),name);
   assert.match(page,/Fictional design demonstration/);
