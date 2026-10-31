@@ -759,17 +759,17 @@
     "liveDomainChange": "none"
   },
   "dh11_3d_production": {
-    "planStatus": "detailed_roadmap_committed_option_a_selected",
+    "planStatus": "dh11c3a_source_audit_and_palette_preview_in_review",
     "scope": "Writing / The Manuscript Hoard 3D world",
     "foundation": "DH-11C.2 owner-liked and Cloudflare-verified mechanics prototype",
     "architectureDecision": "ADR-0012",
     "documentation": "docs/DH11C_3D_PRODUCTION_ROADMAP.md",
-    "currentGate": "DH-11C.3A art direction, existing geometry/camera audit and asset inventory",
+    "currentGate": "DH-11C.3A: hosted palette visual review, baseline camera screenshots and owner decision",
     "milestones": [
       {
         "id": "DH-11C.3",
         "phase": "Art direction and room asset bible",
-        "status": "planned",
+        "status": "in_progress_owner_visual_review_pending",
         "approval": "owner approves style/materials and camera compositions"
       },
       {
@@ -821,7 +821,30 @@
       "davehub.co.uk unconfigured",
       "reuse real geometry, not AI image-state compositing"
     ],
-    "implementationStarted": false,
-    "next": "DH-11C.3A art bible / scene inventory, then cabinet-first model export proof"
+    "implementationStarted": true,
+    "next": "Compare three palette choices on hosted Cloudflare art lab; record owner preference and screenshot audit before GLB modelling",
+    "artDirection": {
+      "status": "three_material_colour_and_light_candidates_owner_review_pending",
+      "preferredDraft": "amber-ink",
+      "candidates": [
+        "amber-ink",
+        "moonlit-archive",
+        "golden-storybook"
+      ],
+      "palettePreview": "/previews/dh-11c/art-lab/",
+      "bible": "docs/DH11C3_ART_BIBLE.md",
+      "cameraAudit": "docs/DH11C3A_SCENE_AUDIT.md",
+      "assetInventory": "docs/DH11C3A_ASSET_INVENTORY.json",
+      "assetCount": 21,
+      "gltfContract": "docs/DH11C3A_GLTF_NODE_CONTRACT.md",
+      "keySourceRisks": [
+        "solid cabinet case behind drawers",
+        "uncut wall geometry behind door/window",
+        "broad raycast selection meshes",
+        "browser visual QA not yet captured"
+      ],
+      "geometryChanged": false,
+      "approvedStyle": false
+    }
   }
 }
