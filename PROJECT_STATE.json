@@ -1,6 +1,6 @@
 {
   "project": "DaveHub",
-  "updated": "2026-10-28",
+  "updated": "2026-10-31",
   "status": "dh10c_hosted_editorial_foundation_deployed",
   "current_work_package": "DH-10C",
   "completed": [
@@ -166,6 +166,13 @@
       "id": "DH07B-2026-10-25",
       "decision": "Give permanently unfinished creative work an archive view rather than implying work remains on the owner's to-do list; model musicals as a canonical production joining script, concept, tracks, releases, notes and approved media",
       "status": "agreed_direction"
+    },
+    {
+      "id": "ADR-0012",
+      "decision": "Geometry first, artwork second for all interactive 3D worlds. Never assemble independently AI-generated object-state images as perspective-critical moving geometry; model consistent 3D and animation before adding visual materials. Exceptions need a superseding owner-approved ADR.",
+      "status": "accepted_mandatory",
+      "date": "2026-10-31",
+      "reference": "docs/DECISIONS/ADR-0012.md"
     }
   ],
   "open_questions": [
@@ -731,5 +738,24 @@
     "defaultBranchWorkflowRegistered": true,
     "catalogueChanges": "none, three approved creations remain",
     "candidatePublicState": "octo-maraton-ideas public enabled with ID octo-marathon; ordinary-universe repository is private and excluded from public discovery"
+  },
+  "dh11_3d_architecture": {
+    "status": "locked_owner_approved",
+    "decision": "ADR-0012",
+    "mandatoryInstructions": "AGENTS.md",
+    "sourceOfTruth": "Coherent geometry, shared camera, real transforms and working mechanics; then materials/textures and lighting",
+    "prohibited": "Independent AI image generations composited as 3D moving states",
+    "validImageUses": [
+      "concept art",
+      "material/texture reference",
+      "static decoration",
+      "frames rendered from one consistent 3D scene"
+    ],
+    "exceptionPolicy": "Explicit owner-approved superseding ADR required",
+    "referencePrototypes": [
+      "/previews/dh-11c/cabinet/",
+      "/previews/dh-11c/room/"
+    ],
+    "liveDomainChange": "none"
   }
 }
