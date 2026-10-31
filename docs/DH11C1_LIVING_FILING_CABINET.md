@@ -227,3 +227,19 @@ Use feature branches and PRs targeting `staging`. Use cloud CI and deployed URLs
 C1.1–C1.6 are complete only when the cabinet genuinely feels like an adventure-game interaction: room-to-cabinet entry, physically opening drawers, extracted folders, accurate approved metadata, remembered discovery, accessible desktop/mobile operation, green hosted regression checks and **explicit owner visual sign-off**.
 
 **Acceptance question:** Does opening a cabinet and retrieving a folder feel like manipulating a physical object in the illustrated world? If it is merely a list or overlay dressed as a drawer, the implementation is not finished.
+
+
+## 14. Geometry-first implementation reset (31 October 2026)
+
+**Supersedes the earlier assumption that independently AI-generated drawer sprites can be aligned into a convincing working cabinet.** The owner rejected open-drawer composites with inconsistent vanishing points. Preserve those images only as palette/material references.
+
+The first usable deliverable is now a **mechanically correct untextured 3D prototype** in `prototypes/dh-11c-cabinet/`, available at `/previews/dh-11c/cabinet/` in the same DaveHub staging deployment.
+
+- A single cabinet coordinate system specifies its dimensions, five non-overlapping drawer slots, drawer-body depth, drawer travel and camera rotation.
+- All cabinet/drawer faces are actual CSS 3D planes, with each drawer front, left/right walls, floor and rear sharing exactly one transform and the same yaw/pitch perspective as the cabinet.
+- Click actual drawer fronts or their accessible alternative buttons. Exactly one drawer is extended at a time. Scrub extension 0–100% to examine geometry; adjust yaw and pitch to expose perspective errors. Escape closes the active drawer.
+- Entirely synthetic geometry is used: no images, private content, fictitious manuscript data, storage state or change to the approved Writing route. This is a visual/mechanical experiment, **not** an approved replacement for the illustrated Writing island.
+- A small, framework-free testable state reducer and invariants ensure no drawer position collision, bounded motion, controlled camera angles and deterministic reset.
+- This gate is approved for cloud staging review only. After acceptance, texture the *same* geometry using the weathered teal/brass style. Then decide whether to animate the cabinet live using CSS/3D or render all sprite frames from one locked camera. Never combine separately imagined open/closed states.
+
+The previously documented production asset-generation and full C1.2–C1.6 behaviour continue to be required after this mechanics review. No production-domain promotion is authorised.
