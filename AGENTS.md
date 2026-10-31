@@ -30,6 +30,19 @@ Create an eccentric, explorable place for the things David has made. It is not a
 - The retro mode should be a real accessible, functional alternative, not a modern theme disguised as retro styling.
 - **Concept 1 is the primary reference**. See `docs/LOCKED_CONCEPTS.md`, `docs/VISUAL_DIRECTION.md` and `docs/BORING_MENU.md` for the reference images and locked decisions.
 
+## Non-negotiable 3D world construction rule (ADR-0012)
+
+> **Do not go back to “generate a bunch of pictures and try to fake a 3D world.”**
+> **Build the world properly, then make it beautiful.**
+
+- **MANDATORY:** Read [ADR-0012](docs/DECISIONS/ADR-0012.md) before changing any interactive 3D world, perspective-dependent furniture, moving scene object, or related asset pipeline.
+- Establish real geometry, shared scale/coordinate system, consistent camera, correct pivots, object separation and working animation **before** creating final textures or artwork.
+- No independently AI-generated open/closed frames, drawer fronts, cabinet interiors, or other moving-state images may be assembled to simulate physical 3D mechanics. Do not try to correct mismatched vanishing points with more image generation or image warping.
+- Use geometry-based Three.js / CSS 3D prototypes as appropriate; detailed production assets may be modelled in Blender and exported in GLB/glTF. All movable components must remain tied to one rig/model/coordinate space.
+- AI-generated images may be used for concepts, references, textures and genuinely static decoration only. Pre-rendered animated sprites must be captured from **one consistent 3D model and camera**.
+- Before adding visual polish, verify movement at closed, half-open and open states plus camera changes, test on Cloudflare staging, and obtain owner review.
+- Any exception requires explicit owner approval and a new superseding ADR. Do not reinterpret this rule into a shortcut.
+
 ## Giant Dave motion implementation decision (ADR-0010)
 
 - Use the approved four-pose identity and [DH-06C1 exact layered rig spec](docs/GIANT_DAVE_LAYERED_RIG_SPEC.md).
