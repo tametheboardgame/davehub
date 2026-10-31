@@ -6,6 +6,12 @@ DaveHub is an eccentric, publicly accessible home for games, writing, music, int
 
 It is emphatically **not** a CV, developer portfolio, professional marketing site or generic blog template. The website itself should be an original, playful project.
 
+## Locked 3D world architecture: geometry first (ADR-0012)
+
+**Do not go back to “generate a bunch of pictures and try to fake a 3D world.” Build the world properly, then make it beautiful.**
+
+Every interactive 3D scene must first have coherent geometry, a shared camera, correct pivots and working mechanisms. Use Three.js, CSS 3D or properly modelled Blender/GLB assets as appropriate; apply artwork, stylised textures and lighting **after** the mechanics work. Never assemble independently AI-generated open/closed images as simulated physical parts. Generated artwork is permitted for concepts, textures and static decoration, not for inventing inconsistent moving geometry. Any deviation needs an explicit owner-approved superseding decision. See [ADR-0012](docs/DECISIONS/ADR-0012.md) and [development-agent instructions](AGENTS.md).
+
 ## Staging and production domain policy (locked)
 
 The future launch will use **two separate Cloudflare Pages projects connected to the same GitHub repository**. The existing `davehub.pages.dev` hostname remains the permanent **staging/test** environment (persistent `staging` branch once the cutover is ready), and the future `davehub.co.uk` website will use a **new live Pages project** deploying the reviewed `main` branch. Routes such as `/games/stephen-martin/` and `/games/unicorn-valley/` will work on both hosts, but each environment can run a different approved version. A live release requires explicit owner approval; staging changes never automatically deploy to production.
