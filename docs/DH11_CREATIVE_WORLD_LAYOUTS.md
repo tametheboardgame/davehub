@@ -47,3 +47,14 @@ The uppermost approved item in a pile is an individually linked, accessible manu
 The visual composition uses deliberate variation in rotation, layering, paper edges and object type. Desktop shows a staggered five-zone paper field; narrow screens switch to full-width ordered piles with minimal rotation, readable text, a visible focus outline and no horizontal scrolling. Reduced-motion preferences disable movement. All links continue using the existing canonical /creations/ routes; fictional data stays below /previews/dh-08b/.
 
 **Acceptance:** GitHub Actions must pass the full site build, the expanded writing render tests and same-origin game regressions. Staging Cloudflare HTTP smoke must pass before requesting owner visual review. Do not update or launch the production domain. The currently approved writing listing is Tame The Board Game; the interface must show no unrelated private or unapproved manuscripts.
+
+
+## DH-11B — enter the Writing island (31 October 2026)
+
+The owner approved a full scene-first, point-and-click direction to replace the manuscript card layout. The entry route /worlds/writing/ now opens the illustrated Manuscript Hoard room, without a generic catalogue header or a tiled article layout. Scene art is held locally in the DaveHub repository and deployed at /assets/worlds/writing/manuscript-room-v1.avif (cropped and optimised from the owner-approved concept blueprint; no external image dependency).
+
+Six spatial hotspots align with objects visible in the artwork: desk (featured work), cabinet (other manuscripts), bin (shelved fragments), bookcase (world notes), typewriter (scripts and scenes), and exit (returns to DaveHub). Each content hotspot opens a native modal close-up displaying approved catalogue titles as discoverable paper manuscripts. Modal closes by button, Escape or backdrop and restores keyboard focus. There is no content generation or independent repository feed.
+
+On narrow screens the scene is horizontally pannable to preserve the actual illustration, with a labelled set of object controls as a direct accessible alternative. Production and fictional builds share the same code. Approved catalogue data is used in /worlds/writing/; invented samples only appear under /previews/dh-08b/worlds/writing/ with a visible disclaimer. The historic DH-08C comparison preview remains unchanged.
+
+This is a vertical slice for the Writing island, not a content publication approval. No changes to davehub.co.uk, live production, game routes or source repository markers.
