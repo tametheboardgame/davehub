@@ -53,7 +53,7 @@ test('prototype ships static CSS 3D geometry and no fictional/public catalogue c
  const html=read('index.html'),css=read('cabinet.css'),js=read('cabinet.js');
  for(const marker of ['DH-11C.1','id="cabinet-model"','id="cabinet-slots"','id="travel-slider"','id="yaw-slider"','id="pitch-slider"','id="status"','<noscript>'])assert.ok(html.includes(marker),marker);
  for(const marker of ['transform-style:preserve-3d','perspective:1200px','.drawer-left','.drawer-right','.drawer-bottom','.drawer-back','translateZ(calc(18px + var(--travel,0px)))','prefers-reduced-motion'])assert.ok(css.includes(marker),marker);
- for(const marker of ['data-drawer','aria-expanded','aria-pressed','data-scrubbing','state=model.reduce','Escape'])assert.ok(js.includes(marker),marker);
+ for(const marker of ['dataset.drawer','aria-expanded','aria-pressed','dataset.scrubbing','state=model.reduce','Escape'])assert.ok(js.includes(marker),marker);
  assert.doesNotMatch(html+css+js,/The Last Lightkeeper|The Clock of Tomorrow|Glass Harbour|ownerApproved|private_source/);
  assert.doesNotMatch(html+css+js,/https?:\/\/(?:cdn|unpkg|jsdelivr)/);
 });
