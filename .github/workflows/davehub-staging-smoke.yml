@@ -20,6 +20,8 @@ on:
       - 'prototypes/dh-11c-cabinet/**'
       - 'prototypes/dh-11c-room/**'
       - 'tests/dh11c-room.test.cjs'
+      - 'scripts/render-dh11c-art-lab.cjs'
+      - 'tests/dh11c-art-direction.test.cjs'
       - 'tests/dh11c-cabinet-geometry.test.cjs'
       - '.node-version'
       - 'scripts/bundle-games.cjs'

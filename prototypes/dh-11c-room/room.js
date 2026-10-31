@@ -40,7 +40,9 @@ const desiredTarget=focusPoint.clone();
 const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
 const selectable=[];
 const objects=new Map();
-const accents=['#98bec4','#d0ae79','#789aab','#d9c2a7','#7d8d95'];
+const artLab=typeof document!=='undefined'&&document.body.dataset.artLab==='true';
+const bookMaterials=[];
+const sceneLights={};
 const matte=(hex,roughness=.85)=>new THREE.MeshStandardMaterial({color:hex,roughness,metalness:.08});
 const mats={
  plaster:matte('#636775'),stone:matte('#555d66'),timber:matte('#756354'),
@@ -94,15 +96,16 @@ function wallScene(){
   box(scene,.07,.028,3.45,mats.edge,x,.065,1.12);
  }
  for(const z of [-.52,2.76])box(scene,5.1,.028,.06,mats.edge,.05,.065,z);
- scene.add(new THREE.HemisphereLight('#c3d4ea','#4d3842',2.25));
+ const ambient=new THREE.HemisphereLight('#c3d4ea','#4d3842',2.25);
+ sceneLights.ambient=ambient;scene.add(ambient);
  const sun=new THREE.DirectionalLight('#ffe0ad',2.8);
  sun.position.set(-3,7,5);
- scene.add(sun);
+ sceneLights.sun=sun;scene.add(sun);
  const lamp=new THREE.PointLight('#f1b982',26,7,2);
  lamp.position.set(-1.65,3.05,1.9);
- scene.add(lamp);
+ sceneLights.lamp=lamp;scene.add(lamp);
  const glow=new THREE.PointLight('#92b8d9',15,9,2);
- glow.position.set(.25,3.7,-3.5);scene.add(glow);
+ glow.position.set(.25,3.7,-3.5);sceneLights.window=glow;scene.add(glow);
 }
 wallScene();
 
@@ -207,7 +210,9 @@ function makeBookcase(){
   for(let b=0;b<20;b++){
    const height=.43+((b*7+shelf*13)%7)*.044;
    const x=-1.32+b*.139,y=.54+shelf*.91+height/2;
-   const bk=box(g,.111,height,.43,matte(colours[(shelf*4+b)%colours.length]),x,y,.44);
+   const bookMat=matte(colours[(shelf*4+b)%colours.length]);
+   bookMaterials.push(bookMat);
+   const bk=box(g,.111,height,.43,bookMat,x,y,.44);
    if((b+shelf)%11===0)pullBooks.push(bk);
   }
  }
@@ -268,6 +273,45 @@ function makeWindow(){
  capture('window',g);return g;
 }
 makeWindow();
+
+// DH-11C.3A opt-in art laboratory. This only recolours materials and lighting;
+// camera, transforms, meshes, pivots, raycasting and interactions are unchanged.
+// Normal DH-11C.2 preview has no art-lab flag and retains its exact baseline.
+function setArtPreset(palette){
+ for(const [name,material] of Object.entries(mats)){
+  if(palette[name]&&material.color)material.color.set(palette[name]);
+ }
+ bookMaterials.forEach((material,i)=>material.color.set(palette.bookSpines[i%palette.bookSpines.length]));
+ scene.background.set(palette.backdrop);
+ if(scene.fog)scene.fog.color.set(palette.backdrop);
+ sceneLights.ambient.color.set(palette.ambient);
+ sceneLights.ambient.groundColor.set(palette.ground);
+ sceneLights.ambient.intensity=palette.ambientIntensity;
+ sceneLights.sun.color.set(palette.sun);
+ sceneLights.sun.intensity=palette.sunIntensity;
+ sceneLights.lamp.color.set(palette.lamp);
+ sceneLights.lamp.intensity=palette.lampIntensity;
+ sceneLights.window.color.set(palette.window);
+ sceneLights.window.intensity=palette.windowIntensity;
+ if(renderer)renderer.toneMappingExposure=palette.exposure;
+}
+if(artLab){
+ const contract=window.DH11ArtPalettes;
+ const options=[...document.querySelectorAll('[data-palette]')];
+ if(!contract||options.length!==3)throw Error('DH-11C.3A art lab missing palette controls');
+ const current=document.getElementById('style-current');
+ const summary=document.getElementById('style-summary');
+ function choose(id){
+  const preset=contract.get(id);
+  setArtPreset(preset);
+  for(const option of options)option.setAttribute('aria-pressed',String(option.dataset.palette===preset.id));
+  if(current)current.textContent=preset.name;
+  if(summary)summary.textContent=preset.description;
+  document.documentElement.style.setProperty('--style-accent',preset.brass);
+ }
+ for(const option of options)option.addEventListener('click',()=>choose(option.dataset.palette));
+ choose(contract.all[0].id);
+}
 
 const copyById={
  desk:'The desk is piled with individually modelled paper sheets, an ink pot and a lamp. Rummage through the papers to move the top sheets.',

@@ -1,0 +1,21 @@
+/* An art-direction review surface only. Geometry and camera controls come from DH-11C.2. */
+:root{--style-accent:#d5ab70}
+.art-lab-selector{background:linear-gradient(130deg,#241d2c,#2a2738);border:1px solid #896d67;border-top:0;padding:24px clamp(17px,3vw,35px);display:grid;gap:17px}
+.art-lab-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.art-lab-head h2{font:700 clamp(22px,3vw,30px)/1.2 Georgia,serif;margin:5px 0}
+.art-lab-current{font-size:12px;color:#c1b5ad}
+.art-lab-current strong{color:#ffe8b7;display:block;font-size:16px;margin-top:4px}
+.art-palette-buttons{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.art-palette-buttons button{border:1px solid #897774;color:#efe7dc;background:#332f3e;border-radius:12px;cursor:pointer;display:flex;text-align:left;flex-direction:column;gap:6px;padding:14px;min-height:132px}
+.art-palette-buttons button strong{font:700 18px Georgia,serif}
+.art-palette-buttons button small{font-size:12px;line-height:1.45;color:#cfc4bb}
+.art-palette-buttons button[aria-pressed=true]{border:2px solid var(--style-accent);background:#414050;box-shadow:0 0 0 1px #f7d8a366}
+.art-palette-buttons button:hover{border-color:#fff0cf}
+.palette-stripe{height:21px;width:100%;border-radius:5px;background-size:100% 100%;margin-bottom:4px}
+.palette-stripe--amber{background:linear-gradient(90deg,#211a28 0 17%,#4f7374 17% 34%,#84664b 34% 51%,#d5ab70 51% 68%,#ead6ae 68% 85%,#684854 85%)}
+.palette-stripe--moon{background:linear-gradient(90deg,#111d30 0 17%,#456d7e 17% 34%,#5b5966 34% 51%,#b5ae91 51% 68%,#d4d6c1 68% 85%,#404963 85%)}
+.palette-stripe--golden{background:linear-gradient(90deg,#44312c 0 17%,#718f86 17% 34%,#ab8059 34% 51%,#dab476 51% 68%,#fff0c9 68% 85%,#966e70 85%)}
+.style-summary{margin:0;font-weight:750;color:#f7e0c1;line-height:1.5}
+.style-scope{font-size:12px;line-height:1.6;color:#c6bfc6;margin:0;max-width:1000px}
+@media(max-width:760px){.art-palette-buttons{grid-template-columns:1fr}.art-palette-buttons button{min-height:auto;display:grid;grid-template-columns:90px 1fr;align-items:center;gap:3px 12px}.art-palette-buttons button small{grid-column:2}.palette-stripe{grid-row:1/span 2;height:42px}}
+@media(prefers-reduced-motion:reduce){.art-palette-buttons button{transition:none}}

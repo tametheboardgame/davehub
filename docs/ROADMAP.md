@@ -1,6 +1,6 @@
 # DaveHub development roadmap
 
-**Updated:** 31 October 2026 for the DH-11C 3D Writing production plan. **Current stage:** DH-11C.2 working geometry-first prototype on staging; design approval and production texturing remain upcoming. Earlier DH-07–DH-10 work is tracked below.
+**Updated:** 31 October 2026 for the DH-11C 3D Writing production plan. **Current stage:** DH-11C.3A art-direction implementation and palette review; production GLB modelling gated on approval. Earlier DH-07–DH-10 work is tracked below.
 
 ## Design baseline
 
@@ -62,13 +62,17 @@
 | DH-11 | Build distinct creative worlds and later extend content types | Theme-specific Writing, Music, Experiments, Unfinished Shelf and Memory Lane rooms from the validated catalogue; public/fictional separation, responsive layouts, no new content approvals | **Layouts implemented for staging review on feature/dh11-creative-world-layouts; browser visual approval and CI required before sign-off.** Later content ingestion remains planned. |
 | DH-11C.1 | The Living Filing Cabinet | First fully explorable object inside the Writing island: original layered cabinet art, zoom to cabinet, five physical drawers, folder examination, persisted discoveries, accessible mobile interactions, approved-catalogue isolation | **Geometry-first reset adopted. A separate five-drawer CSS 3D mechanics laboratory is implemented for /previews/dh-11c/cabinet/ with fixed case/drawer depth, camera yaw/pitch controls and scrubbable movement. Full art integration remains blocked until geometry prototype is reviewed and approved; the current Writing room stays unchanged. See [DH11C1_LIVING_FILING_CABINET.md](DH11C1_LIVING_FILING_CABINET.md).** |
 | DH-11C.2 | Explore the complete Manuscript Hoard in 3D | One shared WebGL camera/coordinate system, actual 3D room and seven furniture/scene interactions, keyboard/mobile focus navigation, no new publications | **Mechanics prototype implemented, owner liked, staging/Cloudflare checks passed; visual production design and real Writing-world integration still pending.** See [DH11C2_FULL_ROOM_GEOMETRY.md](DH11C2_FULL_ROOM_GEOMETRY.md). |
-| DH-11C.3 | Art direction and asset bible | Owner-approved style/material/lighting reference, seven-camera composition, P0/P1/P2 model inventory and geometry-based concept review | **Planned next; DH-11C.3A kickoff.** |
+| DH-11C.3 | Art direction and asset bible | Owner-approved style/material/lighting reference, eight camera views, P0/P1/P2 model inventory and geometry-based concept review | **DH-11C.3A implementation in review: draft art bible, camera/geometry source audit, 21-asset inventory, GLB contract and interactive same-geometry palette lab. Owner visual design approval and screenshot/browser QA still pending.** |
 | DH-11C.4 | Production model/export pipeline | Blender/source-master and reproducible GLB export contract, shared metres/pivots, cabinet-first physical rig and complete room geometry validation | Planned, gated on C3 art and geometry review |
 | DH-11C.5 | Cohesive textured 3D room | Approved UV/material library, stylised textures/atlases, measured texture budget and correct camera/object readability | Planned, gated on fully functioning GLB geometry |
 | DH-11C.6 | Lighting, effects and motion polish | Warm/cool cinematic lighting, restrained atmosphere, camera-motion and accessibility/performance evidence | Planned, gated on first textured scene |
 | DH-11C.7 | Deep physical interactions and approved manuscript content | Five drawers and folder lift/inspect/return, other object mechanics, deterministic approved-only content adapter and full accessible fallbacks | Planned; no new content approval granted |
 | DH-11C.8 | Staging integration and release QA | Cross-browser/mobile QA, cold-load/fps checks, content and game regressions, reversible staging integration and owner approval | Planned; **no production-domain changes** |
 | DH-11C.9 | Optional reusable 3D world primitives | Extract proven shared camera/input/loader contracts after Writing v1, without enforcing one generic world style | Later, conditional on C8 approval |
+
+## DH-11C.3A — Scene audit, first material bible and palette comparison (31 October 2026)
+
+The first art-direction package is under review. Its [draft visual bible](DH11C3_ART_BIBLE.md) proposes Amber & Ink (preferred starting point), Moonlit Archive and Golden Storybook. The [source audit](DH11C3A_SCENE_AUDIT.md) records current camera coordinates and identifies blockers requiring geometry fixes, notably a solid cabinet case and uncut door/window walls. The [21-item P0/P1/P2 model inventory](DH11C3A_ASSET_INVENTORY.json) and [GLB node/pivot contract](DH11C3A_GLTF_NODE_CONTRACT.md) define cabinet-first C4 production entry. An isolated [material comparison lab](https://davehub.pages.dev/previews/dh-11c/art-lab/) swaps light/material colours on the *same* Three.js scene, never independently generated image parts. **No textures or models approved yet; browser screenshots and owner review are required before proceeding to DH-11C.4.** The published Writing page and existing games are unchanged.
 
 ## DH-11C.3–C.9 — Production-quality 3D Writing world roadmap (31 October 2026)
 
