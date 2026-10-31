@@ -282,7 +282,7 @@ let state=plan.next(null,{type:'init'});
 const drawerHome=cabinetDrawers.map(x=>x.position.z);
 const bookHome=pullBooks.map(x=>x.position.z);
 const typeHome=typeKey?.position.y||.19;
-let currentHover=null,travelAnimation=0;
+let currentHover=null;
 function focus(id){
  if(!plan.find(id))return;
  state=plan.next(state,{type:'focus',id});
@@ -389,11 +389,11 @@ function render(){
   focusPoint.lerp(desiredTarget,rate);
   camera.lookAt(focusPoint);
   for(let i=0;i<cabinetDrawers.length;i++){
-   const target=state.drawer===i?.65:0;
+   const target=state.drawer===i ? .65 : 0;
    cabinetDrawers[i].position.z=THREE.MathUtils.lerp(cabinetDrawers[i].position.z,drawerHome[i]+target,rate);
   }
   for(let i=0;i<pullBooks.length;i++){
-   const target=i===state.book?.37:0;
+   const target=i===state.book ? .37 : 0;
    pullBooks[i].position.z=THREE.MathUtils.lerp(pullBooks[i].position.z,bookHome[i]+target,rate);
   }
   if(typeKey)typeKey.position.y=THREE.MathUtils.lerp(typeKey.position.y,typeHome+(state.typed>0?-.025:0),rate);
