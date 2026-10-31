@@ -31,7 +31,6 @@ function createArtLabHtml(source){
     <p class="style-scope">All three modes use the exact DH-11C.2 meshes, camera positions and working mechanisms. They change <em>material colours and lighting only</em>. No photographic textures, invented 3D imagery or published content. The final design and art bible still require approval.</p>
   </section>
   <div class="control-strip">`);
- replace('The Manuscript Hoard:','The Manuscript Hoard:');
  return html;
 }
 function main(outDir){
