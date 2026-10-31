@@ -12,7 +12,9 @@ const {renderCreativeWorld,CREATIVE_VIEWS}=require('./render-dh11-worlds.cjs');
 const worldCss=fs.readFileSync(path.join(__dirname,'../assets/content/worlds.css'),'utf8')+'\n'+
   fs.readFileSync(path.join(__dirname,'../assets/content/dh11-worlds.css'),'utf8');
 const stagingReviewJs=fs.readFileSync(path.join(__dirname,'../assets/content/staging-review.js'),'utf8');
-if(worldCss.includes('</style>')||stagingReviewJs.includes('</script>'))throw Error('Unsafe inline asset delimiter');
+const roomCss=fs.readFileSync(path.join(__dirname,'../assets/worlds/writing/room.css'),'utf8');
+const roomJs=fs.readFileSync(path.join(__dirname,'../assets/worlds/writing/room.js'),'utf8');
+if(worldCss.includes('</style>')||stagingReviewJs.includes('</script>')||roomCss.includes('</style>')||roomJs.includes('</script>'))throw Error('Unsafe inline asset delimiter');
 const GAME_LAUNCHES=new Map(require('../config/game-releases.json').games.map(g=>[g.catalogueId,'/'+g.output+'/']));
 const VIEWS=[
   {id:'projects',title:'Projects',subtitle:'Things that escaped the idea stage.',mark:'◈'},
@@ -45,8 +47,21 @@ function sortEntries(arr,view){
  if(view==='memory-lane')return copy.sort((a,b)=>(a.period?.fromYear??9999)-(b.period?.fromYear??9999)||a.title.localeCompare(b.title));
  return copy.sort((a,b)=>a.title.localeCompare(b.title));
 }
-function shell({title,kicker,lead,body,root,preview=false,reviewRedirectEligible=false,theme=''}){
+function shell({title,kicker,lead,body,root,preview=false,reviewRedirectEligible=false,theme='',sceneMode=false}){
  const nav=VIEWS.map(v=>'<a'+attr('href',viewUrl(root,v.id))+(v.id===theme?' aria-current="page"':'')+'>'+esc(v.title)+'</a>').join('');
+ if(sceneMode)return '<!doctype html>\n<html lang="en-GB"><head><meta charset="utf-8">'+
+ '<meta name="viewport" content="width=device-width,initial-scale=1">'+
+ '<meta name="robots" content="noindex,nofollow">'+
+ '<meta name="color-scheme" content="dark">'+
+ '<title>The Manuscript Hoard · DaveHub</title>'+
+ '<link rel="preload" href="/assets/worlds/writing/manuscript-room-v1.avif" as="image" type="image/avif">'+
+ '<style data-davehub-inline="worlds">'+worldCss+'</style>'+
+ '<style data-davehub-inline="room">'+roomCss+'</style>'+
+ '</head><body class="dh11-theme dh11-theme--writing room-mode"><a class="skip" href="#main">Skip to scene</a>'+
+ '<div class="shell"><header class="room-navigation"><a class="room-brand" href="/">DaveHub</a>'+
+ '<a class="room-back" href="/worlds/">← Explore other islands</a></header>'+
+ '<main id="main">'+body+'</main><footer class="room-footer">An island in the DaveHub creative universe</footer></div>'+
+ '<script data-davehub-inline="room">'+roomJs+'</script></body></html>';
  return '<!doctype html>\n<html lang="en-GB"><head><meta charset="utf-8">'+
  '<meta name="viewport" content="width=device-width,initial-scale=1">'+
  '<meta name="robots" content="noindex,nofollow">'+
@@ -113,7 +128,7 @@ function renderView(data,root,view,preview){
    ? '<p class="found">'+works.length+' '+(works.length===1?'creation':'creations')+' in this world</p>'+linkList(works,root)
    : emptyState(root,view,preview);
  const body=immersive||section('Discover the creations',feature,'EXPLORE THIS WORLD');
- return shell({title:v.title,kicker:'WORLD / '+v.id.toUpperCase().replaceAll('-',' '),lead:v.subtitle,body,root,preview,theme:immersive?view:'',reviewRedirectEligible:!preview&&!data.items.length&&root===''});
+ return shell({title:v.title,kicker:'WORLD / '+v.id.toUpperCase().replaceAll('-',' '),lead:v.subtitle,body,root,preview,theme:immersive?view:'',sceneMode:view==='writing'&&preview!=='review',reviewRedirectEligible:!preview&&!data.items.length&&root===''});
 }
 function related(data,item){
  const out=new Map();
