@@ -1,5 +1,6 @@
 import * as THREE from './vendor/three-r159.module.min.js';
 import {drawerIndexForMesh} from './drawer-picking.mjs';
+import {paperPose,pressDepth,paperAdvance,featuredBook,typedKeyIndex,TYPE_KEY_COUNT} from './furniture-motion.mjs';
 
 const plan=window.DH11RoomPlan;
 if(!plan)throw Error('Missing DH-11C.2 room coordinates');
@@ -218,6 +219,7 @@ function makeText(text,w,h,colour='#30252d',fill='#e8d4b2'){
 if(!glbProof)makeCabinet();
 
 const loosePapers=[],paperStacks=[];
+let paperHomes=[];
 function makeDesk(){
  const g=group(scene,-.3,0,.6);
  box(g,4.5,.2,2.15,mats.desk,0,1.29,0);
@@ -227,7 +229,7 @@ function makeDesk(){
   const x=-1.76+(i%5)*.67,z=-.66+Math.floor(i/5)*.52;
   const mesh=box(g,.49,.012,.32,mats.paper,x,1.41+(i%4)*.022,z);
   mesh.rotation.y=(i%3-1)*.22;
-  if(i<6)loosePapers.push(mesh);
+  if(i<10)loosePapers.push(mesh);
   paperStacks.push(mesh);
  }
  const shade=cylinder(g,.28,.47,.31,mats.brass,-1.67,2.32,-.43,10);
@@ -243,24 +245,32 @@ function makeDesk(){
  return g;
 }
 makeDesk();
+paperHomes=loosePapers.map(m=>({x:m.position.x,y:m.position.y,z:m.position.z,yaw:m.rotation.y,tilt:m.rotation.z}));
 
 let typeKey=null;
+const typeKeys=[];
+let typeKeyHomes=[],typePaper=null,typePaperHome=0,typePlaten=null,typePlatenHome=0;
+let activePress=null,pressSerial=0;
 function makeTypewriter(){
  const g=group(scene,1.08,1.42,.66);
  box(g,.95,.21,.55,mats.ink,0,.07,0);
  box(g,.79,.2,.3,mats.stone,0,.2,-.08);
  for(let row=0;row<3;row++)for(let i=0;i<8;i++){
   const k=box(g,.067,.025,.059,mats.brass,-.34+i*.099,.194,.11+row*.092);
+  k.name='typewriter_key_'+row+'_'+i;
+  typeKeys.push(k);
   if(row===1&&i===4)typeKey=k;
  }
  const roller=cylinder(g,.056,.056,.91,mats.ink,0,.38,-.22,12);
- roller.rotation.z=Math.PI/2;
- box(g,.64,.58,.02,mats.paper,0,.68,-.24);
+ roller.rotation.z=Math.PI/2;typePlaten=roller;
+ typePaper=box(g,.64,.58,.02,mats.paper,0,.68,-.24);
  box(g,.57,.02,.015,mats.edge,0,.65,-.224);
  capture('typewriter',g);
  return g;
 }
 makeTypewriter();
+typeKeyHomes=typeKeys.map(key=>key.position.y);
+typePaperHome=typePaper.position.y;typePlatenHome=typePlaten.rotation.y;
 
 const pullBooks=[];
 function makeBookcase(){
@@ -277,7 +287,7 @@ function makeBookcase(){
    const bookMat=matte(colours[(shelf*4+b)%colours.length]);
    bookMaterials.push(bookMat);
    const bk=box(g,.111,height,.43,bookMat,x,y,.44);
-   if((b+shelf)%11===0)pullBooks.push(bk);
+   if(featuredBook(shelf,b))pullBooks.push(bk);
   }
  }
  box(g,3.3,.16,.97,mats.brass,0,4.51,.07);
@@ -389,7 +399,7 @@ const copyById={
 let state=plan.next(null,{type:'init'});
 const drawerHome=cabinetDrawers.map(x=>x.position.z);
 let bookHome=pullBooks.map(x=>x.position.z);
-let typeHome=typeKey?.position.y||.19;
+// All 24 keys, the platen and the paper have separate animation references.
 let currentHover=null;
 function focus(id){
  if(!plan.find(id))return;
@@ -417,6 +427,18 @@ function home(){
  if(reduced.matches){camera.position.copy(desiredPosition);focusPoint.copy(desiredTarget);camera.lookAt(focusPoint);}
 }
 const drawerNames=['Finished','Drafts','Oddities','Fragments','Field Notes'];
+function movePaperStack(){
+ state=plan.next(state,{type:'paper'});
+ status.textContent=state.paper===0?'The scattered papers settle back into place.':
+  'Paper '+state.paper+' slides and lifts visibly across the desk.';
+}
+function pressTypewriter(index=null){
+ state=plan.next(state,{type:'type'});
+ const selected=index===null?pressSerial%typeKeys.length:index;
+ pressSerial++;
+ activePress={index:selected,at:clock.elapsedTime};
+ status.textContent='Key '+(selected+1)+' struck. '+state.typed+' characters typed; paper advances.';
+}
 function renderControls(id){
  actions.replaceChildren();
  const add=(label,action)=>{
@@ -429,9 +451,9 @@ function renderControls(id){
    status.textContent=n+(state.drawer===i?' drawer extended along the cabinet depth axis.':' drawer closed.');
    renderControls('cabinet');
   }));
- }else if(id==='desk')add('Move a paper stack',()=>{state=plan.next(state,{type:'paper'});status.textContent='Papers shifted: '+state.paper+' (up to ten).';});
- else if(id==='bookcase')add('Pull a book out',()=>{state=plan.next(state,{type:'book'});status.textContent='A book slides forward. Click again to inspect another.';});
- else if(id==='typewriter')add('Press a key',()=>{state=plan.next(state,{type:'type'});status.textContent='A key depresses. '+state.typed+' characters typed.';});
+ }else if(id==='desk')add('Move a paper stack',movePaperStack);
+ else if(id==='bookcase')add('Pull a featured book',()=>{state=plan.next(state,{type:'book'});status.textContent='One of eight featured books slides out. Others remain on their shelves.';});
+ else if(id==='typewriter')add('Press a key',()=>pressTypewriter());
  else if(id==='bin')add('Rummage through paper',()=>{state=plan.next(state,{type:'bin'});status.textContent='The loose paper changes position.';});
  else if(id==='door'){
   add(state.doorOpen?'Close the door':'Open the door',()=>{state=plan.next(state,{type:'door'});status.textContent=state.doorOpen?'The door swings open on its hinge.':'The door swings shut.';renderControls('door');});
@@ -453,7 +475,8 @@ function pickFromEvent(event){
  const mesh=hits[0]?.object;
  const id=mesh?.userData?.objectId;
  if(!id)return null;
- return {id,drawerIndex:id==='cabinet'?drawerIndexForMesh(mesh,cabinetDrawers):null};
+ return {id,drawerIndex:id==='cabinet'?drawerIndexForMesh(mesh,cabinetDrawers):null,
+  keyIndex:id==='typewriter'?typedKeyIndex(mesh.name):null};
 }
 canvas.addEventListener('pointermove',event=>{
  const pick=pickFromEvent(event);
@@ -471,7 +494,7 @@ canvas.addEventListener('pointerup',event=>{
  pointerStart=null;
  const pick=pickFromEvent(event);
  if(!pick)return;
- const {id,drawerIndex}=pick;
+ const {id,drawerIndex,keyIndex}=pick;
  if(state.focus===id){
   if(id==='cabinet'){
    // The cabinet case/rails are not drawers. Only a hit inside a named
@@ -481,12 +504,12 @@ canvas.addEventListener('pointerup',event=>{
    status.textContent=drawerNames[drawerIndex]+
     (state.drawer===drawerIndex?' drawer opened.':' drawer closed.');
   }else{
-   if(id==='desk')state=plan.next(state,{type:'paper'});
+   if(id==='desk')movePaperStack();
    else if(id==='bookcase')state=plan.next(state,{type:'book'});
-   else if(id==='typewriter')state=plan.next(state,{type:'type'});
+   else if(id==='typewriter')pressTypewriter(keyIndex);
    else if(id==='bin')state=plan.next(state,{type:'bin'});
    else if(id==='door')state=plan.next(state,{type:'door'});
-   status.textContent=plan.find(id).label+' responds to your interaction.';
+   if(id!=='desk'&&id!=='typewriter')status.textContent=plan.find(id).label+' responds to your interaction.';
   }
   renderControls(id);
  }else{
@@ -531,11 +554,21 @@ function render(){
    const target=i===state.book ? .37 : 0;
    pullBooks[i].position.z=THREE.MathUtils.lerp(pullBooks[i].position.z,bookHome[i]+target,rate);
   }
-  if(typeKey)typeKey.position.y=THREE.MathUtils.lerp(typeKey.position.y,typeHome+(state.typed>0?-.025:0),rate);
+  typeKeys.forEach((key,i)=>{
+   const depth=activePress?pressDepth(clock.elapsedTime-activePress.at,i===activePress.index,reduced.matches):0;
+   key.position.y=THREE.MathUtils.lerp(key.position.y,typeKeyHomes[i]-depth,rate);
+  });
+  if(typePaper)typePaper.position.y=THREE.MathUtils.lerp(typePaper.position.y,typePaperHome+paperAdvance(state.typed),rate);
+  if(typePlaten)typePlaten.rotation.y=THREE.MathUtils.lerp(typePlaten.rotation.y,typePlatenHome+state.typed*.13,rate);
   if(doorLeaf)doorLeaf.rotation.y=THREE.MathUtils.lerp(doorLeaf.rotation.y,state.doorOpen?-.96:0,rate);
   loosePapers.forEach((mesh,i)=>{
-   const target=state.paper>i? .1*Math.sin(i*1.9):0;
-   mesh.rotation.z=THREE.MathUtils.lerp(mesh.rotation.z,target,rate);
+   const home=paperHomes[i];if(!home)return;
+   const p=paperPose(home,i,state.paper);
+   mesh.position.x=THREE.MathUtils.lerp(mesh.position.x,p.x,rate);
+   mesh.position.y=THREE.MathUtils.lerp(mesh.position.y,p.y,rate);
+   mesh.position.z=THREE.MathUtils.lerp(mesh.position.z,p.z,rate);
+   mesh.rotation.y=THREE.MathUtils.lerp(mesh.rotation.y,p.yaw,rate);
+   mesh.rotation.z=THREE.MathUtils.lerp(mesh.rotation.z,p.tilt,rate);
   });
   if(!reduced.matches){
    const t=clock.elapsedTime;
@@ -627,11 +660,12 @@ if(furnitureModelProof){
      if(!node)throw Error('Missing interactive furniture node '+name);
      return node;
     };
-    const papers=Array.from({length:6},(_,i)=>get('desk_paper_'+String(i).padStart(2,'0')));
+    const papers=Array.from({length:10},(_,i)=>get('desk_paper_'+String(i).padStart(2,'0')));
     const books=[];
     for(let shelf=0;shelf<4;shelf++)for(let b=0;b<20;b++)
-     if((b+shelf)%11===0)books.push(get('book_'+shelf+'_'+String(b).padStart(2,'0')));
-    const key=get('typewriter_key_1_4'),hinge=get('door_leaf_hinge');
+     if(featuredBook(shelf,b))books.push(get('book_'+shelf+'_'+String(b).padStart(2,'0')));
+    const keys=Array.from({length:TYPE_KEY_COUNT},(_,i)=>get('typewriter_key_'+Math.floor(i/8)+'_'+i%8));
+    const key=keys[12],typeSheet=get('typewriter_paper'),platen=get('typewriter_platen'),hinge=get('door_leaf_hinge');
     const islands=Array.from({length:3},(_,i)=>get('window_island_'+i));
     // No procedural object is removed until the complete model contract is
     // satisfied. New raycast targets are registered together.
@@ -646,10 +680,15 @@ if(furnitureModelProof){
      capture(id,next.get(id));
     }
     loosePapers.splice(0,loosePapers.length,...papers);
-    paperStacks.splice(0, paperStacks.length,...Array.from({length:13},(_,i)=>get('desk_paper_'+String(i).padStart(2,'0'))));
+    paperHomes=papers.map(m=>({x:m.position.x,y:m.position.y,z:m.position.z,yaw:m.rotation.y,tilt:m.rotation.z}));
+    paperStacks.splice(0,paperStacks.length,...Array.from({length:13},(_,i)=>get('desk_paper_'+String(i).padStart(2,'0'))));
     pullBooks.splice(0,pullBooks.length,...books);
     bookHome=books.map(book=>book.position.z);
-    typeKey=key;typeHome=key.position.y;doorLeaf=hinge;
+    typeKeys.splice(0,typeKeys.length,...keys);
+    typeKeyHomes=keys.map(k=>k.position.y);
+    typePaper=typeSheet;typePaperHome=typeSheet.position.y;
+    typePlaten=platen;typePlatenHome=platen.rotation.y;
+    typeKey=key;doorLeaf=hinge;
     islandGroups.splice(0,islandGroups.length,...islands);
     report('Furniture GLB loaded: desk, separate papers, bookcase, books, typewriter keys, bin, hinged door and floating islands. Existing click and animation controls remain active.');
    }catch(error){

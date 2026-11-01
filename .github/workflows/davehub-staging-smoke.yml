@@ -39,6 +39,8 @@ on:
       - 'scripts/build-dh11c4f-furniture-glb.cjs'
       - 'scripts/render-dh11c4f-furniture.cjs'
       - 'tests/dh11c4f-furniture.test.cjs'
+      - 'tests/dh11c4f-animation-fixes.test.cjs'
+      - 'prototypes/dh-11c-room/furniture-motion.mjs'
       - 'prototypes/dh-11c-room/immersive.css'
       - 'prototypes/dh-11c-room/immersive-ui.js'
       - 'assets/worlds/writing/3d/models/**'
