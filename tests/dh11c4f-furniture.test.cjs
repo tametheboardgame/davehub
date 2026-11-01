@@ -60,7 +60,7 @@ test('full furniture preview opens on whole-room camera while cabinet-only proof
  const room=read('prototypes/dh-11c-room/room.js');
  const plan=require('../prototypes/dh-11c-room/room-plan.js');
  assert.match(html,/data-furniture-model-proof="true"/,'complete furniture preview must opt into full-scene mode');
- assert.match(html,/room\\/room\\.js\\?v=dh11c4i-gilded-v2/,'fresh bookcase module URL must defeat old browser caches');
+ assert.ok(html.includes('../room/room.js?v=dh11c4i-gilded-v2'),'fresh bookcase module URL must defeat old browser caches');
  assert.match(html,/name="davehub-furniture-release" content="dh11c4i-gilded-v2"/,'preview includes visible-build identity in markup');
  assert.match(html,/data-glb-proof="true"/,'cabinet GLB remains part of the scene');
  assert.match(room,/camera\.position\.set\(\.\.\.plan\.HOME\.position\)/);
