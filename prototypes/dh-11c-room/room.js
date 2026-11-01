@@ -292,6 +292,8 @@ typePaperRuleHome=typePaperRule.position.y;typePlatenHome=typePlaten.quaternion.
 const pullBooks=[];
 // Eight interactive books get unmistakable jewel-turquoise bindings and
 // three gilded spine marks. The unlit gilt stays vivid in the dim study.
+// Use opaque high-contrast pigment instead of relying on a faint emissive
+// accent. All eight bindings are visibly different even under poor lighting.
 const FEATURE_BOOK_COLOUR='#24f5da';
 const featureBookGilt=new THREE.MeshBasicMaterial({color:'#ffe681',toneMapped:false});
 function featuredBookColour(mesh){
@@ -830,6 +832,10 @@ if(furnitureModelProof){
     const keys=Array.from({length:TYPE_KEY_COUNT},(_,i)=>get('typewriter_key_'+Math.floor(i/8)+'_'+i%8));
     const key=keys[12],typeSheet=get('typewriter_paper'),typeRule=get('typewriter_paper_rule'),platen=get('typewriter_platen'),hinge=get('door_leaf_hinge');
     const islands=Array.from({length:3},(_,i)=>get('window_island_'+i));
+    // Attach the bright bindings and gold bands BEFORE capture() traverses
+    // the scene. Otherwise their meshes are absent from the raycast targets.
+    // This also means a failed decoration leaves the fallback untouched.
+    books.forEach((mesh,i)=>markFeaturedBook(mesh,i));
     // No procedural object is removed until the complete model contract is
     // satisfied. New raycast targets are registered together.
     scene.add(content);
@@ -845,7 +851,6 @@ if(furnitureModelProof){
     loosePapers.splice(0,loosePapers.length,...papers);
     paperHomes=papers.map(m=>({x:m.position.x,y:m.position.y,z:m.position.z,yaw:m.rotation.y,tilt:m.rotation.z}));
     paperStacks.splice(0,paperStacks.length,...papers);
-    books.forEach((mesh,i)=>markFeaturedBook(mesh,i));
     pullBooks.splice(0,pullBooks.length,...books);
     bookHome=books.map(book=>book.position.z);
     typeKeys.splice(0,typeKeys.length,...keys);
