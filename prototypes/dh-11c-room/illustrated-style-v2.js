@@ -13,7 +13,7 @@
   painterly:Object.freeze({id:'painterly',name:'Painterly Storybook',
    description:'Actual painted wood, illustrated paper and bindings, inked silhouettes, and a restrained amber/indigo stage.'})
  });
- const KEY_OUTLINE=/^(desk_surface|desk_file_cover|desk_paper_\\d{2}|typewriter_body|typewriter_paper|bookcase_body|bookcase_side_[01]|bookcase_shelf_[0-3]|bookcase_crown|book_[0-3]_\\d{2}|front_face_(finished|drafts|oddities|fragments|field_notes)|case_(left|right|top|bottom))$/;
+ const KEY_OUTLINE=/^(desk_surface|desk_file_cover|desk_paper_\d{2}|typewriter_body|typewriter_paper|bookcase_body|bookcase_side_[01]|bookcase_shelf_[0-3]|bookcase_crown|book_[0-3]_\d{2}|front_face_(finished|drafts|oddities|fragments|field_notes)|case_(left|right|top|bottom))$/;
  function outlinedName(name){return KEY_OUTLINE.test(name||'');}
  // This material classification is deliberately tied to surfaces, NOT
  // lighting or camera position. It also applies to late-loaded Blender GLBs.
