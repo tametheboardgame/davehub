@@ -126,9 +126,16 @@ async function main(){
    ]){
     if(!bookSource.includes(marker))throw Error('Stale furniture script on Cloudflare: missing '+marker);
    }
-   const furnitureSource=bookSource.slice(bookSource.indexOf('if(furnitureModelProof){'));
-   if(furnitureSource.indexOf('books.forEach((mesh,i)=>markFeaturedBook(mesh,i));')>
-      furnitureSource.indexOf('scene.add(content);'))
+   // The material initialiser also uses "if(furnitureModelProof)". Scope
+   // this ordering check to the actual furniture GLB loader, not the first
+   // occurrence in the module (which precedes the cabinet loader).
+   const loaderMarker="if(furnitureModelProof){\\n const output=document.getElementById('furniture-model-status');";
+   const loaderIndex=bookSource.indexOf(loaderMarker);
+   if(loaderIndex<0)throw Error('Furniture GLB loader missing from deployed runtime');
+   const furnitureSource=bookSource.slice(loaderIndex);
+   const giltIndex=furnitureSource.indexOf('books.forEach((mesh,i)=>markFeaturedBook(mesh,i));');
+   const captureIndex=furnitureSource.indexOf('scene.add(content);');
+   if(giltIndex<0||captureIndex<0||giltIndex>captureIndex)
     throw Error('Deployed book inlays are not registered before GLB scene capture');
    console.log('PASS hosted DH-11C.5A textured desk with all previous interactions ('+bookSource.length+' bytes)');
    const deskScript=await fetch(BASE+'/previews/dh-11c/room/desk-materials.js?v=dh11c5a-desk-v1',{
