@@ -38,6 +38,19 @@ export function pressDepth(ageSeconds, isSelected, reducedMotion = false) {
 export function paperAdvance(typed) {
  return Math.min(Math.max(typed, 0), 60) * .006;
 }
+export const TYPE_PAPER_HEIGHT = .58;
+export const TYPE_PLATEN_RADIUS = .056;
+// The sheet is fed UP through the horizontal roller: its bottom edge stays
+// at its original roller contact height while the visible page gets longer.
+// The roller rotation is computed from the same linear feed distance.
+export function typewriterFeed(typed) {
+ const advance=paperAdvance(typed);
+ return {
+  scale:1+advance/TYPE_PAPER_HEIGHT,
+  centreLift:advance/2,
+  rollerAngle:advance/TYPE_PLATEN_RADIUS
+ };
+}
 export function typedKeyIndex(nodeName) {
  const match = /^typewriter_key_([012])_([0-7])$/.exec(nodeName || '');
  return match ? Number(match[1]) * 8 + Number(match[2]) : null;
