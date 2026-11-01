@@ -1,7 +1,7 @@
 # DH-11C.4B: Editable Blender master and GLB round-trip
 
 **Date:** 1 November 2026  
-**Status:** Source and cloud pipeline implemented; actual Blender round-trip must pass its GitHub Actions run before the resulting model is considered verified. Art-direction selection, production textures and the final room remain unapproved.
+**Status:** First actual headless Blender round-trip **verified** in GitHub Actions run [41296250123](https://github.com/tametheboardgame/davehub/actions/runs/41296250123), merged into staging via PR #61. Art-direction selection, production textures, browser visual acceptance and runtime model replacement remain unapproved.
 
 ## Why this is the next step
 
@@ -26,8 +26,8 @@ The current `/previews/dh-11c/cabinet-glb/` continues using the DH-11C.4A determ
 
 ## Approval gates
 
-1. GitHub Actions runs Blender successfully and uploads the editable .blend file and exported GLB. The generated report must match the actual binary.
-2. The exported cabinet preserves all five drawers, closed/half-open/full-open motion and the source camera framing. If the tool chain changes a transform unexpectedly, **fail**, do not hide the mismatch with geometry or image hacks.
+1. **Passed:** Blender 4.0.2 imported the source cabinet, saved an editable `.blend` and exported the new GLB. Artifact #13079755791 contains both, source GLB and report. SHA-256 hashes were checked independently.
+2. **Source/export structure passed:** five drawer groups, parent pivots, positions and +Z axes validated. **Browser visual review still required** to confirm closed/half-open/full-open motion and exact camera framing from the actual exported model.
 3. Review the actual model visually in browser before adopting the new Blender GLB as the staging runtime model.
 4. Select an art direction in the existing DH-11C.3A art lab before applying the first production-quality textures.
 5. Begin a separate DH-11C.4C pass to refine cabinet modelling and scale the verified Blender export pipeline to the room shell and remaining furniture.
