@@ -26,6 +26,9 @@ for asset in \
   prototypes/dh-11c-room/room.js \
   prototypes/dh-11c-room/room-shell-plan.js \
   prototypes/dh-11c-room/architecture.css \
+  prototypes/dh-11c-room/immersive.css \
+  prototypes/dh-11c-room/immersive-ui.js \
+  tests/dh11c4d-immersive-viewport.test.cjs \
   assets/worlds/writing/3d/models/cabinet-blender-verified.glb.deflate.b64 \
   scripts/build-dh11c4c-blender-model.cjs \
   scripts/render-dh11c4c-architecture.cjs \
@@ -72,7 +75,7 @@ done
 
 # A private draft must never become a deployed page through a build bypass.
 # Validate both the empty/approved production manifest and fictional test fixtures.
-node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/dh11-worlds.test.cjs tests/dh11c-cabinet-geometry.test.cjs tests/dh11c-room.test.cjs tests/dh11c-art-direction.test.cjs tests/dh11c4-cabinet-glb.test.cjs tests/dh11c4b-blender.test.cjs tests/dh11c4c-room-architecture.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs tests/dh10c-editorial.test.cjs tests/dh10c-hosted-http.test.cjs
+node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/dh11-worlds.test.cjs tests/dh11c-cabinet-geometry.test.cjs tests/dh11c-room.test.cjs tests/dh11c-art-direction.test.cjs tests/dh11c4-cabinet-glb.test.cjs tests/dh11c4b-blender.test.cjs tests/dh11c4c-room-architecture.test.cjs tests/dh11c4d-immersive-viewport.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs tests/dh10c-editorial.test.cjs tests/dh10c-hosted-http.test.cjs
 node -e "const {validateManifest}=require('./scripts/davehub-manifest.cjs'); const data=require('./davehub.json'); const result=validateManifest(data,'tametheboardgame/davehub');if(!result.valid)throw new Error(result.errors.join('; '));"
 # Fail closed: only individually owner-approved records and links enter production.
 node scripts/content-check.cjs content/public/catalogue.json
@@ -100,7 +103,7 @@ node scripts/render-dh11c4-glb-proof.cjs dist/previews/dh-11c/cabinet-glb
 node scripts/build-dh11c4-cabinet-glb.cjs dist/previews/dh-11c/room/models/cabinet-prototype.glb
 node scripts/build-dh11c4c-blender-model.cjs dist/previews/dh-11c/room/models/cabinet-blender-verified.glb
 cp prototypes/dh-11c-room/room-shell-plan.js dist/previews/dh-11c/room/
-cp prototypes/dh-11c-room/architecture.css dist/previews/dh-11c/architecture/
+cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js dist/previews/dh-11c/architecture/
 node scripts/render-dh11c4c-architecture.cjs dist/previews/dh-11c/architecture
 cp content/examples/fictional.json dist/previews/dh-08/catalogue.json
 cp content/public/catalogue.json dist/content/catalogue.json
@@ -153,7 +156,7 @@ for(const slug of ['unicorn-valley','stephen-martin-project','tame-the-board-gam
 }
 check('dist/worlds/writing/index.html',['data-scene="manuscript-hoard"','room-stage-image','data-room-target="desk"','data-room-target="cabinet"','data-room-target="bin"','data-room-target="bookcase"','data-room-target="typewriter"','Tame The Board Game'],['The Last Lightkeeper','The Clock of Tomorrow']);
 check('dist/previews/dh-08b/worlds/writing/index.html',['data-scene="manuscript-hoard"','Fictional design demonstration','The Last Lightkeeper']);
-check('dist/previews/dh-11c/architecture/index.html',['DH-11C.4C','data-shell-proof="true"','data-blender-compare="true"','../room/room-shell-plan.js','../cabinet-glb/']);
+check('dist/previews/dh-11c/architecture/index.html',['DH-11C.4C','data-shell-proof="true"','data-blender-compare="true"','data-immersive-room="true"','./immersive.css','./immersive-ui.js','id="prototype-tools"','id="scene-nav"','../room/room-shell-plan.js','../cabinet-glb/']);
 check('dist/previews/dh-11c/cabinet-glb/index.html',['DH-11C.4A','data-glb-proof="true"','id="glb-extension"','data-glb-snap="50"','../room/room.js']);
 check('dist/previews/dh-11c/art-lab/index.html',['DH-11C.3A','data-art-lab="true"','data-palette="amber-ink"','data-palette="moonlit-archive"','data-palette="golden-storybook"','../room/room.js']);
 check('dist/previews/dh-11c/room/index.html',['DH-11C.2','id="room-canvas"','room.js','room-plan.js','object-list']);

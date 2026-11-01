@@ -30,6 +30,19 @@ function render(original){
  '  <div class="control-strip">'
  ].join('\n');
  replace(anchor,panel);
+ // DH-11C.4D: keep the original room, canvas, geometry and camera while
+ // composing its UI as a single viewport rather than a scrollable long page.
+ replace('<link rel="stylesheet" href="./architecture.css">','<link rel="stylesheet" href="./architecture.css">\n<link rel="stylesheet" href="./immersive.css">');
+ replace('<body data-glb-proof="true" data-shell-proof="true" data-blender-compare="true">','<body data-glb-proof="true" data-shell-proof="true" data-blender-compare="true" data-immersive-room="true">');
+ replace('<meta name="viewport" content="width=device-width,initial-scale=1">','<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">');
+ replace('<script type="module" src="../room/room.js"></script>','<script type="module" src="../room/room.js"></script>\n<script defer src="./immersive-ui.js"></script>');
+ replace('  <section class="glb-proof-controls" aria-label="Cabinet GLB geometry proof">',
+   '  <details class="prototype-tools" id="prototype-tools"><summary>Test controls</summary>\n  <section class="glb-proof-controls" aria-label="Cabinet GLB geometry proof">');
+ replace('  </nav>\n  <div class="control-strip">','  </nav>\n  </details>\n  <div class="control-strip">');
+ replace('  <nav class="scene-nav" id="scene-nav" aria-label="Explore the room">',
+   '  <details class="object-menu" id="scene-nav"><summary>Explore objects</summary>\n  <nav class="scene-nav" aria-label="Explore the room">');
+ replace('  </nav>\n  <section class="interaction-tray"',
+   '  </nav>\n  </details>\n  <section class="interaction-tray"');
  return html;
 }
 if(require.main===module){
