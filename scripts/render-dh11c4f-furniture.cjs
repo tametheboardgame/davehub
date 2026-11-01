@@ -7,10 +7,10 @@ function render(source){
  // Force a fresh JS fetch for the highlighted bookcase, even in browsers
  // that have cached the earlier six-furniture room module.
  replace('<script type="module" src="../room/room.js"></script>',
-  '<script type="module" src="../room/room.js?v=dh11c4j-bin-v1"></script>');
+  '<script type="module" src="../room/room.js?v=dh11c4k-lamp-v1"></script>');
  replace('<script defer src="../room/room-plan.js"></script>',
-  '<script defer src="../room/room-plan.js?v=dh11c4j-bin-v1"></script>');
- replace('</head>','<meta name="davehub-furniture-release" content="dh11c4j-bin-v1">\n</head>');
+  '<script defer src="../room/room-plan.js?v=dh11c4k-lamp-v1"></script>');
+ replace('</head>','<meta name="davehub-furniture-release" content="dh11c4k-lamp-v1">\n</head>');
  replace('DH-11C.4E Editable Blender Room Architecture','DH-11C.4F Editable Furniture Modelling');
  replace('DH-11C.4E / BLENDER ROOM SHELL','DH-11C.4F / FURNITURE GEOMETRY');
  replace('The room itself is now a model.','Every object belongs to the same world.');
