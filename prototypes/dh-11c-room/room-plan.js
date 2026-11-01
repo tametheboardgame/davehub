@@ -10,6 +10,7 @@
  const DIMENSIONS=Object.freeze({width:14,height:6.4,depth:11});
  const PAPER_COUNT=13;
  const FEATURED_BOOK_COUNT=8;
+ const BIN_PAPER_COUNT=9;
  const HOME=Object.freeze({position:[0,4.2,12.9],target:[0,2.05,-1.5]});
  const OBJECTS=Object.freeze([
   Object.freeze({id:'desk',label:'Writing desk',position:[-.25,1.5,.4],camera:[-1.1,3.15,5.5],lookAt:[-.25,1.45,.3],action:'Inspect the papers'}),
@@ -26,7 +27,7 @@
  const find=id=>OBJECTS.find(x=>x.id===id)||null;
  const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
  function next(current,action){
-  const before=current||{focus:null,drawer:null,paper:0,papers:Array(PAPER_COUNT).fill(false),books:Array(FEATURED_BOOK_COUNT).fill(false),typed:0,doorOpen:false};
+  const before=current||{focus:null,drawer:null,papers:Array(PAPER_COUNT).fill(false),books:Array(FEATURED_BOOK_COUNT).fill(false),binPapers:Array(BIN_PAPER_COUNT).fill(false),typed:0,doorOpen:false};
   if(!action||typeof action.type!=='string')return before;
   switch(action.type){
    case 'focus':return idSet.has(action.id)?{...before,focus:action.id}:before;
@@ -38,7 +39,8 @@
    case 'book':return before.focus==='bookcase'&&Number.isInteger(action.index)&&action.index>=0&&action.index<FEATURED_BOOK_COUNT?
     {...before,books:before.books.map((pulled,i)=>i===action.index?!pulled:pulled)}:before;
    case 'type':return before.focus==='typewriter'?{...before,typed:clamp(before.typed+1,0,60)}:before;
-   case 'bin':return before.focus==='bin'?{...before,paper:clamp(before.paper+1,0,10)}:before;
+   case 'bin':return before.focus==='bin'&&Number.isInteger(action.index)&&action.index>=0&&action.index<BIN_PAPER_COUNT?
+    {...before,binPapers:before.binPapers.map((out,i)=>i===action.index?!out:out)}:before;
    case 'door':return before.focus==='door'?{...before,doorOpen:!before.doorOpen}:before;
    default:return before;
   }
@@ -52,5 +54,5 @@
   return true;
  }
  validate();
- return Object.freeze({DIMENSIONS,HOME,OBJECTS,PAPER_COUNT,FEATURED_BOOK_COUNT,find,next,validate});
+ return Object.freeze({DIMENSIONS,HOME,OBJECTS,PAPER_COUNT,FEATURED_BOOK_COUNT,BIN_PAPER_COUNT,find,next,validate});
 });
