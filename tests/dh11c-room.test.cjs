@@ -19,6 +19,36 @@ test('one scene uses physically consistent world coordinates and seven unique lo
  }
  assert.equal(plan.find('outside'),null);
 });
+test('cabinet camera on a 14-inch laptop keeps the top visible and crops the base instead',()=>{
+ const cabinet=plan.find('cabinet');
+ assert.deepEqual(cabinet.camera,[-3.6,2.65,1.25]);
+ const camera=cabinet.camera,target=cabinet.lookAt;
+ const sub=(a,b)=>a.map((v,i)=>v-b[i]);
+ const normal=a=>a.map(v=>v/Math.hypot(...a));
+ const dot=(a,b)=>a.reduce((sum,v,i)=>sum+v*b[i],0);
+ const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+ const forward=normal(sub(target,camera));
+ const right=normal(cross(forward,[0,1,0]));
+ const up=cross(right,forward);
+ const projectY=(point,height)=> {
+  const delta=sub(point,camera);
+  const depth=dot(delta,forward);
+  assert.ok(depth>0);
+  return height/2-height/(2*Math.tan(51*Math.PI/360))*dot(delta,up)/depth;
+ };
+ // Cabinet height 3.66m, width 1.92m and depth approximately 1.2m,
+ // using the actual GLB/greybox cabinet placement (-4.7,0,-3.25).
+ const corners=(y)=>[-5.7,-3.7].flatMap(x=>[-3.95,-2.65].map(z=>[x,y,z]));
+ for(const height of [768,824]){
+  const highest=Math.min(...corners(3.66).map(p=>projectY(p,height)));
+  const lowest=Math.max(...corners(0).map(p=>projectY(p,height)));
+  // Fullscreen 14-inch browser header occupies roughly the top 80px.
+  assert.ok(highest>height*0.10, 'cabinet top must remain below header on '+height+'px screen: '+highest);
+  assert.ok(lowest>height+20, 'prefer slight base crop rather than chopping the top: '+lowest);
+  assert.ok(lowest<height+height*.18, 'avoid cropping excessive cabinet height: '+lowest);
+ }
+ assert.equal(plan.find('cabinet').lookAt[1],2.30);
+});
 test('room interactions update only approved mechanical state, no publication data',()=>{
  let state=plan.next(null,{type:'init'});
  assert.equal(state.focus,null);

@@ -11,7 +11,9 @@
  const HOME=Object.freeze({position:[0,4.2,12.9],target:[0,2.05,-1.5]});
  const OBJECTS=Object.freeze([
   Object.freeze({id:'desk',label:'Writing desk',position:[-.25,1.5,.4],camera:[-1.1,3.15,5.5],lookAt:[-.25,1.45,.3],action:'Inspect the papers'}),
-  Object.freeze({id:'cabinet',label:'Filing cabinet',position:[-4.7,1.65,-3.2],camera:[-3.6,2.65,1.25],lookAt:[-4.7,1.72,-3.1],action:'Open a drawer'}),
+  // A slightly higher aim keeps the top of the filing cabinet visible below
+  // the immersive header on a 14-inch laptop; the base may crop instead.
+  Object.freeze({id:'cabinet',label:'Filing cabinet',position:[-4.7,1.65,-3.2],camera:[-3.6,2.65,1.25],lookAt:[-4.7,2.30,-3.1],action:'Open a drawer'}),
   Object.freeze({id:'bookcase',label:'Bookcase',position:[4.75,2.15,-3.88],camera:[3.15,2.95,1.3],lookAt:[4.65,2.2,-3.9],action:'Pull out a book'}),
   Object.freeze({id:'typewriter',label:'Typewriter',position:[1.05,1.58,.8],camera:[1.55,2.66,3.35],lookAt:[1.05,1.5,.72],action:'Type something'}),
   Object.freeze({id:'bin',label:'Overflowing bin',position:[-3.2,.48,2.45],camera:[-3.4,2.5,5.5],lookAt:[-3.2,.42,2.45],action:'Rummage in the papers'}),
