@@ -7,7 +7,7 @@ function render(source){
  // Force a fresh JS fetch for the highlighted bookcase, even in browsers
  // that have cached the earlier six-furniture room module.
  replace('<script type="module" src="../room/room.js"></script>',
-  '<script defer src="../room/desk-materials.js?v=dh11c5a-desk-v1"></script>\\n<script type="module" src="../room/room.js?v=dh11c5a-desk-v1"></script>');
+  '<script defer src="../room/desk-materials.js?v=dh11c5a-desk-v1"></script>\n<script type="module" src="../room/room.js?v=dh11c5a-desk-v1"></script>');
  replace('<script defer src="../room/room-plan.js"></script>',
   '<script defer src="../room/room-plan.js?v=dh11c5a-desk-v1"></script>');
  replace('</head>','<meta name="davehub-furniture-release" content="dh11c5a-desk-v1">\n</head>');
