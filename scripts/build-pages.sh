@@ -190,6 +190,8 @@ check('dist/previews/dh-11c/architecture/index.html',['DH-11C.4C','data-shell-pr
 check('dist/previews/dh-11c/cabinet-glb/index.html',['DH-11C.4A','data-glb-proof="true"','id="glb-extension"','data-glb-snap="50"','../room/room.js']);
 check('dist/previews/dh-11c/art-lab/index.html',['DH-11C.3A','data-art-lab="true"','data-palette="amber-ink"','data-palette="moonlit-archive"','data-palette="golden-storybook"','../room/room.js']);
 check('dist/previews/dh-11c/room/index.html',['DH-11C.2','id="room-canvas"','room.js','room-plan.js','object-list']);
+check('dist/previews/dh-11c/room/drawer-picking.mjs',['export function drawerIndexForMesh','indexByGroup','return null']);
+check('dist/previews/dh-11c/room/room.js',["from './drawer-picking.mjs'",'drawerIndexForMesh(mesh,cabinetDrawers)']);
 check('dist/previews/dh-11c/cabinet/index.html',['id="cabinet-model"','id="cabinet-slots"','cabinet-math.js','cabinet.js','cabinet.css']);
 check('dist/previews/dh-08c/index.html',[
  'data-davehub-inline="worlds"','Unicorn Valley','The Stephen Martin Project'
