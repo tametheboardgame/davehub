@@ -3,11 +3,15 @@
 // rigs. Real triangles/UVs/normals, never flattened screenshots.
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),zlib=require('node:zlib');
 const deskMaps=require('../prototypes/dh-11c-room/desk-materials.js');
+const archiveMaps=require('../prototypes/dh-11c-room/archive-materials.js');
 const DESK_TEXTURES=Object.freeze({
  deskWalnut:'deskWalnut',deskFrame:'deskFrame',
  deskParchment0:'deskParchment0',deskParchment1:'deskParchment1',deskParchment2:'deskParchment2',
  deskLeather:'deskLeather',deskBrass:'deskBrass',
- typewriterEnamel:'typewriterEnamel',lampShade:'lampLinen'
+ typewriterEnamel:'typewriterEnamel',lampShade:'lampLinen',
+ shelfWalnut:'shelfWalnut',shelfEdge:'shelfEdge',shelfLining:'shelfLining',shelfGilt:'shelfGilt',
+ book0:'bookBinding0',book1:'bookBinding1',book2:'bookBinding2',book3:'bookBinding3',
+ book4:'bookBinding4',book5:'bookBinding5',book6:'bookBinding6'
 });
 // Tiny PNG encoder for embedded GLB images. Deterministic, lossless,
 // without external build dependencies or uneditable flattened screenshots.
@@ -94,7 +98,8 @@ const linear=h=>[1,3,5].map(i=>{const x=parseInt(h.slice(i,i+2),16)/255;return x
 function build(){
  const mats=Object.keys(asset.materials);
  const materials=mats.map(name=>{
-  const mapName=DESK_TEXTURES[name],finish=mapName?deskMaps.profiles[mapName]:null;
+  const mapName=DESK_TEXTURES[name];
+  const finish=mapName?(deskMaps.profiles[mapName]||archiveMaps.profiles[mapName]):null;
   return {name,pbrMetallicRoughness:{
    baseColorFactor:mapName?[1,1,1,1]:[...linear(asset.materials[name]),1],
    metallicFactor:finish?.metalness??(name==='brass'?.55:name==='lampShade'?.22:.02),
@@ -123,11 +128,11 @@ function build(){
   return i;
  }
  for(const [name,map] of Object.entries(DESK_TEXTURES)){
-  const bitmap=deskMaps.generate(map);
+  const bitmap=(deskMaps.profiles[map]?deskMaps:archiveMaps).generate(map);
   const image=images.length;
-  images.push({name:'DH11C5A_'+name,mimeType:'image/png',bufferView:appendImage(pngRgba(bitmap))});
+  images.push({name:'DH11C5_'+name,mimeType:'image/png',bufferView:appendImage(pngRgba(bitmap))});
   const texture=textures.length;
-  textures.push({name:'DH11C5A_'+name,sampler:0,source:image});
+  textures.push({name:'DH11C5_'+name,sampler:0,source:image});
   const material=materials[mats.indexOf(name)];
   if(!material)throw Error('Desk finish missing from furniture manifest: '+name);
   material.pbrMetallicRoughness.baseColorTexture={index:texture};
@@ -160,7 +165,7 @@ function build(){
  const binary=Buffer.concat(buffers);
  const json={asset:{version:'2.0',generator:'DaveHub DH-11C.4F physical furniture rigs; ADR-0012'},scene:0,scenes:[{nodes:[ids.get('furniture_root')]}],
   nodes,materials,meshes,accessors,bufferViews,images,textures,samplers,buffers:[{byteLength:binary.length}],
-  extras:{milestone:'DH-11C.5A',reference:'writing desk material study',units:'metres',
+  extras:{milestone:'DH-11C.5B',reference:'approved desk plus bookcase material review',units:'metres',
    interactiveRoots:asset.interactiveRoots,sourceNodeCount:asset.nodes.length}};
  const pad=(b,v)=>Buffer.concat([b,Buffer.alloc((4-b.length%4)%4,v)]);
  const j=pad(Buffer.from(JSON.stringify(json)),32),b=pad(binary,0),glb=Buffer.alloc(12+8+j.length+8+b.length);
