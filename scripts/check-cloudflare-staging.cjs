@@ -59,6 +59,12 @@ async function main(){
    const actualShell=crypto.createHash('sha256').update(shellBytes).digest('hex');
    if(expectedShell!==actualShell)throw Error('Deployed room model differs from source manifest');
    console.log('PASS hosted room GLB sha256 '+actualShell);
+   const blenderRoom=await fetch(BASE+'/previews/dh-11c/room/models/room-shell-blender-verified.glb?dh11c4e=2',{headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)});
+   if(!blenderRoom.ok)throw Error('Blender room GLB asset HTTP '+blenderRoom.status);
+   const bytes=Buffer.from(await blenderRoom.arrayBuffer());
+   const verified=require('./build-dh11c4e-blender-model.cjs').expected;
+   if(bytes.length!==22104||crypto.createHash('sha256').update(bytes).digest('hex')!==verified)throw Error('Hosted Blender architecture model fails source hash');
+   console.log('PASS hosted Blender room shell GLB sha256 '+verified);
    console.log('PASS: Cloudflare serves three approved creation pages, accessible live worlds and separate layout-only previews.');
    for(const r of results)console.log('PASS '+r.path+' ('+r.bytes+' HTML bytes)');
    return;
