@@ -27,7 +27,7 @@
  const find=id=>OBJECTS.find(x=>x.id===id)||null;
  const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
  function next(current,action){
-  const before=current||{focus:null,drawer:null,papers:Array(PAPER_COUNT).fill(false),books:Array(FEATURED_BOOK_COUNT).fill(false),binPapers:Array(BIN_PAPER_COUNT).fill(false),typed:0,doorOpen:false};
+  const before=current||{focus:null,drawer:null,papers:Array(PAPER_COUNT).fill(false),books:Array(FEATURED_BOOK_COUNT).fill(false),binPapers:Array(BIN_PAPER_COUNT).fill(false),lampOn:true,typed:0,doorOpen:false};
   if(!action||typeof action.type!=='string')return before;
   switch(action.type){
    case 'focus':return idSet.has(action.id)?{...before,focus:action.id}:before;
@@ -38,6 +38,7 @@
     {...before,papers:before.papers.map((moved,i)=>i===action.index?!moved:moved)}:before;
    case 'book':return before.focus==='bookcase'&&Number.isInteger(action.index)&&action.index>=0&&action.index<FEATURED_BOOK_COUNT?
     {...before,books:before.books.map((pulled,i)=>i===action.index?!pulled:pulled)}:before;
+   case 'lamp':return before.focus==='desk'?{...before,lampOn:!before.lampOn}:before;
    case 'type':return before.focus==='typewriter'?{...before,typed:clamp(before.typed+1,0,60)}:before;
    case 'bin':return before.focus==='bin'&&Number.isInteger(action.index)&&action.index>=0&&action.index<BIN_PAPER_COUNT?
     {...before,binPapers:before.binPapers.map((out,i)=>i===action.index?!out:out)}:before;
