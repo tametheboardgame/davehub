@@ -676,7 +676,10 @@ if(glbProof){
    capture('cabinet',content);
    cabinetDrawers.push(...found);
    drawerHome.push(...found.map(d=>d.position.z));
-   focus('cabinet');
+   // The cabinet-only proof starts at the cabinet, but the complete
+   // furniture preview must open at the whole-room HOME camera instead.
+   // Leave its camera and focus state untouched as the GLB finishes loading.
+   if(!furnitureModelProof)focus('cabinet');
    if(range)range.disabled=false;
    document.querySelectorAll('[data-glb-snap]').forEach(b=>b.disabled=false);
    report((blenderCompare?'Verified Blender-exported GLB loaded':'GLB loaded')+': five separate drawers, genuine open recesses and cabinet rails. Choose a drawer and scrub its extension.');
