@@ -3,6 +3,7 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const asset=require('../prototypes/dh-11c-room/room-shell-asset.js');
 const plan=require('../prototypes/dh-11c-room/room-shell-plan.js');
 const {build}=require('../scripts/build-dh11c4e-shell-glb.cjs');
+const {build:blenderModel,expected:blenderHash}=require('../scripts/build-dh11c4e-blender-model.cjs');
 const {check}=require('../scripts/validate-dh11c4e-shell.cjs');
 const {render}=require('../scripts/render-dh11c4e-room.cjs');
 const read=p=>fs.readFileSync(path.resolve(__dirname,'../'+p),'utf8');
@@ -29,6 +30,10 @@ test('shell GLB is deterministic and retains each physical mesh and material',()
  for(const p of asset.parts)assert.ok(a.json.nodes.some(n=>n.name===p.name));
  const result=check(a.glb,b.glb);
  assert.equal(result.maxPositionDriftM,0);
+ const exported=blenderModel();
+ assert.equal(exported.sha,blenderHash);
+ assert.equal(exported.length,22104);
+ assert.equal(check(a.glb,exported.glb).partCount,asset.parts.length);
  assert.equal(result.partCount,asset.parts.length);
 });
 test('isolated full-viewport architecture preview loads room shell without altering baseline',()=>{
@@ -54,7 +59,7 @@ test('Blender source master production and checks are real executable scripts',(
  for(const m of ['python3-numpy','blender --background','manuscript-room-shell.blend','room-shell-blender.glb',
   'validate-dh11c4e-shell.cjs','actions/upload-artifact@v4'])assert.ok(action.includes(m),m);
  for(const p of ['scripts/build-dh11c4e-shell-glb.cjs','scripts/validate-dh11c4e-shell.cjs',
-  'scripts/render-dh11c4e-room.cjs','prototypes/dh-11c-room/room-shell-asset.js']){
+  'scripts/render-dh11c4e-room.cjs','prototypes/dh-11c-room/room-shell-asset.js','scripts/build-dh11c4e-blender-model.cjs']){
   const run=cp.spawnSync(process.execPath,['--check',path.resolve(__dirname,'../'+p)],{encoding:'utf8'});
   assert.equal(run.status,0,p+': '+run.stderr);
  }
