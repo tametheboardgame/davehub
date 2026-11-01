@@ -1,6 +1,6 @@
 import * as THREE from './vendor/three-r159.module.min.js';
 import {drawerIndexForMesh} from './drawer-picking.mjs';
-import {paperPose,paperIndexForMesh,PAPER_LIMIT,pressDepth,typewriterFeed,TYPE_PAPER_HEIGHT,featuredBook,featuredBookIndexForMesh,FEATURED_BOOK_COUNT,bookPosition,typedKeyIndex,TYPE_KEY_COUNT} from './furniture-motion.mjs';
+import {paperPose,paperIndexForMesh,PAPER_LIMIT,pressDepth,typewriterFeed,TYPE_PAPER_HEIGHT,featuredBook,featuredBookIndexForMesh,FEATURED_BOOK_COUNT,bookPosition,binPaperIndexForMesh,binPaperPose,BIN_PAPER_COUNT,typedKeyIndex,TYPE_KEY_COUNT} from './furniture-motion.mjs?v=dh11c4j-bin-v1';
 
 const plan=window.DH11RoomPlan;
 if(!plan)throw Error('Missing DH-11C.2 room coordinates');
@@ -354,6 +354,12 @@ function makeBookcase(){
  return g;
 }
 makeBookcase();
+const binPapers=[];
+let binPaperHomes=[],binPaperProgress=Array(BIN_PAPER_COUNT).fill(0);
+const binPaperHome=mesh=>({
+ x:mesh.position.x,y:mesh.position.y,z:mesh.position.z,
+ rx:mesh.rotation.x,ry:mesh.rotation.y,rz:mesh.rotation.z
+});
 function makeBin(){
  const g=group(scene,-3.2,0,2.45);
  const bin=cylinder(g,.43,.36,.84,mats.bin,0,.44,0,13);
@@ -362,11 +368,15 @@ function makeBin(){
  for(let i=0;i<9;i++){
   const m=new THREE.Mesh(new THREE.IcosahedronGeometry(.15+(i%3)*.028,0),mats.paper);
   const t=i*2.39,r=.22+((i%3)*.04);m.position.set(Math.cos(t)*r,.82+(i%4)*.075,Math.sin(t)*r);
-  m.rotation.set(.31*i,.72*i,.21*i);g.add(m);
+  m.rotation.set(.31*i,.72*i,.21*i);
+  m.name='bin_paper_'+i;
+  m.userData.binPaperIndex=i;
+  g.add(m);binPapers.push(m);
  }
  capture('bin',g);return g;
 }
 makeBin();
+binPaperHomes=binPapers.map(binPaperHome);
 let doorLeaf;
 function makeDoor(){
  const g=group(scene,6.78,0,-.2);
@@ -453,7 +463,7 @@ const copyById={
  cabinet:'The five drawers belong to one physical cabinet. Each drawer is a collection of 3D surfaces that move together, never a pasted illustration.',
  bookcase:'Find the eight turquoise books with gold spine markings. Click one to pull it forward, then click it again to return it. The other 72 books stay on their shelves.',
  typewriter:'The typewriter has separate keys, a roller and a paper sheet. Tap to press a key and advance the paper.',
- bin:'The bin contains crumpled, low-poly paper. Give the pile a rummage.',
+ bin:'Nine crumpled manuscripts are piled in this bin. Click a particular paper ball to toss it onto the floor; click the same one to return it. Each piece moves independently.',
  door:'The door opens on a real vertical hinge. It provides a way back towards the floating DaveHub islands.',
  window:'The distant islands are simple geometry behind the window frame. Their tiny movement is a first pass at bringing the world to life.'
 };
@@ -506,6 +516,22 @@ function syncBookControls(){
   const index=Number(button.dataset.bookIndex),pulled=state.books[index];
   button.textContent=bookDescription(index)+(pulled?' · return':' · pull');
   button.setAttribute('aria-pressed',String(pulled));
+ }
+}
+function toggleBinPaper(index){
+ if(!Number.isInteger(index)||index<0||index>=BIN_PAPER_COUNT)return;
+ const wasOut=state.binPapers[index];
+ state=plan.next(state,{type:'bin',index});
+ if(state.binPapers[index]===wasOut)return;
+ status.textContent='Crumpled paper '+(index+1)+(state.binPapers[index]?
+  ' tumbles out of the bin onto the floor.':' returns to its original place in the bin.');
+ syncBinPaperControls();
+}
+function syncBinPaperControls(){
+ for(const button of actions.querySelectorAll('[data-bin-paper-index]')){
+  const index=Number(button.dataset.binPaperIndex),out=state.binPapers[index];
+  button.textContent='Paper '+(index+1)+(out?' · return':' · rummage');
+  button.setAttribute('aria-pressed',String(out));
  }
 }
 function togglePaper(index){
@@ -586,7 +612,25 @@ function renderControls(id){
   syncBookControls();
  }
  else if(id==='typewriter')add('Press a key',()=>pressTypewriter());
- else if(id==='bin')add('Rummage through paper',()=>{state=plan.next(state,{type:'bin'});status.textContent='The loose paper changes position.';});
+ else if(id==='bin'){
+  const help=document.createElement('p');
+  help.textContent='Click an individual crumpled paper ball to toss it onto the floor; click it again to put it back.';
+  actions.append(help);
+  const details=document.createElement('details'),summary=document.createElement('summary');
+  summary.textContent='Select a crumpled paper using keyboard controls';
+  details.append(summary);
+  const buttons=document.createElement('div');
+  buttons.className='paper-controls';
+  for(let i=0;i<BIN_PAPER_COUNT;i++){
+   const button=document.createElement('button');
+   button.type='button';
+   button.dataset.binPaperIndex=String(i);
+   button.addEventListener('click',()=>toggleBinPaper(i));
+   buttons.append(button);
+  }
+  details.append(buttons);actions.append(details);
+  syncBinPaperControls();
+ }
  else if(id==='door'){
   add(state.doorOpen?'Close the door':'Open the door',()=>{state=plan.next(state,{type:'door'});status.textContent=state.doorOpen?'The door swings open on its hinge.':'The door swings shut.';renderControls('door');});
   if(state.doorOpen){const a=document.createElement('a');a.href='/';a.textContent='Return to DaveHub islands ↗';actions.append(a);}
@@ -610,6 +654,7 @@ function pickFromEvent(event){
  return {id,drawerIndex:id==='cabinet'?drawerIndexForMesh(mesh,cabinetDrawers):null,
   paperIndex:id==='desk'?(Number.isInteger(mesh.userData.paperIndex)?mesh.userData.paperIndex:paperIndexForMesh(mesh.name)):null,
   bookIndex:id==='bookcase'?(Number.isInteger(mesh.userData.featuredBookIndex)?mesh.userData.featuredBookIndex:featuredBookIndexForMesh(mesh.name)):null,
+  binPaperIndex:id==='bin'?(Number.isInteger(mesh.userData.binPaperIndex)?mesh.userData.binPaperIndex:binPaperIndexForMesh(mesh.name)):null,
   keyIndex:id==='typewriter'?typedKeyIndex(mesh.name):null};
 }
 canvas.addEventListener('pointermove',event=>{
@@ -622,8 +667,11 @@ canvas.addEventListener('pointermove',event=>{
    ?(state.papers[pick.paperIndex]?'Return':'Move')+' sheet '+(pick.paperIndex+1)
    :pick?.bookIndex!==null&&pick?.bookIndex!==undefined
     ?(state.books[pick.bookIndex]?'Return ':'Pull ')+bookDescription(pick.bookIndex)
-    :hovered==='bookcase'?'Only highlighted books can be pulled out'
-    :hovered?'Explore '+plan.find(hovered).label:'';
+    :pick?.binPaperIndex!==null&&pick?.binPaperIndex!==undefined
+     ?(state.binPapers[pick.binPaperIndex]?'Return':'Rummage')+' crumpled paper '+(pick.binPaperIndex+1)
+     :hovered==='bookcase'?'Only highlighted books can be pulled out'
+     :hovered==='bin'?'Click a particular crumpled paper, not the bin itself'
+     :hovered?'Explore '+plan.find(hovered).label:'';
 });
 canvas.addEventListener('pointerleave',()=>{currentHover=null;canvas.classList.remove('interactive');canvas.title='';});
 let pointerStart=null;
@@ -633,7 +681,7 @@ canvas.addEventListener('pointerup',event=>{
  pointerStart=null;
  const pick=pickFromEvent(event);
  if(!pick)return;
- const {id,drawerIndex,paperIndex,bookIndex,keyIndex}=pick;
+ const {id,drawerIndex,paperIndex,bookIndex,binPaperIndex,keyIndex}=pick;
  if(state.focus===id){
   if(id==='cabinet'){
    // The cabinet case/rails are not drawers. Only a hit inside a named
@@ -649,16 +697,20 @@ canvas.addEventListener('pointerup',event=>{
     else status.textContent='Try one of the eight highlighted book spines.';
    }
    else if(id==='typewriter')pressTypewriter(keyIndex);
-   else if(id==='bin')state=plan.next(state,{type:'bin'});
+   else if(id==='bin'){
+    if(binPaperIndex!==null)toggleBinPaper(binPaperIndex);
+    else status.textContent='Click an actual crumpled paper to rummage in the bin.';
+   }
    else if(id==='door')state=plan.next(state,{type:'door'});
-   if(!['desk','bookcase','typewriter'].includes(id))status.textContent=plan.find(id).label+' responds to your interaction.';
+   if(!['desk','bookcase','bin','typewriter'].includes(id))status.textContent=plan.find(id).label+' responds to your interaction.';
   }
-  if(id!=='desk'&&id!=='bookcase')renderControls(id);
+  if(!['desk','bookcase','bin'].includes(id))renderControls(id);
  }else{
   focus(id);
   // Clicking a sheet in the overview focuses the desk and moves that sheet.
   if(id==='desk'&&paperIndex!==null)togglePaper(paperIndex);
   if(id==='bookcase'&&bookIndex!==null)toggleBook(bookIndex);
+  if(id==='bin'&&binPaperIndex!==null)toggleBinPaper(binPaperIndex);
   // A drawer hit in the overview identifies the drawer as well as the
   // cabinet, so the first click opens that drawer after selecting the view.
   if(id==='cabinet'&&drawerIndex!==null){
@@ -698,6 +750,16 @@ function render(){
   for(let i=0;i<pullBooks.length;i++){
    const target=bookPosition(bookHome[i],state.books[i]);
    pullBooks[i].position.z=THREE.MathUtils.lerp(pullBooks[i].position.z,target,rate);
+  }
+  // Reversible lift-and-tumble arcs. Reverse mid-flight without snapping.
+  for(let i=0;i<binPapers.length;i++){
+   const target=state.binPapers[i]?1:0;
+   const step=reduced.matches?1:delta*1.3;
+   binPaperProgress[i]=target>binPaperProgress[i]?
+    Math.min(target,binPaperProgress[i]+step):Math.max(target,binPaperProgress[i]-step);
+   const pose=binPaperPose(binPaperHomes[i],i,binPaperProgress[i]);
+   binPapers[i].position.set(pose.x,pose.y,pose.z);
+   binPapers[i].rotation.set(pose.rx,pose.ry,pose.rz);
   }
   typeKeys.forEach((key,i)=>{
    const depth=activePress?pressDepth(clock.elapsedTime-activePress.at,i===activePress.index,reduced.matches):0;
@@ -826,6 +888,8 @@ if(furnitureModelProof){
     };
     const papers=Array.from({length:PAPER_LIMIT},(_,i)=>get('desk_paper_'+String(i).padStart(2,'0')));
     papers.forEach((mesh,i)=>{mesh.userData.paperIndex=i;});
+    const crumples=Array.from({length:BIN_PAPER_COUNT},(_,i)=>get('bin_paper_'+i));
+    crumples.forEach((mesh,i)=>{mesh.userData.binPaperIndex=i;});
     const books=[];
     for(let shelf=0;shelf<4;shelf++)for(let b=0;b<20;b++)
      if(featuredBook(shelf,b))books.push(get('book_'+shelf+'_'+String(b).padStart(2,'0')));
@@ -853,6 +917,8 @@ if(furnitureModelProof){
     paperStacks.splice(0,paperStacks.length,...papers);
     pullBooks.splice(0,pullBooks.length,...books);
     bookHome=books.map(book=>book.position.z);
+    binPapers.splice(0,binPapers.length,...crumples);
+    binPaperHomes=crumples.map(binPaperHome);
     typeKeys.splice(0,typeKeys.length,...keys);
     typeKeyHomes=keys.map(k=>k.position.y);
     typePaper=typeSheet;typePaperHome=typeSheet.position.y;typePaperHomeScaleY=typeSheet.scale.y;
