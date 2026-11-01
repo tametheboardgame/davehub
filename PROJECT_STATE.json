@@ -759,12 +759,12 @@
     "liveDomainChange": "none"
   },
   "dh11_3d_production": {
-    "planStatus": "dh11c5c_painterly_storybook_variant_a_staging_review",
+    "planStatus": "dh11c5c2a_true_painted_surfaces_pending_visual_review",
     "scope": "Writing / The Manuscript Hoard 3D world",
     "foundation": "DH-11C.4 furniture mechanics approved by owner on 2026-11-01; 197 named source parts and GLB/Blender pipeline retained",
     "architectureDecision": "ADR-0012",
     "documentation": "docs/DH11C_3D_PRODUCTION_ROADMAP.md",
-    "currentGate": "DH-11C.5C.2: owner compares Painterly Storybook with approved C5A and promising C5B original materials on same real 3D furniture",
+    "currentGate": "DH-11C.5C.2A: review visibly repainted walnut/paper/books and illustrated contour strokes rather than only changed lighting",
     "milestones": [
       {
         "id": "DH-11C.3",
@@ -781,7 +781,7 @@
       {
         "id": "DH-11C.5",
         "phase": "Textures/UVs/material atlas",
-        "status": "C5A_approved_C5B_first_pass_positive_C5C_variant_A_owner_review_pending",
+        "status": "C5A_approved_C5B_first_pass_positive_C5C2A_painted_surface_review",
         "approval": "owner must approve a calibrated illustrated style; Variants B/C remain planned, no blanket art-direction sign-off"
       },
       {
@@ -822,7 +822,7 @@
       "reuse real geometry, not AI image-state compositing"
     ],
     "implementationStarted": true,
-    "next": "Confirm Painterly Storybook visual result; iterate Variant A or separately build Variants B and C, then select convergence before room architecture decoration",
+    "next": "Owner compares first lighting-led Painterly Storybook variant to painted-surface revision, then approve/iterate before Variants B/C",
     "artDirection": {
       "status": "three_material_colour_and_light_candidates_owner_review_pending",
       "preferredDraft": "amber-ink",
@@ -1005,10 +1005,10 @@
     "illustratedStyleCalibration": {
       "milestone": "DH-11C.5C",
       "phase": "5C.1 controls plus 5C.2 variant A",
-      "status": "implemented_on_staging_feature_branch_visual_approval_pending",
-      "route": "/previews/dh-11c/illustrated/?v=dh11c5c-painterly-v1",
+      "status": "2A_stronger_painted_surfaces_implemented_pending_owner_visual_review",
+      "route": "/previews/dh-11c/illustrated-v2/?v=dh11c5c-painted-surfaces-v2",
       "originalReference": "/previews/dh-11c/furniture/?v=dh11c5b-archive-v1",
-      "source": "prototypes/dh-11c-room/illustrated-style.js",
+      "source": "prototypes/dh-11c-room/illustrated-style-v2.js",
       "documentation": "docs/DH11C5C_ILLUSTRATED_STYLE_CALIBRATION.md",
       "availableModes": [
         "reference",
@@ -1019,10 +1019,10 @@
         "madmans-manuscript"
       ],
       "techniques": [
-        "shared real UV textures",
-        "reversible toon tone bands",
-        "selective non-raycast contour lines",
-        "theatrical amber and indigo lighting"
+        "reuse original GLB UV pixels, repaint deterministic gouache-like broad colour blocks",
+        "book and manuscript hand-inked contour accents that do not enter raycasting",
+        "preserved original reference and earlier lighting-led preview",
+        "reversible toon tone bands and theatrical amber/indigo lighting"
       ],
       "protectedInteractivity": [
         "desk sheets",
@@ -1036,7 +1036,9 @@
       "originalGLBsUnchanged": true,
       "noRealContentPublication": true,
       "ownerVisualApproval": "pending",
-      "productionPromoted": false
+      "productionPromoted": false,
+      "previousVariant": "/previews/dh-11c/illustrated/?v=dh11c5c-painterly-v1",
+      "ownerFeedback": "first Variant A looked too much like lighting changes, requested stronger illustrated surfaces"
     }
   }
 }
