@@ -12,7 +12,7 @@ const checks=[
  {path:'/creations/unicorn-valley/',required:['<style data-davehub-inline="worlds">','Unicorn Valley','Play on DaveHub','href="/games/unicorn-valley/"','unicorn-valley.pages.dev','View development repository'],forbidden:['DESIGN REVIEW ONLY']},
  {path:'/creations/stephen-martin-project/',required:['<style data-davehub-inline="worlds">','The Stephen Martin Project','Play on DaveHub','href="/games/stephen-martin/"','stephen-martin-project.pages.dev'],forbidden:['DESIGN REVIEW ONLY']},
  {path:'/creations/tame-the-board-game/',required:['<style data-davehub-inline="worlds">','Tame The Board Game','Miriam','tametheboardgame.com/about/'],forbidden:['DESIGN REVIEW ONLY']},
- {path:'/previews/dh-11c/furniture/',required:['DH-11C.4F','data-furniture-model-proof="true"','data-immersive-room="true"','id="furniture-model-status"','dh11c4k-lamp-v1','room.js?v=dh11c4k-lamp-v1','room-plan.js?v=dh11c4k-lamp-v1'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
+ {path:'/previews/dh-11c/furniture/',required:['DH-11C.4F','data-furniture-model-proof="true"','data-immersive-room="true"','id="furniture-model-status"','dh11c4l-lamp-switch-v1','room.js?v=dh11c4l-lamp-switch-v1','room-plan.js?v=dh11c4l-lamp-switch-v1'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/room-shell/',required:['DH-11C.4E','data-shell-model-proof="true"','../room/room-shell-asset.js','id="shell-model-status"','data-immersive-room="true"'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/architecture/',required:['DH-11C.4C','data-shell-proof="true"','data-blender-compare="true"','data-immersive-room="true"','./immersive.css','./immersive-ui.js','id="prototype-tools"','id="scene-nav"','../room/room-shell-plan.js','../cabinet-glb/'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/cabinet-glb/',required:['DH-11C.4A','data-glb-proof="true"','id="glb-extension"','data-glb-snap="50"','../room/room.js'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
@@ -40,7 +40,7 @@ async function main(){
   try{
    const results=[];
    for(const c of checks){
-    const version=c.path==='/previews/dh-11c/furniture/'?'?dh11c4k-lamp-v1=1':'?dh08d=1';
+    const version=c.path==='/previews/dh-11c/furniture/'?'?dh11c4l-lamp-switch-v1=1':'?dh08d=1';
     results.push({path:c.path,bytes:await inspect(BASE+c.path+version,c.required,c.forbidden)});
    }
    // A missing .css or .js may return Pages' HTML fallback with HTTP 200.
@@ -71,22 +71,22 @@ async function main(){
    const motionType=motion.headers.get('content-type')||'';
    if(!motion.ok||!motionType.includes('javascript'))throw Error('Deployed furniture motion module missing or HTML fallback: '+motion.status+' '+motionType);
    const motionSource=await motion.text();
-   for(const marker of ['export function paperPose','export function pressDepth','export function featuredBook','export function typedKeyIndex','export function binPaperPose','export function binPaperIndexForMesh','BIN_PAPER_FLOOR','BIN_PAPER_COUNT=9'])
+   for(const marker of ['export function paperPose','export function pressDepth','export function featuredBook','export function typedKeyIndex','export function binPaperPose','export function binPaperIndexForMesh','BIN_PAPER_FLOOR','BIN_PAPER_COUNT=9','export function lampPartForMesh'])
     if(!motionSource.includes(marker))throw Error('Deployed furniture motion module missing '+marker);
    console.log('PASS hosted furniture motion module: papers, bookcase, typewriter and nine bin crumples');
-   const binPlanResponse=await fetch(BASE+'/previews/dh-11c/room/room-plan.js?v=dh11c4k-lamp-v1',{
+   const binPlanResponse=await fetch(BASE+'/previews/dh-11c/room/room-plan.js?v=dh11c4l-lamp-switch-v1',{
     headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)
    });
    if(!binPlanResponse.ok||!(binPlanResponse.headers.get('content-type')||'').includes('javascript'))
     throw Error('Current bin state module not deployed: HTTP '+binPlanResponse.status);
    const binPlan=await binPlanResponse.text();
-   for(const marker of ['BIN_PAPER_COUNT=9','binPapers:Array(BIN_PAPER_COUNT).fill(false)','case \'bin\''])
+   for(const marker of ['BIN_PAPER_COUNT=9','binPapers:Array(BIN_PAPER_COUNT).fill(false)','case \'bin\'','lampOn:true','case \'lamp\''])
     if(!binPlan.includes(marker))throw Error('Stale bin room state: missing '+marker);
    console.log('PASS hosted nine-crumple room state module');
    // Explicitly validate the versioned live JavaScript, not just HTML
    // referencing a module. A stale JS response caused invisible highlighted
    // books despite all other smoke checks returning green.
-   const bookJs=await fetch(BASE+'/previews/dh-11c/room/room.js?v=dh11c4k-lamp-v1',{
+   const bookJs=await fetch(BASE+'/previews/dh-11c/room/room.js?v=dh11c4l-lamp-switch-v1',{
     headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)
    });
    const bookType=bookJs.headers.get('content-type')||'';
@@ -105,7 +105,14 @@ async function main(){
     'binPaperPose(binPaperHomes[i],i,binPaperProgress[i])',
     'binPapers.splice(0,binPapers.length,...crumples)',
     'crumples.forEach((mesh,i)=>{mesh.userData.binPaperIndex=i;})',
-    "from './furniture-motion.mjs?v=dh11c4j-bin-v1'",
+    "from './furniture-motion.mjs?v=dh11c4l-lamp-switch-v1'",
+    "lampPart:id==='desk'?lampPartForMesh(mesh.name):null",
+    "lampButton.dataset.lampToggle='true'",
+    "lampButton.addEventListener('click',toggleLamp)",
+    "state=plan.next(state,{type:'lamp'})",
+    "lampBulbMesh=glbBulb",
+    "sceneLights.lamp.intensity=THREE.MathUtils.lerp(sceneLights.lamp.intensity,state.lampOn?sceneLights.lamp.userData.litIntensity:0,rate)",
+    "bulbMaterial.emissiveIntensity=THREE.MathUtils.lerp(bulbMaterial.emissiveIntensity,state.lampOn?.85:0,rate)",
     'new THREE.CylinderGeometry(.245,.405,.30,24,1,true)',
     "shade.name='desk_lamp_shade'",
     "cap.name='desk_lamp_cap'",
@@ -119,7 +126,7 @@ async function main(){
    if(furnitureSource.indexOf('books.forEach((mesh,i)=>markFeaturedBook(mesh,i));')>
       furnitureSource.indexOf('scene.add(content);'))
     throw Error('Deployed book inlays are not registered before GLB scene capture');
-   console.log('PASS hosted turquoise-and-gold bookcase and nine-ball rummaging module ('+bookSource.length+' bytes)');
+   console.log('PASS hosted bookcase, bin and independently switchable desk lamp ('+bookSource.length+' bytes)');
 
    const model=await fetch(BASE+'/previews/dh-11c/room/models/cabinet-prototype.glb?dh11c4=1',{headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)});
    if(!model.ok)throw Error('GLB asset HTTP '+model.status);
