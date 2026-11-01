@@ -439,7 +439,7 @@ const drawerNames=['Finished','Drafts','Oddities','Fragments','Field Notes'];
 function movePaperStack(){
  state=plan.next(state,{type:'paper'});
  status.textContent=state.paper===0?'The scattered papers settle back into place.':
-  'Paper '+state.paper+' slides and lifts visibly across the desk.';
+  'Paper '+state.paper+' slides across the desk surface.';
 }
 function pressTypewriter(index=null){
  state=plan.next(state,{type:'type'});
