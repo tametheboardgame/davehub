@@ -51,3 +51,25 @@ test('all furniture scripts are valid JavaScript and no generated image assets a
  const source=read('prototypes/dh-11c-room/furniture-asset.js');
  assert.doesNotMatch(source,/\.png|\.jpg|\.jpeg|image\/|billboard|sprite/i);
 });
+
+
+test('full furniture preview opens on whole-room camera while cabinet-only proof retains its close-up',()=>{
+ const {render}=require('../scripts/render-dh11c4f-furniture.cjs');
+ const source=read('prototypes/dh-11c-room/index.html');
+ const html=render(source);
+ const room=read('prototypes/dh-11c-room/room.js');
+ const plan=require('../prototypes/dh-11c-room/room-plan.js');
+ assert.match(html,/data-furniture-model-proof="true"/,'complete furniture preview must opt into full-scene mode');
+ assert.match(html,/data-glb-proof="true"/,'cabinet GLB remains part of the scene');
+ assert.match(room,/camera\.position\.set\(\.\.\.plan\.HOME\.position\)/);
+ assert.match(room,/const desiredTarget=focusPoint\.clone\(\)/);
+ assert.deepEqual(plan.next(null,{type:'init'}).focus,null);
+ const cabinetLoad=room.slice(room.indexOf('const slugs=[\'finished\''),room.indexOf('// DH-11C.4F: the normal room'));
+ assert.ok(cabinetLoad.includes("if(!furnitureModelProof)focus('cabinet');"),
+  'loading the cabinet must not autofocus it in full furniture mode');
+ assert.doesNotMatch(cabinetLoad,/^\s*focus\('cabinet'\);/m,
+  'cabinet model load may not directly override the whole-room camera');
+ const fullFurnitureLoad=room.slice(room.indexOf('if(furnitureModelProof){'));
+ assert.doesNotMatch(fullFurnitureLoad,/focus\('cabinet'\)/,
+  'six-furniture GLB swap cannot force a cabinet close-up');
+});
