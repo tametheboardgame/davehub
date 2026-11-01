@@ -129,7 +129,7 @@ async function main(){
    // The material initialiser also uses "if(furnitureModelProof)". Scope
    // this ordering check to the actual furniture GLB loader, not the first
    // occurrence in the module (which precedes the cabinet loader).
-   const loaderMarker="if(furnitureModelProof){\\n const output=document.getElementById('furniture-model-status');";
+   const loaderMarker="if(furnitureModelProof){\n const output=document.getElementById('furniture-model-status');";
    const loaderIndex=bookSource.indexOf(loaderMarker);
    if(loaderIndex<0)throw Error('Furniture GLB loader missing from deployed runtime');
    const furnitureSource=bookSource.slice(loaderIndex);
