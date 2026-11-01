@@ -654,6 +654,7 @@ function pickFromEvent(event){
  return {id,drawerIndex:id==='cabinet'?drawerIndexForMesh(mesh,cabinetDrawers):null,
   paperIndex:id==='desk'?(Number.isInteger(mesh.userData.paperIndex)?mesh.userData.paperIndex:paperIndexForMesh(mesh.name)):null,
   bookIndex:id==='bookcase'?(Number.isInteger(mesh.userData.featuredBookIndex)?mesh.userData.featuredBookIndex:featuredBookIndexForMesh(mesh.name)):null,
+  binPaperIndex:id==='bin'?(Number.isInteger(mesh.userData.binPaperIndex)?mesh.userData.binPaperIndex:binPaperIndexForMesh(mesh.name)):null,
   keyIndex:id==='typewriter'?typedKeyIndex(mesh.name):null};
 }
 canvas.addEventListener('pointermove',event=>{
@@ -666,8 +667,11 @@ canvas.addEventListener('pointermove',event=>{
    ?(state.papers[pick.paperIndex]?'Return':'Move')+' sheet '+(pick.paperIndex+1)
    :pick?.bookIndex!==null&&pick?.bookIndex!==undefined
     ?(state.books[pick.bookIndex]?'Return ':'Pull ')+bookDescription(pick.bookIndex)
-    :hovered==='bookcase'?'Only highlighted books can be pulled out'
-    :hovered?'Explore '+plan.find(hovered).label:'';
+    :pick?.binPaperIndex!==null&&pick?.binPaperIndex!==undefined
+     ?(state.binPapers[pick.binPaperIndex]?'Return':'Rummage')+' crumpled paper '+(pick.binPaperIndex+1)
+     :hovered==='bookcase'?'Only highlighted books can be pulled out'
+     :hovered==='bin'?'Click a particular crumpled paper, not the bin itself'
+     :hovered?'Explore '+plan.find(hovered).label:'';
 });
 canvas.addEventListener('pointerleave',()=>{currentHover=null;canvas.classList.remove('interactive');canvas.title='';});
 let pointerStart=null;
@@ -677,7 +681,7 @@ canvas.addEventListener('pointerup',event=>{
  pointerStart=null;
  const pick=pickFromEvent(event);
  if(!pick)return;
- const {id,drawerIndex,paperIndex,bookIndex,keyIndex}=pick;
+ const {id,drawerIndex,paperIndex,bookIndex,binPaperIndex,keyIndex}=pick;
  if(state.focus===id){
   if(id==='cabinet'){
    // The cabinet case/rails are not drawers. Only a hit inside a named
@@ -693,16 +697,20 @@ canvas.addEventListener('pointerup',event=>{
     else status.textContent='Try one of the eight highlighted book spines.';
    }
    else if(id==='typewriter')pressTypewriter(keyIndex);
-   else if(id==='bin')state=plan.next(state,{type:'bin'});
+   else if(id==='bin'){
+    if(binPaperIndex!==null)toggleBinPaper(binPaperIndex);
+    else status.textContent='Click an actual crumpled paper to rummage in the bin.';
+   }
    else if(id==='door')state=plan.next(state,{type:'door'});
-   if(!['desk','bookcase','typewriter'].includes(id))status.textContent=plan.find(id).label+' responds to your interaction.';
+   if(!['desk','bookcase','bin','typewriter'].includes(id))status.textContent=plan.find(id).label+' responds to your interaction.';
   }
-  if(id!=='desk'&&id!=='bookcase')renderControls(id);
+  if(!['desk','bookcase','bin'].includes(id))renderControls(id);
  }else{
   focus(id);
   // Clicking a sheet in the overview focuses the desk and moves that sheet.
   if(id==='desk'&&paperIndex!==null)togglePaper(paperIndex);
   if(id==='bookcase'&&bookIndex!==null)toggleBook(bookIndex);
+  if(id==='bin'&&binPaperIndex!==null)toggleBinPaper(binPaperIndex);
   // A drawer hit in the overview identifies the drawer as well as the
   // cabinet, so the first click opens that drawer after selecting the view.
   if(id==='cabinet'&&drawerIndex!==null){
