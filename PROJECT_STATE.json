@@ -1,6 +1,6 @@
 {
   "project": "DaveHub",
-  "updated": "2026-10-31",
+  "updated": "2026-11-01",
   "status": "dh10c_hosted_editorial_foundation_deployed",
   "current_work_package": "DH-10C",
   "completed": [
@@ -759,12 +759,12 @@
     "liveDomainChange": "none"
   },
   "dh11_3d_production": {
-    "planStatus": "dh11c3a_source_audit_and_palette_preview_in_review",
+    "planStatus": "dh11c3a_style_review_open_dh11c4a_geometry_glb_proof_in_review",
     "scope": "Writing / The Manuscript Hoard 3D world",
     "foundation": "DH-11C.2 owner-liked and Cloudflare-verified mechanics prototype",
     "architectureDecision": "ADR-0012",
     "documentation": "docs/DH11C_3D_PRODUCTION_ROADMAP.md",
-    "currentGate": "DH-11C.3A: hosted palette visual review, baseline camera screenshots and owner decision",
+    "currentGate": "DH-11C.4A: GLB binary/room-preview verification, then owner review of geometry; visual style still unapproved",
     "milestones": [
       {
         "id": "DH-11C.3",
@@ -775,7 +775,7 @@
       {
         "id": "DH-11C.4",
         "phase": "Blender/GLB source and rigged models",
-        "status": "planned",
+        "status": "first_cabinet_glb_roundtrip_in_progress_blender_export_pending",
         "approval": "coherent geometry and mechanism tests"
       },
       {
@@ -822,7 +822,7 @@
       "reuse real geometry, not AI image-state compositing"
     ],
     "implementationStarted": true,
-    "next": "Compare three palette choices on hosted Cloudflare art lab; record owner preference and screenshot audit before GLB modelling",
+    "next": "Owner review of first GLB drawer geometry and selection of DH-11C.3A palette; then Blender source/master and C4 modelling round-trip.",
     "artDirection": {
       "status": "three_material_colour_and_light_candidates_owner_review_pending",
       "preferredDraft": "amber-ink",
@@ -845,6 +845,21 @@
       ],
       "geometryChanged": false,
       "approvedStyle": false
+    },
+    "glbCabinetProof": {
+      "status": "first_roundtrip_geometry_prototype_in_review",
+      "modelSource": "scripts/build-dh11c4-cabinet-glb.cjs",
+      "buildArtifact": "/previews/dh-11c/room/models/cabinet-prototype.glb",
+      "demo": "/previews/dh-11c/cabinet-glb/",
+      "documentation": "docs/DH11C4A_HOLLOW_CABINET_GLB.md",
+      "loader": "Three.js r159 locally vendored GLTFLoader",
+      "fiveNamedDrawers": true,
+      "hollowCase": true,
+      "hasBlenderMaster": false,
+      "materialPaletteApproved": false,
+      "visualBrowserQA": "pending",
+      "changedWorldsWriting": false,
+      "liveDomainChange": "none"
     }
   }
 }
