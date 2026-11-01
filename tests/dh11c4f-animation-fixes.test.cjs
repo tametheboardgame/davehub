@@ -267,3 +267,22 @@ test('unmistakable gilded book spines are visible and clickable on both model re
   }
  }
 });
+
+
+test('GLB gold book markings register as selectable children before replacing the fallback',()=>{
+ const room=read('prototypes/dh-11c-room/room.js');
+ const source=room.slice(room.indexOf('if(furnitureModelProof){'));
+ const highlight=source.indexOf('books.forEach((mesh,i)=>markFeaturedBook(mesh,i));');
+ const swap=source.indexOf('scene.add(content);');
+ const capture=source.indexOf('capture(id,next.get(id));');
+ const lastBookRead=source.indexOf('pullBooks.splice(0,pullBooks.length,...books);');
+ assert.ok(highlight>=0&&highlight<swap&&swap<capture&&capture<lastBookRead,
+  'book gilt must be attached before capture traverses clickable meshes');
+ assert.equal(source.match(/books\\.forEach\\(\\(mesh,i\\)=>markFeaturedBook\\(mesh,i\\)\\);/g)?.length,1,
+  'GLB books should be decorated exactly once');
+ const marker=room.slice(room.indexOf('function markFeaturedBook('),room.indexOf('function makeBookcase('));
+ assert.ok(marker.includes('mesh.add(accent);'));
+ assert.ok(marker.includes('accent.userData.featuredBookIndex=index'));
+ assert.ok(room.includes('g.traverse(o=>{if(o.isMesh){o.userData.objectId=id;selectable.push(o);targets.push(o);}});'),
+  'capture must register book inlays as selectable raycast targets');
+});
