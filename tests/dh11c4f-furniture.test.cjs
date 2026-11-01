@@ -119,10 +119,10 @@ test('DH-11C.4K lamp is level, hollow and keeps the bulb inside its shade in bot
  for(const marker of [
   'new THREE.CylinderGeometry(.245,.405,.30,24,1,true)',
   "shade.name='desk_lamp_shade';shade.position.set(-1.67,2.38,-.43)",
-  'const cap=cylinder(g,.245,.245,.018,mats.brass,-1.67,2.522,-.43,24)',
+  'const cap=cylinder(g,.245,.245,.018,mats.deskBrass,-1.67,2.522,-.43,24)',
   'const bulb=sphere(g,.065,mats.lampBulb,-1.67,2.345,-.43)',
   'lamp.position.set(-1.97,2.31,.17)',
-  "furniture-source.glb?v=dh11c4k-lamp-v1"
+  "furniture-source.glb?v=dh11c5a-desk-v1"
  ])assert.ok(room.includes(marker),'procedural/GLB lamp parity: '+marker);
  assert.doesNotMatch(room,/sphere\(g,\.095,mats\.paper,-1\.67,2\.22,-\.43\)/,'old exposed bulb must be gone');
 });
