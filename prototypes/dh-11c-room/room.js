@@ -41,6 +41,8 @@ const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
 const selectable=[];
 const objects=new Map();
 const artLab=typeof document!=='undefined'&&document.body.dataset.artLab==='true';
+const glbProof=document.body.dataset.glbProof==='true';
+let glbExtension=1;
 const bookMaterials=[];
 const sceneLights={};
 const matte=(hex,roughness=.85)=>new THREE.MeshStandardMaterial({color:hex,roughness,metalness:.08});
@@ -151,7 +153,7 @@ function makeText(text,w,h,colour='#30252d',fill='#e8d4b2'){
  const tx=new THREE.CanvasTexture(c);tx.colorSpace=THREE.SRGBColorSpace;
  return new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({map:tx,transparent:false,side:THREE.DoubleSide}));
 }
-makeCabinet();
+if(!glbProof)makeCabinet();
 
 const loosePapers=[],paperStacks=[];
 function makeDesk(){
@@ -433,7 +435,7 @@ function render(){
   focusPoint.lerp(desiredTarget,rate);
   camera.lookAt(focusPoint);
   for(let i=0;i<cabinetDrawers.length;i++){
-   const target=state.drawer===i ? .65 : 0;
+   const target=state.drawer===i ? (glbProof?.76*glbExtension:.65) : 0;
    cabinetDrawers[i].position.z=THREE.MathUtils.lerp(cabinetDrawers[i].position.z,drawerHome[i]+target,rate);
   }
   for(let i=0;i<pullBooks.length;i++){
@@ -455,3 +457,58 @@ function render(){
  requestAnimationFrame(render);
 }
 render();
+
+if(glbProof){
+ // This isolated preview replaces only the procedural cabinet; no other
+ // furniture, room camera, object state or publication route is changed.
+ const proof=document.getElementById('glb-proof-status');
+ const range=document.getElementById('glb-extension');
+ const meter=document.getElementById('glb-extension-value');
+ const report=message=>{if(proof)proof.textContent=message;};
+ const applyAmount=(value)=>{
+  glbExtension=Math.max(0,Math.min(1,Number(value)/100));
+  if(range)range.value=String(Math.round(glbExtension*100));
+  if(meter)meter.textContent=Math.round(glbExtension*100)+'%';
+  if(state.focus!=='cabinet')focus('cabinet');
+  if(state.drawer===null)state=plan.next(state,{type:'drawer',index:0});
+  renderControls('cabinet');
+  report('Loaded GLB. Drawer '+drawerNames[state.drawer]+' at '+Math.round(glbExtension*100)+'% extension; movement follows its local +Z axis.');
+ };
+ range?.addEventListener('input',()=>applyAmount(range.value));
+ document.querySelectorAll('[data-glb-snap]').forEach(b=>b.addEventListener('click',()=>applyAmount(b.dataset.glbSnap)));
+ const url=new URL('../room/models/cabinet-prototype.glb',document.baseURI).href;
+ function fail(error){
+  console.warn('GLB round-trip proof unavailable',error);
+  makeCabinet();
+  drawerHome.push(...cabinetDrawers.map(x=>x.position.z));
+  report('GLB failed to load. The original procedural cabinet is shown as a fallback. See browser console.');
+ }
+ import('./vendor/GLTFLoader-r159.js').then(({GLTFLoader})=>{
+  const loader=new GLTFLoader();
+  loader.load(url,gltf=>{
+   const content=gltf.scene;
+   content.position.set(-4.7,0,-3.25);
+   const slugs=['finished','drafts','oddities','fragments','field_notes'];
+   const found=[];
+   for(let i=0;i<slugs.length;i++){
+    const drawer=content.getObjectByName('drawer_'+slugs[i]);
+    const front=content.getObjectByName('drawer_front_'+slugs[i]);
+    if(!drawer||!front)throw Error('Missing required GLB drawer nodes: '+slugs[i]);
+    // Text uses a locally drawn canvas fixed to the GLB drawer front.
+    // Labels are decorations, never depth or mechanical geometry.
+    const label=makeText(drawerNames[i],.42,.1);
+    label.position.set(0,.108,.076);
+    front.add(label);
+    found.push(drawer);
+   }
+   scene.add(content);
+   capture('cabinet',content);
+   cabinetDrawers.push(...found);
+   drawerHome.push(...found.map(d=>d.position.z));
+   focus('cabinet');
+   if(range)range.disabled=false;
+   document.querySelectorAll('[data-glb-snap]').forEach(b=>b.disabled=false);
+   report('GLB loaded: five separate drawers, genuine open recesses and cabinet rails. Choose a drawer and scrub its extension.');
+  },undefined,fail);
+ }).catch(fail);
+}
