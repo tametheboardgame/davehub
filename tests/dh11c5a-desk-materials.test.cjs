@@ -80,7 +80,7 @@ test('procedural fallback shares exact UV recipes and staging preview ships map 
  assert.ok(html.includes('room.js?v=dh11c5b-archive-v1'));
  assert.ok(html.indexOf('desk-materials.js?v=')<html.indexOf('room.js?v='),
   'shared map generator must load before module begins');
- assert.ok(html.includes('davehub-furniture-release" content="dh11c5a-desk-v1"'));
+ assert.ok(html.includes('davehub-furniture-release" content="dh11c5b-archive-v1"'));
  const result=cp.spawnSync(process.execPath,['--check',path.join(__dirname,'..','prototypes/dh-11c-room/desk-materials.js')],{encoding:'utf8'});
  assert.equal(result.status,0,result.stderr);
 });
