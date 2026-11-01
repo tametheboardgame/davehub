@@ -30,8 +30,9 @@ function geometry(kind,p){
    [[bottom*x1,-half,bottom*z1],[bottom*x2,-half,bottom*z2],[top*x2,half,top*z2],[top*x1,half,top*z1]]
     .forEach((v,j)=>{pos.push(...v);norm.push(...(j===0||j===3?na:nb));uv.push(...[[i/N,0],[(i+1)/N,0],[(i+1)/N,1],[i/N,1]][j]);});
    idx.push(start,start+1,start+2,start,start+2,start+3);
-   if(top>0)face([[0,half,0],[top*x1,half,top*z1],[top*x2,half,top*z2],[0,half,0]],[0,1,0]);
-   if(bottom>0)face([[0,-half,0],[bottom*x2,-half,bottom*z2],[bottom*x1,-half,bottom*z1],[0,-half,0]],[0,-1,0]);
+   // The lamp shade is open-ended; other cylinders retain solid caps.
+   if(!p.shape.openEnded&&top>0)face([[0,half,0],[top*x1,half,top*z1],[top*x2,half,top*z2],[0,half,0]],[0,1,0]);
+   if(!p.shape.openEnded&&bottom>0)face([[0,-half,0],[bottom*x2,-half,bottom*z2],[bottom*x1,-half,bottom*z1],[0,-half,0]],[0,-1,0]);
   }
  }else if(kind==='sphere'||kind==='icosa'){
   const vertices=kind==='icosa'?(()=>{const g=(1+Math.sqrt(5))/2;return [[-1,g,0],[1,g,0],[-1,-g,0],[1,-g,0],[0,-1,g],[0,1,g],[0,-1,-g],[0,1,-g],[g,0,-1],[g,0,1],[-g,0,-1],[-g,0,1]].map(v=>{const n=Math.hypot(...v);return v.map(x=>x/n)})})():null;
@@ -63,7 +64,9 @@ function quat(euler){
 const linear=h=>[1,3,5].map(i=>{const x=parseInt(h.slice(i,i+2),16)/255;return x<=.04045?x/12.92:((x+.055)/1.055)**2.4;});
 function build(){
  const mats=Object.keys(asset.materials);
- const materials=mats.map(name=>({name,pbrMetallicRoughness:{baseColorFactor:[...linear(asset.materials[name]),1],metallicFactor:name==='brass'?.55:0.02,roughnessFactor:name==='brass'?.46:.85},doubleSided:name==='sky'}));
+ const materials=mats.map(name=>({name,pbrMetallicRoughness:{baseColorFactor:[...linear(asset.materials[name]),1],metallicFactor:name==='brass'?.55:name==='lampShade'?.22:.02,roughnessFactor:name==='brass'?.46:name==='lampShade'?.72:.85},
+  doubleSided:name==='sky'||name==='lampShade',
+  ...(name==='lampBulb'?{emissiveFactor:[.65,.4,.16]}:{})}));
  const nodes=[],ids=new Map(),geometryCache=new Map(),meshes=[],accessors=[],bufferViews=[],buffers=[];
  function append(numbers,kind){
   const component=kind==='uint16'?2:4,buf=Buffer.alloc(numbers.length*component);

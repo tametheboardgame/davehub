@@ -9,7 +9,7 @@
  // the same named pivots are used for procedural proof and Blender editing.
  const nodes=[],materials={
   desk:'#766455',darkwood:'#4b3f42',timber:'#756354',ink:'#494b57',
-  brass:'#c2a26d',paper:'#dbc9ab',stone:'#555d66',edge:'#ad9478',
+  brass:'#c2a26d',lampShade:'#95805c',lampBulb:'#ffddb0',paper:'#dbc9ab',stone:'#555d66',edge:'#ad9478',
   bin:'#677b81',island:'#7e856e',leaf:'#728b7b',
   book0:'#a59482',book1:'#6e737f',book2:'#9b8878',book3:'#b1a391',
   book4:'#5a7181',book5:'#7b6559',book6:'#a7a5a1',sky:'#6b8ca9'
@@ -26,7 +26,7 @@
  const rootName='furniture_root';add(rootName,null,'group');
  const group=(name,parent,position=[0,0,0],rotation=null)=>add(name,parent,'group',position,null,null,rotation);
  const box=(name,parent,m,size,position=[0,0,0],rotation=null)=>add(name,parent,'box',position,size,m,rotation);
- const cyl=(name,parent,m,top,bottom,height,position,sides=12,rotation=null)=>add(name,parent,'cylinder',position,[top,bottom,height],m,rotation,{sides});
+ const cyl=(name,parent,m,top,bottom,height,position,sides=12,rotation=null,openEnded=false)=>add(name,parent,'cylinder',position,[top,bottom,height],m,rotation,{sides,openEnded});
  const orb=(name,parent,m,r,position)=>add(name,parent,'sphere',position,[r,r,r],m);
  const crumple=(name,parent,m,r,position,rotation)=>add(name,parent,'icosa',position,[r,r,r],m,rotation);
  const base='desk_root';group(base,rootName,[-.3,0,.6]);
@@ -47,9 +47,12 @@
   // Keep the first sheet 1mm above the surface, with sub-millimetre layer gaps.
   box('desk_paper_'+String(i).padStart(2,'0'),base,'paper',[.49,.012,.32],[x,1.397+i*.00035,z],[0,(i%3-1)*.22,0]);
  }
- cyl('desk_lamp_shade',base,'brass',.28,.47,.31,[-1.67,2.32,-.43],10);
+ // DH-11C.4K: smoother, level, open shade with a capped top.
+ // Recess the warm bulb 50mm above the lower lip rather than below it.
+ cyl('desk_lamp_shade',base,'lampShade',.245,.405,.30,[-1.67,2.38,-.43],24,null,true);
+ cyl('desk_lamp_cap',base,'brass',.245,.245,.018,[-1.67,2.522,-.43],24);
  cyl('desk_lamp_stem',base,'brass',.035,.035,.96,[-1.67,1.86,-.43]);
- orb('desk_lamp_bulb',base,'paper',.095,[-1.67,2.22,-.43]);
+ orb('desk_lamp_bulb',base,'lampBulb',.065,[-1.67,2.345,-.43]);
  cyl('desk_lamp_base',base,'timber',.28,.28,.12,[-1.67,1.4,-.43]);
  cyl('desk_cup',base,'ink',.13,.105,.26,[-.88,1.53,.57],12,[0,0,.08]);
  group('desk_file',base,[-.55,1.42,-.7]);

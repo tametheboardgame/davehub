@@ -184,8 +184,8 @@ for(const slug of ['unicorn-valley','stephen-martin-project','tame-the-board-gam
 }
 check('dist/worlds/writing/index.html',['data-scene="manuscript-hoard"','room-stage-image','data-room-target="desk"','data-room-target="cabinet"','data-room-target="bin"','data-room-target="bookcase"','data-room-target="typewriter"','Tame The Board Game'],['The Last Lightkeeper','The Clock of Tomorrow']);
 check('dist/previews/dh-08b/worlds/writing/index.html',['data-scene="manuscript-hoard"','Fictional design demonstration','The Last Lightkeeper']);
-check('dist/previews/dh-11c/furniture/index.html',['DH-11C.4F','data-furniture-model-proof="true"','data-immersive-room="true"','id="furniture-model-status"','room.js?v=dh11c4j-bin-v1','room-plan.js?v=dh11c4j-bin-v1','davehub-furniture-release']);
-check('dist/previews/dh-11c/room/furniture-asset.js',['DH11FurnitureAsset','door_leaf_hinge']);
+check('dist/previews/dh-11c/furniture/index.html',['DH-11C.4F','data-furniture-model-proof="true"','data-immersive-room="true"','id="furniture-model-status"','room.js?v=dh11c4k-lamp-v1','room-plan.js?v=dh11c4k-lamp-v1','davehub-furniture-release']);
+check('dist/previews/dh-11c/room/furniture-asset.js',['DH11FurnitureAsset','door_leaf_hinge','desk_lamp_shade','desk_lamp_cap','desk_lamp_bulb','lampShade','lampBulb']);
 check('dist/previews/dh-11c/room-shell/index.html',['DH-11C.4E','data-shell-model-proof="true"','../room/room-shell-asset.js','id="shell-model-status"','data-immersive-room="true"']);
 
 const path=require('node:path');
@@ -206,7 +206,11 @@ check('dist/previews/dh-11c/art-lab/index.html',['DH-11C.3A','data-art-lab="true
 check('dist/previews/dh-11c/room/index.html',['DH-11C.2','id="room-canvas"','room.js','room-plan.js','object-list']);
 check('dist/previews/dh-11c/room/drawer-picking.mjs',['export function drawerIndexForMesh','indexByGroup','return null']);
 check('dist/previews/dh-11c/room/furniture-motion.mjs',['export function paperPose','export const PAPER_LIMIT = 13','PAPER_END_POSITIONS','export function paperIndexForMesh','export function pressDepth','export function typewriterFeed','TYPE_PAPER_HEIGHT','TYPE_PLATEN_RADIUS','export function featuredBook','export function featuredBookIndexForMesh','export function bookPosition','export const BIN_PAPER_COUNT=9','export function binPaperIndexForMesh','export function binPaperPose','BIN_PAPER_FLOOR']);
-check('dist/previews/dh-11c/room/room.js',["from './furniture-motion.mjs?v=dh11c4j-bin-v1'",'paperPose(home,i,state.papers[i])','paperIndexForMesh(mesh.name)','togglePaper(paperIndex)','pressDepth(clock.elapsedTime-activePress.at','typewriterFeed(state.typed)','typePaper.scale.y=THREE.MathUtils.lerp','platenTarget.copy(typePlatenHome).multiply(platenSpin)','typePlaten.quaternion.slerp(platenTarget,rate)','featuredBookIndexForMesh(mesh.name)','markFeaturedBook(mesh,i)','FEATURE_BOOK_COLOUR','featured_book_gilt_','accent.userData.featuredBookIndex=index','toggleBook(bookIndex)','bookPosition(bookHome[i],state.books[i])','binPaperIndexForMesh(mesh.name)','toggleBinPaper(binPaperIndex)','binPaperPose(binPaperHomes[i],i,binPaperProgress[i])','binPapers.splice(0,binPapers.length,...crumples)','crumples.forEach((mesh,i)=>{mesh.userData.binPaperIndex=i;})']);
+check('dist/previews/dh-11c/room/room.js',["from './furniture-motion.mjs?v=dh11c4j-bin-v1'",'paperPose(home,i,state.papers[i])','paperIndexForMesh(mesh.name)','togglePaper(paperIndex)','pressDepth(clock.elapsedTime-activePress.at','typewriterFeed(state.typed)','typePaper.scale.y=THREE.MathUtils.lerp','platenTarget.copy(typePlatenHome).multiply(platenSpin)','typePlaten.quaternion.slerp(platenTarget,rate)','featuredBookIndexForMesh(mesh.name)','markFeaturedBook(mesh,i)','FEATURE_BOOK_COLOUR','featured_book_gilt_','accent.userData.featuredBookIndex=index','toggleBook(bookIndex)','bookPosition(bookHome[i],state.books[i])','binPaperIndexForMesh(mesh.name)','toggleBinPaper(binPaperIndex)','binPaperPose(binPaperHomes[i],i,binPaperProgress[i])','binPapers.splice(0,binPapers.length,...crumples)','crumples.forEach((mesh,i)=>{mesh.userData.binPaperIndex=i;})',
+ 'new THREE.CylinderGeometry(.245,.405,.30,24,1,true)',
+ "shade.name='desk_lamp_shade'",
+ 'lamp.position.set(-1.97,2.31,.17)',
+ "furniture-source.glb?v=dh11c4k-lamp-v1"]);
 check('dist/previews/dh-11c/room/room.js',["from './drawer-picking.mjs'",'drawerIndexForMesh(mesh,cabinetDrawers)']);
 check('dist/previews/dh-11c/cabinet/index.html',['id="cabinet-model"','id="cabinet-slots"','cabinet-math.js','cabinet.js','cabinet.css']);
 check('dist/previews/dh-08c/index.html',[

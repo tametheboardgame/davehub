@@ -60,8 +60,8 @@ test('full furniture preview opens on whole-room camera while cabinet-only proof
  const room=read('prototypes/dh-11c-room/room.js');
  const plan=require('../prototypes/dh-11c-room/room-plan.js');
  assert.match(html,/data-furniture-model-proof="true"/,'complete furniture preview must opt into full-scene mode');
- assert.ok(html.includes('../room/room.js?v=dh11c4j-bin-v1'),'fresh bookcase module URL must defeat old browser caches');
- assert.match(html,/name="davehub-furniture-release" content="dh11c4j-bin-v1"/,'preview includes visible-build identity in markup');
+ assert.ok(html.includes('../room/room.js?v=dh11c4k-lamp-v1'),'fresh bookcase module URL must defeat old browser caches');
+ assert.match(html,/name="davehub-furniture-release" content="dh11c4k-lamp-v1"/,'preview includes visible-build identity in markup');
  assert.match(html,/data-glb-proof="true"/,'cabinet GLB remains part of the scene');
  assert.match(room,/camera\.position\.set\(\.\.\.plan\.HOME\.position\)/);
  assert.match(room,/const desiredTarget=focusPoint\.clone\(\)/);
@@ -74,4 +74,55 @@ test('full furniture preview opens on whole-room camera while cabinet-only proof
  const fullFurnitureLoad=room.slice(room.indexOf('if(furnitureModelProof){'));
  assert.doesNotMatch(fullFurnitureLoad,/focus\('cabinet'\)/,
   'six-furniture GLB swap cannot force a cabinet close-up');
+});
+
+
+test('DH-11C.4K lamp is level, hollow and keeps the bulb inside its shade in both rigs',()=>{
+ const byName=name=>manifest.nodes.find(node=>node.name===name);
+ const shade=byName('desk_lamp_shade'),cap=byName('desk_lamp_cap');
+ const bulb=byName('desk_lamp_bulb'),stem=byName('desk_lamp_stem'),base=byName('desk_lamp_base');
+ assert.ok(shade&&cap&&bulb&&stem&&base,'lamp is made from five separately editable parts');
+ for(const part of [shade,cap,bulb,stem,base]){
+  assert.equal(part.parent,'desk_root');
+  assert.equal(part.position[0],-1.67,'every part centred on stem X');
+  assert.equal(part.position[2],-.43,'every part centred on stem Z');
+  assert.equal(part.rotation,null,'no unexpected shade tilt');
+ }
+ assert.deepEqual(shade.size,[.245,.405,.30]);
+ assert.deepEqual(shade.position,[-1.67,2.38,-.43]);
+ assert.equal(shade.shape.sides,24,'shade must not be a jagged ten-sided cone');
+ assert.equal(shade.shape.openEnded,true,'shade must actually be open from below');
+ assert.equal(shade.material,'lampShade');
+ assert.deepEqual(cap.position,[-1.67,2.522,-.43]);
+ assert.deepEqual(bulb.size,[.065,.065,.065]);
+ assert.equal(bulb.material,'lampBulb');
+ const lip=shade.position[1]-shade.size[2]/2;
+ const roof=shade.position[1]+shade.size[2]/2;
+ assert.ok(bulb.position[1]-bulb.size[0]>=lip+.04,'bulb must be visibly recessed above the lip');
+ assert.ok(bulb.position[1]+bulb.size[0]<roof-.04,'bulb must be contained below top cap');
+ const stemTop=stem.position[1]+stem.size[2]/2;
+ assert.ok(Math.abs(stemTop-bulb.position[1])<.015,'bulb must be attached to stem');
+ assert.ok(Math.abs(base.position[1]-1.4)<.0001,'lamp base and desk unchanged');
+ const out=build().json;
+ const node=out.nodes.find(n=>n.name==='desk_lamp_shade');
+ const mesh=out.meshes[node.mesh];
+ const primitive=mesh.primitives[0];
+ const indices=out.accessors[primitive.indices];
+ assert.equal(indices.count,24*6,'GLB shade contains side walls only, no bottom cover');
+ assert.equal(out.materials[primitive.material].name,'lampShade');
+ assert.equal(out.materials[primitive.material].doubleSided,true,'inside of shade must render');
+ const glbBulb=out.nodes.find(n=>n.name==='desk_lamp_bulb');
+ assert.ok(out.materials.some(m=>m.name==='lampBulb'&&m.emissiveFactor?.[0]>.5),
+  'bulb receives a warm glow instead of stark white paper material');
+ assert.deepEqual(glbBulb.translation,bulb.position,'GLB bulb positioned like source manifest');
+ const room=read('prototypes/dh-11c-room/room.js');
+ for(const marker of [
+  'new THREE.CylinderGeometry(.245,.405,.30,24,1,true)',
+  "shade.name='desk_lamp_shade';shade.position.set(-1.67,2.38,-.43)",
+  'const cap=cylinder(g,.245,.245,.018,mats.brass,-1.67,2.522,-.43,24)',
+  'const bulb=sphere(g,.065,mats.lampBulb,-1.67,2.345,-.43)',
+  'lamp.position.set(-1.97,2.31,.17)',
+  "furniture-source.glb?v=dh11c4k-lamp-v1"
+ ])assert.ok(room.includes(marker),'procedural/GLB lamp parity: '+marker);
+ assert.doesNotMatch(room,/sphere\(g,\.095,mats\.paper,-1\.67,2\.22,-\.43\)/,'old exposed bulb must be gone');
 });
