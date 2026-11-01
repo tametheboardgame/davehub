@@ -64,6 +64,38 @@ const mats={
  lampBulb:new THREE.MeshStandardMaterial({color:'#ffddb0',emissive:'#e1b05b',emissiveIntensity:.65,roughness:.55}),
  island:matte('#7e856e'),leaf:matte('#728b7b'),bin:matte('#677b81')
 };
+// The approved GLB and procedural scene share the exact same UV pixel maps.
+// Other proof pages keep their original flat materials until their own stages.
+for(const [name,old] of Object.entries({
+ deskWalnut:'desk',deskFrame:'darkwood',
+ deskParchment0:'paper',deskParchment1:'paper',deskParchment2:'paper',
+ deskLeather:'darkwood',deskBrass:'brass',typewriterEnamel:'ink'
+}))mats[name]=mats[old];
+const deskKit=window.DH11DeskMaterials;
+if(furnitureModelProof){
+ if(!deskKit)throw Error('Missing DH-11C.5A shared desk material maps');
+ for(const [material,map] of Object.entries({
+  deskWalnut:'deskWalnut',deskFrame:'deskFrame',
+  deskParchment0:'deskParchment0',deskParchment1:'deskParchment1',
+  deskParchment2:'deskParchment2',deskLeather:'deskLeather',
+  deskBrass:'deskBrass',typewriterEnamel:'typewriterEnamel',
+  lampShade:'lampLinen'
+ })){
+  const source=deskKit.generate(map);
+  const texture=new THREE.DataTexture(source.pixels,source.width,source.height,THREE.RGBAFormat);
+  texture.colorSpace=THREE.SRGBColorSpace;
+  texture.magFilter=THREE.LinearFilter;
+  texture.minFilter=THREE.LinearMipmapLinearFilter;
+  texture.generateMipmaps=true;
+  texture.anisotropy=Math.min(4,renderer?.capabilities.getMaxAnisotropy()||1);
+  texture.needsUpdate=true;
+  mats[material]=new THREE.MeshStandardMaterial({
+   color:'#ffffff',map:texture,
+   roughness:source.roughness,metalness:source.metalness,
+   ...(material==='lampShade'?{side:THREE.DoubleSide}:{})
+  });
+ }
+}
 const box=(parent,w,h,d,mat,x=0,y=0,z=0)=>{
  const mesh=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);
  mesh.position.set(x,y,z);
@@ -227,9 +259,9 @@ const lampLitColour=new THREE.Color('#ffddb0'),lampUnlitColour=new THREE.Color('
 let paperHomes=[];
 function makeDesk(){
  const g=group(scene,-.3,0,.6);
- box(g,4.5,.2,2.15,mats.desk,0,1.29,0);
- for(const x of [-1.98,1.98])for(const z of [-.85,.85])box(g,.21,1.15,.23,mats.darkwood,x,.61,z);
- box(g,4.04,.4,.12,mats.darkwood,0,1.0,.94);
+ box(g,4.5,.2,2.15,mats.deskWalnut,0,1.29,0);
+ for(const x of [-1.98,1.98])for(const z of [-.85,.85])box(g,.21,1.15,.23,mats.deskFrame,x,.61,z);
+ box(g,4.04,.4,.12,mats.deskFrame,0,1.0,.94);
  // Paper locations avoid the lamp, open folder, typewriter and cup;
  // no sheet begins intersecting a prop or overhanging the tabletop.
  const paperLayout=[
@@ -241,7 +273,7 @@ function makeDesk(){
   const [x,z]=paperLayout[i];
   // Desk surface top is 1.29 + .20/2 = 1.39m. Paper half-thickness is .006m.
   // Keep the first sheet 1mm above the surface, with sub-millimetre layer gaps.
-  const mesh=box(g,.49,.012,.32,mats.paper,x,1.397+i*.00035,z);
+  const mesh=box(g,.49,.012,.32,mats['deskParchment'+i%3],x,1.397+i*.00035,z);
   mesh.name='desk_paper_'+String(i).padStart(2,'0');
   mesh.rotation.y=(i%3-1)*.22;
   mesh.userData.paperIndex=i;
@@ -251,9 +283,9 @@ function makeDesk(){
  // DH-11C.4K: smooth, level, open-bottomed shade and recessed bulb.
  const shade=new THREE.Mesh(new THREE.CylinderGeometry(.245,.405,.30,24,1,true),mats.lampShade);
  shade.name='desk_lamp_shade';shade.position.set(-1.67,2.38,-.43);g.add(shade);
- const cap=cylinder(g,.245,.245,.018,mats.brass,-1.67,2.522,-.43,24);
+ const cap=cylinder(g,.245,.245,.018,mats.deskBrass,-1.67,2.522,-.43,24);
  cap.name='desk_lamp_cap';
- const stem=cylinder(g,.035,.035,.96,mats.brass,-1.67,1.86,-.43);
+ const stem=cylinder(g,.035,.035,.96,mats.deskBrass,-1.67,1.86,-.43);
  stem.name='desk_lamp_stem';
  const bulb=sphere(g,.065,mats.lampBulb,-1.67,2.345,-.43);
  bulb.name='desk_lamp_bulb';lampBulbMesh=bulb;
@@ -262,8 +294,8 @@ function makeDesk(){
  const cup=cylinder(g,.13,.105,.26,mats.ink,-.88,1.53,.57);
  cup.rotation.z=.08;
  const file=group(g,-.55,1.42,-.7);
- box(file,.86,.14,.64,mats.darkwood);
- box(file,.66,.025,.44,mats.paper,0,.09,0);
+ box(file,.86,.14,.64,mats.deskLeather);
+ box(file,.66,.025,.44,mats.deskParchment0,0,.09,0);
  capture('desk',g);
  return g;
 }
@@ -281,17 +313,17 @@ const platenSpin=new THREE.Quaternion(),platenTarget=new THREE.Quaternion();
 let activePress=null,pressSerial=0;
 function makeTypewriter(){
  const g=group(scene,1.08,1.42,.66);
- box(g,.95,.21,.55,mats.ink,0,.07,0);
- box(g,.79,.2,.3,mats.stone,0,.2,-.08);
+ box(g,.95,.21,.55,mats.typewriterEnamel,0,.07,0);
+ box(g,.79,.2,.3,mats.typewriterEnamel,0,.2,-.08);
  for(let row=0;row<3;row++)for(let i=0;i<8;i++){
-  const k=box(g,.067,.025,.059,mats.brass,-.34+i*.099,.194,.11+row*.092);
+  const k=box(g,.067,.025,.059,mats.deskBrass,-.34+i*.099,.194,.11+row*.092);
   k.name='typewriter_key_'+row+'_'+i;
   typeKeys.push(k);
   if(row===1&&i===4)typeKey=k;
  }
  const roller=cylinder(g,.056,.056,.91,mats.ink,0,.38,-.22,12);
  roller.rotation.z=Math.PI/2;typePlaten=roller;
- typePaper=box(g,.64,.58,.02,mats.paper,0,.68,-.24);
+ typePaper=box(g,.64,.58,.02,mats.deskParchment1,0,.68,-.24);
  typePaperRule=box(g,.57,.02,.015,mats.edge,0,.65,-.224);
  capture('typewriter',g);
  return g;
@@ -917,7 +949,7 @@ if(furnitureModelProof){
  const report=message=>{if(output)output.textContent=message;};
  const required=['desk','typewriter','bookcase','bin','door','window'];
  import('./vendor/GLTFLoader-r159.js').then(({GLTFLoader})=>{
-  new GLTFLoader().load('../room/models/furniture-source.glb?v=dh11c4k-lamp-v1',gltf=>{
+  new GLTFLoader().load('../room/models/furniture-source.glb?v=dh11c5a-desk-v1',gltf=>{
    try{
     const content=gltf.scene;
     const next=new Map();

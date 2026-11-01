@@ -9,6 +9,10 @@
  // the same named pivots are used for procedural proof and Blender editing.
  const nodes=[],materials={
   desk:'#766455',darkwood:'#4b3f42',timber:'#756354',ink:'#494b57',
+  // DH-11C.5A reference desk: separate authored PBR surfaces, no new pivots.
+  deskWalnut:'#ffffff',deskFrame:'#ffffff',deskLeather:'#ffffff',
+  deskParchment0:'#ffffff',deskParchment1:'#ffffff',deskParchment2:'#ffffff',
+  deskBrass:'#ffffff',typewriterEnamel:'#ffffff',
   brass:'#c2a26d',lampShade:'#95805c',lampBulb:'#ffddb0',paper:'#dbc9ab',stone:'#555d66',edge:'#ad9478',
   bin:'#677b81',island:'#7e856e',leaf:'#728b7b',
   book0:'#a59482',book1:'#6e737f',book2:'#9b8878',book3:'#b1a391',
@@ -30,10 +34,10 @@
  const orb=(name,parent,m,r,position)=>add(name,parent,'sphere',position,[r,r,r],m);
  const crumple=(name,parent,m,r,position,rotation)=>add(name,parent,'icosa',position,[r,r,r],m,rotation);
  const base='desk_root';group(base,rootName,[-.3,0,.6]);
- box('desk_surface',base,'desk',[4.5,.2,2.15],[0,1.29,0]);
+ box('desk_surface',base,'deskWalnut',[4.5,.2,2.15],[0,1.29,0]);
  for(const x of [-1.98,1.98])for(const z of [-.85,.85])
-  box('desk_leg_'+(x<0?'l':'r')+'_'+(z<0?'rear':'front'),base,'darkwood',[.21,1.15,.23],[x,.61,z]);
- box('desk_apron',base,'darkwood',[4.04,.4,.12],[0,1,.94]);
+  box('desk_leg_'+(x<0?'l':'r')+'_'+(z<0?'rear':'front'),base,'deskFrame',[.21,1.15,.23],[x,.61,z]);
+ box('desk_apron',base,'deskFrame',[4.04,.4,.12],[0,1,.94]);
  // Paper locations avoid the lamp, open folder, typewriter and cup;
  // no sheet begins intersecting a prop or overhanging the tabletop.
  const paperLayout=[
@@ -45,27 +49,27 @@
   const [x,z]=paperLayout[i];
   // Desk surface top is 1.29 + .20/2 = 1.39m. Paper half-thickness is .006m.
   // Keep the first sheet 1mm above the surface, with sub-millimetre layer gaps.
-  box('desk_paper_'+String(i).padStart(2,'0'),base,'paper',[.49,.012,.32],[x,1.397+i*.00035,z],[0,(i%3-1)*.22,0]);
+  box('desk_paper_'+String(i).padStart(2,'0'),base,'deskParchment'+(i%3),[.49,.012,.32],[x,1.397+i*.00035,z],[0,(i%3-1)*.22,0]);
  }
  // DH-11C.4K: smoother, level, open shade with a capped top.
  // Recess the warm bulb 50mm above the lower lip rather than below it.
  cyl('desk_lamp_shade',base,'lampShade',.245,.405,.30,[-1.67,2.38,-.43],24,null,true);
- cyl('desk_lamp_cap',base,'brass',.245,.245,.018,[-1.67,2.522,-.43],24);
- cyl('desk_lamp_stem',base,'brass',.035,.035,.96,[-1.67,1.86,-.43]);
+ cyl('desk_lamp_cap',base,'deskBrass',.245,.245,.018,[-1.67,2.522,-.43],24);
+ cyl('desk_lamp_stem',base,'deskBrass',.035,.035,.96,[-1.67,1.86,-.43]);
  orb('desk_lamp_bulb',base,'lampBulb',.065,[-1.67,2.345,-.43]);
  cyl('desk_lamp_base',base,'timber',.28,.28,.12,[-1.67,1.4,-.43]);
  cyl('desk_cup',base,'ink',.13,.105,.26,[-.88,1.53,.57],12,[0,0,.08]);
  group('desk_file',base,[-.55,1.42,-.7]);
- box('desk_file_cover','desk_file','darkwood',[.86,.14,.64]);
- box('desk_file_sheet','desk_file','paper',[.66,.025,.44],[0,.09,0]);
+ box('desk_file_cover','desk_file','deskLeather',[.86,.14,.64]);
+ box('desk_file_sheet','desk_file','deskParchment0',[.66,.025,.44],[0,.09,0]);
 
  group('typewriter_root',rootName,[1.08,1.42,.66]);
- box('typewriter_body','typewriter_root','ink',[.95,.21,.55],[0,.07,0]);
- box('typewriter_back','typewriter_root','stone',[.79,.2,.3],[0,.2,-.08]);
+ box('typewriter_body','typewriter_root','typewriterEnamel',[.95,.21,.55],[0,.07,0]);
+ box('typewriter_back','typewriter_root','typewriterEnamel',[.79,.2,.3],[0,.2,-.08]);
  for(let row=0;row<3;row++)for(let i=0;i<8;i++)
-  box('typewriter_key_'+row+'_'+i,'typewriter_root','brass',[.067,.025,.059],[-.34+i*.099,.194,.11+row*.092]);
+  box('typewriter_key_'+row+'_'+i,'typewriter_root','deskBrass',[.067,.025,.059],[-.34+i*.099,.194,.11+row*.092]);
  cyl('typewriter_platen','typewriter_root','ink',.056,.056,.91,[0,.38,-.22],12,[0,0,Math.PI/2]);
- box('typewriter_paper','typewriter_root','paper',[.64,.58,.02],[0,.68,-.24]);
+ box('typewriter_paper','typewriter_root','deskParchment1',[.64,.58,.02],[0,.68,-.24]);
  box('typewriter_paper_rule','typewriter_root','edge',[.57,.02,.015],[0,.65,-.224]);
 
  group('bookcase_root',rootName,[4.7,0,-3.85]);

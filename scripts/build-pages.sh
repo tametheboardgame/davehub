@@ -27,11 +27,13 @@ for asset in \
   prototypes/dh-11c-room/drawer-picking.mjs \
   prototypes/dh-11c-room/furniture-motion.mjs \
   tests/dh11c4f-animation-fixes.test.cjs \
+  tests/dh11c5a-desk-materials.test.cjs \
   tests/dh11c-drawer-picking.test.cjs \
   prototypes/dh-11c-room/room-shell-plan.js \
   prototypes/dh-11c-room/room-shell-asset.js \
   scripts/build-dh11c4e-shell-glb.cjs \
   prototypes/dh-11c-room/furniture-asset.js \
+  prototypes/dh-11c-room/desk-materials.js \
   scripts/build-dh11c4f-furniture-glb.cjs \
   scripts/validate-dh11c4f-furniture.cjs \
   scripts/render-dh11c4f-furniture.cjs \
@@ -93,7 +95,7 @@ done
 
 # A private draft must never become a deployed page through a build bypass.
 # Validate both the empty/approved production manifest and fictional test fixtures.
-node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/dh11-worlds.test.cjs tests/dh11c-cabinet-geometry.test.cjs tests/dh11c-room.test.cjs tests/dh11c-drawer-picking.test.cjs tests/dh11c-art-direction.test.cjs tests/dh11c4-cabinet-glb.test.cjs tests/dh11c4b-blender.test.cjs tests/dh11c4c-room-architecture.test.cjs tests/dh11c4d-immersive-viewport.test.cjs tests/dh11c4e-room-shell.test.cjs tests/dh11c4f-furniture.test.cjs tests/dh11c4f-animation-fixes.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs tests/dh10c-editorial.test.cjs tests/dh10c-hosted-http.test.cjs
+node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/dh11-worlds.test.cjs tests/dh11c-cabinet-geometry.test.cjs tests/dh11c-room.test.cjs tests/dh11c-drawer-picking.test.cjs tests/dh11c-art-direction.test.cjs tests/dh11c4-cabinet-glb.test.cjs tests/dh11c4b-blender.test.cjs tests/dh11c4c-room-architecture.test.cjs tests/dh11c4d-immersive-viewport.test.cjs tests/dh11c4e-room-shell.test.cjs tests/dh11c4f-furniture.test.cjs tests/dh11c4f-animation-fixes.test.cjs tests/dh11c5a-desk-materials.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs tests/dh10c-editorial.test.cjs tests/dh10c-hosted-http.test.cjs
 node -e "const {validateManifest}=require('./scripts/davehub-manifest.cjs'); const data=require('./davehub.json'); const result=validateManifest(data,'tametheboardgame/davehub');if(!result.valid)throw new Error(result.errors.join('; '));"
 # Fail closed: only individually owner-approved records and links enter production.
 node scripts/content-check.cjs content/public/catalogue.json
@@ -112,7 +114,7 @@ cp assets/characters/dave/dave-animation-v1.webm dist/assets/characters/dave/
 cp prototypes/dh-07c/index.html dist/previews/dh-07c/index.html
 cp prototypes/dh-08/index.html dist/previews/dh-08/index.html
 cp prototypes/dh-11c-cabinet/index.html prototypes/dh-11c-cabinet/cabinet.css prototypes/dh-11c-cabinet/cabinet-math.js prototypes/dh-11c-cabinet/cabinet.js dist/previews/dh-11c/cabinet/
-cp prototypes/dh-11c-room/index.html prototypes/dh-11c-room/room.css prototypes/dh-11c-room/room-plan.js prototypes/dh-11c-room/room.js prototypes/dh-11c-room/drawer-picking.mjs prototypes/dh-11c-room/furniture-motion.mjs prototypes/dh-11c-room/art-palettes.js dist/previews/dh-11c/room/
+cp prototypes/dh-11c-room/index.html prototypes/dh-11c-room/room.css prototypes/dh-11c-room/room-plan.js prototypes/dh-11c-room/room.js prototypes/dh-11c-room/drawer-picking.mjs prototypes/dh-11c-room/furniture-motion.mjs prototypes/dh-11c-room/art-palettes.js prototypes/dh-11c-room/desk-materials.js dist/previews/dh-11c/room/
 cp prototypes/dh-11c-room/art-lab.css dist/previews/dh-11c/art-lab/
 node scripts/render-dh11c-art-lab.cjs dist/previews/dh-11c/art-lab
 cp prototypes/dh-11c-room/vendor/three-r159.module.min.js prototypes/dh-11c-room/vendor/THREE-LICENSE.txt prototypes/dh-11c-room/vendor/GLTFLoader-r159.js prototypes/dh-11c-room/vendor/BufferGeometryUtils-r159.js dist/previews/dh-11c/room/vendor/
@@ -184,8 +186,9 @@ for(const slug of ['unicorn-valley','stephen-martin-project','tame-the-board-gam
 }
 check('dist/worlds/writing/index.html',['data-scene="manuscript-hoard"','room-stage-image','data-room-target="desk"','data-room-target="cabinet"','data-room-target="bin"','data-room-target="bookcase"','data-room-target="typewriter"','Tame The Board Game'],['The Last Lightkeeper','The Clock of Tomorrow']);
 check('dist/previews/dh-08b/worlds/writing/index.html',['data-scene="manuscript-hoard"','Fictional design demonstration','The Last Lightkeeper']);
-check('dist/previews/dh-11c/furniture/index.html',['DH-11C.4F','data-furniture-model-proof="true"','data-immersive-room="true"','id="furniture-model-status"','room.js?v=dh11c4l-lamp-switch-v1','room-plan.js?v=dh11c4l-lamp-switch-v1','davehub-furniture-release']);
-check('dist/previews/dh-11c/room/furniture-asset.js',['DH11FurnitureAsset','door_leaf_hinge','desk_lamp_shade','desk_lamp_cap','desk_lamp_bulb','lampShade','lampBulb']);
+check('dist/previews/dh-11c/furniture/index.html',['DH-11C.4F','data-furniture-model-proof="true"','data-immersive-room="true"','id="furniture-model-status"','room.js?v=dh11c5a-desk-v1','room-plan.js?v=dh11c5a-desk-v1','desk-materials.js?v=dh11c5a-desk-v1','davehub-furniture-release']);
+check('dist/previews/dh-11c/room/furniture-asset.js',['DH11FurnitureAsset','door_leaf_hinge','desk_lamp_shade','desk_lamp_cap','desk_lamp_bulb','lampShade','lampBulb','deskWalnut','deskParchment0','deskLeather','typewriterEnamel']);
+check('dist/previews/dh-11c/room/desk-materials.js',['DH11DeskMaterials','deskWalnut','deskParchment0','deskParchment1','deskParchment2','deskLeather','deskBrass','typewriterEnamel','lampLinen']);
 check('dist/previews/dh-11c/room-shell/index.html',['DH-11C.4E','data-shell-model-proof="true"','../room/room-shell-asset.js','id="shell-model-status"','data-immersive-room="true"']);
 
 const path=require('node:path');
@@ -213,7 +216,9 @@ check('dist/previews/dh-11c/room/room.js',["from './furniture-motion.mjs?v=dh11c
  'new THREE.CylinderGeometry(.245,.405,.30,24,1,true)',
  "shade.name='desk_lamp_shade'",
  'lamp.position.set(-1.97,2.31,.17)',
- "furniture-source.glb?v=dh11c4k-lamp-v1"]);
+ "furniture-source.glb?v=dh11c5a-desk-v1",
+ 'new THREE.DataTexture(source.pixels,source.width,source.height,THREE.RGBAFormat)',
+ 'mats.deskWalnut','deskKit.generate(map)']);
 check('dist/previews/dh-11c/room/room.js',["from './drawer-picking.mjs'",'drawerIndexForMesh(mesh,cabinetDrawers)']);
 check('dist/previews/dh-11c/cabinet/index.html',['id="cabinet-model"','id="cabinet-slots"','cabinet-math.js','cabinet.js','cabinet.css']);
 check('dist/previews/dh-08c/index.html',[

@@ -1,7 +1,36 @@
 'use strict';
 // Deterministic glTF 2.0 asset generator for the six interactive 4F furniture
 // rigs. Real triangles/UVs/normals, never flattened screenshots.
-const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),zlib=require('node:zlib');
+const deskMaps=require('../prototypes/dh-11c-room/desk-materials.js');
+const DESK_TEXTURES=Object.freeze({
+ deskWalnut:'deskWalnut',deskFrame:'deskFrame',
+ deskParchment0:'deskParchment0',deskParchment1:'deskParchment1',deskParchment2:'deskParchment2',
+ deskLeather:'deskLeather',deskBrass:'deskBrass',
+ typewriterEnamel:'typewriterEnamel',lampShade:'lampLinen'
+});
+// Tiny PNG encoder for embedded GLB images. Deterministic, lossless,
+// without external build dependencies or uneditable flattened screenshots.
+function crc32(data){
+ let c=-1;
+ for(const v of data){c^=v;for(let i=0;i<8;i++)c=(c>>>1)^((c&1)?0xedb88320:0);}
+ return (c^(-1))>>>0;
+}
+function chunk(type,payload){
+ const label=Buffer.from(type),len=Buffer.alloc(4),crc=Buffer.alloc(4);
+ len.writeUInt32BE(payload.length);crc.writeUInt32BE(crc32(Buffer.concat([label,payload])));
+ return Buffer.concat([len,label,payload,crc]);
+}
+function pngRgba(bitmap){
+ const {width,height,pixels}=bitmap;
+ const raw=Buffer.alloc((width*4+1)*height);
+ for(let y=0;y<height;y++)Buffer.from(pixels.buffer,pixels.byteOffset+y*width*4,width*4).copy(raw,y*(width*4+1)+1);
+ const ihdr=Buffer.alloc(13);ihdr.writeUInt32BE(width,0);ihdr.writeUInt32BE(height,4);
+ ihdr[8]=8;ihdr[9]=6;
+ return Buffer.concat([Buffer.from([137,80,78,71,13,10,26,10]),chunk('IHDR',ihdr),
+  chunk('IDAT',zlib.deflateSync(raw,{level:9})),chunk('IEND',Buffer.alloc(0))]);
+}
+
 const asset=require('../prototypes/dh-11c-room/furniture-asset.js');
 function geometry(kind,p){
  const pos=[],norm=[],uv=[],idx=[];
@@ -64,9 +93,15 @@ function quat(euler){
 const linear=h=>[1,3,5].map(i=>{const x=parseInt(h.slice(i,i+2),16)/255;return x<=.04045?x/12.92:((x+.055)/1.055)**2.4;});
 function build(){
  const mats=Object.keys(asset.materials);
- const materials=mats.map(name=>({name,pbrMetallicRoughness:{baseColorFactor:[...linear(asset.materials[name]),1],metallicFactor:name==='brass'?.55:name==='lampShade'?.22:.02,roughnessFactor:name==='brass'?.46:name==='lampShade'?.72:.85},
-  doubleSided:name==='sky'||name==='lampShade',
-  ...(name==='lampBulb'?{emissiveFactor:[.65,.4,.16]}:{})}));
+ const materials=mats.map(name=>{
+  const mapName=DESK_TEXTURES[name],finish=mapName?deskMaps.profiles[mapName]:null;
+  return {name,pbrMetallicRoughness:{
+   baseColorFactor:mapName?[1,1,1,1]:[...linear(asset.materials[name]),1],
+   metallicFactor:finish?.metalness??(name==='brass'?.55:name==='lampShade'?.22:.02),
+   roughnessFactor:finish?.roughness??(name==='brass'?.46:name==='lampShade'?.72:.85)
+  },doubleSided:name==='sky'||name==='lampShade',
+   ...(name==='lampBulb'?{emissiveFactor:[.65,.4,.16]}:{})};
+ });
  const nodes=[],ids=new Map(),geometryCache=new Map(),meshes=[],accessors=[],bufferViews=[],buffers=[];
  function append(numbers,kind){
   const component=kind==='uint16'?2:4,buf=Buffer.alloc(numbers.length*component);
@@ -76,6 +111,26 @@ function build(){
   buffers.push(padded);
   const index=bufferViews.length;bufferViews.push({buffer:0,byteOffset:off,byteLength:buf.length,target:kind==='uint16'?34963:34962});
   return index;
+ }
+ // Embed all desk reference maps in the existing self-contained furniture
+ // GLB. The geometry, names and animated pivots remain untouched.
+ const images=[],textures=[],samplers=[{magFilter:9729,minFilter:9987,wrapS:10497,wrapT:10497}];
+ function appendImage(bytes){
+  const off=buffers.reduce((n,b)=>n+b.length,0);
+  buffers.push(Buffer.concat([bytes,Buffer.alloc((4-bytes.length%4)%4)]));
+  const i=bufferViews.length;
+  bufferViews.push({buffer:0,byteOffset:off,byteLength:bytes.length});
+  return i;
+ }
+ for(const [name,map] of Object.entries(DESK_TEXTURES)){
+  const bitmap=deskMaps.generate(map);
+  const image=images.length;
+  images.push({name:'DH11C5A_'+name,mimeType:'image/png',bufferView:appendImage(pngRgba(bitmap))});
+  const texture=textures.length;
+  textures.push({name:'DH11C5A_'+name,sampler:0,source:image});
+  const material=materials[mats.indexOf(name)];
+  if(!material)throw Error('Desk finish missing from furniture manifest: '+name);
+  material.pbrMetallicRoughness.baseColorTexture={index:texture};
  }
  function getMesh(spec){
   const key=spec.kind+'|'+(spec.kind==='cylinder'?JSON.stringify([spec.size,spec.shape]):'standard')+'|'+spec.material;
@@ -104,8 +159,9 @@ function build(){
  });
  const binary=Buffer.concat(buffers);
  const json={asset:{version:'2.0',generator:'DaveHub DH-11C.4F physical furniture rigs; ADR-0012'},scene:0,scenes:[{nodes:[ids.get('furniture_root')]}],
-  nodes,materials,meshes,accessors,bufferViews,buffers:[{byteLength:binary.length}],
-  extras:{milestone:'DH-11C.4F',units:'metres',interactiveRoots:asset.interactiveRoots,sourceNodeCount:asset.nodes.length}};
+  nodes,materials,meshes,accessors,bufferViews,images,textures,samplers,buffers:[{byteLength:binary.length}],
+  extras:{milestone:'DH-11C.5A',reference:'writing desk material study',units:'metres',
+   interactiveRoots:asset.interactiveRoots,sourceNodeCount:asset.nodes.length}};
  const pad=(b,v)=>Buffer.concat([b,Buffer.alloc((4-b.length%4)%4,v)]);
  const j=pad(Buffer.from(JSON.stringify(json)),32),b=pad(binary,0),glb=Buffer.alloc(12+8+j.length+8+b.length);
  glb.writeUInt32LE(0x46546c67,0);glb.writeUInt32LE(2,4);glb.writeUInt32LE(glb.length,8);

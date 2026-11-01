@@ -271,7 +271,7 @@ test('unmistakable gilded book spines are visible and clickable on both model re
 
 test('GLB gold book markings register as selectable children before replacing the fallback',()=>{
  const room=read('prototypes/dh-11c-room/room.js');
- const source=room.slice(room.indexOf('if(furnitureModelProof){'));
+ const source=room.slice(room.indexOf('if(furnitureModelProof){\n const output=document.getElementById(\'furniture-model-status\');'));
  const highlight=source.indexOf('books.forEach((mesh,i)=>markFeaturedBook(mesh,i));');
  const swap=source.indexOf('scene.add(content);');
  const capture=source.indexOf('capture(id,next.get(id));');

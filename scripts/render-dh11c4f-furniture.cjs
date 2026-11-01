@@ -7,10 +7,10 @@ function render(source){
  // Force a fresh JS fetch for the highlighted bookcase, even in browsers
  // that have cached the earlier six-furniture room module.
  replace('<script type="module" src="../room/room.js"></script>',
-  '<script type="module" src="../room/room.js?v=dh11c4l-lamp-switch-v1"></script>');
+  '<script defer src="../room/desk-materials.js?v=dh11c5a-desk-v1"></script>\n<script type="module" src="../room/room.js?v=dh11c5a-desk-v1"></script>');
  replace('<script defer src="../room/room-plan.js"></script>',
-  '<script defer src="../room/room-plan.js?v=dh11c4l-lamp-switch-v1"></script>');
- replace('</head>','<meta name="davehub-furniture-release" content="dh11c4l-lamp-switch-v1">\n</head>');
+  '<script defer src="../room/room-plan.js?v=dh11c5a-desk-v1"></script>');
+ replace('</head>','<meta name="davehub-furniture-release" content="dh11c5a-desk-v1">\n</head>');
  replace('DH-11C.4E Editable Blender Room Architecture','DH-11C.4F Editable Furniture Modelling');
  replace('DH-11C.4E / BLENDER ROOM SHELL','DH-11C.4F / FURNITURE GEOMETRY');
  replace('The room itself is now a model.','Every object belongs to the same world.');
@@ -22,7 +22,7 @@ function render(source){
  replace('<p id="shell-model-status" role="status" aria-live="polite">Loading exportable room shell model…</p>',
  '<p id="shell-model-status" role="status" aria-live="polite">Loading Blender room shell…</p><p id="furniture-model-status" role="status" aria-live="polite">Loading six-furniture GLB geometry…</p>');
  replace('Geometry modelling validation only; colours and textures remain placeholders. No model swaps on the existing Writing world. Compare the room and cabinet from their normal camera stops.',
- 'Furniture geometry prototype only; textures are not yet approved. Test the desk papers, selectable books, typewriter key, bin, swinging door, floating islands and cabinet drawers. This is not the published Writing world.');
+ 'DH-11C.5A MATERIAL REFERENCE: the writing desk now carries real walnut grain, worn leather, parchment fibres, aged brass and enamel. Test every approved interaction, including moving papers and switching the lamp. This is a staging-only visual study, not the published Writing world.');
  replace('<a href="../architecture/" rel="nofollow">Previous procedural architecture</a>',
  '<a href="../room-shell/" rel="nofollow">Earlier Blender room shell</a><a href="../architecture/" rel="nofollow">Earlier procedural architecture</a>');
  return html;
