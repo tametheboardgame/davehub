@@ -24,6 +24,8 @@ for asset in \
   prototypes/dh-11c-room/room.css \
   prototypes/dh-11c-room/room-plan.js \
   prototypes/dh-11c-room/room.js \
+  prototypes/dh-11c-room/drawer-picking.mjs \
+  tests/dh11c-drawer-picking.test.cjs \
   prototypes/dh-11c-room/room-shell-plan.js \
   prototypes/dh-11c-room/room-shell-asset.js \
   scripts/build-dh11c4e-shell-glb.cjs \
@@ -83,7 +85,7 @@ done
 
 # A private draft must never become a deployed page through a build bypass.
 # Validate both the empty/approved production manifest and fictional test fixtures.
-node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/dh11-worlds.test.cjs tests/dh11c-cabinet-geometry.test.cjs tests/dh11c-room.test.cjs tests/dh11c-art-direction.test.cjs tests/dh11c4-cabinet-glb.test.cjs tests/dh11c4b-blender.test.cjs tests/dh11c4c-room-architecture.test.cjs tests/dh11c4d-immersive-viewport.test.cjs tests/dh11c4e-room-shell.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs tests/dh10c-editorial.test.cjs tests/dh10c-hosted-http.test.cjs
+node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/dh11-worlds.test.cjs tests/dh11c-cabinet-geometry.test.cjs tests/dh11c-room.test.cjs tests/dh11c-drawer-picking.test.cjs tests/dh11c-art-direction.test.cjs tests/dh11c4-cabinet-glb.test.cjs tests/dh11c4b-blender.test.cjs tests/dh11c4c-room-architecture.test.cjs tests/dh11c4d-immersive-viewport.test.cjs tests/dh11c4e-room-shell.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs tests/dh10c-editorial.test.cjs tests/dh10c-hosted-http.test.cjs
 node -e "const {validateManifest}=require('./scripts/davehub-manifest.cjs'); const data=require('./davehub.json'); const result=validateManifest(data,'tametheboardgame/davehub');if(!result.valid)throw new Error(result.errors.join('; '));"
 # Fail closed: only individually owner-approved records and links enter production.
 node scripts/content-check.cjs content/public/catalogue.json
@@ -102,7 +104,7 @@ cp assets/characters/dave/dave-animation-v1.webm dist/assets/characters/dave/
 cp prototypes/dh-07c/index.html dist/previews/dh-07c/index.html
 cp prototypes/dh-08/index.html dist/previews/dh-08/index.html
 cp prototypes/dh-11c-cabinet/index.html prototypes/dh-11c-cabinet/cabinet.css prototypes/dh-11c-cabinet/cabinet-math.js prototypes/dh-11c-cabinet/cabinet.js dist/previews/dh-11c/cabinet/
-cp prototypes/dh-11c-room/index.html prototypes/dh-11c-room/room.css prototypes/dh-11c-room/room-plan.js prototypes/dh-11c-room/room.js prototypes/dh-11c-room/art-palettes.js dist/previews/dh-11c/room/
+cp prototypes/dh-11c-room/index.html prototypes/dh-11c-room/room.css prototypes/dh-11c-room/room-plan.js prototypes/dh-11c-room/room.js prototypes/dh-11c-room/drawer-picking.mjs prototypes/dh-11c-room/art-palettes.js dist/previews/dh-11c/room/
 cp prototypes/dh-11c-room/art-lab.css dist/previews/dh-11c/art-lab/
 node scripts/render-dh11c-art-lab.cjs dist/previews/dh-11c/art-lab
 cp prototypes/dh-11c-room/vendor/three-r159.module.min.js prototypes/dh-11c-room/vendor/THREE-LICENSE.txt prototypes/dh-11c-room/vendor/GLTFLoader-r159.js prototypes/dh-11c-room/vendor/BufferGeometryUtils-r159.js dist/previews/dh-11c/room/vendor/
