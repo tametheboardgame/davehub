@@ -7,6 +7,7 @@ function render(original){
  const replace=(a,b)=>{if(!html.includes(a))throw Error('Missing cabinet proof marker '+a);html=html.replace(a,b)};
  replace('DH-11C.4A Hollow Cabinet GLB Round-Trip','DH-11C.4C Real Architectural Openings and Blender Cabinet');
  replace('<script defer src="../room/room-plan.js"></script>','<script defer src="../room/room-plan.js"></script>\n<script defer src="../room/room-shell-plan.js"></script>');
+ replace('<link rel="stylesheet" href="./glb-proof.css">','<link rel="stylesheet" href="../cabinet-glb/glb-proof.css">\n<link rel="stylesheet" href="./architecture.css">');
  replace('<body data-glb-proof="true">','<body data-glb-proof="true" data-shell-proof="true" data-blender-compare="true">');
  replace('DH-11C.4A / GEOMETRY ROUND-TRIP','DH-11C.4C / REAL ROOM ARCHITECTURE');
  replace('One cabinet. Five real sliding drawers.','A real room beyond the doorway.');
