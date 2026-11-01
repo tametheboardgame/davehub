@@ -315,6 +315,9 @@ test('nine unique crumpled papers tumble from the bin and return independently w
   for(let step=0;step<=100;step++){
    const t=step/100,p=binPaperPose(start,i,t);
    assert.ok(p.y-radius>=-.00001,'paper '+i+' clips floor on its journey');
+   const distanceFromBin=Math.hypot(p.x,p.z);
+   if(distanceFromBin>=.43&&distanceFromBin<=.43+radius)
+    assert.ok(p.y-radius>=.875,'paper '+i+' intersects bin rim at t '+t);
    assert.deepEqual(binPaperPose(start,i,t),p,'the same t always gives the same pose');
   }
   const crest=binPaperPose(start,i,.5);
