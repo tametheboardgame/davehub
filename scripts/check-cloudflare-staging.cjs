@@ -12,6 +12,7 @@ const checks=[
  {path:'/creations/unicorn-valley/',required:['<style data-davehub-inline="worlds">','Unicorn Valley','Play on DaveHub','href="/games/unicorn-valley/"','unicorn-valley.pages.dev','View development repository'],forbidden:['DESIGN REVIEW ONLY']},
  {path:'/creations/stephen-martin-project/',required:['<style data-davehub-inline="worlds">','The Stephen Martin Project','Play on DaveHub','href="/games/stephen-martin/"','stephen-martin-project.pages.dev'],forbidden:['DESIGN REVIEW ONLY']},
  {path:'/creations/tame-the-board-game/',required:['<style data-davehub-inline="worlds">','Tame The Board Game','Miriam','tametheboardgame.com/about/'],forbidden:['DESIGN REVIEW ONLY']},
+ {path:'/previews/dh-11c/furniture/',required:['DH-11C.4F','data-furniture-model-proof="true"','data-immersive-room="true"','id="furniture-model-status"'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/room-shell/',required:['DH-11C.4E','data-shell-model-proof="true"','../room/room-shell-asset.js','id="shell-model-status"','data-immersive-room="true"'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/architecture/',required:['DH-11C.4C','data-shell-proof="true"','data-blender-compare="true"','data-immersive-room="true"','./immersive.css','./immersive-ui.js','id="prototype-tools"','id="scene-nav"','../room/room-shell-plan.js','../cabinet-glb/'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/cabinet-glb/',required:['DH-11C.4A','data-glb-proof="true"','id="glb-extension"','data-glb-snap="50"','../room/room.js'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
@@ -83,6 +84,24 @@ async function main(){
    const actualShell=crypto.createHash('sha256').update(shellBytes).digest('hex');
    if(expectedShell!==actualShell)throw Error('Deployed room model differs from source manifest');
    console.log('PASS hosted room GLB sha256 '+actualShell);
+   const fmodel=await fetch(BASE+'/previews/dh-11c/room/models/furniture-source.glb?dh11c4f=1',{headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)});
+   if(!fmodel.ok)throw Error('Furniture GLB not deployed: '+fmodel.status);
+   const furnitureBytes=Buffer.from(await fmodel.arrayBuffer());
+   const furnitureHash=crypto.createHash('sha256').update(furnitureBytes).digest('hex');
+   const expectedFurniture=require('./build-dh11c4f-furniture-glb.cjs').build().sha256;
+   if(furnitureHash!==expectedFurniture||furnitureBytes.readUInt32LE(0)!==0x46546c67)
+    throw Error('Furniture GLB on Cloudflare does not match approved source geometry');
+   console.log('PASS hosted furniture GLB SHA256 '+furnitureHash);
+   for(const name of ['immersive.css','immersive-ui.js','architecture.css','glb-proof.css']){
+    const response=await fetch(BASE+'/previews/dh-11c/furniture/'+name+'?dh11c4f=1',{signal:AbortSignal.timeout(15000)});
+    const type=response.headers.get('content-type')||'';
+    if(!response.ok||!type.includes(name.endsWith('.css')?'text/css':'javascript'))
+     throw Error('Furniture preview missing stylesheet/script '+name+' (HTTP '+response.status+', '+type+')');
+    const code=await response.text();
+    if(code.includes('<!doctype html>')||code.length<100)throw Error('Furniture preview dependency was HTML fallback: '+name);
+   }
+   console.log('PASS furniture viewport CSS and JS deployed as real assets');
+
    const blenderRoom=await fetch(BASE+'/previews/dh-11c/room/models/room-shell-blender-verified.glb?dh11c4e=2',{headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)});
    if(!blenderRoom.ok)throw Error('Blender room GLB asset HTTP '+blenderRoom.status);
    const bytes=Buffer.from(await blenderRoom.arrayBuffer());

@@ -1,0 +1,73 @@
+name: DH-11C.4F Editable Blender Furniture
+
+on:
+  pull_request:
+    paths:
+      - 'prototypes/dh-11c-room/furniture-asset.js'
+      - 'scripts/build-dh11c4f-furniture-glb.cjs'
+      - 'scripts/blender/dh11c_furniture.py'
+      - 'scripts/validate-dh11c4f-furniture.cjs'
+      - 'tests/dh11c4f-furniture.test.cjs'
+      - '.github/workflows/dh11c4f-blender-furniture.yml'
+  push:
+    branches: [staging]
+    paths:
+      - 'prototypes/dh-11c-room/furniture-asset.js'
+      - 'scripts/build-dh11c4f-furniture-glb.cjs'
+      - 'scripts/blender/dh11c_furniture.py'
+      - 'scripts/validate-dh11c4f-furniture.cjs'
+      - 'tests/dh11c4f-furniture.test.cjs'
+      - '.github/workflows/dh11c4f-blender-furniture.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  blender-furniture:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install headless Blender
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq blender python3-numpy
+          blender --version | head -n 2
+      - name: Generate exact editable furniture geometry source
+        run: |
+          set -euo pipefail
+          mkdir -p reports/dh11c4f
+          node --test tests/dh11c4f-furniture.test.cjs
+          node scripts/build-dh11c4f-furniture-glb.cjs reports/dh11c4f/furniture-source.glb
+      - name: Save Blender master and export genuine GLB
+        run: |
+          set -euo pipefail
+          blender --background --factory-startup --python scripts/blender/dh11c_furniture.py -- \
+            --input reports/dh11c4f/furniture-source.glb \
+            --blend reports/dh11c4f/manuscript-furniture.blend \
+            --output reports/dh11c4f/furniture-blender.glb \
+            --report reports/dh11c4f/furniture-report.json
+      - name: Compare each furniture node and moving pivot with source
+        run: |
+          set -euo pipefail
+          node scripts/validate-dh11c4f-furniture.cjs \
+            reports/dh11c4f/furniture-source.glb \
+            reports/dh11c4f/furniture-blender.glb \
+            reports/dh11c4f/furniture-report.json
+      - name: Upload editable Blender master for owner review
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dh11c4f-blender-furniture-master
+          path: |
+            reports/dh11c4f/furniture-source.glb
+            reports/dh11c4f/manuscript-furniture.blend
+            reports/dh11c4f/furniture-blender.glb
+            reports/dh11c4f/furniture-report.json
+          if-no-files-found: error
+          retention-days: 30
