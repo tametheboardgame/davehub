@@ -764,7 +764,7 @@
     "foundation": "DH-11C.2 owner-liked and Cloudflare-verified mechanics prototype",
     "architectureDecision": "ADR-0012",
     "documentation": "docs/DH11C_3D_PRODUCTION_ROADMAP.md",
-    "currentGate": "DH-11C.4A: GLB binary/room-preview verification, then owner review of geometry; visual style still unapproved",
+    "currentGate": "DH-11C.4B: headless Blender cabinet import/source master/re-export plus actual asset validation",
     "milestones": [
       {
         "id": "DH-11C.3",
@@ -775,7 +775,7 @@
       {
         "id": "DH-11C.4",
         "phase": "Blender/GLB source and rigged models",
-        "status": "first_cabinet_glb_roundtrip_in_progress_blender_export_pending",
+        "status": "Blender_master_cloud_roundtrip_validation_in_progress",
         "approval": "coherent geometry and mechanism tests"
       },
       {
@@ -822,7 +822,7 @@
       "reuse real geometry, not AI image-state compositing"
     ],
     "implementationStarted": true,
-    "next": "Owner review of first GLB drawer geometry and selection of DH-11C.3A palette; then Blender source/master and C4 modelling round-trip.",
+    "next": "Validate CI-produced Blender .blend master and glTF model; then inspect model and choose style before scene texture integration",
     "artDirection": {
       "status": "three_material_colour_and_light_candidates_owner_review_pending",
       "preferredDraft": "amber-ink",
@@ -860,6 +860,24 @@
       "visualBrowserQA": "pending",
       "changedWorldsWriting": false,
       "liveDomainChange": "none"
+    },
+    "blenderRoundTrip": {
+      "status": "workflow_submitted_validation_pending",
+      "decision": "ADR-0012",
+      "source": "scripts/blender/dh11c_cabinet_roundtrip.py",
+      "input": "scripts/build-dh11c4-cabinet-glb.cjs",
+      "validator": "scripts/validate-dh11c4b-blender.cjs",
+      "workflow": ".github/workflows/dh11c4b-blender-asset.yml",
+      "artifacts": [
+        "source-cabinet.glb",
+        "manuscript-cabinet.blend",
+        "cabinet-blender.glb",
+        "model-report.json"
+      ],
+      "runtimeReplacement": false,
+      "authoringEnvironment": "GitHub Actions Ubuntu headless Blender, no local owner setup",
+      "styleApproved": false,
+      "nextGate": "actual Blender asset export must succeed and pass node hierarchy and transform comparisons"
     }
   }
 }
