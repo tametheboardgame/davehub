@@ -138,21 +138,50 @@ test('typewriter every press creates a new visible timed key movement and paper 
  assert.ok(Math.abs(axisAfterRestRotation[0]+1)<1e-10);
  assert.ok(Math.abs(axisAfterRestRotation[1])<1e-10);
 });
-test('exactly eight deliberate featured books exist physically in the GLB, matching the button cycle',async()=>{
- const {featuredBook,FEATURED_BOOK_COUNT}=await import('../prototypes/dh-11c-room/furniture-motion.mjs');
+test('eight actual featured books each toggle independently, while the other seventy-two remain fixed',async()=>{
+ const {featuredBook,featuredBookIndexForMesh,bookPosition,BOOK_PULL_DISTANCE,FEATURED_BOOK_COUNT}=await import('../prototypes/dh-11c-room/furniture-motion.mjs');
+ assert.equal(FEATURED_BOOK_COUNT,8);
+ assert.equal(plan.FEATURED_BOOK_COUNT,8);
  const selected=[];
- for(let shelf=0;shelf<4;shelf++)for(let b=0;b<20;b++)
-  if(featuredBook(shelf,b))selected.push('book_'+shelf+'_'+String(b).padStart(2,'0'));
- assert.equal(selected.length,FEATURED_BOOK_COUNT);
- const nodes=new Set(build().json.nodes.map(n=>n.name));
- selected.forEach(name=>assert.ok(nodes.has(name)));
- let s=plan.next(null,{type:'focus',id:'bookcase'});
- for(let n=0;n<8;n++)s=plan.next(s,{type:'book'});
- assert.equal(s.book,0);
+ const nodes=new Map(build().json.nodes.map(n=>[n.name,n]));
+ for(let shelf=0;shelf<4;shelf++)for(let b=0;b<20;b++){
+  const name='book_'+shelf+'_'+String(b).padStart(2,'0');
+  const index=featuredBookIndexForMesh(name);
+  assert.ok(nodes.has(name),'all 80 books remain present in the GLB: '+name);
+  if(featuredBook(shelf,b)){
+   assert.equal(index,selected.length,'book ordering must match physical mesh order');
+   selected.push(name);
+  }else assert.equal(index,null,'ordinary book must not be interactive: '+name);
+ }
+ assert.deepEqual(selected,[
+  'book_0_00','book_0_10','book_1_09','book_1_19',
+  'book_2_08','book_2_18','book_3_07','book_3_17'
+ ]);
+ for(const malformed of ['book_4_09','book_0_20','book_0_0','book_0_10_spine','bookcase_body','typewriter_body','book_1_08'])
+  assert.equal(featuredBookIndexForMesh(malformed),null,'invalid or ordinary mesh ignored: '+malformed);
+ assert.equal(BOOK_PULL_DISTANCE,.37);
+ assert.equal(bookPosition(.44,false),.44);
+ assert.equal(bookPosition(.44,true),.81);
+ let state=plan.next(null,{type:'focus',id:'bookcase'});
+ assert.equal(state.books.length,8);
+ assert.ok(state.books.every(pulled=>!pulled));
+ state=plan.next(state,{type:'book',index:3});
+ assert.deepEqual(state.books,[false,false,false,true,false,false,false,false]);
+ state=plan.next(state,{type:'book',index:7});
+ assert.deepEqual(state.books,[false,false,false,true,false,false,false,true],'two books stay out together');
+ state=plan.next(state,{type:'book',index:3});
+ assert.deepEqual(state.books,[false,false,false,false,false,false,false,true],'clicking the same book returns only it');
+ for(const index of [-1,8,1.5,null,undefined])
+  assert.deepEqual(plan.next(state,{type:'book',index}),state,'invalid book selection ignored');
+ assert.deepEqual(plan.next(state,{type:'book'}),state,'bare bookcase click must not cycle a book');
+ const elsewhere=plan.next(state,{type:'focus',id:'desk'});
+ assert.deepEqual(plan.next(elsewhere,{type:'book',index:7}),elsewhere,'other furniture cannot pull books');
  const room=read('prototypes/dh-11c-room/room.js');
  assert.match(room,/featuredBook\(shelf,b\)/);
- assert.match(room,/Pull a featured book/);
- assert.doesNotMatch(room,/%11===0/);
+ assert.match(room,/bookIndex:id==='bookcase'/);
+ assert.match(room,/toggleBook\(bookIndex\)/);
+ assert.match(room,/bookPosition\(bookHome\[i\],state.books\[i\]\)/);
+ assert.doesNotMatch(room,/i===state\.book/,'no global book cycle remains');
 });
 test('source and Blender-mapped runtime each wire paper sheets, every key and platen',()=>{
  const room=read('prototypes/dh-11c-room/room.js');
@@ -168,8 +197,10 @@ test('source and Blender-mapped runtime each wire paper sheets, every key and pl
   "typePlaten.quaternion.slerp(platenTarget,rate)",
   "typePaper.scale.y=THREE.MathUtils.lerp", "typePaper.position.y=typePaperHome+actualFeed/2",
   "typePaperRule.position.y=typePaperRuleHome+actualFeed",
-  "typedKeyIndex(mesh.name)","paperIndexForMesh(mesh.name)","mesh.userData.paperIndex=i","activePress={index:selected,at:clock.elapsedTime}",
-  "togglePaper(paperIndex)","pressTypewriter(keyIndex)"
+  "typedKeyIndex(mesh.name)","paperIndexForMesh(mesh.name)","mesh.userData.paperIndex=i",
+  "featuredBookIndexForMesh(mesh.name)","markFeaturedBook(mesh,i)","bookPosition(bookHome[i],state.books[i])",
+  "activePress={index:selected,at:clock.elapsedTime}",
+  "togglePaper(paperIndex)","toggleBook(bookIndex)","pressTypewriter(keyIndex)"
  ])assert.ok(room.includes(marker),'missing animation wiring '+marker);
  assert.doesNotMatch(room,/\.1\*Math\.sin\(i\*1\.9\)/);
  assert.doesNotMatch(room,/state\.typed>0\?-.025:0/);
