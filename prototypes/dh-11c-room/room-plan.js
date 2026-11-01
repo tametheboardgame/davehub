@@ -31,7 +31,7 @@
    case 'home':return {...before,focus:null};
    case 'drawer':return before.focus==='cabinet'&&Number.isInteger(action.index)&&action.index>=0&&action.index<5?
     {...before,drawer:before.drawer===action.index?null:action.index}:before;
-   case 'paper':return before.focus==='desk'?{...before,paper:clamp(before.paper+1,0,10)}:before;
+   case 'paper':return before.focus==='desk'?{...before,paper:(before.paper+1)%11}:before;
    case 'book':return before.focus==='bookcase'?{...before,book:(before.book+1)%8}:before;
    case 'type':return before.focus==='typewriter'?{...before,typed:clamp(before.typed+1,0,60)}:before;
    case 'bin':return before.focus==='bin'?{...before,paper:clamp(before.paper+1,0,10)}:before;
