@@ -18,7 +18,8 @@
  const add=(name,parent,kind,position=[0,0,0],size=null,material=null,rotation=null,shape=null)=>{
   if(names.has(name))throw Error('Duplicate furniture node '+name);
   if(parent!==null&&!names.has(parent))throw Error('Missing parent '+parent+' for '+name);
-  if(position.some(x=>!Number.isFinite(x))||size&&size.some(x=>!Number.isFinite(x)||x<=0))throw Error('Bad dimensions '+name);
+  const validSize=!size||(kind==='cylinder'?(size[0]>=0&&size[1]>=0&&(size[0]+size[1])>0&&size[2]>0):size.every(x=>x>0));
+  if(position.some(x=>!Number.isFinite(x))||size&&size.some(x=>!Number.isFinite(x))||!validSize)throw Error('Bad dimensions '+name);
   names.add(name);
   nodes.push(Object.freeze({name,parent,kind,position,size,material,rotation,shape}));
  };
