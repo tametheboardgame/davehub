@@ -1,6 +1,6 @@
 import * as THREE from './vendor/three-r159.module.min.js';
 import {drawerIndexForMesh} from './drawer-picking.mjs';
-import {paperPose,paperIndexForMesh,PAPER_LIMIT,pressDepth,typewriterFeed,TYPE_PAPER_HEIGHT,featuredBook,featuredBookIndexForMesh,FEATURED_BOOK_COUNT,bookPosition,binPaperIndexForMesh,binPaperPose,BIN_PAPER_COUNT,typedKeyIndex,TYPE_KEY_COUNT} from './furniture-motion.mjs?v=dh11c4j-bin-v1';
+import {paperPose,paperIndexForMesh,PAPER_LIMIT,pressDepth,typewriterFeed,TYPE_PAPER_HEIGHT,featuredBook,featuredBookIndexForMesh,FEATURED_BOOK_COUNT,bookPosition,binPaperIndexForMesh,binPaperPose,BIN_PAPER_COUNT,lampPartForMesh,typedKeyIndex,TYPE_KEY_COUNT} from './furniture-motion.mjs?v=dh11c4l-lamp-switch-v1';
 
 const plan=window.DH11RoomPlan;
 if(!plan)throw Error('Missing DH-11C.2 room coordinates');
@@ -222,6 +222,8 @@ function makeText(text,w,h,colour='#30252d',fill='#e8d4b2'){
 if(!glbProof)makeCabinet();
 
 const loosePapers=[],paperStacks=[];
+let lampBulbMesh=null;
+const lampLitColour=new THREE.Color('#ffddb0'),lampUnlitColour=new THREE.Color('#594538');
 let paperHomes=[];
 function makeDesk(){
  const g=group(scene,-.3,0,.6);
@@ -254,7 +256,7 @@ function makeDesk(){
  const stem=cylinder(g,.035,.035,.96,mats.brass,-1.67,1.86,-.43);
  stem.name='desk_lamp_stem';
  const bulb=sphere(g,.065,mats.lampBulb,-1.67,2.345,-.43);
- bulb.name='desk_lamp_bulb';
+ bulb.name='desk_lamp_bulb';lampBulbMesh=bulb;
  const base=cylinder(g,.28,.28,.12,mats.timber,-1.67,1.4,-.43);
  base.name='desk_lamp_base';
  const cup=cylinder(g,.13,.105,.26,mats.ink,-.88,1.53,.57);
@@ -469,7 +471,7 @@ if(artLab){
 }
 
 const copyById={
- desk:'Each sheet has two places on the desktop. Click a particular piece of paper to slide it out; click the same paper again to slide it back.',
+ desk:'Each sheet has two places on the desktop. Click it to slide out or return it. Click the lamp to switch its light on or off.',
  cabinet:'The five drawers belong to one physical cabinet. Each drawer is a collection of 3D surfaces that move together, never a pasted illustration.',
  bookcase:'Find the eight turquoise books with gold spine markings. Click one to pull it forward, then click it again to return it. The other 72 books stay on their shelves.',
  typewriter:'The typewriter has separate keys, a roller and a paper sheet. Tap to press a key and advance the paper.',
@@ -544,6 +546,19 @@ function syncBinPaperControls(){
   button.setAttribute('aria-pressed',String(out));
  }
 }
+function syncLampControl(){
+ for(const button of actions.querySelectorAll('[data-lamp-toggle]')){
+  button.textContent=state.lampOn?'Turn lamp off':'Turn lamp on';
+  button.setAttribute('aria-pressed',String(state.lampOn));
+ }
+}
+function toggleLamp(){
+ const wasOn=state.lampOn;
+ state=plan.next(state,{type:'lamp'});
+ if(state.lampOn===wasOn)return;
+ status.textContent=state.lampOn?'The desk lamp clicks on, casting a warm glow.':'The desk lamp clicks off; its bulb goes dark.';
+ syncLampControl();
+}
 function togglePaper(index){
  if(!Number.isInteger(index)||index<0||index>=PAPER_LIMIT)return;
  const wasMoved=state.papers[index];
@@ -580,6 +595,12 @@ function renderControls(id){
    renderControls('cabinet');
   }));
  }else if(id==='desk'){
+  const lampButton=document.createElement('button');
+  lampButton.type='button';
+  lampButton.dataset.lampToggle='true';
+  lampButton.addEventListener('click',toggleLamp);
+  actions.append(lampButton);
+  syncLampControl();
   // Click the actual named 3D mesh; equivalent controls remain keyboard accessible.
   const help=document.createElement('p');
   help.textContent='Click a particular paper to slide it out. Click it again to return it.';
@@ -663,6 +684,7 @@ function pickFromEvent(event){
  if(!id)return null;
  return {id,drawerIndex:id==='cabinet'?drawerIndexForMesh(mesh,cabinetDrawers):null,
   paperIndex:id==='desk'?(Number.isInteger(mesh.userData.paperIndex)?mesh.userData.paperIndex:paperIndexForMesh(mesh.name)):null,
+  lampPart:id==='desk'?lampPartForMesh(mesh.name):null,
   bookIndex:id==='bookcase'?(Number.isInteger(mesh.userData.featuredBookIndex)?mesh.userData.featuredBookIndex:featuredBookIndexForMesh(mesh.name)):null,
   binPaperIndex:id==='bin'?(Number.isInteger(mesh.userData.binPaperIndex)?mesh.userData.binPaperIndex:binPaperIndexForMesh(mesh.name)):null,
   keyIndex:id==='typewriter'?typedKeyIndex(mesh.name):null};
@@ -679,6 +701,8 @@ canvas.addEventListener('pointermove',event=>{
     ?(state.books[pick.bookIndex]?'Return ':'Pull ')+bookDescription(pick.bookIndex)
     :pick?.binPaperIndex!==null&&pick?.binPaperIndex!==undefined
      ?(state.binPapers[pick.binPaperIndex]?'Return':'Rummage')+' crumpled paper '+(pick.binPaperIndex+1)
+     :pick?.lampPart!==null&&pick?.lampPart!==undefined
+     ?(state.lampOn?'Switch off':'Switch on')+' desk lamp'
      :hovered==='bookcase'?'Only highlighted books can be pulled out'
      :hovered==='bin'?'Click a particular crumpled paper, not the bin itself'
      :hovered?'Explore '+plan.find(hovered).label:'';
@@ -691,7 +715,7 @@ canvas.addEventListener('pointerup',event=>{
  pointerStart=null;
  const pick=pickFromEvent(event);
  if(!pick)return;
- const {id,drawerIndex,paperIndex,bookIndex,binPaperIndex,keyIndex}=pick;
+ const {id,drawerIndex,paperIndex,bookIndex,binPaperIndex,lampPart,keyIndex}=pick;
  if(state.focus===id){
   if(id==='cabinet'){
    // The cabinet case/rails are not drawers. Only a hit inside a named
@@ -701,7 +725,8 @@ canvas.addEventListener('pointerup',event=>{
    status.textContent=drawerNames[drawerIndex]+
     (state.drawer===drawerIndex?' drawer opened.':' drawer closed.');
   }else{
-   if(id==='desk'&&paperIndex!==null)togglePaper(paperIndex);
+   if(id==='desk'&&lampPart!==null)toggleLamp();
+   else if(id==='desk'&&paperIndex!==null)togglePaper(paperIndex);
    else if(id==='bookcase'){
     if(bookIndex!==null)toggleBook(bookIndex);
     else status.textContent='Try one of the eight highlighted book spines.';
@@ -718,7 +743,8 @@ canvas.addEventListener('pointerup',event=>{
  }else{
   focus(id);
   // Clicking a sheet in the overview focuses the desk and moves that sheet.
-  if(id==='desk'&&paperIndex!==null)togglePaper(paperIndex);
+  if(id==='desk'&&lampPart!==null)toggleLamp();
+  else if(id==='desk'&&paperIndex!==null)togglePaper(paperIndex);
   if(id==='bookcase'&&bookIndex!==null)toggleBook(bookIndex);
   if(id==='bin'&&binPaperIndex!==null)toggleBinPaper(binPaperIndex);
   // A drawer hit in the overview identifies the drawer as well as the
@@ -750,6 +776,14 @@ function render(){
  const delta=Math.min(clock.getDelta(),.08);
  if(renderer){
   const rate=reduced.matches?1:1-Math.exp(-5.5*delta);
+  // The bulb and actual point light share one state. Fade both so switching
+  // it off genuinely darkens the desk, rather than just changing button text.
+  sceneLights.lamp.intensity=THREE.MathUtils.lerp(sceneLights.lamp.intensity,state.lampOn?26:0,rate);
+  if(lampBulbMesh){
+   const bulbMaterial=lampBulbMesh.material;
+   bulbMaterial.color.lerp(state.lampOn?lampLitColour:lampUnlitColour,rate);
+   bulbMaterial.emissiveIntensity=THREE.MathUtils.lerp(bulbMaterial.emissiveIntensity,state.lampOn?.85:0,rate);
+  }
   camera.position.lerp(desiredPosition,rate);
   focusPoint.lerp(desiredTarget,rate);
   camera.lookAt(focusPoint);
@@ -903,6 +937,9 @@ if(furnitureModelProof){
     const books=[];
     for(let shelf=0;shelf<4;shelf++)for(let b=0;b<20;b++)
      if(featuredBook(shelf,b))books.push(get('book_'+shelf+'_'+String(b).padStart(2,'0')));
+    // GLB lamp must preserve the same five named click targets as fallback.
+    for(const part of ['shade','cap','stem','bulb','base'])get('desk_lamp_'+part);
+    const glbBulb=get('desk_lamp_bulb');
     const keys=Array.from({length:TYPE_KEY_COUNT},(_,i)=>get('typewriter_key_'+Math.floor(i/8)+'_'+i%8));
     const key=keys[12],typeSheet=get('typewriter_paper'),typeRule=get('typewriter_paper_rule'),platen=get('typewriter_platen'),hinge=get('door_leaf_hinge');
     const islands=Array.from({length:3},(_,i)=>get('window_island_'+i));
@@ -922,6 +959,11 @@ if(furnitureModelProof){
      }
      capture(id,next.get(id));
     }
+    lampBulbMesh=glbBulb;
+    lampBulbMesh.material=lampBulbMesh.material.clone();
+    lampBulbMesh.material.emissive.set('#e1b05b');
+    lampBulbMesh.material.emissiveIntensity=state.lampOn?.85:0;
+    lampBulbMesh.material.color.set(state.lampOn?lampLitColour:lampUnlitColour);
     loosePapers.splice(0,loosePapers.length,...papers);
     paperHomes=papers.map(m=>({x:m.position.x,y:m.position.y,z:m.position.z,yaw:m.rotation.y,tilt:m.rotation.z}));
     paperStacks.splice(0,paperStacks.length,...papers);
