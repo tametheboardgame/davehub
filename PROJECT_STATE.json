@@ -759,12 +759,12 @@
     "liveDomainChange": "none"
   },
   "dh11_3d_production": {
-    "planStatus": "dh11c4c_real_openings_and_blender_export_comparison_in_review",
+    "planStatus": "dh11c4d_immersive_viewport_shell_staging_review",
     "scope": "Writing / The Manuscript Hoard 3D world",
     "foundation": "DH-11C.2 owner-liked and Cloudflare-verified mechanics prototype",
     "architectureDecision": "ADR-0012",
     "documentation": "docs/DH11C_3D_PRODUCTION_ROADMAP.md",
-    "currentGate": "DH-11C.4C: Cloudflare-hosted real architectural apertures and verified Blender model visual review",
+    "currentGate": "DH-11C.4D: full viewport on laptop, no document scrolling, native overlay controls, browser owner visual acceptance",
     "milestones": [
       {
         "id": "DH-11C.3",
@@ -822,7 +822,7 @@
       "reuse real geometry, not AI image-state compositing"
     ],
     "implementationStarted": true,
-    "next": "Review actual architectural openings and Blender cabinet against original; then correct geometry issues and model room shell in Blender. Choose art palette separately.",
+    "next": "Verify actual laptop viewport no scrolling and readable overlays; then owner visual review before broader scene shell adoption",
     "artDirection": {
       "status": "three_material_colour_and_light_candidates_owner_review_pending",
       "preferredDraft": "amber-ink",
@@ -904,6 +904,22 @@
       "originalWritingWorldChanged": false,
       "baselineRoomChanged": false,
       "artPaletteApproved": false,
+      "ownerVisualReview": "pending"
+    },
+    "immersiveViewport": {
+      "status": "feature_implemented_browser_qa_pending",
+      "route": "/previews/dh-11c/architecture/",
+      "specification": "docs/DH11C4D_IMMERSIVE_VIEWPORT.md",
+      "mode": "opt_in_data_immersive_room",
+      "canvas": "fixed full viewport, responsive 100dvh",
+      "header": "fixed translucent overlay",
+      "wholeRoom": "fixed bottom right",
+      "objectControls": "native details menu bottom left",
+      "inspection": "floating internal-scroll panel",
+      "technicalControls": "native details with internal-scroll",
+      "modelOrGeometryChanged": false,
+      "artStyleChanged": false,
+      "originalWritingWorldChanged": false,
       "ownerVisualReview": "pending"
     }
   }
