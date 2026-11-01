@@ -94,7 +94,9 @@ async function main(){
    ]){
     if(!bookSource.includes(marker))throw Error('Stale furniture script on Cloudflare: missing '+marker);
    }
-   if(bookSource.indexOf('books.forEach((mesh,i)=>markFeaturedBook(mesh,i));')>bookSource.indexOf('scene.add(content);'))
+   const furnitureSource=bookSource.slice(bookSource.indexOf('if(furnitureModelProof){'));
+   if(furnitureSource.indexOf('books.forEach((mesh,i)=>markFeaturedBook(mesh,i));')>
+      furnitureSource.indexOf('scene.add(content);'))
     throw Error('Deployed book inlays are not registered before GLB scene capture');
    console.log('PASS hosted v2 turquoise-and-gold bookcase module ('+bookSource.length+' bytes)');
 
