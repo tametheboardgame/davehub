@@ -56,6 +56,16 @@ button:focus-visible,a:focus-visible{outline:3px solid #ffda9c;outline-offset:4p
 .interaction-actions{display:flex;gap:9px;flex-wrap:wrap;align-content:start}
 .interaction-actions button,.interaction-actions a{display:inline-flex;text-decoration:none;align-items:center;justify-content:center;border:1px solid #d9ad7b;background:#634638;color:#fff0d5;border-radius:9px;padding:12px 14px;min-height:44px;font-size:13px;font-weight:800;cursor:pointer}
 .interaction-actions button:hover,.interaction-actions a:hover{background:#885a43}
+
+/* The exact 3D sheets remain the primary controls; keyboard fallback stays
+   collapsed unless requested, and works on narrow screens without overflow. */
+.interaction-actions > p{width:100%;margin:0 0 8px;color:#e8d7c3;line-height:1.5;font-size:14px}
+.interaction-actions details{width:100%;border:1px solid #ae907899;border-radius:10px;padding:10px 12px}
+.interaction-actions summary{cursor:pointer;font-weight:750;color:#f6dfc0}
+.paper-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-top:12px}
+.paper-controls button{min-height:38px;padding:8px 10px}
+.paper-controls button[aria-pressed="true"]{background:#805240;border-color:#f4d29c}
+
 .interaction-status{grid-column:1/-1;border-top:1px dashed #baa08a55;padding-top:14px;color:#f3cba1;font-size:12px;line-height:1.5;min-height:34px}
 .prototype-note{display:flex;gap:20px;align-items:center;margin:24px clamp(12px,3vw,43px);padding:23px;background:#162335;border:1px solid #5b677a;border-radius:16px}
 .prototype-number{font-size:47px;font-family:Georgia,serif;color:#d5ad7d;line-height:1}
