@@ -39,6 +39,22 @@ async function main(){
   try{
    const results=[];
    for(const c of checks)results.push({path:c.path,bytes:await inspect(BASE+c.path+'?dh08d=1',c.required,c.forbidden)});
+   // A missing .css or .js may return Pages' HTML fallback with HTTP 200.
+   // Require the actual MIME and source bytes, not just the page's script tags.
+   for(const dep of [
+    {name:'immersive.css',type:'text/css',markers:['height:100dvh','body[data-immersive-room="true"] .canvas-frame']},
+    {name:'immersive-ui.js',type:'javascript',markers:['prototype-tools','scene-nav','Escape']},
+    {name:'architecture.css',type:'text/css',markers:['comparison-links']}
+   ]){
+    const url=BASE+'/previews/dh-11c/room-shell/'+dep.name+'?dh11c4e-layout=1';
+    const response=await fetch(url,{headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)});
+    const contentType=response.headers.get('content-type')||'';
+    if(!response.ok||!contentType.includes(dep.type))throw Error('Room-shell asset '+dep.name+' missing or wrong type (HTTP '+response.status+', '+contentType+')');
+    const source=await response.text();
+    for(const marker of dep.markers)if(!source.includes(marker))throw Error('Room-shell asset '+dep.name+' lacks expected code '+marker);
+    if(source.includes('<!doctype html>')||source.includes('<html'))throw Error('Room-shell asset '+dep.name+' is a fallback HTML page');
+    console.log('PASS hosted room-shell dependency '+dep.name+' ('+source.length+' bytes)');
+   }
    const model=await fetch(BASE+'/previews/dh-11c/room/models/cabinet-prototype.glb?dh11c4=1',{headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)});
    if(!model.ok)throw Error('GLB asset HTTP '+model.status);
    const glb=Buffer.from(await model.arrayBuffer());

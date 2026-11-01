@@ -116,6 +116,9 @@ node scripts/build-dh11c4e-blender-model.cjs dist/previews/dh-11c/room/models/ro
 node scripts/render-dh11c4e-room.cjs dist/previews/dh-11c/room-shell
 cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js dist/previews/dh-11c/architecture/
 node scripts/render-dh11c4c-architecture.cjs dist/previews/dh-11c/architecture
+# DH-11C.4E derives the same immersive page but lives in a sibling folder.
+# Every relative stylesheet/script must be shipped in that sibling too.
+cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js dist/previews/dh-11c/room-shell/
 cp content/examples/fictional.json dist/previews/dh-08/catalogue.json
 cp content/public/catalogue.json dist/content/catalogue.json
 cp assets/content/worlds.css assets/content/dh11-worlds.css dist/assets/content/
@@ -168,6 +171,19 @@ for(const slug of ['unicorn-valley','stephen-martin-project','tame-the-board-gam
 check('dist/worlds/writing/index.html',['data-scene="manuscript-hoard"','room-stage-image','data-room-target="desk"','data-room-target="cabinet"','data-room-target="bin"','data-room-target="bookcase"','data-room-target="typewriter"','Tame The Board Game'],['The Last Lightkeeper','The Clock of Tomorrow']);
 check('dist/previews/dh-08b/worlds/writing/index.html',['data-scene="manuscript-hoard"','Fictional design demonstration','The Last Lightkeeper']);
 check('dist/previews/dh-11c/room-shell/index.html',['DH-11C.4E','data-shell-model-proof="true"','../room/room-shell-asset.js','id="shell-model-status"','data-immersive-room="true"']);
+
+const path=require('node:path');
+const shellDir='dist/previews/dh-11c/room-shell';
+const shellHtml=fs.readFileSync(path.join(shellDir,'index.html'),'utf8');
+const refs=[...shellHtml.matchAll(/(?:href|src)="(\.[^"]+\.(?:css|js))"/g)].map(match=>match[1]);
+if(!refs.includes('./immersive.css')||!refs.includes('./immersive-ui.js'))throw Error('Immersive shell asset references missing');
+for(const ref of refs){
+ const file=path.resolve(shellDir,ref);
+ if(!fs.existsSync(file))throw Error('Unpublished room-shell dependency '+ref+' ('+file+')');
+}
+check(path.join(shellDir,'immersive.css'),['body[data-immersive-room="true"] .canvas-frame','position:fixed;inset:0','height:100dvh']);
+check(path.join(shellDir,'immersive-ui.js'),['prototype-tools','scene-nav','Escape','preventScroll']);
+console.log('PASS: every room-shell CSS/JS reference has a real built asset (no fallback HTML)');
 check('dist/previews/dh-11c/architecture/index.html',['DH-11C.4C','data-shell-proof="true"','data-blender-compare="true"','data-immersive-room="true"','./immersive.css','./immersive-ui.js','id="prototype-tools"','id="scene-nav"','../room/room-shell-plan.js','../cabinet-glb/']);
 check('dist/previews/dh-11c/cabinet-glb/index.html',['DH-11C.4A','data-glb-proof="true"','id="glb-extension"','data-glb-snap="50"','../room/room.js']);
 check('dist/previews/dh-11c/art-lab/index.html',['DH-11C.3A','data-art-lab="true"','data-palette="amber-ink"','data-palette="moonlit-archive"','data-palette="golden-storybook"','../room/room.js']);
