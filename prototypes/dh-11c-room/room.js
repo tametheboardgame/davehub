@@ -519,6 +519,7 @@ function pickFromEvent(event){
  const id=mesh?.userData?.objectId;
  if(!id)return null;
  return {id,drawerIndex:id==='cabinet'?drawerIndexForMesh(mesh,cabinetDrawers):null,
+  paperIndex:id==='desk'?(Number.isInteger(mesh.userData.paperIndex)?mesh.userData.paperIndex:paperIndexForMesh(mesh.name)):null,
   keyIndex:id==='typewriter'?typedKeyIndex(mesh.name):null};
 }
 canvas.addEventListener('pointermove',event=>{
@@ -527,7 +528,9 @@ canvas.addEventListener('pointermove',event=>{
  if(hovered!==currentHover){currentHover=hovered;canvas.classList.toggle('interactive',!!hovered);}
  canvas.title=pick?.drawerIndex!==null&&pick?.drawerIndex!==undefined
   ?drawerNames[pick.drawerIndex]+' drawer'
-  :hovered?'Explore '+plan.find(hovered).label:'';
+  :pick?.paperIndex!==null&&pick?.paperIndex!==undefined
+   ?(state.papers[pick.paperIndex]?'Return':'Move')+' sheet '+(pick.paperIndex+1)
+   :hovered?'Explore '+plan.find(hovered).label:'';
 });
 canvas.addEventListener('pointerleave',()=>{currentHover=null;canvas.classList.remove('interactive');canvas.title='';});
 let pointerStart=null;
@@ -537,7 +540,7 @@ canvas.addEventListener('pointerup',event=>{
  pointerStart=null;
  const pick=pickFromEvent(event);
  if(!pick)return;
- const {id,drawerIndex,keyIndex}=pick;
+ const {id,drawerIndex,paperIndex,keyIndex}=pick;
  if(state.focus===id){
   if(id==='cabinet'){
    // The cabinet case/rails are not drawers. Only a hit inside a named
@@ -547,16 +550,18 @@ canvas.addEventListener('pointerup',event=>{
    status.textContent=drawerNames[drawerIndex]+
     (state.drawer===drawerIndex?' drawer opened.':' drawer closed.');
   }else{
-   if(id==='desk')movePaperStack();
+   if(id==='desk'&&paperIndex!==null)togglePaper(paperIndex);
    else if(id==='bookcase')state=plan.next(state,{type:'book'});
    else if(id==='typewriter')pressTypewriter(keyIndex);
    else if(id==='bin')state=plan.next(state,{type:'bin'});
    else if(id==='door')state=plan.next(state,{type:'door'});
    if(id!=='desk'&&id!=='typewriter')status.textContent=plan.find(id).label+' responds to your interaction.';
   }
-  renderControls(id);
+  if(id!=='desk')renderControls(id);
  }else{
   focus(id);
+  // Clicking a sheet in the overview focuses the desk and moves that sheet.
+  if(id==='desk'&&paperIndex!==null)togglePaper(paperIndex);
   // A drawer hit in the overview identifies the drawer as well as the
   // cabinet, so the first click opens that drawer after selecting the view.
   if(id==='cabinet'&&drawerIndex!==null){
@@ -606,7 +611,7 @@ function render(){
   if(doorLeaf)doorLeaf.rotation.y=THREE.MathUtils.lerp(doorLeaf.rotation.y,state.doorOpen?-.96:0,rate);
   loosePapers.forEach((mesh,i)=>{
    const home=paperHomes[i];if(!home)return;
-   const p=paperPose(home,i,state.paper);
+   const p=paperPose(home,i,state.papers[i]);
    mesh.position.x=THREE.MathUtils.lerp(mesh.position.x,p.x,rate);
    mesh.position.y=THREE.MathUtils.lerp(mesh.position.y,p.y,rate);
    mesh.position.z=THREE.MathUtils.lerp(mesh.position.z,p.z,rate);
@@ -703,7 +708,8 @@ if(furnitureModelProof){
      if(!node)throw Error('Missing interactive furniture node '+name);
      return node;
     };
-    const papers=Array.from({length:10},(_,i)=>get('desk_paper_'+String(i).padStart(2,'0')));
+    const papers=Array.from({length:PAPER_LIMIT},(_,i)=>get('desk_paper_'+String(i).padStart(2,'0')));
+    papers.forEach((mesh,i)=>{mesh.userData.paperIndex=i;});
     const books=[];
     for(let shelf=0;shelf<4;shelf++)for(let b=0;b<20;b++)
      if(featuredBook(shelf,b))books.push(get('book_'+shelf+'_'+String(b).padStart(2,'0')));
@@ -724,7 +730,7 @@ if(furnitureModelProof){
     }
     loosePapers.splice(0,loosePapers.length,...papers);
     paperHomes=papers.map(m=>({x:m.position.x,y:m.position.y,z:m.position.z,yaw:m.rotation.y,tilt:m.rotation.z}));
-    paperStacks.splice(0,paperStacks.length,...Array.from({length:13},(_,i)=>get('desk_paper_'+String(i).padStart(2,'0'))));
+    paperStacks.splice(0,paperStacks.length,...papers);
     pullBooks.splice(0,pullBooks.length,...books);
     bookHome=books.map(book=>book.position.z);
     typeKeys.splice(0,typeKeys.length,...keys);
