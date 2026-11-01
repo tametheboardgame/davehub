@@ -221,7 +221,7 @@ test('source and Blender-mapped runtime each wire paper sheets, every key and pl
 test('unmistakable gilded book spines are visible and clickable on both model representations',async()=>{
  const {featuredBook,featuredBookIndexForMesh}=await import('../prototypes/dh-11c-room/furniture-motion.mjs');
  const room=read('prototypes/dh-11c-room/room.js');
- const asset=manifest.nodes.filter(n=>/^book_[0-3]_\\d{2}$/.test(n.name));
+ const asset=manifest.nodes.filter(n=>/^book_[0-3]_\d{2}$/.test(n.name));
  assert.equal(asset.length,80);
  const highlights=asset.filter(n=>featuredBookIndexForMesh(n.name)!==null);
  assert.equal(highlights.length,8,'only the eight chosen books receive markers');
@@ -240,7 +240,7 @@ test('unmistakable gilded book spines are visible and clickable on both model re
   "books.forEach((mesh,i)=>markFeaturedBook(mesh,i))",
   "pullBooks.forEach(featuredBookColour)"
  ])assert.ok(room.includes(fragment),'highlight missing or incompatible: '+fragment);
- assert.doesNotMatch(room,/emissiveIntensity=\\.36/,'old near-invisible glow must be removed');
+ assert.doesNotMatch(room,/emissiveIntensity=\.36/,'old near-invisible glow must be removed');
  assert.doesNotMatch(room,/subtly highlighted/i,'instructions must explain the visible markings');
  // The same gilt has fixed world dimensions for both unit-cube GLB geometry
  // with a per-axis scale and procedural, dimensioned geometry with unit scale.
