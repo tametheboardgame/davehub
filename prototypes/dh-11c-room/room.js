@@ -1,6 +1,6 @@
 import * as THREE from './vendor/three-r159.module.min.js';
 import {drawerIndexForMesh} from './drawer-picking.mjs';
-import {paperPose,paperIndexForMesh,PAPER_LIMIT,pressDepth,typewriterFeed,TYPE_PAPER_HEIGHT,featuredBook,featuredBookIndexForMesh,FEATURED_BOOK_COUNT,bookPosition,binPaperIndexForMesh,binPaperPose,BIN_PAPER_COUNT,typedKeyIndex,TYPE_KEY_COUNT} from './furniture-motion.mjs';
+import {paperPose,paperIndexForMesh,PAPER_LIMIT,pressDepth,typewriterFeed,TYPE_PAPER_HEIGHT,featuredBook,featuredBookIndexForMesh,FEATURED_BOOK_COUNT,bookPosition,binPaperIndexForMesh,binPaperPose,BIN_PAPER_COUNT,typedKeyIndex,TYPE_KEY_COUNT} from './furniture-motion.mjs?v=dh11c4j-bin-v1';
 
 const plan=window.DH11RoomPlan;
 if(!plan)throw Error('Missing DH-11C.2 room coordinates');
