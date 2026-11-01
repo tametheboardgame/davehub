@@ -74,7 +74,7 @@ test('all thirteen slide paths remain flat and clear of desk furniture, not just
    assert.ok(clearance>=-.00001&&clearance<.006,'sheet '+i+' floats/clips: '+clearance);
    const rect=bounds(pose);
    assert.ok(rect.xmin>=-2.25&&rect.xmax<=2.25,'sheet '+i+' overhangs desk X');
-   assert.ok(rect.zmin>=-1.075&&rect.zmax<=1.075,'sheet '+i+' overhangs desk Z');
+   assert.ok(rect.zmin>=-1.075&&rect.zmax<=1.075,'sheet '+i+' overhangs desk Z: '+JSON.stringify({sheet:sheet.name,pose,rect,home,end,step}));
    for(const obstacle of obstacles)
     assert.ok(!intersects(rect,obstacle),'sheet '+i+' intersects '+obstacle.name+' on frame '+step);
   }
