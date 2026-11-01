@@ -286,3 +286,80 @@ test('GLB gold book markings register as selectable children before replacing th
  assert.ok(room.includes('g.traverse(o=>{if(o.isMesh){o.userData.objectId=id;selectable.push(o);targets.push(o);}});'),
   'capture must register book inlays as selectable raycast targets');
 });
+
+test('nine unique crumpled papers tumble from the bin and return independently without floating on the floor',async()=>{
+ const {BIN_PAPER_COUNT,BIN_PAPER_FLOOR,binPaperIndexForMesh,binPaperPose}=await import('../prototypes/dh-11c-room/furniture-motion.mjs');
+ assert.equal(BIN_PAPER_COUNT,9);
+ assert.equal(plan.BIN_PAPER_COUNT,9);
+ assert.equal(BIN_PAPER_FLOOR.length,9);
+ assert.equal(new Set(BIN_PAPER_FLOOR.map(x=>x.join(','))).size,9,'every destination distinct');
+ const crumples=manifest.nodes.filter(n=>/^bin_paper_[0-8]$/.test(n.name)).sort((a,b)=>a.name.localeCompare(b.name));
+ assert.equal(crumples.length,9,'source asset has nine independently named crumples');
+ const nodes=new Set(build().json.nodes.map(n=>n.name));
+ const root=manifest.nodes.find(n=>n.name==='bin_root');
+ assert.deepEqual(root.position,[-3.2,0,2.45]);
+ for(let i=0;i<9;i++){
+  const n=crumples[i],radius=.15+(i%3)*.028;
+  assert.ok(nodes.has('bin_paper_'+i),'crumple '+i+' must exist in GLB');
+  assert.equal(n.parent,'bin_root','bin paper must follow its actual bin rig');
+  assert.equal(binPaperIndexForMesh(n.name),i);
+  const start={x:n.position[0],y:n.position[1],z:n.position[2],rx:n.rotation[0],ry:n.rotation[1],rz:n.rotation[2]};
+  assert.deepEqual(binPaperPose(start,i,0),start,'start exact');
+  assert.deepEqual(binPaperPose(start,i,NaN),start,'invalid progress must start safely');
+  const out=binPaperPose(start,i,1);
+  assert.ok(Math.abs(out.x-BIN_PAPER_FLOOR[i][0])<1e-10);
+  assert.ok(Math.abs(out.z-BIN_PAPER_FLOOR[i][1])<1e-10);
+  assert.ok(Math.abs(out.y-(radius+.015))<1e-10,'floor-landing radius clearance');
+  assert.ok(Math.hypot(out.x,out.z)>.43+radius+.05,'landing is outside bin wall');
+  assert.ok(Math.hypot(out.x-start.x,out.z-start.z)>.5,'visible rummaging travel');
+  for(let step=0;step<=100;step++){
+   const t=step/100,p=binPaperPose(start,i,t);
+   assert.ok(p.y-radius>=-.00001,'paper '+i+' clips floor on its journey');
+   assert.deepEqual(binPaperPose(start,i,t),p,'the same t always gives the same pose');
+  }
+  const crest=binPaperPose(start,i,.5);
+  assert.ok(crest.y>.85+radius,'paper '+i+' must lift over bin rim');
+  for(let j=0;j<i;j++){
+   const other=BIN_PAPER_FLOOR[j],min=radius+.15+(j%3)*.028;
+   assert.ok(Math.hypot(out.x-other[0],out.z-other[1])>=min+.015,'crumpled papers overlap on floor: '+j+'/'+i);
+  }
+ }
+ for(const bad of ['bin_body','bin_rim','bin_paper_9','bin_paper_00','desk_paper_00','book_0_00',null,undefined])
+  assert.equal(binPaperIndexForMesh(bad),null);
+ let state=plan.next(null,{type:'focus',id:'bin'});
+ assert.deepEqual(state.binPapers,Array(9).fill(false));
+ state=plan.next(state,{type:'bin',index:4});
+ state=plan.next(state,{type:'bin',index:7});
+ assert.deepEqual(state.binPapers,[false,false,false,false,true,false,false,true,false]);
+ state=plan.next(state,{type:'bin',index:4});
+ assert.deepEqual(state.binPapers,[false,false,false,false,false,false,false,true,false]);
+ for(const invalid of [null,undefined,-1,9,2.2])
+  assert.deepEqual(plan.next(state,{type:'bin',index:invalid}),state,'invalid index must be ignored');
+ assert.deepEqual(plan.next(state,{type:'bin'}),state,'bare bin body cannot randomise crumples');
+ const away=plan.next(state,{type:'focus',id:'desk'});
+ assert.deepEqual(plan.next(away,{type:'bin',index:7}),away,'cannot rummage when bin is not selected');
+});
+test('bin raycasting, fallback, GLB swap, keyboard and reversible animation are wired individually',()=>{
+ const room=read('prototypes/dh-11c-room/room.js');
+ for(const marker of [
+  "m.name='bin_paper_'+i",
+  "m.userData.binPaperIndex=i",
+  "binPaperHomes=binPapers.map(binPaperHome)",
+  "binPaperIndexForMesh(mesh.name)",
+  "const {id,drawerIndex,paperIndex,bookIndex,binPaperIndex,keyIndex}=pick",
+  "toggleBinPaper(binPaperIndex)",
+  "data-bin-paper-index",
+  "syncBinPaperControls()",
+  "const pose=binPaperPose(binPaperHomes[i],i,binPaperProgress[i])",
+  "binPapers[i].position.set(pose.x,pose.y,pose.z)",
+  "binPapers[i].rotation.set(pose.rx,pose.ry,pose.rz)",
+  "const crumples=Array.from({length:BIN_PAPER_COUNT}",
+  "crumples.forEach((mesh,i)=>{mesh.userData.binPaperIndex=i;})",
+  "binPapers.splice(0,binPapers.length,...crumples)",
+  "binPaperHomes=crumples.map(binPaperHome)"
+ ])assert.ok(room.includes(marker),'bin interaction wiring missing: '+marker);
+ assert.doesNotMatch(room,/state=plan.next\(state,\{type:'bin'\}\)/,'no global rummage counter');
+ assert.ok(room.includes('const step=reduced.matches?1:delta*1.3'),'reduced-motion support');
+ const js=cp.spawnSync(process.execPath,['--input-type=module','--check'],{input:room,encoding:'utf8'});
+ assert.equal(js.status,0,js.stderr);
+});
