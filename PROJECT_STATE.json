@@ -759,12 +759,12 @@
     "liveDomainChange": "none"
   },
   "dh11_3d_production": {
-    "planStatus": "dh11c3a_style_review_open_dh11c4a_geometry_glb_proof_in_review",
+    "planStatus": "dh11c4b_blender_roundtrip_export_verified_art_style_review_pending",
     "scope": "Writing / The Manuscript Hoard 3D world",
     "foundation": "DH-11C.2 owner-liked and Cloudflare-verified mechanics prototype",
     "architectureDecision": "ADR-0012",
     "documentation": "docs/DH11C_3D_PRODUCTION_ROADMAP.md",
-    "currentGate": "DH-11C.4B: headless Blender cabinet import/source master/re-export plus actual asset validation",
+    "currentGate": "DH-11C.4B cloud Blender master/re-export validated; pending visual comparison and art-direction approval before adopting it as runtime model",
     "milestones": [
       {
         "id": "DH-11C.3",
@@ -775,7 +775,7 @@
       {
         "id": "DH-11C.4",
         "phase": "Blender/GLB source and rigged models",
-        "status": "Blender_master_cloud_roundtrip_validation_in_progress",
+        "status": "Blender_master_and_glb_roundtrip_verified_next_visual_modelling_gate",
         "approval": "coherent geometry and mechanism tests"
       },
       {
@@ -822,7 +822,7 @@
       "reuse real geometry, not AI image-state compositing"
     ],
     "implementationStarted": true,
-    "next": "Validate CI-produced Blender .blend master and glTF model; then inspect model and choose style before scene texture integration",
+    "next": "Review geometry if desired, select C3A palette, then begin cabinet production surface modelling and textures using validated Blender master",
     "artDirection": {
       "status": "three_material_colour_and_light_candidates_owner_review_pending",
       "preferredDraft": "amber-ink",
@@ -862,7 +862,7 @@
       "liveDomainChange": "none"
     },
     "blenderRoundTrip": {
-      "status": "workflow_submitted_validation_pending",
+      "status": "validated_cloud_blender_roundtrip",
       "decision": "ADR-0012",
       "source": "scripts/blender/dh11c_cabinet_roundtrip.py",
       "input": "scripts/build-dh11c4-cabinet-glb.cjs",
@@ -877,7 +877,21 @@
       "runtimeReplacement": false,
       "authoringEnvironment": "GitHub Actions Ubuntu headless Blender, no local owner setup",
       "styleApproved": false,
-      "nextGate": "actual Blender asset export must succeed and pass node hierarchy and transform comparisons"
+      "nextGate": "actual Blender asset export must succeed and pass node hierarchy and transform comparisons",
+      "validationWorkflowRun": 41296250123,
+      "validatedCommit": "b7c25cb26f26a051cc5fa6d9da10f4feb069f6a9",
+      "mergedStagingCommit": "bee345d8d80fd6a365d2b314bb05a0b5c6b2a0d7",
+      "blenderVersion": "4.0.2",
+      "meshCount": 78,
+      "objectCount": 106,
+      "exportedGlbSha256": "051e4abdb015799282234ea50b14cd179cb335ee496dbfdf965a4f1081abbf8a",
+      "editableBlendSha256": "14e2782279621c154b310c7effa58c872b48c617886aaba800f4b8def1eadd16",
+      "archivedGitHubArtifactId": 13079755791,
+      "githubArtifactRetentionEnd": "2026-12-01",
+      "binaryValidation": "passed",
+      "sourceVsExportGeometry": "passed (five drawer rigs, transforms and outward axis)",
+      "stagingCloudflare": "passed",
+      "visualBrowserQA": "pending"
     }
   }
 }
