@@ -536,7 +536,7 @@ if(artLab){
 // moving meshes and camera stops are unchanged; materials, drawn contour
 // children and lighting are the only calibrated properties.
 if(illustratedProof){
- const system=window.DH11IllustratedStyle;
+ const system=document.body.dataset.illustratedV2==='true'?window.DH11IllustratedStyleV2:window.DH11IllustratedStyle;
  const options=[...document.querySelectorAll('[data-illustration-mode]')];
  if(!system||options.length!==2)throw Error('Missing DH-11C.5C Painterly Storybook calibration system');
  illustratedRuntime=system.createRuntime({THREE,scene,renderer,lights:sceneLights});
