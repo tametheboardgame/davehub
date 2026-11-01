@@ -12,7 +12,7 @@ const checks=[
  {path:'/creations/unicorn-valley/',required:['<style data-davehub-inline="worlds">','Unicorn Valley','Play on DaveHub','href="/games/unicorn-valley/"','unicorn-valley.pages.dev','View development repository'],forbidden:['DESIGN REVIEW ONLY']},
  {path:'/creations/stephen-martin-project/',required:['<style data-davehub-inline="worlds">','The Stephen Martin Project','Play on DaveHub','href="/games/stephen-martin/"','stephen-martin-project.pages.dev'],forbidden:['DESIGN REVIEW ONLY']},
  {path:'/creations/tame-the-board-game/',required:['<style data-davehub-inline="worlds">','Tame The Board Game','Miriam','tametheboardgame.com/about/'],forbidden:['DESIGN REVIEW ONLY']},
- {path:'/previews/dh-11c/furniture/',required:['DH-11C.4F','data-furniture-model-proof="true"','data-immersive-room="true"','id="furniture-model-status"'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
+ {path:'/previews/dh-11c/furniture/',required:['DH-11C.4F','data-furniture-model-proof="true"','data-immersive-room="true"','id="furniture-model-status"','dh11c4i-gilded-v2','room.js?v=dh11c4i-gilded-v2'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/room-shell/',required:['DH-11C.4E','data-shell-model-proof="true"','../room/room-shell-asset.js','id="shell-model-status"','data-immersive-room="true"'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/architecture/',required:['DH-11C.4C','data-shell-proof="true"','data-blender-compare="true"','data-immersive-room="true"','./immersive.css','./immersive-ui.js','id="prototype-tools"','id="scene-nav"','../room/room-shell-plan.js','../cabinet-glb/'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/cabinet-glb/',required:['DH-11C.4A','data-glb-proof="true"','id="glb-extension"','data-glb-snap="50"','../room/room.js'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
@@ -39,7 +39,10 @@ async function main(){
  for(let n=1;n<=attempts;n++){
   try{
    const results=[];
-   for(const c of checks)results.push({path:c.path,bytes:await inspect(BASE+c.path+'?dh08d=1',c.required,c.forbidden)});
+   for(const c of checks){
+    const version=c.path==='/previews/dh-11c/furniture/'?'?dh11c4i-gilded-v2=1':'?dh08d=1';
+    results.push({path:c.path,bytes:await inspect(BASE+c.path+version,c.required,c.forbidden)});
+   }
    // A missing .css or .js may return Pages' HTML fallback with HTTP 200.
    // Require the actual MIME and source bytes, not just the page's script tags.
    for(const dep of [
@@ -71,6 +74,29 @@ async function main(){
    for(const marker of ['export function paperPose','export function pressDepth','export function featuredBook','export function typedKeyIndex'])
     if(!motionSource.includes(marker))throw Error('Deployed furniture motion module missing '+marker);
    console.log('PASS hosted furniture motion module: paper, typewriter and eight-book rules');
+   // Explicitly validate the versioned live JavaScript, not just HTML
+   // referencing a module. A stale JS response caused invisible highlighted
+   // books despite all other smoke checks returning green.
+   const bookJs=await fetch(BASE+'/previews/dh-11c/room/room.js?v=dh11c4i-gilded-v2',{
+    headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)
+   });
+   const bookType=bookJs.headers.get('content-type')||'';
+   if(!bookJs.ok||!bookType.includes('javascript'))
+    throw Error('Versioned furniture module not served (HTTP '+bookJs.status+', '+bookType+')');
+   const bookSource=await bookJs.text();
+   for(const marker of [
+    "const FEATURE_BOOK_COLOUR='#24f5da'",
+    'featureBookGilt',
+    'mesh.add(accent)',
+    'books.forEach((mesh,i)=>markFeaturedBook(mesh,i));',
+    'accent.userData.featuredBookIndex=index',
+    'Find the eight turquoise books with gold spine markings'
+   ]){
+    if(!bookSource.includes(marker))throw Error('Stale furniture script on Cloudflare: missing '+marker);
+   }
+   if(bookSource.indexOf('books.forEach((mesh,i)=>markFeaturedBook(mesh,i));')>bookSource.indexOf('scene.add(content);'))
+    throw Error('Deployed book inlays are not registered before GLB scene capture');
+   console.log('PASS hosted v2 turquoise-and-gold bookcase module ('+bookSource.length+' bytes)');
 
    const model=await fetch(BASE+'/previews/dh-11c/room/models/cabinet-prototype.glb?dh11c4=1',{headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)});
    if(!model.ok)throw Error('GLB asset HTTP '+model.status);
