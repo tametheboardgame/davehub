@@ -43,6 +43,8 @@ const objects=new Map();
 const artLab=typeof document!=='undefined'&&document.body.dataset.artLab==='true';
 const glbProof=document.body.dataset.glbProof==='true';
 const shellProof=document.body.dataset.shellProof==='true';
+const shellModelProof=document.body.dataset.shellModelProof==='true';
+let shellFallback=null;
 const blenderCompare=document.body.dataset.blenderCompare==='true';
 let glbExtension=1;
 const bookMaterials=[];
@@ -81,6 +83,13 @@ const capture=(id,g)=>{
  return g;
 };
 function wallScene(){
+ if(shellModelProof){
+  const manifest=window.DH11ShellAsset;
+  if(!manifest||!manifest.parts?.length)throw Error('Missing DH-11C.4E shell asset manifest');
+  shellFallback=group(scene);
+  shellFallback.name='architecture_fallback';
+  for(const part of manifest.parts)box(shellFallback,...part.size,mats[part.material],...part.position).name=part.name;
+ }else{
  box(scene,14,.22,11,mats.darkwood,0,-.12,0);
  // Individual floor planks make room orientation visible at all camera angles.
  for(let x=-6.75;x<7;x+=.56)box(scene,.51,.016,10.7,x%2?mats.timber:mats.desk,x,.008,0);
@@ -128,6 +137,7 @@ function wallScene(){
   box(scene,.07,.028,3.45,mats.edge,x,.065,1.12);
  }
  for(const z of [-.52,2.76])box(scene,5.1,.028,.06,mats.edge,.05,.065,z);
+ }
  const ambient=new THREE.HemisphereLight('#c3d4ea','#4d3842',2.25);
  sceneLights.ambient=ambient;scene.add(ambient);
  const sun=new THREE.DirectionalLight('#ffe0ad',2.8);
@@ -140,6 +150,26 @@ function wallScene(){
  glow.position.set(.25,3.7,-3.5);sceneLights.window=glow;scene.add(glow);
 }
 wallScene();
+if(shellModelProof){
+ // Only the isolated DH-11C.4E proof uses a GLB room shell.
+ // A complete source-manifest mesh stays visible until the GLB loads, then is
+ // hidden, so failed/missing model files never leave an empty room.
+ const output=document.getElementById('shell-model-status');
+ const report=message=>{if(output)output.textContent=message;};
+ import('./vendor/GLTFLoader-r159.js').then(({GLTFLoader})=>{
+  new GLTFLoader().load('../room/models/room-shell-blender-verified.glb',gltf=>{
+   if(!gltf.scene.getObjectByName('room_shell_root'))throw Error('Room shell GLB root missing');
+   const model=gltf.scene;model.name='room_shell_glb';
+   model.traverse(o=>{if(o.isMesh)o.userData.architecture=true;});
+   scene.add(model);
+   if(shellFallback)shellFallback.visible=false;
+   report('Blender-exported room architecture loaded: floor, beams, genuine door/window openings and corridor. The rest of the scene is unchanged.');
+  },undefined,error=>{
+   console.warn('Room GLB failed to load',error);
+   report('Architecture GLB could not load. Rendering the identical source geometry as a safe fallback.');
+  });
+ }).catch(error=>{console.warn('Room GLB loader failed',error);report('GLB loader failed. Source geometry fallback remains visible.');});
+}
 
 const cabinetDrawers=[];
 function makeCabinet(){

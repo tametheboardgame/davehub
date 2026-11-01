@@ -25,6 +25,14 @@ for asset in \
   prototypes/dh-11c-room/room-plan.js \
   prototypes/dh-11c-room/room.js \
   prototypes/dh-11c-room/room-shell-plan.js \
+  prototypes/dh-11c-room/room-shell-asset.js \
+  scripts/build-dh11c4e-shell-glb.cjs \
+  scripts/build-dh11c4e-blender-model.cjs \
+  assets/worlds/writing/3d/models/room-shell-blender-verified.glb.deflate.b64 \
+  scripts/validate-dh11c4e-shell.cjs \
+  scripts/render-dh11c4e-room.cjs \
+  scripts/blender/dh11c_room_shell.py \
+  tests/dh11c4e-room-shell.test.cjs \
   prototypes/dh-11c-room/architecture.css \
   prototypes/dh-11c-room/immersive.css \
   prototypes/dh-11c-room/immersive-ui.js \
@@ -75,7 +83,7 @@ done
 
 # A private draft must never become a deployed page through a build bypass.
 # Validate both the empty/approved production manifest and fictional test fixtures.
-node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/dh11-worlds.test.cjs tests/dh11c-cabinet-geometry.test.cjs tests/dh11c-room.test.cjs tests/dh11c-art-direction.test.cjs tests/dh11c4-cabinet-glb.test.cjs tests/dh11c4b-blender.test.cjs tests/dh11c4c-room-architecture.test.cjs tests/dh11c4d-immersive-viewport.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs tests/dh10c-editorial.test.cjs tests/dh10c-hosted-http.test.cjs
+node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/dh11-worlds.test.cjs tests/dh11c-cabinet-geometry.test.cjs tests/dh11c-room.test.cjs tests/dh11c-art-direction.test.cjs tests/dh11c4-cabinet-glb.test.cjs tests/dh11c4b-blender.test.cjs tests/dh11c4c-room-architecture.test.cjs tests/dh11c4d-immersive-viewport.test.cjs tests/dh11c4e-room-shell.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs tests/dh10c-editorial.test.cjs tests/dh10c-hosted-http.test.cjs
 node -e "const {validateManifest}=require('./scripts/davehub-manifest.cjs'); const data=require('./davehub.json'); const result=validateManifest(data,'tametheboardgame/davehub');if(!result.valid)throw new Error(result.errors.join('; '));"
 # Fail closed: only individually owner-approved records and links enter production.
 node scripts/content-check.cjs content/public/catalogue.json
@@ -84,7 +92,7 @@ node scripts/content-check.cjs content/examples/fictional.json
 node scripts/dh09d-topology.cjs check
 
 rm -rf dist
-mkdir -p dist/assets/worlds/writing dist/assets/branding dist/assets/homepage dist/assets/characters/dave dist/previews/dh-07c dist/previews/dh-08 dist/previews/dh-08b dist/previews/dh-08c dist/previews/dh-11c/cabinet dist/previews/dh-11c/room/vendor dist/previews/dh-11c/art-lab dist/previews/dh-11c/cabinet-glb dist/previews/dh-11c/architecture dist/previews/dh-11c/room/models dist/content dist/assets/content
+mkdir -p dist/assets/worlds/writing dist/assets/branding dist/assets/homepage dist/assets/characters/dave dist/previews/dh-07c dist/previews/dh-08 dist/previews/dh-08b dist/previews/dh-08c dist/previews/dh-11c/cabinet dist/previews/dh-11c/room/vendor dist/previews/dh-11c/art-lab dist/previews/dh-11c/cabinet-glb dist/previews/dh-11c/architecture dist/previews/dh-11c/room-shell dist/previews/dh-11c/room/models dist/content dist/assets/content
 
 cp index.html styles.css main.js catalogue.js dist/
 cp assets/branding/davehub-logo-faithful.svg dist/assets/branding/
@@ -102,7 +110,10 @@ cp prototypes/dh-11c-room/glb-proof.css dist/previews/dh-11c/cabinet-glb/
 node scripts/render-dh11c4-glb-proof.cjs dist/previews/dh-11c/cabinet-glb
 node scripts/build-dh11c4-cabinet-glb.cjs dist/previews/dh-11c/room/models/cabinet-prototype.glb
 node scripts/build-dh11c4c-blender-model.cjs dist/previews/dh-11c/room/models/cabinet-blender-verified.glb
-cp prototypes/dh-11c-room/room-shell-plan.js dist/previews/dh-11c/room/
+cp prototypes/dh-11c-room/room-shell-plan.js prototypes/dh-11c-room/room-shell-asset.js dist/previews/dh-11c/room/
+node scripts/build-dh11c4e-shell-glb.cjs dist/previews/dh-11c/room/models/room-shell-source.glb
+node scripts/build-dh11c4e-blender-model.cjs dist/previews/dh-11c/room/models/room-shell-blender-verified.glb
+node scripts/render-dh11c4e-room.cjs dist/previews/dh-11c/room-shell
 cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js dist/previews/dh-11c/architecture/
 node scripts/render-dh11c4c-architecture.cjs dist/previews/dh-11c/architecture
 cp content/examples/fictional.json dist/previews/dh-08/catalogue.json
@@ -156,6 +167,7 @@ for(const slug of ['unicorn-valley','stephen-martin-project','tame-the-board-gam
 }
 check('dist/worlds/writing/index.html',['data-scene="manuscript-hoard"','room-stage-image','data-room-target="desk"','data-room-target="cabinet"','data-room-target="bin"','data-room-target="bookcase"','data-room-target="typewriter"','Tame The Board Game'],['The Last Lightkeeper','The Clock of Tomorrow']);
 check('dist/previews/dh-08b/worlds/writing/index.html',['data-scene="manuscript-hoard"','Fictional design demonstration','The Last Lightkeeper']);
+check('dist/previews/dh-11c/room-shell/index.html',['DH-11C.4E','data-shell-model-proof="true"','../room/room-shell-asset.js','id="shell-model-status"','data-immersive-room="true"']);
 check('dist/previews/dh-11c/architecture/index.html',['DH-11C.4C','data-shell-proof="true"','data-blender-compare="true"','data-immersive-room="true"','./immersive.css','./immersive-ui.js','id="prototype-tools"','id="scene-nav"','../room/room-shell-plan.js','../cabinet-glb/']);
 check('dist/previews/dh-11c/cabinet-glb/index.html',['DH-11C.4A','data-glb-proof="true"','id="glb-extension"','data-glb-snap="50"','../room/room.js']);
 check('dist/previews/dh-11c/art-lab/index.html',['DH-11C.3A','data-art-lab="true"','data-palette="amber-ink"','data-palette="moonlit-archive"','data-palette="golden-storybook"','../room/room.js']);
