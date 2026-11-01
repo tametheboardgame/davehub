@@ -96,6 +96,27 @@ if(furnitureModelProof){
   });
  }
 }
+// C5B has its own material family so approved desk and older preview routes
+// keep their existing finish. The same UV pixels are used by Blender GLB and
+// the WebGL procedural fallback.
+const archiveKit=window.DH11ArchiveMaterials;
+const archiveFinishes=[
+ 'shelfWalnut','shelfEdge','shelfLining','shelfGilt',
+ ...Array.from({length:7},(_,i)=>'bookBinding'+i),
+ 'cabinetCase','cabinetDrawer','cabinetTrim','cabinetTray',
+ 'cabinetBrass','cabinetFolder0','cabinetFolder1','cabinetLabel'
+];
+if(furnitureModelProof){
+ if(!archiveKit)throw Error('Missing DH-11C.5B archive material maps');
+ for(const name of archiveFinishes){
+  const spec=archiveKit.generate(name);
+  const tx=new THREE.DataTexture(spec.pixels,spec.width,spec.height,THREE.RGBAFormat);
+  tx.colorSpace=THREE.SRGBColorSpace;tx.magFilter=THREE.LinearFilter;
+  tx.minFilter=THREE.LinearMipmapLinearFilter;tx.generateMipmaps=true;
+  tx.anisotropy=Math.min(4,renderer?.capabilities.getMaxAnisotropy()||1);tx.needsUpdate=true;
+  mats[name]=new THREE.MeshStandardMaterial({color:'#ffffff',map:tx,roughness:spec.roughness,metalness:spec.metalness});
+ }
+}
 const box=(parent,w,h,d,mat,x=0,y=0,z=0)=>{
  const mesh=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);
  mesh.position.set(x,y,z);
@@ -212,26 +233,27 @@ if(shellModelProof){
 const cabinetDrawers=[];
 function makeCabinet(){
  const g=group(scene,-4.7,0,-3.25);
- // A physical case: panels, aperture outlines, inner void, fixed single perspective.
- box(g,1.92,3.66,1.16,mats.cabinet,0,1.83,-.17);
- box(g,1.79,3.43,.075,mats.ink,0,1.83,.441);
+ // Existing geometry and five drawer travel paths remain untouched.
+ const finish=name=>furnitureModelProof?mats[name]:null;
+ box(g,1.92,3.66,1.16,finish('cabinetCase')||mats.cabinet,0,1.83,-.17);
+ box(g,1.79,3.43,.075,finish('cabinetTrim')||mats.ink,0,1.83,.441);
  for(const x of [-.92,.92]){
-  box(g,.1,3.66,1.2,mats.brass,x,1.83,-.16);
+  box(g,.1,3.66,1.2,finish('cabinetTrim')||mats.brass,x,1.83,-.16);
  }
- for(const y of [.12,3.58])box(g,1.99,.13,1.18,mats.brass,0,y,-.16);
+ for(const y of [.12,3.58])box(g,1.99,.13,1.18,finish('cabinetTrim')||mats.brass,0,y,-.16);
  const names=['Finished','Drafts','Oddities','Fragments','Field Notes'];
  for(let i=0;i<5;i++){
   const yy=3.18-i*.615;
-  box(g,1.67,.53,.06,mats.darkwood,0,yy,.493);
+  box(g,1.67,.53,.06,finish('cabinetCase')||mats.darkwood,0,yy,.493);
   const tray=group(g,0,yy,.52);
-  box(tray,1.61,.48,.08,mats.drawer,0,0,0);
-  box(tray,1.6,.075,.83,mats.timber,0,-.207,-.39);
-  for(const x of [-.78,.78])box(tray,.07,.41,.83,mats.timber,x,-.015,-.39);
-  box(tray,1.6,.35,.08,mats.timber,0,-.055,-.81);
-  box(tray,.65,.16,.025,mats.paper,0,.095,.056);
-  box(tray,.58,.055,.09,mats.brass,0,-.085,.123);
+  box(tray,1.61,.48,.08,finish('cabinetDrawer')||mats.drawer,0,0,0);
+  box(tray,1.6,.075,.83,finish('cabinetTray')||mats.timber,0,-.207,-.39);
+  for(const x of [-.78,.78])box(tray,.07,.41,.83,finish('cabinetTray')||mats.timber,x,-.015,-.39);
+  box(tray,1.6,.35,.08,finish('cabinetTray')||mats.timber,0,-.055,-.81);
+  box(tray,.65,.16,.025,finish('cabinetLabel')||mats.paper,0,.095,.056);
+  box(tray,.58,.055,.09,finish('cabinetBrass')||mats.brass,0,-.085,.123);
   for(let f=0;f<4;f++){
-   const folder=box(tray,.23,.24,.018,mats.paper,-.48+f*.32,.06,-.3-f*.03);
+   const folder=box(tray,.23,.24,.018,finish('cabinetFolder'+f%2)||mats.paper,-.48+f*.32,.06,-.3-f*.03);
    folder.rotation.y=(f%2?.12:-.1);
   }
   const tag=makeText(names[i],.38,.11,'#33434b','#efe0c2');
@@ -350,6 +372,9 @@ function featuredBookColour(mesh){
 function markFeaturedBook(mesh,index){
  mesh.userData.featuredBookIndex=index;
  mesh.material=mesh.material.clone();
+ // Multiplying a bright teal colour by a dark leather colour-map would
+ // hide the eight interaction targets. Keep those approved bindings vivid.
+ if(mesh.material.map){mesh.material.map=null;mesh.material.needsUpdate=true;}
  featuredBookColour(mesh);
  if(!mesh.geometry.boundingBox)mesh.geometry.computeBoundingBox();
  const bounds=mesh.geometry.boundingBox;
@@ -373,16 +398,17 @@ function markFeaturedBook(mesh,index){
 }
 function makeBookcase(){
  const g=group(scene,4.7,0,-3.85);
- box(g,3.1,4.47,.77,mats.darkwood,0,2.23,0);
- box(g,2.9,4.17,.12,mats.ink,0,2.22,.35);
- for(const x of [-1.5,1.5])box(g,.13,4.55,.81,mats.timber,x,2.23,.04);
- for(let y=.47;y<=4.08;y+=.91)box(g,3.04,.095,.84,mats.edge,0,y,.11);
+ box(g,3.1,4.47,.77,furnitureModelProof?mats.shelfWalnut:mats.darkwood,0,2.23,0);
+ box(g,2.9,4.17,.12,furnitureModelProof?mats.shelfLining:mats.ink,0,2.22,.35);
+ for(const x of [-1.5,1.5])box(g,.13,4.55,.81,furnitureModelProof?mats.shelfWalnut:mats.timber,x,2.23,.04);
+ for(let y=.47;y<=4.08;y+=.91)box(g,3.04,.095,.84,furnitureModelProof?mats.shelfEdge:mats.edge,0,y,.11);
  const colours=['#a59482','#6e737f','#9b8878','#b1a391','#5a7181','#7b6559','#a7a5a1'];
  for(let shelf=0;shelf<4;shelf++){
   for(let b=0;b<20;b++){
    const height=.43+((b*7+shelf*13)%7)*.044;
    const x=-1.32+b*.139,y=.54+shelf*.91+height/2;
-   const bookMat=matte(colours[(shelf*4+b)%colours.length]);
+   const materialIndex=(shelf*4+b)%colours.length;
+   const bookMat=furnitureModelProof?mats['bookBinding'+materialIndex]:matte(colours[materialIndex]);
    const bk=box(g,.111,height,.43,bookMat,x,y,.44);
    bk.name='book_'+shelf+'_'+String(b).padStart(2,'0');
    if(featuredBook(shelf,b)){
@@ -393,7 +419,7 @@ function makeBookcase(){
    bookMaterials.push(bk.material);
   }
  }
- box(g,3.3,.16,.97,mats.brass,0,4.51,.07);
+ box(g,3.3,.16,.97,furnitureModelProof?mats.shelfGilt:mats.brass,0,4.51,.07);
  capture('bookcase',g);
  return g;
 }
@@ -924,6 +950,13 @@ if(glbProof){
     front.add(label);
     found.push(drawer);
    }
+   if(furnitureModelProof){
+    content.traverse(node=>{
+     if(!node.isMesh)return;
+     const finish=archiveKit.cabinetFinishForNode(node.name);
+     if(finish)node.material=mats[finish];
+    });
+   }
    scene.add(content);
    capture('cabinet',content);
    cabinetDrawers.push(...found);
@@ -949,7 +982,7 @@ if(furnitureModelProof){
  const report=message=>{if(output)output.textContent=message;};
  const required=['desk','typewriter','bookcase','bin','door','window'];
  import('./vendor/GLTFLoader-r159.js').then(({GLTFLoader})=>{
-  new GLTFLoader().load('../room/models/furniture-source.glb?v=dh11c5a-desk-v1',gltf=>{
+  new GLTFLoader().load('../room/models/furniture-source.glb?v=dh11c5b-archive-v1',gltf=>{
    try{
     const content=gltf.scene;
     const next=new Map();

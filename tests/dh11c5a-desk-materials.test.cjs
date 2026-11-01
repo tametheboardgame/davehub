@@ -27,11 +27,11 @@ test('nine genuinely detailed, varied and deterministic writing-desk materials',
 });
 test('furniture GLB embeds usable lossless PNG material maps with unchanged mesh identities',()=>{
  const {json,glb}=build(),materialNames=Object.keys(manifest.materials);
- assert.equal(json.images.length,9);
- assert.equal(json.textures.length,9);
+ assert.equal(json.images.length,20,'nine approved desk textures plus eleven bookcase maps');
+ assert.equal(json.textures.length,20);
  assert.equal(json.samplers.length,1);
  assert.equal(json.nodes.length,manifest.nodes.length);
- assert.equal(json.extras.milestone,'DH-11C.5A');
+ assert.equal(json.extras.milestone,'DH-11C.5B');
  const chunkSize=glb.readUInt32LE(12),binaryStart=20+chunkSize+8;
  for(let i=0;i<9;i++){
   const image=json.images[i],texture=json.textures[i];
@@ -74,13 +74,13 @@ test('procedural fallback shares exact UV recipes and staging preview ships map 
   "mats['deskParchment'+i%3]",
   'mats.typewriterEnamel',
   'mats.deskBrass',
-  "furniture-source.glb?v=dh11c5a-desk-v1"
+  "furniture-source.glb?v=dh11c5b-archive-v1"
  ])assert.ok(room.includes(term),'procedural texture parity missing '+term);
  assert.ok(html.includes('desk-materials.js?v=dh11c5a-desk-v1'));
- assert.ok(html.includes('room.js?v=dh11c5a-desk-v1'));
+ assert.ok(html.includes('room.js?v=dh11c5b-archive-v1'));
  assert.ok(html.indexOf('desk-materials.js?v=')<html.indexOf('room.js?v='),
   'shared map generator must load before module begins');
- assert.ok(html.includes('davehub-furniture-release" content="dh11c5a-desk-v1"'));
+ assert.ok(html.includes('davehub-furniture-release" content="dh11c5b-archive-v1"'));
  const result=cp.spawnSync(process.execPath,['--check',path.join(__dirname,'..','prototypes/dh-11c-room/desk-materials.js')],{encoding:'utf8'});
  assert.equal(result.status,0,result.stderr);
 });

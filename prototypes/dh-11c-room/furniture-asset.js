@@ -13,6 +13,7 @@
   deskWalnut:'#ffffff',deskFrame:'#ffffff',deskLeather:'#ffffff',
   deskParchment0:'#ffffff',deskParchment1:'#ffffff',deskParchment2:'#ffffff',
   deskBrass:'#ffffff',typewriterEnamel:'#ffffff',
+  shelfWalnut:'#ffffff',shelfEdge:'#ffffff',shelfLining:'#ffffff',shelfGilt:'#ffffff',
   brass:'#c2a26d',lampShade:'#95805c',lampBulb:'#ffddb0',paper:'#dbc9ab',stone:'#555d66',edge:'#ad9478',
   bin:'#677b81',island:'#7e856e',leaf:'#728b7b',
   book0:'#a59482',book1:'#6e737f',book2:'#9b8878',book3:'#b1a391',
@@ -73,15 +74,15 @@
  box('typewriter_paper_rule','typewriter_root','edge',[.57,.02,.015],[0,.65,-.224]);
 
  group('bookcase_root',rootName,[4.7,0,-3.85]);
- box('bookcase_body','bookcase_root','darkwood',[3.1,4.47,.77],[0,2.23,0]);
- box('bookcase_recess','bookcase_root','ink',[2.9,4.17,.12],[0,2.22,.35]);
- for(const [i,x] of [-1.5,1.5].entries())box('bookcase_side_'+i,'bookcase_root','timber',[.13,4.55,.81],[x,2.23,.04]);
- for(let shelf=0;shelf<5;shelf++)box('bookcase_shelf_'+shelf,'bookcase_root','edge',[3.04,.095,.84],[0,.47+shelf*.91,.11]);
+ box('bookcase_body','bookcase_root','shelfWalnut',[3.1,4.47,.77],[0,2.23,0]);
+ box('bookcase_recess','bookcase_root','shelfLining',[2.9,4.17,.12],[0,2.22,.35]);
+ for(const [i,x] of [-1.5,1.5].entries())box('bookcase_side_'+i,'bookcase_root','shelfWalnut',[.13,4.55,.81],[x,2.23,.04]);
+ for(let shelf=0;shelf<5;shelf++)box('bookcase_shelf_'+shelf,'bookcase_root','shelfEdge',[3.04,.095,.84],[0,.47+shelf*.91,.11]);
  for(let shelf=0;shelf<4;shelf++)for(let i=0;i<20;i++){
   const height=.43+((i*7+shelf*13)%7)*.044;
   box('book_'+shelf+'_'+String(i).padStart(2,'0'),'bookcase_root','book'+((shelf*4+i)%7),[.111,height,.43],[-1.32+i*.139,.54+shelf*.91+height/2,.44]);
  }
- box('bookcase_crown','bookcase_root','brass',[3.3,.16,.97],[0,4.51,.07]);
+ box('bookcase_crown','bookcase_root','shelfGilt',[3.3,.16,.97],[0,4.51,.07]);
 
  group('bin_root',rootName,[-3.2,0,2.45]);
  cyl('bin_body','bin_root','bin',.43,.36,.84,[0,.44,0],13);
