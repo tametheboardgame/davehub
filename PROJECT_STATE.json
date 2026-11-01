@@ -759,12 +759,12 @@
     "liveDomainChange": "none"
   },
   "dh11_3d_production": {
-    "planStatus": "dh11c5a_textured_desk_reference_pending_visual_approval",
+    "planStatus": "dh11c5b_bookcase_cabinet_material_review_pending",
     "scope": "Writing / The Manuscript Hoard 3D world",
     "foundation": "DH-11C.4 furniture mechanics approved by owner on 2026-11-01; 197 named source parts and GLB/Blender pipeline retained",
     "architectureDecision": "ADR-0012",
     "documentation": "docs/DH11C_3D_PRODUCTION_ROADMAP.md",
-    "currentGate": "DH-11C.5A: owner visual review of the walnut, parchment, leather, metal and linen desk-material reference on staging",
+    "currentGate": "DH-11C.5B: owner reviews bookcase leather/cloth gilt spine finishes and weathered five-drawer cabinet in hosted staging",
     "milestones": [
       {
         "id": "DH-11C.3",
@@ -781,8 +781,8 @@
       {
         "id": "DH-11C.5",
         "phase": "Textures/UVs/material atlas",
-        "status": "C5A_desk_reference_implemented_staging_owner_visual_approval_pending",
-        "approval": "owner evaluates textured writing-desk reference before extending finishes to the rest of the room"
+        "status": "C5A_approved_2026_11_01_C5B_preview_pending_visual_acceptance",
+        "approval": "C5A walnut desk approved; separate explicit acceptance required for C5B bookcase and cabinet"
       },
       {
         "id": "DH-11C.6",
@@ -822,7 +822,7 @@
       "reuse real geometry, not AI image-state compositing"
     ],
     "implementationStarted": true,
-    "next": "Review the C5A desk texture reference in hosted staging and preserve current mechanical approvals; extend textures only after owner visual approval",
+    "next": "Obtain owner visual approval of C5B before rolling approved materials into wall architecture/floor and ambient environment",
     "artDirection": {
       "status": "three_material_colour_and_light_candidates_owner_review_pending",
       "preferredDraft": "amber-ink",
@@ -942,7 +942,7 @@
       "editableMeshCount": 68
     },
     "furniturePipeline": {
-      "status": "six_furniture_mechanics_owner_approved_desk_material_study_under_review",
+      "status": "C4_mechanics_and_C5A_desk_materials_owner_approved_C5B_pending",
       "route": "/previews/dh-11c/furniture/",
       "source": "prototypes/dh-11c-room/furniture-asset.js",
       "sourceModel": "/previews/dh-11c/room/models/furniture-source.glb",
@@ -958,13 +958,13 @@
         "window_root"
       ],
       "originalFurnitureFallback": true,
-      "ownerVisualReview": "mechanics_approved_2026-11-01_materials_pending",
+      "ownerVisualReview": "mechanics_and_desk_materials_approved_2026_11_01_bookcase_cabinet_materials_pending",
       "artDirectionApproved": false,
       "liveDomainChanged": false
     },
     "deskMaterialReference": {
       "milestone": "DH-11C.5A",
-      "status": "implemented_on_feature_branch_pending_visual_approval",
+      "status": "approved_by_owner_2026_11_01",
       "route": "/previews/dh-11c/furniture/?v=dh11c5a-desk-v1",
       "source": "prototypes/dh-11c-room/desk-materials.js",
       "pbrTextureCount": 9,
@@ -984,8 +984,23 @@
         "five cabinet drawers",
         "door and window"
       ],
-      "ownerMaterialApproval": "pending",
+      "ownerMaterialApproval": "approved",
       "productionPromoted": false
+    },
+    "archiveMaterialReference": {
+      "milestone": "DH-11C.5B",
+      "status": "implemented_pending_owner_visual_approval",
+      "route": "/previews/dh-11c/furniture/?v=dh11c5b-archive-v1",
+      "source": "prototypes/dh-11c-room/archive-materials.js",
+      "PBRTextureRecipes": 19,
+      "additionalEmbeddedFurnitureGLBMaps": 11,
+      "combinedEmbeddedFurnitureGLBMaps": 20,
+      "cabinetGLB": "preserved original verified Blender GLB; texture assignment to named surfaces at runtime",
+      "geometryProtected": true,
+      "interactiveBooks": 8,
+      "bookCount": 80,
+      "cabinetDrawerCount": 5,
+      "liveDomainChanged": false
     }
   }
 }
