@@ -27,6 +27,8 @@ for asset in \
   prototypes/dh-11c-room/room-shell-plan.js \
   prototypes/dh-11c-room/room-shell-asset.js \
   scripts/build-dh11c4e-shell-glb.cjs \
+  scripts/build-dh11c4e-blender-model.cjs \
+  assets/worlds/writing/3d/models/room-shell-blender-verified.glb.deflate.b64 \
   scripts/validate-dh11c4e-shell.cjs \
   scripts/render-dh11c4e-room.cjs \
   scripts/blender/dh11c_room_shell.py \
@@ -110,6 +112,7 @@ node scripts/build-dh11c4-cabinet-glb.cjs dist/previews/dh-11c/room/models/cabin
 node scripts/build-dh11c4c-blender-model.cjs dist/previews/dh-11c/room/models/cabinet-blender-verified.glb
 cp prototypes/dh-11c-room/room-shell-plan.js prototypes/dh-11c-room/room-shell-asset.js dist/previews/dh-11c/room/
 node scripts/build-dh11c4e-shell-glb.cjs dist/previews/dh-11c/room/models/room-shell-source.glb
+node scripts/build-dh11c4e-blender-model.cjs dist/previews/dh-11c/room/models/room-shell-blender-verified.glb
 node scripts/render-dh11c4e-room.cjs dist/previews/dh-11c/room-shell
 cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js dist/previews/dh-11c/architecture/
 node scripts/render-dh11c4c-architecture.cjs dist/previews/dh-11c/architecture
