@@ -62,7 +62,8 @@ test('room interactions update only approved mechanical state, no publication da
  const before=plan.next(state,{type:'focus',id:'unapproved'});
  assert.equal(before.focus,'cabinet');
  state=plan.next(state,{type:'focus',id:'desk'});
- assert.equal(plan.next(state,{type:'paper'}).paper,1);
+ assert.equal(plan.next(state,{type:'paper',index:0}).papers[0],true);
+ assert.deepEqual(plan.next(state,{type:'paper'}),state,'unnamed desk clicks must not move papers');
  assert.equal(plan.next(state,{type:'drawer',index:0}).drawer,null);
  assert.equal(plan.next(state,{type:'home'}).focus,null);
 });
