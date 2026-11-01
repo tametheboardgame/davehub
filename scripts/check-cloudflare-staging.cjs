@@ -55,6 +55,14 @@ async function main(){
     if(source.includes('<!doctype html>')||source.includes('<html'))throw Error('Room-shell asset '+dep.name+' is a fallback HTML page');
     console.log('PASS hosted room-shell dependency '+dep.name+' ('+source.length+' bytes)');
    }
+   // The raycast helper is imported by room.js on every preview route.
+   // Pages may return fallback HTML with HTTP 200 when a .mjs file is missing.
+   const picking=await fetch(BASE+'/previews/dh-11c/room/drawer-picking.mjs?dh11c-drawer=1',{headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)});
+   const pickType=picking.headers.get('content-type')||'';
+   if(!picking.ok||!pickType.includes('javascript'))throw Error('Deployed drawer picking module missing/wrong MIME: '+picking.status+' '+pickType);
+   const pickSource=await picking.text();
+   if(!pickSource.includes('export function drawerIndexForMesh')||pickSource.includes('<!doctype html>'))throw Error('Invalid deployed drawer picking module');
+   console.log('PASS hosted five-drawer raycast resolver ('+pickSource.length+' bytes)');
    const model=await fetch(BASE+'/previews/dh-11c/room/models/cabinet-prototype.glb?dh11c4=1',{headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)});
    if(!model.ok)throw Error('GLB asset HTTP '+model.status);
    const glb=Buffer.from(await model.arrayBuffer());
