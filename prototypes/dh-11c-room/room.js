@@ -751,6 +751,16 @@ function render(){
    const target=bookPosition(bookHome[i],state.books[i]);
    pullBooks[i].position.z=THREE.MathUtils.lerp(pullBooks[i].position.z,target,rate);
   }
+  // Reversible lift-and-tumble arcs. Reverse mid-flight without snapping.
+  for(let i=0;i<binPapers.length;i++){
+   const target=state.binPapers[i]?1:0;
+   const step=reduced.matches?1:delta*1.3;
+   binPaperProgress[i]=target>binPaperProgress[i]?
+    Math.min(target,binPaperProgress[i]+step):Math.max(target,binPaperProgress[i]-step);
+   const pose=binPaperPose(binPaperHomes[i],i,binPaperProgress[i]);
+   binPapers[i].position.set(pose.x,pose.y,pose.z);
+   binPapers[i].rotation.set(pose.rx,pose.ry,pose.rz);
+  }
   typeKeys.forEach((key,i)=>{
    const depth=activePress?pressDepth(clock.elapsedTime-activePress.at,i===activePress.index,reduced.matches):0;
    key.position.y=THREE.MathUtils.lerp(key.position.y,typeKeyHomes[i]-depth,rate);
@@ -878,6 +888,8 @@ if(furnitureModelProof){
     };
     const papers=Array.from({length:PAPER_LIMIT},(_,i)=>get('desk_paper_'+String(i).padStart(2,'0')));
     papers.forEach((mesh,i)=>{mesh.userData.paperIndex=i;});
+    const crumples=Array.from({length:BIN_PAPER_COUNT},(_,i)=>get('bin_paper_'+i));
+    crumples.forEach((mesh,i)=>{mesh.userData.binPaperIndex=i;});
     const books=[];
     for(let shelf=0;shelf<4;shelf++)for(let b=0;b<20;b++)
      if(featuredBook(shelf,b))books.push(get('book_'+shelf+'_'+String(b).padStart(2,'0')));
@@ -905,6 +917,8 @@ if(furnitureModelProof){
     paperStacks.splice(0,paperStacks.length,...papers);
     pullBooks.splice(0,pullBooks.length,...books);
     bookHome=books.map(book=>book.position.z);
+    binPapers.splice(0,binPapers.length,...crumples);
+    binPaperHomes=crumples.map(binPaperHome);
     typeKeys.splice(0,typeKeys.length,...keys);
     typeKeyHomes=keys.map(k=>k.position.y);
     typePaper=typeSheet;typePaperHome=typeSheet.position.y;typePaperHomeScaleY=typeSheet.scale.y;
