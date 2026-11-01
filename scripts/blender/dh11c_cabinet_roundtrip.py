@@ -97,7 +97,7 @@ def main():
     scene["davehub_source_glb_sha256"] = sha256(args.input)
     scene["davehub_drawer_axis_export"] = "+Z (glTF Y-up)"
     scene["davehub_travel_metres"] = 0.76
-    scene.render.engine = "BLENDER_EEVEE_NEXT" if bpy.app.version >= (4, 2, 0) else "BLENDER_EEVEE"
+    # This is a modelling/export pipeline; no render-engine selection is needed.
     bpy.ops.wm.save_as_mainfile(filepath=os.path.abspath(args.blend), check_existing=False, compress=True)
 
     # Preserve independent glTF child nodes and the imported UV0/material
