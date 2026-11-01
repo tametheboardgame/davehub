@@ -1,4 +1,5 @@
 import * as THREE from './vendor/three-r159.module.min.js';
+import {drawerIndexForMesh} from './drawer-picking.mjs';
 
 const plan=window.DH11RoomPlan;
 if(!plan)throw Error('Missing DH-11C.2 room coordinates');
@@ -439,18 +440,27 @@ function renderControls(id){
 for(const b of focusButtons)b.addEventListener('click',()=>focus(b.dataset.focus));
 homeButton.addEventListener('click',home);
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&state.focus){e.preventDefault();home();}});
-function objectFromEvent(event){
+function pickFromEvent(event){
  if(!renderer)return null;
  const rect=canvas.getBoundingClientRect();
  if(rect.width===0||rect.height===0)return null;
  pointer.set(((event.clientX-rect.left)/rect.width)*2-1,-((event.clientY-rect.top)/rect.height)*2+1);
  raycaster.setFromCamera(pointer,camera);
  const hits=raycaster.intersectObjects(selectable,false);
- return hits[0]?.object?.userData?.objectId||null;
+ // Raycaster returns nearest meshes first. Identify the drawer that owns the
+ // actual hit mesh, not the cabinet as a whole or its first child.
+ const mesh=hits[0]?.object;
+ const id=mesh?.userData?.objectId;
+ if(!id)return null;
+ return {id,drawerIndex:id==='cabinet'?drawerIndexForMesh(mesh,cabinetDrawers):null};
 }
 canvas.addEventListener('pointermove',event=>{
- const hovered=objectFromEvent(event);
- if(hovered!==currentHover){currentHover=hovered;canvas.classList.toggle('interactive',!!hovered);canvas.title=hovered?'Explore '+plan.find(hovered).label:'';}
+ const pick=pickFromEvent(event);
+ const hovered=pick?.id||null;
+ if(hovered!==currentHover){currentHover=hovered;canvas.classList.toggle('interactive',!!hovered);}
+ canvas.title=pick?.drawerIndex!==null&&pick?.drawerIndex!==undefined
+  ?drawerNames[pick.drawerIndex]+' drawer'
+  :hovered?'Explore '+plan.find(hovered).label:'';
 });
 canvas.addEventListener('pointerleave',()=>{currentHover=null;canvas.classList.remove('interactive');canvas.title='';});
 let pointerStart=null;
@@ -458,18 +468,36 @@ canvas.addEventListener('pointerdown',event=>{pointerStart={x:event.clientX,y:ev
 canvas.addEventListener('pointerup',event=>{
  if(!pointerStart||Math.hypot(pointerStart.x-event.clientX,pointerStart.y-event.clientY)>8){pointerStart=null;return;}
  pointerStart=null;
- const id=objectFromEvent(event);
- if(!id)return;
+ const pick=pickFromEvent(event);
+ if(!pick)return;
+ const {id,drawerIndex}=pick;
  if(state.focus===id){
-  if(id==='cabinet')state=plan.next(state,{type:'drawer',index:0});
-  else if(id==='desk')state=plan.next(state,{type:'paper'});
-  else if(id==='bookcase')state=plan.next(state,{type:'book'});
-  else if(id==='typewriter')state=plan.next(state,{type:'type'});
-  else if(id==='bin')state=plan.next(state,{type:'bin'});
-  else if(id==='door')state=plan.next(state,{type:'door'});
+  if(id==='cabinet'){
+   // The cabinet case/rails are not drawers. Only a hit inside a named
+   // drawer group should toggle its own state.
+   if(drawerIndex===null)return;
+   state=plan.next(state,{type:'drawer',index:drawerIndex});
+   status.textContent=drawerNames[drawerIndex]+
+    (state.drawer===drawerIndex?' drawer opened.':' drawer closed.');
+  }else{
+   if(id==='desk')state=plan.next(state,{type:'paper'});
+   else if(id==='bookcase')state=plan.next(state,{type:'book'});
+   else if(id==='typewriter')state=plan.next(state,{type:'type'});
+   else if(id==='bin')state=plan.next(state,{type:'bin'});
+   else if(id==='door')state=plan.next(state,{type:'door'});
+   status.textContent=plan.find(id).label+' responds to your interaction.';
+  }
   renderControls(id);
-  status.textContent=plan.find(id).label+' responds to your interaction.';
- }else focus(id);
+ }else{
+  focus(id);
+  // A drawer hit in the overview identifies the drawer as well as the
+  // cabinet, so the first click opens that drawer after selecting the view.
+  if(id==='cabinet'&&drawerIndex!==null){
+   state=plan.next(state,{type:'drawer',index:drawerIndex});
+   status.textContent=drawerNames[drawerIndex]+' drawer opened.';
+   renderControls('cabinet');
+  }
+ }
 });
 function resize(){
  if(!renderer)return;
