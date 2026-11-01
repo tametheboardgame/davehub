@@ -290,13 +290,40 @@ typePaperHome=typePaper.position.y;typePaperHomeScaleY=typePaper.scale.y;
 typePaperRuleHome=typePaperRule.position.y;typePlatenHome=typePlaten.quaternion.clone();
 
 const pullBooks=[];
-// Subtle warm glint marks the eight books that genuinely move, without
-// recolouring the 72 ordinary volumes or altering the GLB geometry.
+// Eight interactive books get unmistakable jewel-turquoise bindings and
+// three gilded spine marks. The unlit gilt stays vivid in the dim study.
+const FEATURE_BOOK_COLOUR='#24f5da';
+const featureBookGilt=new THREE.MeshBasicMaterial({color:'#ffe681',toneMapped:false});
+function featuredBookColour(mesh){
+ mesh.material.color.set(FEATURE_BOOK_COLOUR);
+ if(mesh.material.emissive){
+  mesh.material.emissive.set('#0f9f9e');
+  mesh.material.emissiveIntensity=.85;
+ }
+}
 function markFeaturedBook(mesh,index){
  mesh.userData.featuredBookIndex=index;
  mesh.material=mesh.material.clone();
- mesh.material.emissive.set('#a87638');
- mesh.material.emissiveIntensity=.36;
+ featuredBookColour(mesh);
+ if(!mesh.geometry.boundingBox)mesh.geometry.computeBoundingBox();
+ const bounds=mesh.geometry.boundingBox;
+ // glTF uses a unit box plus mesh.scale, while the procedural fallback has
+ // real-sized BoxGeometry. Compensate for that scale in all three dimensions.
+ const dx=bounds.max.x-bounds.min.x,dy=bounds.max.y-bounds.min.y;
+ const sy=Math.max(Math.abs(mesh.scale.y),.0001);
+ const sz=Math.max(Math.abs(mesh.scale.z),.0001);
+ const x=(bounds.min.x+bounds.max.x)/2,z=bounds.max.z+.004/sz;
+ for(const [n,part,width,height] of [
+  [0,.18,.9,.025],[1,.5,.58,.095],[2,.82,.9,.025]
+ ]){
+  const accent=new THREE.Mesh(
+   new THREE.BoxGeometry(dx*width,height/sy,.006/sz),featureBookGilt);
+  accent.position.set(x,bounds.min.y+dy*part,z);
+  accent.name='featured_book_gilt_'+index+'_'+n;
+  // The gilt can be clicked too, not only the coloured book underneath.
+  accent.userData.featuredBookIndex=index;
+  mesh.add(accent);
+ }
 }
 function makeBookcase(){
  const g=group(scene,4.7,0,-3.85);
@@ -386,6 +413,8 @@ function setArtPreset(palette){
   if(palette[name]&&material.color)material.color.set(palette[name]);
  }
  bookMaterials.forEach((material,i)=>material.color.set(palette.bookSpines[i%palette.bookSpines.length]));
+ // Preserve highlighted bindings when an art-lab palette is selected.
+ pullBooks.forEach(featuredBookColour);
  scene.background.set(palette.backdrop);
  if(scene.fog)scene.fog.color.set(palette.backdrop);
  sceneLights.ambient.color.set(palette.ambient);
@@ -420,7 +449,7 @@ if(artLab){
 const copyById={
  desk:'Each sheet has two places on the desktop. Click a particular piece of paper to slide it out; click the same paper again to slide it back.',
  cabinet:'The five drawers belong to one physical cabinet. Each drawer is a collection of 3D surfaces that move together, never a pasted illustration.',
- bookcase:'Eight subtly highlighted books can be pulled out individually. Click one to slide it forward, then click it again to return it. The remaining books stay on their shelves.',
+ bookcase:'Find the eight turquoise books with gold spine markings. Click one to pull it forward, then click it again to return it. The other 72 books stay on their shelves.',
  typewriter:'The typewriter has separate keys, a roller and a paper sheet. Tap to press a key and advance the paper.',
  bin:'The bin contains crumpled, low-poly paper. Give the pile a rummage.',
  door:'The door opens on a real vertical hinge. It provides a way back towards the floating DaveHub islands.',
@@ -536,7 +565,7 @@ function renderControls(id){
  }
  else if(id==='bookcase'){
   const help=document.createElement('p');
-  help.textContent='Click one of the eight subtly highlighted spines to pull that book out. Click it again to return it.';
+  help.textContent='Look for the eight bright turquoise spines with gold markings. Click one to pull it out, or click it again to return it.';
   actions.append(help);
   const details=document.createElement('details'),summary=document.createElement('summary');
   summary.textContent='Select a book using keyboard controls';
