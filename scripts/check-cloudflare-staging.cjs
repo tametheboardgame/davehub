@@ -12,6 +12,7 @@ const checks=[
  {path:'/creations/unicorn-valley/',required:['<style data-davehub-inline="worlds">','Unicorn Valley','Play on DaveHub','href="/games/unicorn-valley/"','unicorn-valley.pages.dev','View development repository'],forbidden:['DESIGN REVIEW ONLY']},
  {path:'/creations/stephen-martin-project/',required:['<style data-davehub-inline="worlds">','The Stephen Martin Project','Play on DaveHub','href="/games/stephen-martin/"','stephen-martin-project.pages.dev'],forbidden:['DESIGN REVIEW ONLY']},
  {path:'/creations/tame-the-board-game/',required:['<style data-davehub-inline="worlds">','Tame The Board Game','Miriam','tametheboardgame.com/about/'],forbidden:['DESIGN REVIEW ONLY']},
+ {path:'/previews/dh-11c/room-shell/',required:['DH-11C.4E','data-shell-model-proof="true"','../room/room-shell-asset.js','id="shell-model-status"','data-immersive-room="true"'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/architecture/',required:['DH-11C.4C','data-shell-proof="true"','data-blender-compare="true"','data-immersive-room="true"','./immersive.css','./immersive-ui.js','id="prototype-tools"','id="scene-nav"','../room/room-shell-plan.js','../cabinet-glb/'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/cabinet-glb/',required:['DH-11C.4A','data-glb-proof="true"','id="glb-extension"','data-glb-snap="50"','../room/room.js'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/art-lab/',required:['DH-11C.3A','data-art-lab="true"','data-palette="amber-ink"','data-palette="moonlit-archive"','data-palette="golden-storybook"','../room/room.js'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
@@ -50,6 +51,14 @@ async function main(){
    const hash=crypto.createHash('sha256').update(blenderGlb).digest('hex');
    if(blenderGlb.length!==26164||hash!=='051e4abdb015799282234ea50b14cd179cb335ee496dbfdf965a4f1081abbf8a')throw Error('Staging Blender export differs from verified source');
    console.log('PASS verified Blender cabinet GLB on Cloudflare, sha256 '+hash);
+   const shell=await fetch(BASE+'/previews/dh-11c/room/models/room-shell-source.glb?dh11c4e=1',{headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)});
+   if(!shell.ok)throw Error('Room shell GLB asset HTTP '+shell.status);
+   const shellBytes=Buffer.from(await shell.arrayBuffer());
+   if(shellBytes.length<2000||shellBytes.readUInt32LE(0)!==0x46546c67||shellBytes.readUInt32LE(4)!==2||shellBytes.readUInt32LE(8)!==shellBytes.length)throw Error('Invalid deployed room shell GLB');
+   const expectedShell=require('./build-dh11c4e-shell-glb.cjs').build().sha256;
+   const actualShell=crypto.createHash('sha256').update(shellBytes).digest('hex');
+   if(expectedShell!==actualShell)throw Error('Deployed room model differs from source manifest');
+   console.log('PASS hosted room GLB sha256 '+actualShell);
    console.log('PASS: Cloudflare serves three approved creation pages, accessible live worlds and separate layout-only previews.');
    for(const r of results)console.log('PASS '+r.path+' ('+r.bytes+' HTML bytes)');
    return;
