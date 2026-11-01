@@ -448,7 +448,7 @@ function setArtPreset(palette){
  sceneLights.sun.intensity=palette.sunIntensity;
  sceneLights.lamp.color.set(palette.lamp);
  sceneLights.lamp.userData.litIntensity=palette.lampIntensity;
- sceneLights.lamp.intensity=state.lampOn?palette.lampIntensity:0;
+ sceneLights.lamp.intensity=palette.lampIntensity;
  sceneLights.window.color.set(palette.window);
  sceneLights.window.intensity=palette.windowIntensity;
  if(renderer)renderer.toneMappingExposure=palette.exposure;
