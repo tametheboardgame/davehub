@@ -116,6 +116,9 @@ node scripts/build-dh11c4e-blender-model.cjs dist/previews/dh-11c/room/models/ro
 node scripts/render-dh11c4e-room.cjs dist/previews/dh-11c/room-shell
 cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js dist/previews/dh-11c/architecture/
 node scripts/render-dh11c4c-architecture.cjs dist/previews/dh-11c/architecture
+# DH-11C.4E derives the same immersive page but lives in a sibling folder.
+# Every relative stylesheet/script must be shipped in that sibling too.
+cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js dist/previews/dh-11c/room-shell/
 cp content/examples/fictional.json dist/previews/dh-08/catalogue.json
 cp content/public/catalogue.json dist/content/catalogue.json
 cp assets/content/worlds.css assets/content/dh11-worlds.css dist/assets/content/
