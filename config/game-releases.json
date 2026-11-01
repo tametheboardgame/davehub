@@ -13,10 +13,10 @@
     {
       "id": "unicorn-valley",
       "repository": "tametheboardgame/unicorn-valley",
-      "commit": "473506e229b7710e6f6f42e079e808825279c1e4",
+      "commit": "d45acf0c76f819da70a554e10cbba9aadab7265f",
       "output": "games/unicorn-valley",
       "build": "vite-subpath",
-      "version": "main-ci-40093204337",
+      "version": "main-ci-41304318832",
       "catalogueId": "unicorn-valley"
     }
   ]
