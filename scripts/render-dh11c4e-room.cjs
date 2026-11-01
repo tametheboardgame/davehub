@@ -11,10 +11,10 @@ function render(source){
  '<body data-glb-proof="true" data-shell-proof="true" data-blender-compare="true" data-immersive-room="true" data-shell-model-proof="true">');
  put('<script defer src="../room/room-shell-plan.js"></script>',
  '<script defer src="../room/room-shell-plan.js"></script>\n<script defer src="../room/room-shell-asset.js"></script>');
- put('VERIFIED BLENDER MODEL AND OPEN ARCHITECTURE','ROOM-SHELL ASSET PIPELINE');
+ put('VERIFIED BLENDER MODEL AND OPEN ARCHITECTURE','BLENDER ROOM-SHELL ASSET');
  put('Look through the room, not through a picture','Inspect the first exportable room shell');
  put('This test loads the cabinet GLB exported by Blender 4.0.2 and independently validated in DH-11C.4B. Seven real wall segments make two structural openings instead of hiding intact walls behind decorative images. Choose Door or Window below to see through them, or inspect the cabinet as before.',
- 'The complete architectural shell is modelled from one coordinate manifest and loaded as a GLB, with real openings, floor planks, beams, rug and corridor. The existing Blender-exported cabinet still has five working drawers. A separate GitHub job generates and validates an editable Blender room master; the preview initially loads the deterministic source GLB to protect visual parity.');
+ 'The complete architectural shell is modelled from one coordinate manifest and loaded as a GLB, with real openings, floor planks, beams, rug and corridor. The existing Blender-exported cabinet still has five working drawers. A separate GitHub job generates and validates an editable Blender room master; the preview loads the actual Blender-exported GLB, with a fallback model created from the same geometry manifest.');
  put('  <section class="glb-proof-controls" aria-label="Cabinet GLB geometry proof">',
  '  <section class="glb-proof-controls" aria-label="Cabinet GLB geometry proof">\n   <p id="shell-model-status" role="status" aria-live="polite">Loading exportable room shell model…</p>');
  put('This is a same-geometry architectural and model comparison, not final textured art. The older procedural cabinet and original room remain available, and no manuscripts or production pages are changed.',
