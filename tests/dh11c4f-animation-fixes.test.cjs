@@ -87,7 +87,7 @@ test('all thirteen slide paths remain flat and clear of desk furniture, not just
  }
 });
 test('typewriter every press creates a new visible timed key movement and paper advance',async()=>{
- const {pressDepth,paperAdvance,typedKeyIndex,TYPE_KEY_COUNT}=await import('../prototypes/dh-11c-room/furniture-motion.mjs');
+ const {pressDepth,paperAdvance,typewriterFeed,TYPE_PAPER_HEIGHT,TYPE_PLATEN_RADIUS,typedKeyIndex,TYPE_KEY_COUNT}=await import('../prototypes/dh-11c-room/furniture-motion.mjs');
  assert.equal(TYPE_KEY_COUNT,24);
  assert.equal(pressDepth(0,true),0);
  assert.ok(pressDepth(.22,true)>.06,'key must visibly travel');
@@ -97,6 +97,28 @@ test('typewriter every press creates a new visible timed key movement and paper 
  assert.equal(paperAdvance(0),0);
  assert.equal(paperAdvance(1),.006);
  assert.ok(paperAdvance(10)>.05,'paper advances clearly after several key presses');
+ // No visible gap at any intermediate frame: the physical bottom stays
+ // at 0.68 - 0.58/2 = 0.39, even when the page gets longer.
+ assert.equal(TYPE_PAPER_HEIGHT,.58);
+ assert.equal(TYPE_PLATEN_RADIUS,.056);
+ const paperBottom=.68-TYPE_PAPER_HEIGHT/2;
+ for(const typed of [0,1,5,10,25,60]){
+  const feed=typewriterFeed(typed);
+  const travel=paperAdvance(typed);
+  assert.ok(Math.abs(feed.scale-(1+travel/.58))<1e-12);
+  assert.ok(Math.abs(feed.centreLift-travel/2)<1e-12);
+  assert.ok(Math.abs(feed.rollerAngle-travel/.056)<1e-12);
+  const top=.68+feed.centreLift+TYPE_PAPER_HEIGHT*feed.scale/2;
+  const bottom=.68+feed.centreLift-TYPE_PAPER_HEIGHT*feed.scale/2;
+  assert.ok(Math.abs(bottom-paperBottom)<1e-10,'paper bottom floats away at '+typed+' keys');
+  assert.ok(Math.abs(top-(.68+TYPE_PAPER_HEIGHT/2+travel))<1e-10,'top must emerge from roller');
+  for(const fraction of [.1,.4,.7]){
+   const liveScale=1+(feed.scale-1)*fraction;
+   const liveY=.68+(liveScale-1)*TYPE_PAPER_HEIGHT/2;
+   assert.ok(Math.abs(liveY-liveScale*TYPE_PAPER_HEIGHT/2-paperBottom)<1e-10,
+    'contact with platen must hold during easing, not just endpoints');
+  }
+ }
  assert.equal(typedKeyIndex('typewriter_key_1_4'),12);
  assert.equal(typedKeyIndex('typewriter_key_2_7'),23);
  assert.equal(typedKeyIndex('typewriter_body'),null);
@@ -106,6 +128,15 @@ test('typewriter every press creates a new visible timed key movement and paper 
   assert.ok(nodes.has('typewriter_key_'+row+'_'+key),'missing actual GLB key '+row+'/'+key);
  assert.ok(nodes.has('typewriter_paper'));
  assert.ok(nodes.has('typewriter_platen'));
+ assert.ok(nodes.has('typewriter_paper_rule'));
+ const cylinder=manifest.nodes.find(n=>n.name==='typewriter_platen');
+ const sheet=manifest.nodes.find(n=>n.name==='typewriter_paper');
+ assert.deepEqual(cylinder.rotation,[0,0,Math.PI/2],'platen starts along X, not Y');
+ assert.deepEqual(sheet.size,[.64,.58,.02],'sheet feeds upwards from a 58cm original height');
+ // A 90° Z rotation maps the cylinder's local Y axis onto negative X.
+ const axisAfterRestRotation=[-Math.sin(cylinder.rotation[2]),Math.cos(cylinder.rotation[2]),0];
+ assert.ok(Math.abs(axisAfterRestRotation[0]+1)<1e-10);
+ assert.ok(Math.abs(axisAfterRestRotation[1])<1e-10);
 });
 test('exactly eight deliberate featured books exist physically in the GLB, matching the button cycle',async()=>{
  const {featuredBook,FEATURED_BOOK_COUNT}=await import('../prototypes/dh-11c-room/furniture-motion.mjs');
@@ -131,12 +162,24 @@ test('source and Blender-mapped runtime each wire paper sheets, every key and pl
   "paperPose(home,i,state.papers[i])","const keys=Array.from({length:TYPE_KEY_COUNT}",
   "typeKeys.splice(0,typeKeys.length,...keys)","typeKeyHomes=keys.map",
   "typePaper=typeSheet","typePlaten=platen",
-  "pressDepth(clock.elapsedTime-activePress.at","paperAdvance(state.typed)",
+  "pressDepth(clock.elapsedTime-activePress.at","typewriterFeed(state.typed)",
+  "platenSpin.setFromAxisAngle(platenAxis,feed.rollerAngle)",
+  "platenTarget.copy(typePlatenHome).multiply(platenSpin)",
+  "typePlaten.quaternion.slerp(platenTarget,rate)",
+  "typePaper.scale.y=THREE.MathUtils.lerp", "typePaper.position.y=typePaperHome+actualFeed/2",
+  "typePaperRule.position.y=typePaperRuleHome+actualFeed",
   "typedKeyIndex(mesh.name)","paperIndexForMesh(mesh.name)","mesh.userData.paperIndex=i","activePress={index:selected,at:clock.elapsedTime}",
   "togglePaper(paperIndex)","pressTypewriter(keyIndex)"
  ])assert.ok(room.includes(marker),'missing animation wiring '+marker);
  assert.doesNotMatch(room,/\.1\*Math\.sin\(i\*1\.9\)/);
  assert.doesNotMatch(room,/state\.typed>0\?-.025:0/);
+ assert.doesNotMatch(room,/typePlaten\.rotation\.y=/,'platen must never yaw around the room Y axis');
+ assert.doesNotMatch(room,/typePaperHome\+paperAdvance\(state\.typed\)/,'paper may not lift wholesale off the roller');
+ for(const fragment of [
+  "typePaperHomeScaleY=typePaper.scale.y", "typePaperRuleHome=typePaperRule.position.y",
+  "typePaperHomeScaleY=typeSheet.scale.y", "typePaperRuleHome=typeRule.position.y",
+  "typePlatenHome=typePlaten.quaternion.clone()","typePlatenHome=platen.quaternion.clone()"
+ ])assert.ok(room.includes(fragment),'GLB and procedural rest transforms required: '+fragment);
  const furnitureKeys=manifest.nodes.filter(n=>n.name.startsWith('typewriter_key_'));
  assert.equal(furnitureKeys.length,24);
  const p=cp.spawnSync(process.execPath,['--input-type=module','--check'],{input:room,encoding:'utf8'});
