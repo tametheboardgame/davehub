@@ -101,5 +101,20 @@
   return Object.freeze({name,width:size,height:size,pixels,
    roughness:config.roughness,metalness:config.metalness??.03});
  }
- return Object.freeze({SIZE,profiles,generate});
+ // Classify existing verified cabinet GLB part names. No added geometry,
+ // altered transforms, or material changes to the legacy cabinet proof.
+ function cabinetFinishForNode(name){
+  if(typeof name!=='string')return null;
+  if(/^case_(?:back|left|right|top|bottom|divider_[0-3])$/.test(name))return 'cabinetCase';
+  if(/^front_divider_trim_[0-3]$/.test(name)||/^track_(?:left|right)_(?:finished|drafts|oddities|fragments|field_notes)$/.test(name))
+   return 'cabinetTrim';
+  if(/^front_face_(?:finished|drafts|oddities|fragments|field_notes)$/.test(name))return 'cabinetDrawer';
+  if(/^brass_handle_(?:finished|drafts|oddities|fragments|field_notes)$/.test(name))return 'cabinetBrass';
+  if(/^label_plate_(?:finished|drafts|oddities|fragments|field_notes)$/.test(name))return 'cabinetLabel';
+  if(/^tray_(?:floor|left|right|rear)_(?:finished|drafts|oddities|fragments|field_notes)$/.test(name))return 'cabinetTray';
+  const folder=/^folder_(?:finished|drafts|oddities|fragments|field_notes)_([0-3])$/.exec(name);
+  if(folder)return 'cabinetFolder'+(Number(folder[1])%2);
+  return null;
+ }
+ return Object.freeze({SIZE,profiles,generate,cabinetFinishForNode});
 });
