@@ -41,7 +41,7 @@ test('isolated full-viewport architecture preview loads room shell without alter
  const room=read('prototypes/dh-11c-room/room.js');
  assert.match(room,/if\(shellModelProof\)/);
  assert.match(room,/room_shell_root/);
- assert.match(room,/\.\.\/room\/models\/room-shell-source\.glb/);
+ assert.match(room,/\.\.\/room\/models\/room-shell-blender-verified\.glb/);
  assert.match(room,/shellFallback\.visible=false/);
  assert.match(room,/render\(\)/);
  assert.doesNotMatch(html,/The Last Lightkeeper|The Clock of Tomorrow/);
