@@ -7,15 +7,19 @@ export function featuredBook(shelf, book) {
  return Number.isInteger(shelf) && Number.isInteger(book) &&
   shelf >= 0 && shelf < 4 && book >= 0 && book < 20 && (book + shelf) % 10 === 0;
 }
+// Papers are rigid flat sheets resting on the writing surface. Move them
+// IN the tabletop plane: X/Z slide, Y-axis yaw. Never lift or roll a sheet,
+// which previously made it appear to float or clip through the desk.
 export function paperPose(home, index, moved) {
  const active = index < moved;
- const direction = index % 2 ? -1 : 1;
+ // Sheets at the left edge always travel inwards, not off the tabletop.
+ const direction = index % 5 === 0 ? 1 : (index % 2 ? -1 : 1);
  return {
-  x: home.x + (active ? direction * .32 : 0),
-  y: home.y + (active ? .075 + index % 3 * .012 : 0),
-  z: home.z + (active ? (index % 3 - 1) * .19 : 0),
-  yaw: home.yaw + (active ? direction * .28 : 0),
-  tilt: home.tilt + (active ? direction * .105 : 0)
+  x: home.x + (active ? direction * .23 : 0),
+  y: home.y,
+  z: home.z + (active ? (index % 3 - 1) * .10 : 0),
+  yaw: home.yaw + (active ? direction * .17 : 0),
+  tilt: home.tilt
  };
 }
 export function pressDepth(ageSeconds, isSelected, reducedMotion = false) {
