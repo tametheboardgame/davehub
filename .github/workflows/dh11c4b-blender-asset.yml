@@ -1,0 +1,69 @@
+name: DH-11C.4B Cabinet Blender Source and GLB Validation
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/blender/dh11c_cabinet_roundtrip.py'
+      - 'scripts/build-dh11c4-cabinet-glb.cjs'
+      - 'scripts/validate-dh11c4b-blender.cjs'
+      - 'tests/dh11c4b-blender.test.cjs'
+      - '.github/workflows/dh11c4b-blender-asset.yml'
+  push:
+    branches: [staging]
+    paths:
+      - 'scripts/blender/dh11c_cabinet_roundtrip.py'
+      - 'scripts/build-dh11c4-cabinet-glb.cjs'
+      - 'scripts/validate-dh11c4b-blender.cjs'
+      - 'tests/dh11c4b-blender.test.cjs'
+      - '.github/workflows/dh11c4b-blender-asset.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  blender-asset:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Check out DaveHub geometry source
+        uses: actions/checkout@v4
+      - name: Use the pinned Node runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install headless Blender from Ubuntu packages
+        run: |
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq blender
+          blender --version | head -n 2
+      - name: Generate authoritative first-party cabinet geometry
+        run: |
+          mkdir -p reports/dh11c4b
+          node scripts/build-dh11c4-cabinet-glb.cjs reports/dh11c4b/source-cabinet.glb
+      - name: Build editable Blender master and re-export GLB
+        run: |
+          blender --background --factory-startup --python scripts/blender/dh11c_cabinet_roundtrip.py -- \
+            --input reports/dh11c4b/source-cabinet.glb \
+            --blend reports/dh11c4b/manuscript-cabinet.blend \
+            --output reports/dh11c4b/cabinet-blender.glb \
+            --report reports/dh11c4b/model-report.json
+      - name: Validate actual exported geometry, axes and component hierarchy
+        run: |
+          node scripts/validate-dh11c4b-blender.cjs \
+            reports/dh11c4b/source-cabinet.glb \
+            reports/dh11c4b/cabinet-blender.glb \
+            reports/dh11c4b/model-report.json
+          node --test tests/dh11c4b-blender.test.cjs
+      - name: Upload editable master and exported 3D asset for review
+        uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: dh11c4b-cabinet-blender-model
+          path: |
+            reports/dh11c4b/source-cabinet.glb
+            reports/dh11c4b/manuscript-cabinet.blend
+            reports/dh11c4b/cabinet-blender.glb
+            reports/dh11c4b/model-report.json
+          if-no-files-found: error
+          retention-days: 30
