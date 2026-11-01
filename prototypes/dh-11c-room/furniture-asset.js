@@ -36,7 +36,9 @@
  box('desk_apron',base,'darkwood',[4.04,.4,.12],[0,1,.94]);
  for(let i=0;i<13;i++){
   const x=-1.76+(i%5)*.67,z=-.66+Math.floor(i/5)*.52;
-  box('desk_paper_'+String(i).padStart(2,'0'),base,'paper',[.49,.012,.32],[x,1.41+(i%4)*.022,z],[0,(i%3-1)*.22,0]);
+  // Desk surface top is 1.29 + .20/2 = 1.39m. Paper half-thickness is .006m.
+  // Keep the first sheet 1mm above the surface, with sub-millimetre layer gaps.
+  box('desk_paper_'+String(i).padStart(2,'0'),base,'paper',[.49,.012,.32],[x,1.397+i*.00035,z],[0,(i%3-1)*.22,0]);
  }
  cyl('desk_lamp_shade',base,'brass',.28,.47,.31,[-1.67,2.32,-.43],10);
  cyl('desk_lamp_stem',base,'brass',.035,.035,.96,[-1.67,1.86,-.43]);
