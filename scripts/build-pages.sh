@@ -206,7 +206,7 @@ check('dist/previews/dh-11c/art-lab/index.html',['DH-11C.3A','data-art-lab="true
 check('dist/previews/dh-11c/room/index.html',['DH-11C.2','id="room-canvas"','room.js','room-plan.js','object-list']);
 check('dist/previews/dh-11c/room/drawer-picking.mjs',['export function drawerIndexForMesh','indexByGroup','return null']);
 check('dist/previews/dh-11c/room/furniture-motion.mjs',['export function paperPose','export const PAPER_LIMIT = 13','PAPER_END_POSITIONS','export function paperIndexForMesh','export function pressDepth','export function typewriterFeed','TYPE_PAPER_HEIGHT','TYPE_PLATEN_RADIUS','export function featuredBook']);
-check('dist/previews/dh-11c/room/room.js',["from './furniture-motion.mjs'",'paperPose(home,i,state.papers[i])','paperIndexForMesh(mesh.name)','togglePaper(paperIndex)','pressDepth(clock.elapsedTime-activePress.at)','typewriterFeed(state.typed)','typePaper.scale.y=THREE.MathUtils.lerp','platenTarget.copy(typePlatenHome).multiply(platenSpin)','typePlaten.quaternion.slerp(platenTarget,rate)']);
+check('dist/previews/dh-11c/room/room.js',["from './furniture-motion.mjs'",'paperPose(home,i,state.papers[i])','paperIndexForMesh(mesh.name)','togglePaper(paperIndex)','pressDepth(clock.elapsedTime-activePress.at','typewriterFeed(state.typed)','typePaper.scale.y=THREE.MathUtils.lerp','platenTarget.copy(typePlatenHome).multiply(platenSpin)','typePlaten.quaternion.slerp(platenTarget,rate)']);
 check('dist/previews/dh-11c/room/room.js',["from './drawer-picking.mjs'",'drawerIndexForMesh(mesh,cabinetDrawers)']);
 check('dist/previews/dh-11c/cabinet/index.html',['id="cabinet-model"','id="cabinet-slots"','cabinet-math.js','cabinet.js','cabinet.css']);
 check('dist/previews/dh-08c/index.html',[
