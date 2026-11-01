@@ -157,13 +157,13 @@ if(shellModelProof){
  const output=document.getElementById('shell-model-status');
  const report=message=>{if(output)output.textContent=message;};
  import('./vendor/GLTFLoader-r159.js').then(({GLTFLoader})=>{
-  new GLTFLoader().load('../room/models/room-shell-source.glb',gltf=>{
+  new GLTFLoader().load('../room/models/room-shell-blender-verified.glb',gltf=>{
    if(!gltf.scene.getObjectByName('room_shell_root'))throw Error('Room shell GLB root missing');
    const model=gltf.scene;model.name='room_shell_glb';
    model.traverse(o=>{if(o.isMesh)o.userData.architecture=true;});
    scene.add(model);
    if(shellFallback)shellFallback.visible=false;
-   report('Room architecture loaded from the GLB: floor, beams, genuine door/window openings and corridor. The rest of the scene is unchanged.');
+   report('Blender-exported room architecture loaded: floor, beams, genuine door/window openings and corridor. The rest of the scene is unchanged.');
   },undefined,error=>{
    console.warn('Room GLB failed to load',error);
    report('Architecture GLB could not load. Rendering the identical source geometry as a safe fallback.');
