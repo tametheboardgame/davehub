@@ -51,6 +51,20 @@ test('isolated full-viewport architecture preview loads room shell without alter
  assert.match(room,/render\(\)/);
  assert.doesNotMatch(html,/The Last Lightkeeper|The Clock of Tomorrow/);
 });
+test('new room-shell preview retains every physical immersive style and script asset',()=>{
+ const html=render(read('prototypes/dh-11c-room/index.html'));
+ for(const target of ['./immersive.css','./immersive-ui.js','./architecture.css']){
+  assert.ok(html.includes(target),target+' missing from rendered page');
+ }
+ const pipeline=read('scripts/build-pages.sh');
+ assert.ok(pipeline.includes('prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js dist/previews/dh-11c/room-shell/'),
+  'Pages build must copy runtime CSS/JS into the new room-shell directory');
+ assert.match(pipeline,/Unpublished room-shell dependency/);
+ const smoke=read('scripts/check-cloudflare-staging.cjs');
+ assert.match(smoke,/Room-shell asset .* wrong type/);
+ assert.match(smoke,/immersive\.css/);
+ assert.match(smoke,/immersive-ui\.js/);
+});
 test('Blender source master production and checks are real executable scripts',()=>{
  const python=read('scripts/blender/dh11c_room_shell.py');
  for(const m of ['bpy.ops.import_scene.gltf','bpy.ops.wm.save_as_mainfile','bpy.ops.export_scene.gltf',
