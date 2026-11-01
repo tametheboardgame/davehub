@@ -45,6 +45,7 @@ const artLab=typeof document!=='undefined'&&document.body.dataset.artLab==='true
 const glbProof=document.body.dataset.glbProof==='true';
 const shellProof=document.body.dataset.shellProof==='true';
 const shellModelProof=document.body.dataset.shellModelProof==='true';
+const furnitureModelProof=document.body.dataset.furnitureModelProof==='true';
 let shellFallback=null;
 const blenderCompare=document.body.dataset.blenderCompare==='true';
 let glbExtension=1;
@@ -387,8 +388,8 @@ const copyById={
 };
 let state=plan.next(null,{type:'init'});
 const drawerHome=cabinetDrawers.map(x=>x.position.z);
-const bookHome=pullBooks.map(x=>x.position.z);
-const typeHome=typeKey?.position.y||.19;
+let bookHome=pullBooks.map(x=>x.position.z);
+let typeHome=typeKey?.position.y||.19;
 let currentHover=null;
 function focus(id){
  if(!plan.find(id))return;
@@ -600,4 +601,64 @@ if(glbProof){
    report((blenderCompare?'Verified Blender-exported GLB loaded':'GLB loaded')+': five separate drawers, genuine open recesses and cabinet rails. Choose a drawer and scrub its extension.');
   },undefined,fail);
  }).catch(fail);
+}
+
+
+// DH-11C.4F: the normal room keeps its original furniture. Only the isolated
+// comparison page opts in to the modelled six-root furniture GLB. Swap all
+// six objects atomically, after verifying their animated pivots, and preserve
+// the procedural furniture if anything cannot be loaded or validated.
+if(furnitureModelProof){
+ const output=document.getElementById('furniture-model-status');
+ const report=message=>{if(output)output.textContent=message;};
+ const required=['desk','typewriter','bookcase','bin','door','window'];
+ import('./vendor/GLTFLoader-r159.js').then(({GLTFLoader})=>{
+  new GLTFLoader().load('../room/models/furniture-source.glb',gltf=>{
+   try{
+    const content=gltf.scene;
+    const next=new Map();
+    for(const id of required){
+     const model=content.getObjectByName(id+'_root');
+     if(!model)throw Error('Missing furniture GLB root '+id);
+     next.set(id,model);
+    }
+    const get=name=>{
+     const node=content.getObjectByName(name);
+     if(!node)throw Error('Missing interactive furniture node '+name);
+     return node;
+    };
+    const papers=Array.from({length:6},(_,i)=>get('desk_paper_'+String(i).padStart(2,'0')));
+    const books=[];
+    for(let shelf=0;shelf<4;shelf++)for(let b=0;b<20;b++)
+     if((b+shelf)%11===0)books.push(get('book_'+shelf+'_'+String(b).padStart(2,'0')));
+    const key=get('typewriter_key_1_4'),hinge=get('door_leaf_hinge');
+    const islands=Array.from({length:3},(_,i)=>get('window_island_'+i));
+    // No procedural object is removed until the complete model contract is
+    // satisfied. New raycast targets are registered together.
+    scene.add(content);
+    for(const id of required){
+     const previous=objects.get(id);
+     if(previous){
+      const old=new Set(previous.targets);
+      for(let i=selectable.length-1;i>=0;i--)if(old.has(selectable[i]))selectable.splice(i,1);
+      if(previous.group.parent)previous.group.parent.remove(previous.group);
+     }
+     capture(id,next.get(id));
+    }
+    loosePapers.splice(0,loosePapers.length,...papers);
+    paperStacks.splice(0, paperStacks.length,...Array.from({length:13},(_,i)=>get('desk_paper_'+String(i).padStart(2,'0'))));
+    pullBooks.splice(0,pullBooks.length,...books);
+    bookHome=books.map(book=>book.position.z);
+    typeKey=key;typeHome=key.position.y;doorLeaf=hinge;
+    islandGroups.splice(0,islandGroups.length,...islands);
+    report('Furniture GLB loaded: desk, separate papers, bookcase, books, typewriter keys, bin, hinged door and floating islands. Existing click and animation controls remain active.');
+   }catch(error){
+    console.error('Furniture GLB validation failed; retaining original furniture',error);
+    report('Furniture GLB did not pass structural checks. Original interactive room furniture remains visible.');
+   }
+  },undefined,error=>{
+   console.warn('Furniture GLB loading failed',error);
+   report('Furniture GLB could not load. Original room furniture remains available.');
+  });
+ }).catch(error=>{console.warn('Furniture model loader failed',error);report('GLB loader unavailable; original furniture remains active.');});
 }
