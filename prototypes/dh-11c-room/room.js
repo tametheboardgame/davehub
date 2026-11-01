@@ -157,7 +157,7 @@ if(shellModelProof){
  const output=document.getElementById('shell-model-status');
  const report=message=>{if(output)output.textContent=message;};
  import('./vendor/GLTFLoader-r159.js').then(({GLTFLoader})=>{
-  new GLTFLoader().load('./models/room-shell-source.glb',gltf=>{
+  new GLTFLoader().load('../room/models/room-shell-source.glb',gltf=>{
    if(!gltf.scene.getObjectByName('room_shell_root'))throw Error('Room shell GLB root missing');
    const model=gltf.scene;model.name='room_shell_glb';
    model.traverse(o=>{if(o.isMesh)o.userData.architecture=true;});
