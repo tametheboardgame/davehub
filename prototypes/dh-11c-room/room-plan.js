@@ -8,6 +8,7 @@
  // Metres in a single right-handed world: X left/right, Y up, Z towards camera.
  // All focus targets use the SAME perspective and never independent painted states.
  const DIMENSIONS=Object.freeze({width:14,height:6.4,depth:11});
+ const PAPER_COUNT=13;
  const HOME=Object.freeze({position:[0,4.2,12.9],target:[0,2.05,-1.5]});
  const OBJECTS=Object.freeze([
   Object.freeze({id:'desk',label:'Writing desk',position:[-.25,1.5,.4],camera:[-1.1,3.15,5.5],lookAt:[-.25,1.45,.3],action:'Inspect the papers'}),
@@ -24,14 +25,15 @@
  const find=id=>OBJECTS.find(x=>x.id===id)||null;
  const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
  function next(current,action){
-  const before=current||{focus:null,drawer:null,paper:0,book:0,typed:0,doorOpen:false};
+  const before=current||{focus:null,drawer:null,paper:0,papers:Array(PAPER_COUNT).fill(false),book:0,typed:0,doorOpen:false};
   if(!action||typeof action.type!=='string')return before;
   switch(action.type){
    case 'focus':return idSet.has(action.id)?{...before,focus:action.id}:before;
    case 'home':return {...before,focus:null};
    case 'drawer':return before.focus==='cabinet'&&Number.isInteger(action.index)&&action.index>=0&&action.index<5?
     {...before,drawer:before.drawer===action.index?null:action.index}:before;
-   case 'paper':return before.focus==='desk'?{...before,paper:(before.paper+1)%11}:before;
+   case 'paper':return before.focus==='desk'&&Number.isInteger(action.index)&&action.index>=0&&action.index<PAPER_COUNT?
+    {...before,papers:before.papers.map((moved,i)=>i===action.index?!moved:moved)}:before;
    case 'book':return before.focus==='bookcase'?{...before,book:(before.book+1)%8}:before;
    case 'type':return before.focus==='typewriter'?{...before,typed:clamp(before.typed+1,0,60)}:before;
    case 'bin':return before.focus==='bin'?{...before,paper:clamp(before.paper+1,0,10)}:before;
@@ -48,5 +50,5 @@
   return true;
  }
  validate();
- return Object.freeze({DIMENSIONS,HOME,OBJECTS,find,next,validate});
+ return Object.freeze({DIMENSIONS,HOME,OBJECTS,PAPER_COUNT,find,next,validate});
 });
