@@ -35,7 +35,7 @@ jobs:
       - name: Install headless Blender from Ubuntu packages
         run: |
           sudo apt-get update -qq
-          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq blender
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq blender python3-numpy
           blender --version | head -n 2
       - name: Generate authoritative first-party cabinet geometry
         run: |
@@ -43,6 +43,7 @@ jobs:
           node scripts/build-dh11c4-cabinet-glb.cjs reports/dh11c4b/source-cabinet.glb
       - name: Build editable Blender master and re-export GLB
         run: |
+          set -euo pipefail
           blender --background --factory-startup --python scripts/blender/dh11c_cabinet_roundtrip.py -- \
             --input reports/dh11c4b/source-cabinet.glb \
             --blend reports/dh11c4b/manuscript-cabinet.blend \
@@ -50,6 +51,7 @@ jobs:
             --report reports/dh11c4b/model-report.json
       - name: Validate actual exported geometry, axes and component hierarchy
         run: |
+          set -euo pipefail
           node scripts/validate-dh11c4b-blender.cjs \
             reports/dh11c4b/source-cabinet.glb \
             reports/dh11c4b/cabinet-blender.glb \
