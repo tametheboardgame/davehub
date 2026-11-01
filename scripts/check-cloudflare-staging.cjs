@@ -12,7 +12,7 @@ const checks=[
  {path:'/creations/unicorn-valley/',required:['<style data-davehub-inline="worlds">','Unicorn Valley','Play on DaveHub','href="/games/unicorn-valley/"','unicorn-valley.pages.dev','View development repository'],forbidden:['DESIGN REVIEW ONLY']},
  {path:'/creations/stephen-martin-project/',required:['<style data-davehub-inline="worlds">','The Stephen Martin Project','Play on DaveHub','href="/games/stephen-martin/"','stephen-martin-project.pages.dev'],forbidden:['DESIGN REVIEW ONLY']},
  {path:'/creations/tame-the-board-game/',required:['<style data-davehub-inline="worlds">','Tame The Board Game','Miriam','tametheboardgame.com/about/'],forbidden:['DESIGN REVIEW ONLY']},
- {path:'/previews/dh-11c/furniture/',required:['DH-11C.4F','data-furniture-model-proof="true"','data-immersive-room="true"','id="furniture-model-status"','dh11c5a-desk-v1','room.js?v=dh11c5a-desk-v1','room-plan.js?v=dh11c5a-desk-v1','desk-materials.js?v=dh11c5a-desk-v1'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
+ {path:'/previews/dh-11c/furniture/',required:['DH-11C.4F','data-furniture-model-proof="true"','data-immersive-room="true"','id="furniture-model-status"','dh11c5b-archive-v1','room.js?v=dh11c5b-archive-v1','room-plan.js?v=dh11c5b-archive-v1','desk-materials.js?v=dh11c5a-desk-v1','archive-materials.js?v=dh11c5b-archive-v1'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/room-shell/',required:['DH-11C.4E','data-shell-model-proof="true"','../room/room-shell-asset.js','id="shell-model-status"','data-immersive-room="true"'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/architecture/',required:['DH-11C.4C','data-shell-proof="true"','data-blender-compare="true"','data-immersive-room="true"','./immersive.css','./immersive-ui.js','id="prototype-tools"','id="scene-nav"','../room/room-shell-plan.js','../cabinet-glb/'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/cabinet-glb/',required:['DH-11C.4A','data-glb-proof="true"','id="glb-extension"','data-glb-snap="50"','../room/room.js'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
@@ -40,7 +40,7 @@ async function main(){
   try{
    const results=[];
    for(const c of checks){
-    const version=c.path==='/previews/dh-11c/furniture/'?'?dh11c5a-desk-v1=1':'?dh08d=1';
+    const version=c.path==='/previews/dh-11c/furniture/'?'?dh11c5b-archive-v1=1':'?dh08d=1';
     results.push({path:c.path,bytes:await inspect(BASE+c.path+version,c.required,c.forbidden)});
    }
    // A missing .css or .js may return Pages' HTML fallback with HTTP 200.
@@ -74,7 +74,7 @@ async function main(){
    for(const marker of ['export function paperPose','export function pressDepth','export function featuredBook','export function typedKeyIndex','export function binPaperPose','export function binPaperIndexForMesh','BIN_PAPER_FLOOR','BIN_PAPER_COUNT=9','export function lampPartForMesh'])
     if(!motionSource.includes(marker))throw Error('Deployed furniture motion module missing '+marker);
    console.log('PASS hosted furniture motion module: papers, bookcase, typewriter and nine bin crumples');
-   const binPlanResponse=await fetch(BASE+'/previews/dh-11c/room/room-plan.js?v=dh11c5a-desk-v1',{
+   const binPlanResponse=await fetch(BASE+'/previews/dh-11c/room/room-plan.js?v=dh11c5b-archive-v1',{
     headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)
    });
    if(!binPlanResponse.ok||!(binPlanResponse.headers.get('content-type')||'').includes('javascript'))
@@ -86,7 +86,7 @@ async function main(){
    // Explicitly validate the versioned live JavaScript, not just HTML
    // referencing a module. A stale JS response caused invisible highlighted
    // books despite all other smoke checks returning green.
-   const bookJs=await fetch(BASE+'/previews/dh-11c/room/room.js?v=dh11c5a-desk-v1',{
+   const bookJs=await fetch(BASE+'/previews/dh-11c/room/room.js?v=dh11c5b-archive-v1',{
     headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)
    });
    const bookType=bookJs.headers.get('content-type')||'';
@@ -107,6 +107,11 @@ async function main(){
     'crumples.forEach((mesh,i)=>{mesh.userData.binPaperIndex=i;})',
     "from './furniture-motion.mjs?v=dh11c4l-lamp-switch-v1'",
     "if(!deskKit)throw Error('Missing DH-11C.5A shared desk material maps')",
+    "const archiveKit=window.DH11ArchiveMaterials",
+    "archiveKit.cabinetFinishForNode(node.name)",
+    "if(finish)node.material=mats[finish]",
+    "mats['bookBinding'+materialIndex]",
+    "mesh.material.map=null;mesh.material.needsUpdate=true",
     "new THREE.DataTexture(source.pixels,source.width,source.height,THREE.RGBAFormat)",
     "const mesh=box(g,.49,.012,.32,mats['deskParchment'+i%3]",
     "box(g,4.5,.2,2.15,mats.deskWalnut,0,1.29,0)",
@@ -122,7 +127,7 @@ async function main(){
     "cap.name='desk_lamp_cap'",
     'lamp.position.set(-1.97,2.31,.17)',
     'const bulb=sphere(g,.065,mats.lampBulb,-1.67,2.345,-.43)',
-    'furniture-source.glb?v=dh11c5a-desk-v1'
+    'furniture-source.glb?v=dh11c5b-archive-v1'
    ]){
     if(!bookSource.includes(marker))throw Error('Stale furniture script on Cloudflare: missing '+marker);
    }
@@ -146,7 +151,18 @@ async function main(){
    for(const marker of ['DH11DeskMaterials','deskWalnut','deskParchment0','deskParchment1',
     'deskLeather','typewriterEnamel','lampLinen','function generate(name,size=SIZE)'])
     if(!deskSource.includes(marker))throw Error('Stale desk map generator: '+marker);
-   console.log('PASS hosted nine shared UV material recipes ('+deskSource.length+' bytes)');
+   console.log('PASS hosted nine approved desk UV material recipes ('+deskSource.length+' bytes)');
+   const archiveResponse=await fetch(BASE+'/previews/dh-11c/room/archive-materials.js?v=dh11c5b-archive-v1',{
+    headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)
+   });
+   if(!archiveResponse.ok||!(archiveResponse.headers.get('content-type')||'').includes('javascript'))
+    throw Error('Missing versioned archive texture recipe script');
+   const archiveText=await archiveResponse.text();
+   for(const marker of ['DH11ArchiveMaterials','shelfWalnut','bookBinding0','bookBinding6',
+    'cabinetCase','cabinetBrass','cabinetFolder0','cabinetFinishForNode']){
+    if(!archiveText.includes(marker))throw Error('Stale archive map recipe script: '+marker);
+   }
+   console.log('PASS hosted nineteen archive UV recipes ('+archiveText.length+' bytes)');
 
    const model=await fetch(BASE+'/previews/dh-11c/room/models/cabinet-prototype.glb?dh11c4=1',{headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)});
    if(!model.ok)throw Error('GLB asset HTTP '+model.status);
@@ -168,7 +184,7 @@ async function main(){
    const actualShell=crypto.createHash('sha256').update(shellBytes).digest('hex');
    if(expectedShell!==actualShell)throw Error('Deployed room model differs from source manifest');
    console.log('PASS hosted room GLB sha256 '+actualShell);
-   const fmodel=await fetch(BASE+'/previews/dh-11c/room/models/furniture-source.glb?v=dh11c5a-desk-v1',{headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)});
+   const fmodel=await fetch(BASE+'/previews/dh-11c/room/models/furniture-source.glb?v=dh11c5b-archive-v1',{headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)});
    if(!fmodel.ok)throw Error('Furniture GLB not deployed: '+fmodel.status);
    const furnitureBytes=Buffer.from(await fmodel.arrayBuffer());
    const furnitureHash=crypto.createHash('sha256').update(furnitureBytes).digest('hex');
@@ -177,15 +193,17 @@ async function main(){
     throw Error('Furniture GLB on Cloudflare does not match approved source geometry');
    const jsonSize=furnitureBytes.readUInt32LE(12);
    const furnitureJson=JSON.parse(furnitureBytes.subarray(20,20+jsonSize).toString('utf8').trimEnd());
-   if(furnitureJson.images?.length!==9||furnitureJson.textures?.length!==9)
-    throw Error('Deployed material-reference GLB missing nine embedded UV textures');
+   if(furnitureJson.images?.length!==20||furnitureJson.textures?.length!==20)
+    throw Error('Deployed material-reference GLB missing twenty embedded UV textures');
    for(const name of ['deskWalnut','deskFrame','deskParchment0','deskParchment1','deskParchment2',
-    'deskLeather','deskBrass','typewriterEnamel','lampShade']){
+    'deskLeather','deskBrass','typewriterEnamel','lampShade',
+    'shelfWalnut','shelfEdge','shelfLining','shelfGilt',
+    ...Array.from({length:7},(_,i)=>'book'+i)]){
     const mat=furnitureJson.materials.find(m=>m.name===name);
     if(!mat?.pbrMetallicRoughness?.baseColorTexture)
      throw Error('Deployed desk GLB missing PBR map for '+name);
    }
-   console.log('PASS hosted texture-embedded GLB SHA256 '+furnitureHash+' (9 PBR images)');
+   console.log('PASS hosted archive-textured GLB SHA256 '+furnitureHash+' (20 PBR images)');
    for(const name of ['immersive.css','immersive-ui.js','architecture.css','glb-proof.css']){
     const response=await fetch(BASE+'/previews/dh-11c/furniture/'+name+'?dh11c4f=1',{signal:AbortSignal.timeout(15000)});
     const type=response.headers.get('content-type')||'';
