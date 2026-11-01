@@ -151,7 +151,7 @@ function wallScene(){
  const lamp=new THREE.PointLight('#f1b982',26,7,2);
  // Centre the light at the actual desk lamp, not elsewhere over the desk.
  lamp.position.set(-1.97,2.31,.17);
- sceneLights.lamp=lamp;scene.add(lamp);
+ sceneLights.lamp=lamp;lamp.userData.litIntensity=26;scene.add(lamp);
  const glow=new THREE.PointLight('#92b8d9',15,9,2);
  glow.position.set(.25,3.7,-3.5);sceneLights.window=glow;scene.add(glow);
 }
@@ -447,7 +447,8 @@ function setArtPreset(palette){
  sceneLights.sun.color.set(palette.sun);
  sceneLights.sun.intensity=palette.sunIntensity;
  sceneLights.lamp.color.set(palette.lamp);
- sceneLights.lamp.intensity=palette.lampIntensity;
+ sceneLights.lamp.userData.litIntensity=palette.lampIntensity;
+ sceneLights.lamp.intensity=state.lampOn?palette.lampIntensity:0;
  sceneLights.window.color.set(palette.window);
  sceneLights.window.intensity=palette.windowIntensity;
  if(renderer)renderer.toneMappingExposure=palette.exposure;
@@ -778,7 +779,7 @@ function render(){
   const rate=reduced.matches?1:1-Math.exp(-5.5*delta);
   // The bulb and actual point light share one state. Fade both so switching
   // it off genuinely darkens the desk, rather than just changing button text.
-  sceneLights.lamp.intensity=THREE.MathUtils.lerp(sceneLights.lamp.intensity,state.lampOn?26:0,rate);
+  sceneLights.lamp.intensity=THREE.MathUtils.lerp(sceneLights.lamp.intensity,state.lampOn?sceneLights.lamp.userData.litIntensity:0,rate);
   if(lampBulbMesh){
    const bulbMaterial=lampBulbMesh.material;
    bulbMaterial.color.lerp(state.lampOn?lampLitColour:lampUnlitColour,rate);
