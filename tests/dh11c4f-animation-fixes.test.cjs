@@ -216,3 +216,54 @@ test('source and Blender-mapped runtime each wire paper sheets, every key and pl
  const p=cp.spawnSync(process.execPath,['--input-type=module','--check'],{input:room,encoding:'utf8'});
  assert.equal(p.status,0,p.stderr);
 });
+
+
+test('unmistakable gilded book spines are visible and clickable on both model representations',async()=>{
+ const {featuredBook,featuredBookIndexForMesh}=await import('../prototypes/dh-11c-room/furniture-motion.mjs');
+ const room=read('prototypes/dh-11c-room/room.js');
+ const asset=manifest.nodes.filter(n=>/^book_[0-3]_\d{2}$/.test(n.name));
+ assert.equal(asset.length,80);
+ const highlights=asset.filter(n=>featuredBookIndexForMesh(n.name)!==null);
+ assert.equal(highlights.length,8,'only the eight chosen books receive markers');
+ assert.equal(asset.filter(n=>featuredBook(Number(n.name[5]),Number(n.name.slice(-2)))).length,8);
+ for(const fragment of [
+  "const FEATURE_BOOK_COLOUR='#24f5da'",
+  "new THREE.MeshBasicMaterial({color:'#ffe681',toneMapped:false})",
+  "new THREE.BoxGeometry(dx*width,height/sy,.006/sz)",
+  "accent.userData.featuredBookIndex=index",
+  "accent.name='featured_book_gilt_'+index+'_'+n",
+  "mesh.add(accent)",
+  "if(!mesh.geometry.boundingBox)mesh.geometry.computeBoundingBox()",
+  "const sy=Math.max(Math.abs(mesh.scale.y),.0001)",
+  "const sz=Math.max(Math.abs(mesh.scale.z),.0001)",
+  "markFeaturedBook(bk,pullBooks.length)",
+  "books.forEach((mesh,i)=>markFeaturedBook(mesh,i))",
+  "pullBooks.forEach(featuredBookColour)"
+ ])assert.ok(room.includes(fragment),'highlight missing or incompatible: '+fragment);
+ assert.doesNotMatch(room,/emissiveIntensity=\.36/,'old near-invisible glow must be removed');
+ assert.doesNotMatch(room,/subtly highlighted/i,'instructions must explain the visible markings');
+ // The same gilt has fixed world dimensions for both unit-cube GLB geometry
+ // with a per-axis scale and procedural, dimensioned geometry with unit scale.
+ for(const n of highlights){
+  const height=n.size[1],width=n.size[0],depth=n.size[2];
+  for(const [bounds,scale] of [
+   [{min:{x:-.5,y:-.5,z:-.5},max:{x:.5,y:.5,z:.5}},{x:width,y:height,z:depth}],
+   [{min:{x:-width/2,y:-height/2,z:-depth/2},max:{x:width/2,y:height/2,z:depth/2}},{x:1,y:1,z:1}]
+  ]){
+   const dx=bounds.max.x-bounds.min.x,dy=bounds.max.y-bounds.min.y;
+   const sy=Math.max(Math.abs(scale.y),.0001),sz=Math.max(Math.abs(scale.z),.0001);
+   const z=bounds.max.z+.004/sz;
+   const faceOffset=(z-.003/sz-bounds.max.z)*scale.z;
+   assert.ok(Math.abs(faceOffset-.001)<1e-9,'gilt must sit above front surface without z fighting');
+   for(const [part,widthFactor,bandHeight] of [[.18,.9,.025],[.5,.58,.095],[.82,.9,.025]]){
+    const goldWidth=dx*widthFactor*scale.x;
+    const goldHeight=bandHeight/sy*scale.y;
+    const y=bounds.min.y+dy*part;
+    assert.ok(Math.abs(goldWidth-width*widthFactor)<1e-9);
+    assert.ok(Math.abs(goldHeight-bandHeight)<1e-9);
+    assert.ok(y-bandHeight/(2*sy)>bounds.min.y && y+bandHeight/(2*sy)<bounds.max.y,
+     'gold marking must fit within the book: '+n.name);
+   }
+  }
+ }
+});
