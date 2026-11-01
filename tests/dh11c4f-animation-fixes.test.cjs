@@ -69,7 +69,7 @@ test('all thirteen slide paths remain flat and clear of desk furniture, not just
   for(let step=0;step<=20;step++){
    const t=step/20;
    const pose={x:home.x+(end.x-home.x)*t,y:home.y,z:home.z+(end.z-home.z)*t,
-    yaw:home.y,tilt:home.tilt};
+    yaw:home.yaw,tilt:home.tilt};
    const clearance=pose.y-sheet.size[1]/2-top;
    assert.ok(clearance>=-.00001&&clearance<.006,'sheet '+i+' floats/clips: '+clearance);
    const rect=bounds(pose);
