@@ -12,7 +12,7 @@ const checks=[
  {path:'/creations/unicorn-valley/',required:['<style data-davehub-inline="worlds">','Unicorn Valley','Play on DaveHub','href="/games/unicorn-valley/"','unicorn-valley.pages.dev','View development repository'],forbidden:['DESIGN REVIEW ONLY']},
  {path:'/creations/stephen-martin-project/',required:['<style data-davehub-inline="worlds">','The Stephen Martin Project','Play on DaveHub','href="/games/stephen-martin/"','stephen-martin-project.pages.dev'],forbidden:['DESIGN REVIEW ONLY']},
  {path:'/creations/tame-the-board-game/',required:['<style data-davehub-inline="worlds">','Tame The Board Game','Miriam','tametheboardgame.com/about/'],forbidden:['DESIGN REVIEW ONLY']},
- {path:'/previews/dh-11c/furniture/',required:['DH-11C.4F','data-furniture-model-proof="true"','data-immersive-room="true"','id="furniture-model-status"','dh11c4k-lamp-v1','room.js?v=dh11c4k-lamp-v1','room-plan.js?v=dh11c4k-lamp-v1'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
+ {path:'/previews/dh-11c/furniture/',required:['DH-11C.4F','data-furniture-model-proof="true"','data-immersive-room="true"','id="furniture-model-status"','dh11c4k-lamp-v1','room.js?v=dh11c4l-lamp-switch-v1','room-plan.js?v=dh11c4l-lamp-switch-v1'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/room-shell/',required:['DH-11C.4E','data-shell-model-proof="true"','../room/room-shell-asset.js','id="shell-model-status"','data-immersive-room="true"'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/architecture/',required:['DH-11C.4C','data-shell-proof="true"','data-blender-compare="true"','data-immersive-room="true"','./immersive.css','./immersive-ui.js','id="prototype-tools"','id="scene-nav"','../room/room-shell-plan.js','../cabinet-glb/'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/cabinet-glb/',required:['DH-11C.4A','data-glb-proof="true"','id="glb-extension"','data-glb-snap="50"','../room/room.js'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
@@ -40,7 +40,7 @@ async function main(){
   try{
    const results=[];
    for(const c of checks){
-    const version=c.path==='/previews/dh-11c/furniture/'?'?dh11c4k-lamp-v1=1':'?dh08d=1';
+    const version=c.path==='/previews/dh-11c/furniture/'?'?dh11c4l-lamp-switch-v1=1':'?dh08d=1';
     results.push({path:c.path,bytes:await inspect(BASE+c.path+version,c.required,c.forbidden)});
    }
    // A missing .css or .js may return Pages' HTML fallback with HTTP 200.
@@ -74,7 +74,7 @@ async function main(){
    for(const marker of ['export function paperPose','export function pressDepth','export function featuredBook','export function typedKeyIndex','export function binPaperPose','export function binPaperIndexForMesh','BIN_PAPER_FLOOR','BIN_PAPER_COUNT=9'])
     if(!motionSource.includes(marker))throw Error('Deployed furniture motion module missing '+marker);
    console.log('PASS hosted furniture motion module: papers, bookcase, typewriter and nine bin crumples');
-   const binPlanResponse=await fetch(BASE+'/previews/dh-11c/room/room-plan.js?v=dh11c4k-lamp-v1',{
+   const binPlanResponse=await fetch(BASE+'/previews/dh-11c/room/room-plan.js?v=dh11c4l-lamp-switch-v1',{
     headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)
    });
    if(!binPlanResponse.ok||!(binPlanResponse.headers.get('content-type')||'').includes('javascript'))
@@ -86,7 +86,7 @@ async function main(){
    // Explicitly validate the versioned live JavaScript, not just HTML
    // referencing a module. A stale JS response caused invisible highlighted
    // books despite all other smoke checks returning green.
-   const bookJs=await fetch(BASE+'/previews/dh-11c/room/room.js?v=dh11c4k-lamp-v1',{
+   const bookJs=await fetch(BASE+'/previews/dh-11c/room/room.js?v=dh11c4l-lamp-switch-v1',{
     headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)
    });
    const bookType=bookJs.headers.get('content-type')||'';
