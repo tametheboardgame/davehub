@@ -77,7 +77,7 @@ test('procedural fallback shares exact UV recipes and staging preview ships map 
   "furniture-source.glb?v=dh11c5b-archive-v1"
  ])assert.ok(room.includes(term),'procedural texture parity missing '+term);
  assert.ok(html.includes('desk-materials.js?v=dh11c5a-desk-v1'));
- assert.ok(html.includes('room.js?v=dh11c5a-desk-v1'));
+ assert.ok(html.includes('room.js?v=dh11c5b-archive-v1'));
  assert.ok(html.indexOf('desk-materials.js?v=')<html.indexOf('room.js?v='),
   'shared map generator must load before module begins');
  assert.ok(html.includes('davehub-furniture-release" content="dh11c5a-desk-v1"'));
