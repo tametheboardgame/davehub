@@ -13,6 +13,7 @@ const checks=[
  {path:'/creations/stephen-martin-project/',required:['<style data-davehub-inline="worlds">','The Stephen Martin Project','Play on DaveHub','href="/games/stephen-martin/"','stephen-martin-project.pages.dev'],forbidden:['DESIGN REVIEW ONLY']},
  {path:'/creations/tame-the-board-game/',required:['<style data-davehub-inline="worlds">','Tame The Board Game','Miriam','tametheboardgame.com/about/'],forbidden:['DESIGN REVIEW ONLY']},
  {path:'/previews/dh-11c/furniture/',required:['DH-11C.4F','data-furniture-model-proof="true"','data-immersive-room="true"','id="furniture-model-status"','dh11c5b-archive-v1','room.js?v=dh11c5b-archive-v1','room-plan.js?v=dh11c5b-archive-v1','desk-materials.js?v=dh11c5a-desk-v1','archive-materials.js?v=dh11c5b-archive-v1'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
+ {path:'/previews/dh-11c/illustrated/',required:['DH-11C.5C.2','data-illustrated-proof="true"','data-furniture-model-proof="true"','dh11c5c-painterly-v1','illustrated.css','illustrated-style.js?v=dh11c5c-painterly-v1','room.js?v=dh11c5c-painterly-v1','data-illustration-mode="reference"','data-illustration-mode="painterly"','aria-pressed="true"'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/room-shell/',required:['DH-11C.4E','data-shell-model-proof="true"','../room/room-shell-asset.js','id="shell-model-status"','data-immersive-room="true"'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/architecture/',required:['DH-11C.4C','data-shell-proof="true"','data-blender-compare="true"','data-immersive-room="true"','./immersive.css','./immersive-ui.js','id="prototype-tools"','id="scene-nav"','../room/room-shell-plan.js','../cabinet-glb/'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/cabinet-glb/',required:['DH-11C.4A','data-glb-proof="true"','id="glb-extension"','data-glb-snap="50"','../room/room.js'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
@@ -40,7 +41,8 @@ async function main(){
   try{
    const results=[];
    for(const c of checks){
-    const version=c.path==='/previews/dh-11c/furniture/'?'?dh11c5b-archive-v1=1':'?dh08d=1';
+    const version=c.path==='/previews/dh-11c/illustrated/'?'?dh11c5c-painterly-v1=1':
+     c.path==='/previews/dh-11c/furniture/'?'?dh11c5b-archive-v1=1':'?dh08d=1';
     results.push({path:c.path,bytes:await inspect(BASE+c.path+version,c.required,c.forbidden)});
    }
    // A missing .css or .js may return Pages' HTML fallback with HTTP 200.
@@ -163,6 +165,41 @@ async function main(){
     if(!archiveText.includes(marker))throw Error('Stale archive map recipe script: '+marker);
    }
    console.log('PASS hosted nineteen archive UV recipes ('+archiveText.length+' bytes)');
+   const illustratedBase=BASE+'/previews/dh-11c/';
+   const illustratedJs=await fetch(illustratedBase+'room/illustrated-style.js?v=dh11c5c-painterly-v1',{
+    headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)
+   });
+   if(!illustratedJs.ok||!(illustratedJs.headers.get('content-type')||'').includes('javascript'))
+    throw Error('Missing staged illustrated style runtime');
+   const illustratedText=await illustratedJs.text();
+   for(const marker of ['DH11IllustratedStyle','MeshToonMaterial','EdgesGeometry',
+    'protectedMesh','createRuntime','gradientMap:ramp','lamp.userData.litIntensity']){
+    if(!illustratedText.includes(marker))throw Error('Stale painted shading runtime '+marker);
+   }
+   const illustratedRoom=await fetch(illustratedBase+'room/room.js?v=dh11c5c-painterly-v1',{
+    headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)
+   });
+   if(!illustratedRoom.ok||!(illustratedRoom.headers.get('content-type')||'').includes('javascript'))
+    throw Error('Missing versioned illustrated WebGL runtime');
+   const paintedRoomText=await illustratedRoom.text();
+   for(const marker of ["const illustratedProof=furnitureModelProof&&document.body.dataset.illustratedProof==='true'",
+    'illustratedRuntime=system.createRuntime({THREE,scene,renderer,lights:sceneLights})',
+    'illustratedRuntime.register(scene)',
+    "chooseIllustration('painterly')",
+    'if(illustratedRuntime)illustratedRuntime.register(content)',
+    "lampButton.addEventListener('click',toggleLamp)",
+    'toggleBook(bookIndex)','toggleBinPaper(binPaperIndex)']){
+    if(!paintedRoomText.includes(marker))throw Error('Missing live illustrated interaction '+marker);
+   }
+   const illustratedCss=await fetch(illustratedBase+'illustrated/illustrated.css?v=dh11c5c-painterly-v1',{
+    headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)
+   });
+   if(!illustratedCss.ok||!(illustratedCss.headers.get('content-type')||'').includes('css'))
+    throw Error('Missing illustrated comparison styling');
+   const css=await illustratedCss.text();
+   if(!css.includes('illustration-choices')||!css.includes('aria-pressed'))
+    throw Error('Illustrated comparison UI stylesheet incomplete');
+   console.log('PASS hosted DH-11C.5C variant A painterly engine, versioned room and accessible selector');
 
    const model=await fetch(BASE+'/previews/dh-11c/room/models/cabinet-prototype.glb?dh11c4=1',{headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)});
    if(!model.ok)throw Error('GLB asset HTTP '+model.status);

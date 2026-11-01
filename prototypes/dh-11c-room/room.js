@@ -47,6 +47,8 @@ const glbProof=document.body.dataset.glbProof==='true';
 const shellProof=document.body.dataset.shellProof==='true';
 const shellModelProof=document.body.dataset.shellModelProof==='true';
 const furnitureModelProof=document.body.dataset.furnitureModelProof==='true';
+const illustratedProof=furnitureModelProof&&document.body.dataset.illustratedProof==='true';
+let illustratedRuntime=null;
 let shellFallback=null;
 const blenderCompare=document.body.dataset.blenderCompare==='true';
 let glbExtension=1;
@@ -221,6 +223,7 @@ if(shellModelProof){
    const model=gltf.scene;model.name='room_shell_glb';
    model.traverse(o=>{if(o.isMesh)o.userData.architecture=true;});
    scene.add(model);
+   if(illustratedRuntime)illustratedRuntime.register(model);
    if(shellFallback)shellFallback.visible=false;
    report('Blender-exported room architecture loaded: floor, beams, genuine door/window openings and corridor. The rest of the scene is unchanged.');
   },undefined,error=>{
@@ -529,6 +532,27 @@ if(artLab){
  choose(contract.all[0].id);
 }
 
+// DH-11C.5C.1-C.2: variant A lives on a separate staging route. All
+// moving meshes and camera stops are unchanged; materials, drawn contour
+// children and lighting are the only calibrated properties.
+if(illustratedProof){
+ const system=window.DH11IllustratedStyle;
+ const options=[...document.querySelectorAll('[data-illustration-mode]')];
+ if(!system||options.length!==2)throw Error('Missing DH-11C.5C Painterly Storybook calibration system');
+ illustratedRuntime=system.createRuntime({THREE,scene,renderer,lights:sceneLights});
+ illustratedRuntime.register(scene);
+ const description=document.getElementById('illustration-description');
+ function chooseIllustration(mode){
+  const selected=illustratedRuntime.set(mode);
+  for(const option of options){
+   option.setAttribute('aria-pressed',String(option.dataset.illustrationMode===mode));
+  }
+  if(description)description.textContent=selected.description;
+  document.body.dataset.illustrationMode=mode;
+ }
+ options.forEach(button=>button.addEventListener('click',()=>chooseIllustration(button.dataset.illustrationMode)));
+ chooseIllustration('painterly');
+}
 const copyById={
  desk:'Each sheet has two places on the desktop. Click it to slide out or return it. Click the lamp to switch its light on or off.',
  cabinet:'The five drawers belong to one physical cabinet. Each drawer is a collection of 3D surfaces that move together, never a pasted illustration.',
@@ -958,6 +982,7 @@ if(glbProof){
     });
    }
    scene.add(content);
+   if(illustratedRuntime)illustratedRuntime.register(content);
    capture('cabinet',content);
    cabinetDrawers.push(...found);
    drawerHome.push(...found.map(d=>d.position.z));
@@ -1013,6 +1038,7 @@ if(furnitureModelProof){
     // the scene. Otherwise their meshes are absent from the raycast targets.
     // This also means a failed decoration leaves the fallback untouched.
     books.forEach((mesh,i)=>markFeaturedBook(mesh,i));
+    if(illustratedRuntime)illustratedRuntime.register(content);
     // No procedural object is removed until the complete model contract is
     // satisfied. New raycast targets are registered together.
     scene.add(content);
