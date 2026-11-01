@@ -11,6 +11,34 @@ export function paperIndexForMesh(name) {
  const match=/^desk_paper_(0[0-9]|1[0-2])$/.exec(name||'');
  return match ? Number(match[1]) : null;
 }
+// Nine named physical crumples have independent destinations on the floor,
+// arranged around the front/sides of the bin. These never overlap the bin body.
+export const BIN_PAPER_COUNT=9;
+export const BIN_PAPER_FLOOR=Object.freeze([
+ [-.72,.68],[-.30,.85],[.12,.95],[.54,.85],[.93,.62],
+ [-1.05,.37],[.96,.20],[-.82,1.22],[.62,1.23]
+].map(pair=>Object.freeze(pair)));
+export function binPaperIndexForMesh(name){
+ const match=/^bin_paper_([0-8])$/.exec(name||'');
+ return match?Number(match[1]):null;
+}
+// Pure reversible path: out and back trace exactly the same arc. The floor
+// landing sits one centimetre above the lowest point of the crumpled mesh.
+export function binPaperPose(home,index,progress){
+ const t=Math.min(1,Math.max(0,Number.isFinite(progress)?progress:0));
+ const goal=BIN_PAPER_FLOOR[index];
+ if(!goal)return {...home};
+ const radius=.15+(index%3)*.028;
+ const y=home.y*(1-t)+(radius+.015)*t+Math.sin(Math.PI*t)*.47;
+ return {
+  x:home.x+(goal[0]-home.x)*t,
+  y,
+  z:home.z+(goal[1]-home.z)*t,
+  rx:home.rx+.42*t,
+  ry:home.ry+1.1*t,
+  rz:home.rz+.34*t
+ };
+}
 export const TYPE_KEY_COUNT = 24;
 export const FEATURED_BOOK_COUNT = 8;
 export function featuredBook(shelf, book) {
