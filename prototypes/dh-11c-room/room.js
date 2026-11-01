@@ -949,7 +949,7 @@ if(furnitureModelProof){
  const report=message=>{if(output)output.textContent=message;};
  const required=['desk','typewriter','bookcase','bin','door','window'];
  import('./vendor/GLTFLoader-r159.js').then(({GLTFLoader})=>{
-  new GLTFLoader().load('../room/models/furniture-source.glb?v=dh11c4k-lamp-v1',gltf=>{
+  new GLTFLoader().load('../room/models/furniture-source.glb?v=dh11c5a-desk-v1',gltf=>{
    try{
     const content=gltf.scene;
     const next=new Map();
