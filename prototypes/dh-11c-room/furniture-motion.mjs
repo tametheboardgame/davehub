@@ -29,7 +29,9 @@ export function binPaperPose(home,index,progress){
  const goal=BIN_PAPER_FLOOR[index];
  if(!goal)return {...home};
  const radius=.15+(index%3)*.028;
- const y=home.y*(1-t)+(radius+.015)*t+Math.sin(Math.PI*t)*.47;
+ // A quadratic lift-and-toss arc clears the actual bin rim before the
+ // paper travels outwards, then settles on the floor without sinking through.
+ const y=(1-t)*(1-t)*home.y+2*(1-t)*t*2.4+t*t*(radius+.015);
  return {
   x:home.x+(goal[0]-home.x)*t,
   y,
