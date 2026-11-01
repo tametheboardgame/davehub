@@ -225,8 +225,15 @@ function makeDesk(){
  box(g,4.5,.2,2.15,mats.desk,0,1.29,0);
  for(const x of [-1.98,1.98])for(const z of [-.85,.85])box(g,.21,1.15,.23,mats.darkwood,x,.61,z);
  box(g,4.04,.4,.12,mats.darkwood,0,1.0,.94);
+ // Paper locations avoid the lamp, open folder, typewriter and cup;
+ // no sheet begins intersecting a prop or overhanging the tabletop.
+ const paperLayout=[
+  [.20,-.72],[.78,-.72],[1.36,-.72],[1.91,-.72],
+  [-1.75,.18],[-1.05,0],[-.42,0],[.20,0],
+  [-1.70,.65],[-.30,.68],[.34,.68],[1.02,.68],[1.72,.68]
+ ];
  for(let i=0;i<13;i++){
-  const x=-1.76+(i%5)*.67,z=-.66+Math.floor(i/5)*.52;
+  const [x,z]=paperLayout[i];
   // Desk surface top is 1.29 + .20/2 = 1.39m. Paper half-thickness is .006m.
   // Keep the first sheet 1mm above the surface, with sub-millimetre layer gaps.
   const mesh=box(g,.49,.012,.32,mats.paper,x,1.397+i*.00035,z);
