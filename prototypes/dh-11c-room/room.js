@@ -42,6 +42,8 @@ const selectable=[];
 const objects=new Map();
 const artLab=typeof document!=='undefined'&&document.body.dataset.artLab==='true';
 const glbProof=document.body.dataset.glbProof==='true';
+const shellProof=document.body.dataset.shellProof==='true';
+const blenderCompare=document.body.dataset.blenderCompare==='true';
 let glbExtension=1;
 const bookMaterials=[];
 const sceneLights={};
@@ -82,12 +84,40 @@ function wallScene(){
  box(scene,14,.22,11,mats.darkwood,0,-.12,0);
  // Individual floor planks make room orientation visible at all camera angles.
  for(let x=-6.75;x<7;x+=.56)box(scene,.51,.016,10.7,x%2?mats.timber:mats.desk,x,.008,0);
- box(scene,14,6.4,.26,mats.plaster,0,3.2,-5.48);
+ if(shellProof){
+  const shell=window.DH11RoomShell;
+  if(!shell||!shell.check())throw Error('Missing valid 3D aperture plan');
+  for(const part of shell.panels){
+   const m=box(scene,...part.dimensions,mats[part.material],...part.centre);
+   m.name=part.id;
+  }
+  // Genuine architectural reveal surfaces around the wall thickness,
+  // placed on the aperture EDGES rather than across the opening itself.
+  for(const edge of [shell.window.xMin,shell.window.xMax])
+   box(scene,.09,shell.window.yMax-shell.window.yMin,.34,mats.edge,edge,(shell.window.yMin+shell.window.yMax)/2,shell.window.wallZ);
+  for(const edge of [shell.window.yMin,shell.window.yMax])
+   box(scene,shell.window.xMax-shell.window.xMin,.09,.34,mats.edge,(shell.window.xMin+shell.window.xMax)/2,edge,shell.window.wallZ);
+  // View through the open doorway into a small, actual neighbouring corridor.
+  box(scene,2.85,.11,2.45,mats.darkwood,8.2,-.11,-.2);
+  for(const z of [-1.47,1.07])box(scene,2.8,4.7,.12,mats.plaster,8.25,2.35,z);
+  box(scene,.12,4.7,2.55,mats.stone,9.65,2.35,-.2);
+  box(scene,2.8,.12,2.55,mats.timber,8.25,4.65,-.2);
+ }else{
+  box(scene,14,6.4,.26,mats.plaster,0,3.2,-5.48);
+  box(scene,.25,6.4,11,mats.stone,6.97,3.2,0);
+ }
  box(scene,.25,6.4,11,mats.stone,-6.97,3.2,0);
- box(scene,.25,6.4,11,mats.stone,6.97,3.2,0);
  for(const y of [.4,2.55,5.75]){
-  box(scene,14,.11,.19,mats.timber,0,y,-5.3);
-  for(const x of [-6.8,6.8])box(scene,.13,.12,11,mats.timber,x,y,0);
+  if(shellProof&&y===2.55){
+   // The original continuous skirting crossed the glass opening.
+   box(scene,5.39,.11,.19,mats.timber,(-7-1.61)/2,y,-5.3);
+   box(scene,5.05,.11,.19,mats.timber,(1.95+7)/2,y,-5.3);
+  }else box(scene,14,.11,.19,mats.timber,0,y,-5.3);
+  box(scene,.13,.12,11,mats.timber,-6.8,y,0);
+  if(shellProof&&y<4.66){
+   box(scene,.13,.12,4.02,mats.timber,6.8,y,(-5.5-1.48)/2);
+   box(scene,.13,.12,4.42,mats.timber,6.8,y,(1.08+5.5)/2);
+  }else box(scene,.13,.12,11,mats.timber,6.8,y,0);
  }
  for(const x of [-6.6,-3.4,3.1,6.6]){
   box(scene,.2,6.25,.34,mats.darkwood,x,3.15,-5.15);
@@ -255,12 +285,12 @@ makeDoor();
 const islandGroups=[];
 function makeWindow(){
  const g=group(scene,.17,3.65,-5.31);
- box(g,3.4,2.75,.06,mats.edge,0,0,-.08);
- box(g,3.13,2.47,.04,mats.sky,0,0,-.032);
+ if(!shellProof)box(g,3.4,2.75,.06,mats.edge,0,0,-.08);
+ box(g,3.13,2.47,.04,mats.sky,0,0,shellProof?-.54:-.032);
  // Islands are low-poly forms against a sky plane, never photographs.
  for(let i=0;i<3;i++){
   const cx=[-.9,.36,1.04][i],cy=[.1,.55,-.27][i],size=[.46,.56,.33][i];
-  const island=group(g,cx,cy,.035);
+  const island=group(g,cx,cy,shellProof?-.19:.035);
   const cone=new THREE.Mesh(new THREE.ConeGeometry(size*.8,size*.63,7),mats.island);
   cone.rotation.z=Math.PI;cone.position.y=-size*.32;island.add(cone);
   cylinder(island,size*.75,size*.64,size*.22,mats.leaf,0,0,0,7);
@@ -476,7 +506,8 @@ if(glbProof){
  };
  range?.addEventListener('input',()=>applyAmount(range.value));
  document.querySelectorAll('[data-glb-snap]').forEach(b=>b.addEventListener('click',()=>applyAmount(b.dataset.glbSnap)));
- const url=new URL('../room/models/cabinet-prototype.glb',document.baseURI).href;
+ const modelName=blenderCompare?'cabinet-blender-verified.glb':'cabinet-prototype.glb';
+ const url=new URL('../room/models/'+modelName,document.baseURI).href;
  function fail(error){
   console.warn('GLB round-trip proof unavailable',error);
   makeCabinet();
@@ -508,7 +539,7 @@ if(glbProof){
    focus('cabinet');
    if(range)range.disabled=false;
    document.querySelectorAll('[data-glb-snap]').forEach(b=>b.disabled=false);
-   report('GLB loaded: five separate drawers, genuine open recesses and cabinet rails. Choose a drawer and scrub its extension.');
+   report((blenderCompare?'Verified Blender-exported GLB loaded':'GLB loaded')+': five separate drawers, genuine open recesses and cabinet rails. Choose a drawer and scrub its extension.');
   },undefined,fail);
  }).catch(fail);
 }
