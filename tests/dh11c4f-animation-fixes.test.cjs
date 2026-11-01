@@ -278,7 +278,7 @@ test('GLB gold book markings register as selectable children before replacing th
  const lastBookRead=source.indexOf('pullBooks.splice(0,pullBooks.length,...books);');
  assert.ok(highlight>=0&&highlight<swap&&swap<capture&&capture<lastBookRead,
   'book gilt must be attached before capture traverses clickable meshes');
- assert.equal(source.match(/books\\.forEach\\(\\(mesh,i\\)=>markFeaturedBook\\(mesh,i\\)\\);/g)?.length,1,
+ assert.equal(source.split('books.forEach((mesh,i)=>markFeaturedBook(mesh,i));').length-1,1,
   'GLB books should be decorated exactly once');
  const marker=room.slice(room.indexOf('function markFeaturedBook('),room.indexOf('function makeBookcase('));
  assert.ok(marker.includes('mesh.add(accent);'));
