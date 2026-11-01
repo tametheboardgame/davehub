@@ -229,7 +229,7 @@ function makeDesk(){
   const x=-1.76+(i%5)*.67,z=-.66+Math.floor(i/5)*.52;
   const mesh=box(g,.49,.012,.32,mats.paper,x,1.41+(i%4)*.022,z);
   mesh.rotation.y=(i%3-1)*.22;
-  if(i<6)loosePapers.push(mesh);
+  if(i<10)loosePapers.push(mesh);
   paperStacks.push(mesh);
  }
  const shade=cylinder(g,.28,.47,.31,mats.brass,-1.67,2.32,-.43,10);
