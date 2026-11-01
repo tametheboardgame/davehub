@@ -1,6 +1,6 @@
 import * as THREE from './vendor/three-r159.module.min.js';
 import {drawerIndexForMesh} from './drawer-picking.mjs';
-import {paperPose,paperIndexForMesh,PAPER_LIMIT,pressDepth,typewriterFeed,TYPE_PAPER_HEIGHT,featuredBook,typedKeyIndex,TYPE_KEY_COUNT} from './furniture-motion.mjs';
+import {paperPose,paperIndexForMesh,PAPER_LIMIT,pressDepth,typewriterFeed,TYPE_PAPER_HEIGHT,featuredBook,featuredBookIndexForMesh,FEATURED_BOOK_COUNT,bookPosition,typedKeyIndex,TYPE_KEY_COUNT} from './furniture-motion.mjs';
 
 const plan=window.DH11RoomPlan;
 if(!plan)throw Error('Missing DH-11C.2 room coordinates');
@@ -290,6 +290,14 @@ typePaperHome=typePaper.position.y;typePaperHomeScaleY=typePaper.scale.y;
 typePaperRuleHome=typePaperRule.position.y;typePlatenHome=typePlaten.quaternion.clone();
 
 const pullBooks=[];
+// Subtle warm glint marks the eight books that genuinely move, without
+// recolouring the 72 ordinary volumes or altering the GLB geometry.
+function markFeaturedBook(mesh,index){
+ mesh.userData.featuredBookIndex=index;
+ mesh.material=mesh.material.clone();
+ mesh.material.emissive.set('#a87638');
+ mesh.material.emissiveIntensity=.36;
+}
 function makeBookcase(){
  const g=group(scene,4.7,0,-3.85);
  box(g,3.1,4.47,.77,mats.darkwood,0,2.23,0);
@@ -302,9 +310,14 @@ function makeBookcase(){
    const height=.43+((b*7+shelf*13)%7)*.044;
    const x=-1.32+b*.139,y=.54+shelf*.91+height/2;
    const bookMat=matte(colours[(shelf*4+b)%colours.length]);
-   bookMaterials.push(bookMat);
    const bk=box(g,.111,height,.43,bookMat,x,y,.44);
-   if(featuredBook(shelf,b))pullBooks.push(bk);
+   bk.name='book_'+shelf+'_'+String(b).padStart(2,'0');
+   if(featuredBook(shelf,b)){
+    markFeaturedBook(bk,pullBooks.length);
+    pullBooks.push(bk);
+   }
+   // Art lab recolours the actual mesh material, including selected books.
+   bookMaterials.push(bk.material);
   }
  }
  box(g,3.3,.16,.97,mats.brass,0,4.51,.07);
@@ -407,7 +420,7 @@ if(artLab){
 const copyById={
  desk:'Each sheet has two places on the desktop. Click a particular piece of paper to slide it out; click the same paper again to slide it back.',
  cabinet:'The five drawers belong to one physical cabinet. Each drawer is a collection of 3D surfaces that move together, never a pasted illustration.',
- bookcase:'The shelves and books occupy real positions. Try pulling a book forward to reveal an unexpected gap.',
+ bookcase:'Eight subtly highlighted books can be pulled out individually. Click one to slide it forward, then click it again to return it. The remaining books stay on their shelves.',
  typewriter:'The typewriter has separate keys, a roller and a paper sheet. Tap to press a key and advance the paper.',
  bin:'The bin contains crumpled, low-poly paper. Give the pile a rummage.',
  door:'The door opens on a real vertical hinge. It provides a way back towards the floating DaveHub islands.',
@@ -444,6 +457,26 @@ function home(){
  if(reduced.matches){camera.position.copy(desiredPosition);focusPoint.copy(desiredTarget);camera.lookAt(focusPoint);}
 }
 const drawerNames=['Finished','Drafts','Oddities','Fragments','Field Notes'];
+function bookDescription(index){
+ const shelf=Math.floor(index/2),slot=(10-shelf)%10+(index%2)*10;
+ return 'Shelf '+(shelf+1)+', book '+(slot+1);
+}
+function toggleBook(index){
+ if(!Number.isInteger(index)||index<0||index>=FEATURED_BOOK_COUNT)return;
+ const wasPulled=state.books[index];
+ state=plan.next(state,{type:'book',index});
+ if(wasPulled===state.books[index])return;
+ status.textContent=bookDescription(index)+(state.books[index]?
+  ' slides forward. Click it again to return it.':' slides back into its original slot.');
+ syncBookControls();
+}
+function syncBookControls(){
+ for(const button of actions.querySelectorAll('[data-book-index]')){
+  const index=Number(button.dataset.bookIndex),pulled=state.books[index];
+  button.textContent=bookDescription(index)+(pulled?' · return':' · pull');
+  button.setAttribute('aria-pressed',String(pulled));
+ }
+}
 function togglePaper(index){
  if(!Number.isInteger(index)||index<0||index>=PAPER_LIMIT)return;
  const wasMoved=state.papers[index];
@@ -501,7 +534,26 @@ function renderControls(id){
   actions.append(details);
   syncPaperControls();
  }
- else if(id==='bookcase')add('Pull a featured book',()=>{state=plan.next(state,{type:'book'});status.textContent='One of eight featured books slides out. Others remain on their shelves.';});
+ else if(id==='bookcase'){
+  const help=document.createElement('p');
+  help.textContent='Click one of the eight subtly highlighted spines to pull that book out. Click it again to return it.';
+  actions.append(help);
+  const details=document.createElement('details'),summary=document.createElement('summary');
+  summary.textContent='Select a book using keyboard controls';
+  details.append(summary);
+  const buttons=document.createElement('div');
+  buttons.className='paper-controls';
+  for(let i=0;i<FEATURED_BOOK_COUNT;i++){
+   const button=document.createElement('button');
+   button.type='button';
+   button.dataset.bookIndex=String(i);
+   button.addEventListener('click',()=>toggleBook(i));
+   buttons.append(button);
+  }
+  details.append(buttons);
+  actions.append(details);
+  syncBookControls();
+ }
  else if(id==='typewriter')add('Press a key',()=>pressTypewriter());
  else if(id==='bin')add('Rummage through paper',()=>{state=plan.next(state,{type:'bin'});status.textContent='The loose paper changes position.';});
  else if(id==='door'){
@@ -526,6 +578,7 @@ function pickFromEvent(event){
  if(!id)return null;
  return {id,drawerIndex:id==='cabinet'?drawerIndexForMesh(mesh,cabinetDrawers):null,
   paperIndex:id==='desk'?(Number.isInteger(mesh.userData.paperIndex)?mesh.userData.paperIndex:paperIndexForMesh(mesh.name)):null,
+  bookIndex:id==='bookcase'?(Number.isInteger(mesh.userData.featuredBookIndex)?mesh.userData.featuredBookIndex:featuredBookIndexForMesh(mesh.name)):null,
   keyIndex:id==='typewriter'?typedKeyIndex(mesh.name):null};
 }
 canvas.addEventListener('pointermove',event=>{
@@ -536,7 +589,10 @@ canvas.addEventListener('pointermove',event=>{
   ?drawerNames[pick.drawerIndex]+' drawer'
   :pick?.paperIndex!==null&&pick?.paperIndex!==undefined
    ?(state.papers[pick.paperIndex]?'Return':'Move')+' sheet '+(pick.paperIndex+1)
-   :hovered?'Explore '+plan.find(hovered).label:'';
+   :pick?.bookIndex!==null&&pick?.bookIndex!==undefined
+    ?(state.books[pick.bookIndex]?'Return ':'Pull ')+bookDescription(pick.bookIndex)
+    :hovered==='bookcase'?'Only highlighted books can be pulled out'
+    :hovered?'Explore '+plan.find(hovered).label:'';
 });
 canvas.addEventListener('pointerleave',()=>{currentHover=null;canvas.classList.remove('interactive');canvas.title='';});
 let pointerStart=null;
@@ -546,7 +602,7 @@ canvas.addEventListener('pointerup',event=>{
  pointerStart=null;
  const pick=pickFromEvent(event);
  if(!pick)return;
- const {id,drawerIndex,paperIndex,keyIndex}=pick;
+ const {id,drawerIndex,paperIndex,bookIndex,keyIndex}=pick;
  if(state.focus===id){
   if(id==='cabinet'){
    // The cabinet case/rails are not drawers. Only a hit inside a named
@@ -557,17 +613,21 @@ canvas.addEventListener('pointerup',event=>{
     (state.drawer===drawerIndex?' drawer opened.':' drawer closed.');
   }else{
    if(id==='desk'&&paperIndex!==null)togglePaper(paperIndex);
-   else if(id==='bookcase')state=plan.next(state,{type:'book'});
+   else if(id==='bookcase'){
+    if(bookIndex!==null)toggleBook(bookIndex);
+    else status.textContent='Try one of the eight highlighted book spines.';
+   }
    else if(id==='typewriter')pressTypewriter(keyIndex);
    else if(id==='bin')state=plan.next(state,{type:'bin'});
    else if(id==='door')state=plan.next(state,{type:'door'});
-   if(id!=='desk'&&id!=='typewriter')status.textContent=plan.find(id).label+' responds to your interaction.';
+   if(!['desk','bookcase','typewriter'].includes(id))status.textContent=plan.find(id).label+' responds to your interaction.';
   }
-  if(id!=='desk')renderControls(id);
+  if(id!=='desk'&&id!=='bookcase')renderControls(id);
  }else{
   focus(id);
   // Clicking a sheet in the overview focuses the desk and moves that sheet.
   if(id==='desk'&&paperIndex!==null)togglePaper(paperIndex);
+  if(id==='bookcase'&&bookIndex!==null)toggleBook(bookIndex);
   // A drawer hit in the overview identifies the drawer as well as the
   // cabinet, so the first click opens that drawer after selecting the view.
   if(id==='cabinet'&&drawerIndex!==null){
@@ -605,8 +665,8 @@ function render(){
    cabinetDrawers[i].position.z=THREE.MathUtils.lerp(cabinetDrawers[i].position.z,drawerHome[i]+target,rate);
   }
   for(let i=0;i<pullBooks.length;i++){
-   const target=i===state.book ? .37 : 0;
-   pullBooks[i].position.z=THREE.MathUtils.lerp(pullBooks[i].position.z,bookHome[i]+target,rate);
+   const target=bookPosition(bookHome[i],state.books[i]);
+   pullBooks[i].position.z=THREE.MathUtils.lerp(pullBooks[i].position.z,target,rate);
   }
   typeKeys.forEach((key,i)=>{
    const depth=activePress?pressDepth(clock.elapsedTime-activePress.at,i===activePress.index,reduced.matches):0;
@@ -756,6 +816,7 @@ if(furnitureModelProof){
     loosePapers.splice(0,loosePapers.length,...papers);
     paperHomes=papers.map(m=>({x:m.position.x,y:m.position.y,z:m.position.z,yaw:m.rotation.y,tilt:m.rotation.z}));
     paperStacks.splice(0,paperStacks.length,...papers);
+    books.forEach((mesh,i)=>markFeaturedBook(mesh,i));
     pullBooks.splice(0,pullBooks.length,...books);
     bookHome=books.map(book=>book.position.z);
     typeKeys.splice(0,typeKeys.length,...keys);

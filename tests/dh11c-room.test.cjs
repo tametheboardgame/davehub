@@ -70,9 +70,15 @@ test('room interactions update only approved mechanical state, no publication da
 test('book/typewriter/door actions remain bounded and tied to focus state',()=>{
  let state=plan.next(null,{type:'init'});
  state=plan.next(state,{type:'focus',id:'bookcase'});
- for(let i=0;i<10;i++)state=plan.next(state,{type:'book'});
- assert.equal(state.book,2);
+ state=plan.next(state,{type:'book',index:0});
+ state=plan.next(state,{type:'book',index:5});
+ assert.deepEqual(state.books,[true,false,false,false,false,true,false,false]);
+ state=plan.next(state,{type:'book',index:0});
+ assert.deepEqual(state.books,[false,false,false,false,false,true,false,false]);
+ assert.deepEqual(plan.next(state,{type:'book'}),state,'click on bare bookcase does not cycle selections');
+ assert.deepEqual(plan.next(state,{type:'book',index:8}),state,'invalid book index ignored');
  state=plan.next(state,{type:'focus',id:'typewriter'});
+ assert.deepEqual(plan.next(state,{type:'book',index:5}),state,'book cannot move without bookcase focus');
  for(let i=0;i<100;i++)state=plan.next(state,{type:'type'});
  assert.equal(state.typed,60);
  state=plan.next(state,{type:'focus',id:'door'});

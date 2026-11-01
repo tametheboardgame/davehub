@@ -17,6 +17,18 @@ export function featuredBook(shelf, book) {
  return Number.isInteger(shelf) && Number.isInteger(book) &&
   shelf >= 0 && shelf < 4 && book >= 0 && book < 20 && (book + shelf) % 10 === 0;
 }
+// Stable mapping from one physical mesh to one of exactly eight independent
+// toggles. All other 72 volumes are deliberately non-interactive.
+export function featuredBookIndexForMesh(name) {
+ const match=/^book_([0-3])_(0[0-9]|1[0-9])$/.exec(name||'');
+ if(!match)return null;
+ const shelf=Number(match[1]),book=Number(match[2]);
+ return featuredBook(shelf,book)?shelf*2+(book>=10?1:0):null;
+}
+export const BOOK_PULL_DISTANCE=.37;
+export function bookPosition(homeZ,pulled) {
+ return homeZ+(pulled?BOOK_PULL_DISTANCE:0);
+}
 // Sheets have a fixed start and end, without lift or roll on the desktop.
 export function paperPose(home,index,moved) {
  const end=PAPER_END_POSITIONS[index];
