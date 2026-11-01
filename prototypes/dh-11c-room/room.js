@@ -60,6 +60,8 @@ const mats={
  paper:matte('#dbc9ab'),ink:matte('#494b57'),cabinet:matte('#57737b'),
  drawer:matte('#80989a'),rug:matte('#66505f'),glass:new THREE.MeshBasicMaterial({color:'#a4c3db',transparent:true,opacity:.7}),
  sky:new THREE.MeshBasicMaterial({color:'#6b8ca9',side:THREE.DoubleSide}),
+ lampShade:new THREE.MeshStandardMaterial({color:'#95805c',metalness:.22,roughness:.72,side:THREE.DoubleSide}),
+ lampBulb:new THREE.MeshStandardMaterial({color:'#ffddb0',emissive:'#e1b05b',emissiveIntensity:.65,roughness:.55}),
  island:matte('#7e856e'),leaf:matte('#728b7b'),bin:matte('#677b81')
 };
 const box=(parent,w,h,d,mat,x=0,y=0,z=0)=>{
@@ -147,7 +149,8 @@ function wallScene(){
  sun.position.set(-3,7,5);
  sceneLights.sun=sun;scene.add(sun);
  const lamp=new THREE.PointLight('#f1b982',26,7,2);
- lamp.position.set(-1.65,3.05,1.9);
+ // Centre the light at the actual desk lamp, not elsewhere over the desk.
+ lamp.position.set(-1.97,2.31,.17);
  sceneLights.lamp=lamp;scene.add(lamp);
  const glow=new THREE.PointLight('#92b8d9',15,9,2);
  glow.position.set(.25,3.7,-3.5);sceneLights.window=glow;scene.add(glow);
@@ -243,10 +246,17 @@ function makeDesk(){
   if(i<PAPER_LIMIT)loosePapers.push(mesh);
   paperStacks.push(mesh);
  }
- const shade=cylinder(g,.28,.47,.31,mats.brass,-1.67,2.32,-.43,10);
- cylinder(g,.035,.035,.96,mats.brass,-1.67,1.86,-.43);
- sphere(g,.095,mats.paper,-1.67,2.22,-.43);
- cylinder(g,.28,.28,.12,mats.timber,-1.67,1.4,-.43);
+ // DH-11C.4K: smooth, level, open-bottomed shade and recessed bulb.
+ const shade=new THREE.Mesh(new THREE.CylinderGeometry(.245,.405,.30,24,1,true),mats.lampShade);
+ shade.name='desk_lamp_shade';shade.position.set(-1.67,2.38,-.43);g.add(shade);
+ const cap=cylinder(g,.245,.245,.018,mats.brass,-1.67,2.522,-.43,24);
+ cap.name='desk_lamp_cap';
+ const stem=cylinder(g,.035,.035,.96,mats.brass,-1.67,1.86,-.43);
+ stem.name='desk_lamp_stem';
+ const bulb=sphere(g,.065,mats.lampBulb,-1.67,2.345,-.43);
+ bulb.name='desk_lamp_bulb';
+ const base=cylinder(g,.28,.28,.12,mats.timber,-1.67,1.4,-.43);
+ base.name='desk_lamp_base';
  const cup=cylinder(g,.13,.105,.26,mats.ink,-.88,1.53,.57);
  cup.rotation.z=.08;
  const file=group(g,-.55,1.42,-.7);
@@ -872,7 +882,7 @@ if(furnitureModelProof){
  const report=message=>{if(output)output.textContent=message;};
  const required=['desk','typewriter','bookcase','bin','door','window'];
  import('./vendor/GLTFLoader-r159.js').then(({GLTFLoader})=>{
-  new GLTFLoader().load('../room/models/furniture-source.glb',gltf=>{
+  new GLTFLoader().load('../room/models/furniture-source.glb?v=dh11c4k-lamp-v1',gltf=>{
    try{
     const content=gltf.scene;
     const next=new Map();
