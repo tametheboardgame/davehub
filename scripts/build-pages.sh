@@ -184,7 +184,7 @@ for(const slug of ['unicorn-valley','stephen-martin-project','tame-the-board-gam
 }
 check('dist/worlds/writing/index.html',['data-scene="manuscript-hoard"','room-stage-image','data-room-target="desk"','data-room-target="cabinet"','data-room-target="bin"','data-room-target="bookcase"','data-room-target="typewriter"','Tame The Board Game'],['The Last Lightkeeper','The Clock of Tomorrow']);
 check('dist/previews/dh-08b/worlds/writing/index.html',['data-scene="manuscript-hoard"','Fictional design demonstration','The Last Lightkeeper']);
-check('dist/previews/dh-11c/furniture/index.html',['DH-11C.4F','data-furniture-model-proof="true"','data-immersive-room="true"','id="furniture-model-status"','room.js?v=dh11c4k-lamp-v1','room-plan.js?v=dh11c4k-lamp-v1','davehub-furniture-release']);
+check('dist/previews/dh-11c/furniture/index.html',['DH-11C.4F','data-furniture-model-proof="true"','data-immersive-room="true"','id="furniture-model-status"','room.js?v=dh11c4l-lamp-switch-v1','room-plan.js?v=dh11c4l-lamp-switch-v1','davehub-furniture-release']);
 check('dist/previews/dh-11c/room/furniture-asset.js',['DH11FurnitureAsset','door_leaf_hinge','desk_lamp_shade','desk_lamp_cap','desk_lamp_bulb','lampShade','lampBulb']);
 check('dist/previews/dh-11c/room-shell/index.html',['DH-11C.4E','data-shell-model-proof="true"','../room/room-shell-asset.js','id="shell-model-status"','data-immersive-room="true"']);
 
