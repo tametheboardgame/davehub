@@ -55,7 +55,7 @@ test('furniture GLB embeds usable lossless PNG material maps with unchanged mesh
  const desk=manifest.nodes.find(n=>n.name==='desk_surface');
  assert.equal(desk.material,'deskWalnut');
  assert.deepEqual(desk.position,[0,1.29,0]);
- assert.equal(manifest.nodes.filter(n=>/^desk_paper_\\d{2}$/.test(n.name)).length,13);
+ assert.equal(manifest.nodes.filter(n=>/^desk_paper_\d{2}$/.test(n.name)).length,13);
  assert.equal(manifest.nodes.filter(n=>/^typewriter_key_/.test(n.name)).length,24);
  assert.equal(manifest.nodes.filter(n=>/^bin_paper_/.test(n.name)).length,9);
  assert.equal(manifest.nodes.filter(n=>/^book_[0-3]_[0-9]{2}$/.test(n.name)).length,80);
