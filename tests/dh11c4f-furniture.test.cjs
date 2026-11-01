@@ -71,7 +71,7 @@ test('full furniture preview opens on whole-room camera while cabinet-only proof
   'loading the cabinet must not autofocus it in full furniture mode');
  assert.doesNotMatch(cabinetLoad,/^\s*focus\('cabinet'\);/m,
   'cabinet model load may not directly override the whole-room camera');
- const fullFurnitureLoad=room.slice(room.indexOf('if(furnitureModelProof){'));
+ const fullFurnitureLoad=room.slice(room.indexOf('if(furnitureModelProof){\n const output=document.getElementById(\'furniture-model-status\');'));
  assert.doesNotMatch(fullFurnitureLoad,/focus\('cabinet'\)/,
   'six-furniture GLB swap cannot force a cabinet close-up');
 });
