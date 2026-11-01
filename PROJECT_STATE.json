@@ -759,12 +759,12 @@
     "liveDomainChange": "none"
   },
   "dh11_3d_production": {
-    "planStatus": "dh11c4e_room_shell_glb_and_editable_blender_master_in_review",
+    "planStatus": "DH-11C.4E_blender_room_export_verified_review_pending",
     "scope": "Writing / The Manuscript Hoard 3D world",
     "foundation": "DH-11C.2 owner-liked and Cloudflare-verified mechanics prototype",
     "architectureDecision": "ADR-0012",
     "documentation": "docs/DH11C_3D_PRODUCTION_ROADMAP.md",
-    "currentGate": "DH-11C.4E: verified cloud Blender room architecture, source GLB staging preview and owner spatial visual review",
+    "currentGate": "DH-11C.4E: verify hosted real Blender GLB and visually review whole room, window, door and floor",
     "milestones": [
       {
         "id": "DH-11C.3",
@@ -775,7 +775,7 @@
       {
         "id": "DH-11C.4",
         "phase": "Blender/GLB source and rigged models",
-        "status": "C4E room shell GLB and Blender exporter pending verification",
+        "status": "C4E Blender room shell export verified, staging review next",
         "approval": "coherent geometry and mechanism tests"
       },
       {
@@ -822,7 +822,7 @@
       "reuse real geometry, not AI image-state compositing"
     ],
     "implementationStarted": true,
-    "next": "Verify GitHub Action Blender import/export, GLB geometry and Cloudflare route, then obtain owner visual review before substituting verified Blender model",
+    "next": "Compare full-screen Blender-exported room shell on staging with prior architecture and approve layout before art materials",
     "artDirection": {
       "status": "three_material_colour_and_light_candidates_owner_review_pending",
       "preferredDraft": "amber-ink",
@@ -923,18 +923,23 @@
       "ownerVisualReview": "pending"
     },
     "roomShellPipeline": {
-      "status": "feature_in_review",
+      "status": "Blender_4_0_2_export_validated_staging_visual_review_pending",
       "route": "/previews/dh-11c/room-shell/",
       "document": "docs/DH11C4E_BLENDER_ROOM_ARCHITECTURE.md",
       "source": "prototypes/dh-11c-room/room-shell-asset.js",
       "sourceModel": "/previews/dh-11c/room/models/room-shell-source.glb",
       "blenderMaster": "manuscript-room-shell.blend (GitHub Actions artifact)",
       "blenderWorkflow": ".github/workflows/dh11c4e-blender-room.yml",
-      "blenderModelCurrentlyUsedInBrowser": false,
+      "blenderModelCurrentlyUsedInBrowser": true,
       "sourceGeometryFallback": true,
       "existingWorldChanged": false,
       "ownerVisualApproval": "pending",
-      "artPaletteApproved": false
+      "artPaletteApproved": false,
+      "verifiedBlenderModel": "/previews/dh-11c/room/models/room-shell-blender-verified.glb",
+      "blenderExportSha256": "2bb5d20bdcd742fa6e2e88bbbd4176be0f0c7f2b4cc8c35bf038859f1c6e28fc",
+      "blenderReportRun": 41299772477,
+      "blenderArchiveArtifact": 13080613354,
+      "editableMeshCount": 68
     }
   }
 }
