@@ -186,7 +186,7 @@ test('eight actual featured books each toggle independently, while the other sev
 test('source and Blender-mapped runtime each wire paper sheets, every key and platen',()=>{
  const room=read('prototypes/dh-11c-room/room.js');
  for(const marker of [
-  "from './furniture-motion.mjs?v=dh11c4j-bin-v1'","if(i<PAPER_LIMIT)loosePapers.push(mesh)",
+  "from './furniture-motion.mjs?v=dh11c4l-lamp-switch-v1'","if(i<PAPER_LIMIT)loosePapers.push(mesh)",
   "const papers=Array.from({length:PAPER_LIMIT}","paperHomes=papers.map",
   "paperPose(home,i,state.papers[i])","const keys=Array.from({length:TYPE_KEY_COUNT}",
   "typeKeys.splice(0,typeKeys.length,...keys)","typeKeyHomes=keys.map",
@@ -349,7 +349,7 @@ test('bin raycasting, fallback, GLB swap, keyboard and reversible animation are 
   "m.userData.binPaperIndex=i",
   "binPaperHomes=binPapers.map(binPaperHome)",
   "binPaperIndexForMesh(mesh.name)",
-  "const {id,drawerIndex,paperIndex,bookIndex,binPaperIndex,keyIndex}=pick",
+  "const {id,drawerIndex,paperIndex,bookIndex,binPaperIndex,lampPart,keyIndex}=pick",
   "toggleBinPaper(binPaperIndex)",
   "data-bin-paper-index",
   "syncBinPaperControls()",
