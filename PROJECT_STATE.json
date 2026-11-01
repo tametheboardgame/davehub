@@ -759,12 +759,12 @@
     "liveDomainChange": "none"
   },
   "dh11_3d_production": {
-    "planStatus": "dh11c4b_blender_roundtrip_export_verified_art_style_review_pending",
+    "planStatus": "dh11c4c_real_openings_and_blender_export_comparison_in_review",
     "scope": "Writing / The Manuscript Hoard 3D world",
     "foundation": "DH-11C.2 owner-liked and Cloudflare-verified mechanics prototype",
     "architectureDecision": "ADR-0012",
     "documentation": "docs/DH11C_3D_PRODUCTION_ROADMAP.md",
-    "currentGate": "DH-11C.4B cloud Blender master/re-export validated; pending visual comparison and art-direction approval before adopting it as runtime model",
+    "currentGate": "DH-11C.4C: Cloudflare-hosted real architectural apertures and verified Blender model visual review",
     "milestones": [
       {
         "id": "DH-11C.3",
@@ -775,7 +775,7 @@
       {
         "id": "DH-11C.4",
         "phase": "Blender/GLB source and rigged models",
-        "status": "Blender_master_and_glb_roundtrip_verified_next_visual_modelling_gate",
+        "status": "real_room_openings_and_blender_cabinet_preview_in_review",
         "approval": "coherent geometry and mechanism tests"
       },
       {
@@ -822,7 +822,7 @@
       "reuse real geometry, not AI image-state compositing"
     ],
     "implementationStarted": true,
-    "next": "Review geometry if desired, select C3A palette, then begin cabinet production surface modelling and textures using validated Blender master",
+    "next": "Review actual architectural openings and Blender cabinet against original; then correct geometry issues and model room shell in Blender. Choose art palette separately.",
     "artDirection": {
       "status": "three_material_colour_and_light_candidates_owner_review_pending",
       "preferredDraft": "amber-ink",
@@ -892,6 +892,19 @@
       "sourceVsExportGeometry": "passed (five drawer rigs, transforms and outward axis)",
       "stagingCloudflare": "passed",
       "visualBrowserQA": "pending"
+    },
+    "architecturePreview": {
+      "status": "staging_review_pending",
+      "route": "/previews/dh-11c/architecture/",
+      "specification": "docs/DH11C4C_ARCHITECTURE_AND_BLENDER_COMPARE.md",
+      "geometry": "seven physical wall panels, actual door and window openings, corridor beyond door",
+      "source": "prototypes/dh-11c-room/room-shell-plan.js",
+      "blenderGLB": "/previews/dh-11c/room/models/cabinet-blender-verified.glb",
+      "blenderGLBSha256": "051e4abdb015799282234ea50b14cd179cb335ee496dbfdf965a4f1081abbf8a",
+      "originalWritingWorldChanged": false,
+      "baselineRoomChanged": false,
+      "artPaletteApproved": false,
+      "ownerVisualReview": "pending"
     }
   }
 }
