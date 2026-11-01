@@ -81,7 +81,18 @@ test('book/typewriter/door actions remain bounded and tied to focus state',()=>{
  assert.deepEqual(plan.next(state,{type:'book',index:5}),state,'book cannot move without bookcase focus');
  for(let i=0;i<100;i++)state=plan.next(state,{type:'type'});
  assert.equal(state.typed,60);
+ state=plan.next(state,{type:'focus',id:'bin'});
+ assert.deepEqual(state.binPapers,Array(9).fill(false));
+ state=plan.next(state,{type:'bin',index:2});
+ state=plan.next(state,{type:'bin',index:7});
+ assert.equal(state.binPapers.filter(Boolean).length,2);
+ state=plan.next(state,{type:'bin',index:2});
+ assert.equal(state.binPapers[2],false,'click again returns only the clicked paper ball');
+ assert.equal(state.binPapers[7],true);
+ assert.deepEqual(plan.next(state,{type:'bin'}),state,'empty-bin click does not randomise papers');
+ assert.deepEqual(plan.next(state,{type:'bin',index:9}),state,'invalid crumple index ignored');
  state=plan.next(state,{type:'focus',id:'door'});
+ assert.deepEqual(plan.next(state,{type:'bin',index:7}),state,'bin only interacts in bin focus');
  assert.equal(plan.next(state,{type:'door'}).doorOpen,true);
 });
 test('3D prototype uses pinned self-hosted Three.js with licence and no unapproved catalogue',()=>{
