@@ -12,7 +12,8 @@ export function featuredBook(shelf, book) {
 // which previously made it appear to float or clip through the desk.
 export function paperPose(home, index, moved) {
  const active = index < moved;
- const direction = index % 2 ? -1 : 1;
+ // Sheets at the left edge always travel inwards, not off the tabletop.
+ const direction = index % 5 === 0 ? 1 : (index % 2 ? -1 : 1);
  return {
   x: home.x + (active ? direction * .23 : 0),
   y: home.y,
