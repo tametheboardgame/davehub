@@ -759,12 +759,12 @@
     "liveDomainChange": "none"
   },
   "dh11_3d_production": {
-    "planStatus": "dh11c4f_six_editable_interactive_furniture_assets_in_review",
+    "planStatus": "dh11c5a_textured_desk_reference_pending_visual_approval",
     "scope": "Writing / The Manuscript Hoard 3D world",
-    "foundation": "DH-11C.2 owner-liked and Cloudflare-verified mechanics prototype",
+    "foundation": "DH-11C.4 furniture mechanics approved by owner on 2026-11-01; 197 named source parts and GLB/Blender pipeline retained",
     "architectureDecision": "ADR-0012",
     "documentation": "docs/DH11C_3D_PRODUCTION_ROADMAP.md",
-    "currentGate": "DH-11C.4F: verify six interactive furniture model rigs, actual Blender export and hosted visual preview",
+    "currentGate": "DH-11C.5A: owner visual review of the walnut, parchment, leather, metal and linen desk-material reference on staging",
     "milestones": [
       {
         "id": "DH-11C.3",
@@ -775,14 +775,14 @@
       {
         "id": "DH-11C.4",
         "phase": "Blender/GLB source and rigged models",
-        "status": "C4F furniture GLB and Blender export verification pending",
+        "status": "mechanics_owner_approved_2026-11-01_geometry_frozen",
         "approval": "coherent geometry and mechanism tests"
       },
       {
         "id": "DH-11C.5",
         "phase": "Textures/UVs/material atlas",
-        "status": "planned",
-        "approval": "owner visual review of cabinet-first textured vertical slice"
+        "status": "C5A_desk_reference_implemented_staging_owner_visual_approval_pending",
+        "approval": "owner evaluates textured writing-desk reference before extending finishes to the rest of the room"
       },
       {
         "id": "DH-11C.6",
@@ -822,7 +822,7 @@
       "reuse real geometry, not AI image-state compositing"
     ],
     "implementationStarted": true,
-    "next": "Verify actual Blender 4F model export, load the source furniture GLB in staging, validate all six object interactions, obtain owner visual approval",
+    "next": "Review the C5A desk texture reference in hosted staging and preserve current mechanical approvals; extend textures only after owner visual approval",
     "artDirection": {
       "status": "three_material_colour_and_light_candidates_owner_review_pending",
       "preferredDraft": "amber-ink",
@@ -942,7 +942,7 @@
       "editableMeshCount": 68
     },
     "furniturePipeline": {
-      "status": "feature_implementation_in_review",
+      "status": "six_furniture_mechanics_owner_approved_desk_material_study_under_review",
       "route": "/previews/dh-11c/furniture/",
       "source": "prototypes/dh-11c-room/furniture-asset.js",
       "sourceModel": "/previews/dh-11c/room/models/furniture-source.glb",
@@ -958,9 +958,34 @@
         "window_root"
       ],
       "originalFurnitureFallback": true,
-      "ownerVisualReview": "pending",
+      "ownerVisualReview": "mechanics_approved_2026-11-01_materials_pending",
       "artDirectionApproved": false,
       "liveDomainChanged": false
+    },
+    "deskMaterialReference": {
+      "milestone": "DH-11C.5A",
+      "status": "implemented_on_feature_branch_pending_visual_approval",
+      "route": "/previews/dh-11c/furniture/?v=dh11c5a-desk-v1",
+      "source": "prototypes/dh-11c-room/desk-materials.js",
+      "pbrTextureCount": 9,
+      "pixelDimensions": [
+        192,
+        192
+      ],
+      "pbrDelivery": "nine deterministic embedded PNG images in glTF/GLB, same pixel maps as browser fallback",
+      "authorisedScope": "writing desk and its associated objects only",
+      "preservedGeometryParts": 197,
+      "protectedInteractions": [
+        "13 desk sheets",
+        "24 typewriter keys and platen",
+        "lamp shade and switch",
+        "8 individually pullable books",
+        "9 bin crumples",
+        "five cabinet drawers",
+        "door and window"
+      ],
+      "ownerMaterialApproval": "pending",
+      "productionPromoted": false
     }
   }
 }
