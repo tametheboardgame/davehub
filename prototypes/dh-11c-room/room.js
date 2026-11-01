@@ -310,13 +310,14 @@ function makeBookcase(){
    const height=.43+((b*7+shelf*13)%7)*.044;
    const x=-1.32+b*.139,y=.54+shelf*.91+height/2;
    const bookMat=matte(colours[(shelf*4+b)%colours.length]);
-   bookMaterials.push(bookMat);
    const bk=box(g,.111,height,.43,bookMat,x,y,.44);
    bk.name='book_'+shelf+'_'+String(b).padStart(2,'0');
    if(featuredBook(shelf,b)){
     markFeaturedBook(bk,pullBooks.length);
     pullBooks.push(bk);
    }
+   // Art lab recolours the actual mesh material, including selected books.
+   bookMaterials.push(bk.material);
   }
  }
  box(g,3.3,.16,.97,mats.brass,0,4.51,.07);
