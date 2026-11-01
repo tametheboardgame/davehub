@@ -1,6 +1,13 @@
 // DH-11C.4F interaction targets, shared by the procedural and GLB rigs.
 // Pure maths so effects can be regression-tested without a WebGL browser.
 export const PAPER_LIMIT = 13;
+// Exactly the physical lamp meshes may toggle the desk light. Paper sheets,
+// desk surface, typewriter and other furniture are never switches.
+export function lampPartForMesh(name) {
+ const match=/^desk_lamp_(shade|cap|stem|bulb|base)$/.exec(name||'');
+ return match?match[1]:null;
+}
+
 // Explicit second position for each paper, in desk-local coordinates.
 export const PAPER_END_POSITIONS = Object.freeze([
  [.60,-.22],[.18,-.32],[.86,-.52],[1.41,-.52],
