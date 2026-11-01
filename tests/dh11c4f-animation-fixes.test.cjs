@@ -366,3 +366,59 @@ test('bin raycasting, fallback, GLB swap, keyboard and reversible animation are 
  const js=cp.spawnSync(process.execPath,['--input-type=module','--check'],{input:room,encoding:'utf8'});
  assert.equal(js.status,0,js.stderr);
 });
+
+
+test('desk lamp switches independently through five physical GLB and fallback meshes',async()=>{
+ const {lampPartForMesh}=await import('../prototypes/dh-11c-room/furniture-motion.mjs');
+ const parts=['shade','cap','stem','bulb','base'];
+ const nodes=new Set(build().json.nodes.map(x=>x.name));
+ for(const part of parts){
+  const name='desk_lamp_'+part;
+  assert.equal(lampPartForMesh(name),part);
+  assert.ok(nodes.has(name),'real lamp part absent from GLB: '+name);
+  assert.ok(manifest.nodes.some(n=>n.name===name&&n.parent==='desk_root'));
+ }
+ for(const name of ['desk_surface','desk_paper_00','desk_lamp_fake','desk_lamp_bulb_more','typewriter_body','',null,undefined])
+  assert.equal(lampPartForMesh(name),null,'only the physical lamp may switch its light');
+ let state=plan.next(null,{type:'init'});
+ assert.equal(state.lampOn,true,'the study opens with the lamp lit');
+ const unfocused=plan.next(state,{type:'lamp'});
+ assert.deepEqual(unfocused,state,'cannot switch lamp when another object is selected');
+ state=plan.next(state,{type:'focus',id:'desk'});
+ state=plan.next(state,{type:'paper',index:4});
+ const paperSnapshot=state.papers.slice();
+ state=plan.next(state,{type:'lamp'});
+ assert.equal(state.lampOn,false);
+ assert.deepEqual(state.papers,paperSnapshot,'lamp must never shift papers');
+ assert.equal(state.typed,0);
+ state=plan.next(state,{type:'lamp'});
+ assert.equal(state.lampOn,true,'second click restores the lamp');
+ assert.deepEqual(state.papers,paperSnapshot);
+ state=plan.next(state,{type:'focus',id:'cabinet'});
+ assert.deepEqual(plan.next(state,{type:'lamp'}),state,'switch is inactive on other furniture');
+});
+test('3D lamp hit detection, light intensity, bulb emissive material and keyboard switch stay in sync',()=>{
+ const room=read('prototypes/dh-11c-room/room.js');
+ for(const marker of [
+  "lampPart:id==='desk'?lampPartForMesh(mesh.name):null",
+  "if(id==='desk'&&lampPart!==null)toggleLamp()",
+  "lampButton.dataset.lampToggle='true'",
+  "lampButton.addEventListener('click',toggleLamp)",
+  "button.setAttribute('aria-pressed',String(state.lampOn))",
+  "const wasOn=state.lampOn",
+  "state=plan.next(state,{type:'lamp'})",
+  "sceneLights.lamp.intensity=THREE.MathUtils.lerp(sceneLights.lamp.intensity,state.lampOn?sceneLights.lamp.userData.litIntensity:0,rate)",
+  "bulbMaterial.color.lerp(state.lampOn?lampLitColour:lampUnlitColour,rate)",
+  "bulbMaterial.emissiveIntensity=THREE.MathUtils.lerp(bulbMaterial.emissiveIntensity,state.lampOn?.85:0,rate)",
+  "lampBulbMesh=bulb",
+  "lampBulbMesh=glbBulb",
+  "lampBulbMesh.material=lampBulbMesh.material.clone()",
+  "lampBulbMesh.material.emissive.set('#e1b05b')",
+  "for(const part of ['shade','cap','stem','bulb','base'])get('desk_lamp_'+part)"
+ ])assert.ok(room.includes(marker),'lamp switching wiring missing: '+marker);
+ assert.ok(room.includes("sceneLights.lamp.userData.litIntensity=palette.lampIntensity"),
+  'art lab light intensity is retained when switching');
+ assert.ok(room.includes("from './furniture-motion.mjs?v=dh11c4l-lamp-switch-v1'"));
+ const js=cp.spawnSync(process.execPath,['--input-type=module','--check'],{input:room,encoding:'utf8'});
+ assert.equal(js.status,0,js.stderr);
+});
