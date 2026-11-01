@@ -1,6 +1,6 @@
 import * as THREE from './vendor/three-r159.module.min.js';
 import {drawerIndexForMesh} from './drawer-picking.mjs';
-import {paperPose,paperIndexForMesh,PAPER_LIMIT,pressDepth,paperAdvance,featuredBook,typedKeyIndex,TYPE_KEY_COUNT} from './furniture-motion.mjs';
+import {paperPose,paperIndexForMesh,PAPER_LIMIT,pressDepth,typewriterFeed,TYPE_PAPER_HEIGHT,featuredBook,typedKeyIndex,TYPE_KEY_COUNT} from './furniture-motion.mjs';
 
 const plan=window.DH11RoomPlan;
 if(!plan)throw Error('Missing DH-11C.2 room coordinates');
@@ -260,7 +260,11 @@ paperHomes=loosePapers.map(m=>({x:m.position.x,y:m.position.y,z:m.position.z,yaw
 
 let typeKey=null;
 const typeKeys=[];
-let typeKeyHomes=[],typePaper=null,typePaperHome=0,typePlaten=null,typePlatenHome=0;
+let typeKeyHomes=[],typePaper=null,typePaperHome=0,typePaperHomeScaleY=1,typePlaten=null,typePlatenHome=null;
+// The cylinder is modelled along local Y, then laid along the typewriter's X.
+// Its spin must be around the CYLINDER'S LOCAL Y, not the room's vertical Y.
+const platenAxis=new THREE.Vector3(0,1,0);
+const platenSpin=new THREE.Quaternion(),platenTarget=new THREE.Quaternion();
 let activePress=null,pressSerial=0;
 function makeTypewriter(){
  const g=group(scene,1.08,1.42,.66);
@@ -281,7 +285,7 @@ function makeTypewriter(){
 }
 makeTypewriter();
 typeKeyHomes=typeKeys.map(key=>key.position.y);
-typePaperHome=typePaper.position.y;typePlatenHome=typePlaten.rotation.y;
+typePaperHome=typePaper.position.y;typePaperHomeScaleY=typePaper.scale.y;typePlatenHome=typePlaten.quaternion.clone();
 
 const pullBooks=[];
 function makeBookcase(){
@@ -606,8 +610,22 @@ function render(){
    const depth=activePress?pressDepth(clock.elapsedTime-activePress.at,i===activePress.index,reduced.matches):0;
    key.position.y=THREE.MathUtils.lerp(key.position.y,typeKeyHomes[i]-depth,rate);
   });
-  if(typePaper)typePaper.position.y=THREE.MathUtils.lerp(typePaper.position.y,typePaperHome+paperAdvance(state.typed),rate);
-  if(typePlaten)typePlaten.rotation.y=THREE.MathUtils.lerp(typePlaten.rotation.y,typePlatenHome+state.typed*.13,rate);
+  const feed=typewriterFeed(state.typed);
+  if(typePaper){
+   // Stretch the sheet as it is fed through the roller, rather than moving
+   // the entire page into mid-air. Derive its centre from the CURRENT scale
+   // so the bottom edge stays fixed during every intermediate animation frame.
+   typePaper.scale.y=THREE.MathUtils.lerp(typePaper.scale.y,typePaperHomeScaleY*feed.scale,rate);
+   typePaper.position.y=typePaperHome+
+    (typePaper.scale.y/typePaperHomeScaleY-1)*TYPE_PAPER_HEIGHT/2;
+  }
+  if(typePlaten){
+   // Retain the cylinder's original horizontal orientation; multiply a
+   // local-axis spin onto its rest quaternion, never change Euler Y (yaw).
+   platenSpin.setFromAxisAngle(platenAxis,feed.rollerAngle);
+   platenTarget.copy(typePlatenHome).multiply(platenSpin);
+   typePlaten.quaternion.slerp(platenTarget,rate);
+  }
   if(doorLeaf)doorLeaf.rotation.y=THREE.MathUtils.lerp(doorLeaf.rotation.y,state.doorOpen?-.96:0,rate);
   loosePapers.forEach((mesh,i)=>{
    const home=paperHomes[i];if(!home)return;
@@ -738,8 +756,8 @@ if(furnitureModelProof){
     bookHome=books.map(book=>book.position.z);
     typeKeys.splice(0,typeKeys.length,...keys);
     typeKeyHomes=keys.map(k=>k.position.y);
-    typePaper=typeSheet;typePaperHome=typeSheet.position.y;
-    typePlaten=platen;typePlatenHome=platen.rotation.y;
+    typePaper=typeSheet;typePaperHome=typeSheet.position.y;typePaperHomeScaleY=typeSheet.scale.y;
+    typePlaten=platen;typePlatenHome=platen.quaternion.clone();
     typeKey=key;doorLeaf=hinge;
     islandGroups.splice(0,islandGroups.length,...islands);
     report('Furniture GLB loaded: desk, separate papers, bookcase, books, typewriter keys, bin, hinged door and floating islands. Existing click and animation controls remain active.');
