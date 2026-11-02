@@ -57,10 +57,10 @@ test('decorative scene is real 3D geometry, never registered as a raycast target
  assert.ok(meshes.length>85,'scene should have recognisable material detail, not just another colour grade');
  assert.ok(meshes.every(o=>o.userData.decorativeOnly===true));
  assert.ok(meshes.every(o=>!selected.has(o)));
- assert.ok(meshes.some(o=>o.name.startsWith('loose_sheet_')));
- assert.ok(meshes.some(o=>o.name.startsWith('ivy_leaf_')));
- assert.ok(meshes.some(o=>o.name.startsWith('torn_note_paper_')));
- assert.ok(meshes.some(o=>o.name.startsWith('abandoned_book_')));
+ assert.ok(meshes.some(o=>o.name?.startsWith('loose_sheet_')));
+ assert.ok(meshes.some(o=>o.name?.startsWith('ivy_leaf_')));
+ assert.ok(meshes.some(o=>o.name?.startsWith('torn_note_paper_')));
+ assert.ok(meshes.some(o=>o.name?.startsWith('abandoned_book_')));
  assert.deepEqual(result.placements.floorManuscripts.length,3);
  assert.deepEqual(result.placements.ivy.length,2);
  result.setVisible(true);assert.equal(result.visible,true);assert.equal(result.root.visible,true);
