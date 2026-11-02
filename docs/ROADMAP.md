@@ -1,6 +1,6 @@
 # DaveHub development roadmap
 
-**Updated:** 1 November 2026. **Current stage:** DH-11C.5C.2A painted-surface refinement after initial lighting-led Variant A review. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+**Updated:** 2 November 2026. **Current stage:** DH-11C.5C.2B softened hand-drawn edges following owner feedback that painted-surface V2 retained excessively precise silhouettes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
 
 ## Design baseline
 
@@ -69,6 +69,10 @@
 | DH-11C.7 | Deep physical interactions and approved manuscript content | Five drawers and folder lift/inspect/return, other object mechanics, deterministic approved-only content adapter and full accessible fallbacks | Planned; no new content approval granted |
 | DH-11C.8 | Staging integration and release QA | Cross-browser/mobile QA, cold-load/fps checks, content and game regressions, reversible staging integration and owner approval | Planned; **no production-domain changes** |
 | DH-11C.9 | Optional reusable 3D world primitives | Extract proven shared camera/input/loader contracts after Writing v1, without enforcing one generic world style | Later, conditional on C8 approval |
+
+## DH-11C.5C.2B — Softened Hand-Drawn Edges (2 November 2026)
+
+The owner confirmed V2 was an improvement but still looked too clean-cut. C5C.2B responds with visual-only, deterministically wobbling ink contour polylines, dry-brush gaps and varied ink strength, replacing rigid vector-like EdgeGeometry lines in an opt-in V3 renderer. Regular paper and book UV textures also gain slightly irregular clipped edges, while original GLB geometry, transforms, raycasting surfaces and interactive meshes are **never mutated**. Featured turquoise books, labels and the working lamp are protected. This extends the prior painted surfaces rather than reworking the approved C5A desk textures or C5B furniture model. V1 and V2 previews remain accessible. The new preview is `/previews/dh-11c/illustrated-v3/?v=dh11c5c-soft-edges-v3`, compared with an Original Materials toggle. **Owner visual approval pending** before pursuing more drastic illustrated silhouette alterations or variants B/C. Production untouched.
 
 ## DH-11C.5C — Illustrated Art Style Calibration (1 November 2026)
 
