@@ -1,6 +1,6 @@
 # DaveHub development roadmap
 
-**Updated:** 2 November 2026. **Current stage:** DH-11C.5C.2B softened hand-drawn edges following owner feedback that painted-surface V2 retained excessively precise silhouettes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+**Updated:** 2 November 2026. **Current stage:** DH-11C.5C.3 comic-storybook rendering and physical scene dressing, based on owner-supplied illustration-style reference while preserving the existing room layout. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
 
 ## Design baseline
 
@@ -69,6 +69,10 @@
 | DH-11C.7 | Deep physical interactions and approved manuscript content | Five drawers and folder lift/inspect/return, other object mechanics, deterministic approved-only content adapter and full accessible fallbacks | Planned; no new content approval granted |
 | DH-11C.8 | Staging integration and release QA | Cross-browser/mobile QA, cold-load/fps checks, content and game regressions, reversible staging integration and owner approval | Planned; **no production-domain changes** |
 | DH-11C.9 | Optional reusable 3D world primitives | Extract proven shared camera/input/loader contracts after Writing v1, without enforcing one generic world style | Later, conditional on C8 approval |
+
+## DH-11C.5C.3 — Comic Storybook Style Calibration (2 November 2026)
+
+Following the owner-supplied illustrated fantasy-study reference, the next step targets the **art style**, not that image's composition or room layout. This staging-only route uses stronger hand-painted colour blocks, gouache-style hatching, warm gold and cool magical light; it also installs modest **real 3D** environmental dressing (manuscript stacks, abandoned books, ink-marked pinned papers, climbing ivy) around the *unchanged* interactive room. All new props are excluded from selectable targets. It keeps the approved 197 furniture parts and independent Blender cabinet source intact. Toggle **Original materials** to revert all illustration-only dressing and lighting. Compare `/previews/dh-11c/comic-storybook/?v=dh11c5c-comic-storybook-v4` with earlier V3. **This is an art-direction study awaiting visual approval, not a claim that the reference's highly detailed production illustration has already been matched.** No real manuscript content, public-world replacement or production deployment.
 
 ## DH-11C.5C.2B — Softened Hand-Drawn Edges (2 November 2026)
 

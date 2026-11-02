@@ -759,12 +759,12 @@
     "liveDomainChange": "none"
   },
   "dh11_3d_production": {
-    "planStatus": "dh11c5c2b_handdrawn_edge_refinement_pending_visual_review",
+    "planStatus": "dh11c5c3_comic_storybook_staging_review",
     "scope": "Writing / The Manuscript Hoard 3D world",
     "foundation": "DH-11C.4 furniture mechanics approved by owner on 2026-11-01; 197 named source parts and GLB/Blender pipeline retained",
     "architectureDecision": "ADR-0012",
     "documentation": "docs/DH11C_3D_PRODUCTION_ROADMAP.md",
-    "currentGate": "DH-11C.5C.2B: owner reviews irregular drawn contour strokes and softened paper/book edge boundaries in an isolated staging preview",
+    "currentGate": "DH-11C.5C.3: owner judges illustrated colour, textures, hand-drawn contours and restrained 3D environmental character against reference style, not reference layout",
     "milestones": [
       {
         "id": "DH-11C.3",
@@ -781,7 +781,7 @@
       {
         "id": "DH-11C.5",
         "phase": "Textures/UVs/material atlas",
-        "status": "C5A_approved_C5B_first_pass_positive_C5C2B_handdrawn_edge_staging_review",
+        "status": "C5A_approved_C5B_positive_C5C3_comic_storybook_art_review_pending",
         "approval": "C5C.2B handmade silhouettes pending owner visual approval"
       },
       {
@@ -822,7 +822,7 @@
       "reuse real geometry, not AI image-state compositing"
     ],
     "implementationStarted": true,
-    "next": "Review V3 against V2 and the original material reference; retain approved geometry before any later animated or madman's styles",
+    "next": "Owner reviews dedicated comic-storybook staging comparison before extending art style across architecture or building further style variants",
     "artDirection": {
       "status": "three_material_colour_and_light_candidates_owner_review_pending",
       "preferredDraft": "amber-ink",
@@ -1004,11 +1004,11 @@
     },
     "illustratedStyleCalibration": {
       "milestone": "DH-11C.5C",
-      "phase": "5C.1 controls plus 5C.2 variant A",
-      "status": "2B_softened_handdrawn_edges_implemented_staging_pending_visual_approval",
-      "route": "/previews/dh-11c/illustrated-v3/?v=dh11c5c-soft-edges-v3",
+      "phase": "5C.3 comic-storybook aesthetic study",
+      "status": "comic_storybook_implemented_pending_owner_visual_approval",
+      "route": "/previews/dh-11c/comic-storybook/?v=dh11c5c-comic-storybook-v4",
       "originalReference": "/previews/dh-11c/furniture/?v=dh11c5b-archive-v1",
-      "source": "prototypes/dh-11c-room/illustrated-style-v3.js",
+      "source": "prototypes/dh-11c-room/comic-storybook-style.js",
       "documentation": "docs/DH11C5C_ILLUSTRATED_STYLE_CALIBRATION.md",
       "availableModes": [
         "reference",
@@ -1019,10 +1019,10 @@
         "madmans-manuscript"
       ],
       "techniques": [
-        "hand-inked deterministic line segments with broken gaps and variable stroke strength",
-        "visual-only displaced contour geometry, never changes raycast meshes",
-        "small ragged UV edge clipping on papers and non-featured bindings",
-        "all C5C.2A painterly UV texture and reversible lighting retained"
+        "repaint original GLB UV textures with graphic value grouping, gouache hatching and gilt accents",
+        "strong warm/cool comic-fantasy scene lighting",
+        "subtle broken ink contour lines from genuine geometry",
+        "new world-space static 3D stacks, books, pinned notes and ivy, outside interactive capture"
       ],
       "protectedInteractivity": [
         "desk sheets",
@@ -1037,8 +1037,10 @@
       "noRealContentPublication": true,
       "ownerVisualApproval": "pending",
       "productionPromoted": false,
-      "previousVariant": "/previews/dh-11c/illustrated-v2/?v=dh11c5c-painted-surfaces-v2",
-      "ownerFeedback": "V2 an improvement, but clean-cut edges still felt too mechanically precise"
+      "previousVariant": "/previews/dh-11c/illustrated-v3/?v=dh11c5c-soft-edges-v3",
+      "ownerFeedback": "V3 is a better direction; user supplied densely illustrated comic-fantasy study, specifically requiring its style not its layout",
+      "dressingSource": "prototypes/dh-11c-room/comic-storybook-dressing.js",
+      "referenceLayoutCopied": false
     }
   }
 }
