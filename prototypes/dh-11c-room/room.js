@@ -536,15 +536,23 @@ if(artLab){
 // moving meshes and camera stops are unchanged; materials, drawn contour
 // children and lighting are the only calibrated properties.
 if(illustratedProof){
- const system=document.body.dataset.illustratedV3==='true'?window.DH11IllustratedStyleV3:
+ const system=document.body.dataset.illustratedV4==='true'?window.DH11ComicStorybookStyle:
+  document.body.dataset.illustratedV3==='true'?window.DH11IllustratedStyleV3:
   document.body.dataset.illustratedV2==='true'?window.DH11IllustratedStyleV2:window.DH11IllustratedStyle;
  const options=[...document.querySelectorAll('[data-illustration-mode]')];
  if(!system||options.length!==2)throw Error('Missing DH-11C.5C Painterly Storybook calibration system');
  illustratedRuntime=system.createRuntime({THREE,scene,renderer,lights:sceneLights});
  illustratedRuntime.register(scene);
+ // V4 installs static painted 3D dressing outside the object capture() rigs.
+ // Nothing enters the interactive raycast target array.
+ const comicDressing=document.body.dataset.illustratedV4==='true'
+  ?window.DH11ComicDressing?.create(THREE,scene):null;
+ if(document.body.dataset.illustratedV4==='true'&&!comicDressing)
+  throw Error('Missing DH-11C.5C.3 comic storybook dressing contract');
  const description=document.getElementById('illustration-description');
  function chooseIllustration(mode){
   const selected=illustratedRuntime.set(mode);
+  if(comicDressing)comicDressing.setVisible(mode==='painterly');
   for(const option of options){
    option.setAttribute('aria-pressed',String(option.dataset.illustrationMode===mode));
   }
