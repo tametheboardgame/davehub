@@ -49,19 +49,19 @@
    if(mag<.0001){axis[0]=0;axis[1]=0;axis[2]=1;mag=1;}
    for(let q=0;q<3;q++)axis[q]/=mag;
    const fragments=Math.max(4,Math.min(22,Math.ceil(len/.085)));
-   const strength=Math.min(.018,len*.03);
+   const strength=Math.min(.032,len*.035);
    const sample=k=>{
     const t=k/fragments;
     const edgeFade=Math.sin(Math.PI*t);
     const wave=Math.sin(t*17.2+edge*2.31+seedValue*.17)*.63+
      Math.sin(t*40.1+edge*.82+seedValue*.39)*.3+
-     (seed(edge,k,seedValue)/4294967295-.5)*.45;
+     (seed(edge,k,seedValue)-.5)*.45;
     return a.map((v,c)=>v+delta[c]*t+axis[c]*strength*edgeFade*wave);
    };
    for(let k=0;k<fragments;k++){
     // Short intentional dry-brush gaps, not one perfect vector line.
     if((k+edge*3+seedValue)%11===5)continue;
-    const ink=.58+.37*(seed(edge,k,seedValue+4)/4294967295);
+    const ink=.58+.37*(seed(edge,k,seedValue+4));
     add(sample(k),sample(k+1),ink);
    }
   }
