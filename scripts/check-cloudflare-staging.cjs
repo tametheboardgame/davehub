@@ -13,6 +13,7 @@ const checks=[
  {path:'/creations/stephen-martin-project/',required:['<style data-davehub-inline="worlds">','The Stephen Martin Project','Play on DaveHub','href="/games/stephen-martin/"','stephen-martin-project.pages.dev'],forbidden:['DESIGN REVIEW ONLY']},
  {path:'/creations/tame-the-board-game/',required:['<style data-davehub-inline="worlds">','Tame The Board Game','Miriam','tametheboardgame.com/about/'],forbidden:['DESIGN REVIEW ONLY']},
  {path:'/previews/dh-11c/furniture/',required:['DH-11C.4F','data-furniture-model-proof="true"','data-immersive-room="true"','id="furniture-model-status"','dh11c5b-archive-v1','room.js?v=dh11c5b-archive-v1','room-plan.js?v=dh11c5b-archive-v1','desk-materials.js?v=dh11c5a-desk-v1','archive-materials.js?v=dh11c5b-archive-v1'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
+ {path:'/previews/dh-11c/comic-storybook/',required:['DH-11C.5C.3','data-illustrated-v4="true"','dh11c5c-comic-storybook-v4','comic-storybook-style.js?v=dh11c5c-comic-storybook-v4','comic-storybook-dressing.js?v=dh11c5c-comic-storybook-v4','room.js?v=dh11c5c-comic-storybook-v4','data-illustration-mode="reference"','data-illustration-mode="painterly"'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/illustrated-v3/',required:['DH-11C.5C.2B','data-illustrated-v3="true"','dh11c5c-soft-edges-v3','illustrated-style-v3.js?v=dh11c5c-soft-edges-v3','room.js?v=dh11c5c-soft-edges-v3','data-illustration-mode="reference"','data-illustration-mode="painterly"'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/illustrated-v2/',required:['DH-11C.5C.2A','data-illustrated-v2="true"','dh11c5c-painted-surfaces-v2','illustrated-style-v2.js?v=dh11c5c-painted-surfaces-v2','room.js?v=dh11c5c-painted-surfaces-v2','data-illustration-mode="reference"','data-illustration-mode="painterly"'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/illustrated/',required:['DH-11C.5C.2','data-illustrated-proof="true"','data-furniture-model-proof="true"','dh11c5c-painterly-v1','illustrated.css','illustrated-style.js?v=dh11c5c-painterly-v1','room.js?v=dh11c5c-painterly-v1','data-illustration-mode="reference"','data-illustration-mode="painterly"','aria-pressed="true"'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
@@ -43,7 +44,8 @@ async function main(){
   try{
    const results=[];
    for(const c of checks){
-    const version=c.path==='/previews/dh-11c/illustrated-v3/'?'?dh11c5c-soft-edges-v3=1':
+    const version=c.path==='/previews/dh-11c/comic-storybook/'?'?dh11c5c-comic-storybook-v4=1':
+     c.path==='/previews/dh-11c/illustrated-v3/'?'?dh11c5c-soft-edges-v3=1':
      c.path==='/previews/dh-11c/illustrated-v2/'?'?dh11c5c-painted-surfaces-v2=1':
      c.path==='/previews/dh-11c/illustrated/'?'?dh11c5c-painterly-v1=1':
      c.path==='/previews/dh-11c/furniture/'?'?dh11c5b-archive-v1=1':'?dh08d=1';
@@ -246,6 +248,33 @@ async function main(){
    if(!inkCss.ok||!(inkCss.headers.get('content-type')||'').includes('css'))
     throw Error('Missing V3 comparison stylesheet');
    console.log('PASS hosted DH-11C.5C.2B broken hand-inked contours, ragged UV edges and staging-only controls');
+   // A dedicated fourth treatment must arrive as real JavaScript, not Pages'
+   // HTML SPA fallback. The original materials and controls remain shared.
+   const comicBase=illustratedBase+'room/';
+   for(const spec of [
+    {file:'comic-storybook-style.js',tokens:['DH11ComicStorybookStyle','parchmentInk',
+      'gouache','sketchEdgeSegments','set(next)','MeshToonMaterial']},
+    {file:'comic-storybook-dressing.js',tokens:['DH11ComicDressing','floorManuscripts',
+      'wallNotes','ivy_leaf_','decorativeOnly','new THREE.TubeGeometry']}
+   ]){
+    const resp=await fetch(comicBase+spec.file+'?v=dh11c5c-comic-storybook-v4',{
+     headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)
+    });
+    if(!resp.ok||!(resp.headers.get('content-type')||'').includes('javascript'))
+     throw Error('Missing real comic storybook JS: '+spec.file);
+    const source=await resp.text();
+    for(const marker of spec.tokens)if(!source.includes(marker))
+     throw Error('Stale comic storybook source '+spec.file+': '+marker);
+   }
+   if(!paintedRoomText.includes("document.body.dataset.illustratedV4==='true'?window.DH11ComicStorybookStyle")||
+      !paintedRoomText.includes('comicDressing.setVisible'))
+    throw Error('Stale room.js: comic style or reference comparison missing');
+   const comicCss=await fetch(illustratedBase+'comic-storybook/illustrated.css?v=dh11c5c-comic-storybook-v4',{
+    headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)
+   });
+   if(!comicCss.ok||!(comicCss.headers.get('content-type')||'').includes('css'))
+    throw Error('Comic storybook comparison stylesheet missing');
+   console.log('PASS hosted DH-11C.5C.3 true illustrated materials, static 3D dressing and original interactions');
 
    const model=await fetch(BASE+'/previews/dh-11c/room/models/cabinet-prototype.glb?dh11c4=1',{headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)});
    if(!model.ok)throw Error('GLB asset HTTP '+model.status);
