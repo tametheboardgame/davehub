@@ -15,6 +15,7 @@ const checks=[
  {path:'/previews/dh-11c/furniture/',required:['DH-11C.4F','data-furniture-model-proof="true"','data-immersive-room="true"','id="furniture-model-status"','dh11c5b-archive-v1','room.js?v=dh11c5b-archive-v1','room-plan.js?v=dh11c5b-archive-v1','desk-materials.js?v=dh11c5a-desk-v1','archive-materials.js?v=dh11c5b-archive-v1'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/illustrated-overview/',required:['DH-11C.5D.3A','data-overview-studio="true"','dh11c5d3a-align-v1','/assets/worlds/writing/manuscript-room-v1.avif','id="projection-map"','id="new-art-file"','../illustrated-views/?v=dh11c5d-geometry-guides-v1'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/illustrated-views/',required:['DH-11C.5D','data-illustrated-view-proof="true"','dh11c5d-geometry-guides-v1','view-pipeline.js?v=dh11c5d-geometry-guides-v1','room.js?v=dh11c5d-geometry-guides-v1','capture-view-guide','export-view-guide'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
+ {path:'/previews/dh-11c/authored-3d/',required:['DH-11C.5D.3B','data-illustrated-v5="true"','dh11c5d3b-authored-3d-v1','high-illustration-3d.js?v=dh11c5d3b-authored-3d-v1','room.js?v=dh11c5d3b-authored-3d-v1','data-illustration-mode="painterly"','data-illustration-mode="reference"'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/comic-storybook/',required:['DH-11C.5C.3','data-illustrated-v4="true"','dh11c5c-comic-storybook-v4','comic-storybook-style.js?v=dh11c5c-comic-storybook-v4','comic-storybook-dressing.js?v=dh11c5c-comic-storybook-v4','room.js?v=dh11c5c-comic-storybook-v4','data-illustration-mode="reference"','data-illustration-mode="painterly"'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/illustrated-v3/',required:['DH-11C.5C.2B','data-illustrated-v3="true"','dh11c5c-soft-edges-v3','illustrated-style-v3.js?v=dh11c5c-soft-edges-v3','room.js?v=dh11c5c-soft-edges-v3','data-illustration-mode="reference"','data-illustration-mode="painterly"'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/illustrated-v2/',required:['DH-11C.5C.2A','data-illustrated-v2="true"','dh11c5c-painted-surfaces-v2','illustrated-style-v2.js?v=dh11c5c-painted-surfaces-v2','room.js?v=dh11c5c-painted-surfaces-v2','data-illustration-mode="reference"','data-illustration-mode="painterly"'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
@@ -46,7 +47,8 @@ async function main(){
   try{
    const results=[];
    for(const c of checks){
-    const version=c.path==='/previews/dh-11c/illustrated-overview/'?'?dh11c5d3a-align-v1=1':
+    const version=c.path==='/previews/dh-11c/authored-3d/'?'?dh11c5d3b-authored-3d-v1=1':
+     c.path==='/previews/dh-11c/illustrated-overview/'?'?dh11c5d3a-align-v1=1':
      c.path==='/previews/dh-11c/illustrated-views/'?'?dh11c5d-geometry-guides-v1=1':
      c.path==='/previews/dh-11c/comic-storybook/'?'?dh11c5c-comic-storybook-v4=1':
      c.path==='/previews/dh-11c/illustrated-v3/'?'?dh11c5c-soft-edges-v3=1':
@@ -279,6 +281,26 @@ async function main(){
    if(!comicCss.ok||!(comicCss.headers.get('content-type')||'').includes('css'))
     throw Error('Comic storybook comparison stylesheet missing');
    console.log('PASS hosted DH-11C.5C.3 true illustrated materials, static 3D dressing and original interactions');
+   const authoredResponse=await fetch(illustratedBase+'room/high-illustration-3d.js?v=dh11c5d3b-authored-3d-v1',{
+    headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)
+   });
+   if(!authoredResponse.ok||!(authoredResponse.headers.get('content-type')||'').includes('javascript'))
+    throw Error('Missing deployed authored-3D art runtime');
+   const authoredSource=await authoredResponse.text();
+   for(const token of ['DH11HighIllustration3D','function paintCanvas','function reliefPaths',
+    'new THREE.CanvasTexture(canvas)','new THREE.LineSegments(geometry',
+    'registered=new WeakSet()','item.mesh.material=on?item.styled:item.original',
+    'featuredBookIndex','decorativeOnly=true']){
+    if(!authoredSource.includes(token))throw Error('Outdated 3D authored art code '+token);
+   }
+   if(!paintedRoomText.includes("document.body.dataset.illustratedV5==='true'?window.DH11HighIllustration3D"))
+    throw Error('Authored 3D art not connected to live scene runtime');
+   const authoredCss=await fetch(illustratedBase+'authored-3d/illustrated.css?v=dh11c5d3b-authored-3d-v1',{
+    headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)
+   });
+   if(!authoredCss.ok||!(authoredCss.headers.get('content-type')||'').includes('css'))
+    throw Error('Missing authored 3D comparison controls');
+   console.log('PASS hosted DH-11C.5D.3B authored UV paint and real geometry-bound artwork');
    const guideBase=BASE+'/previews/dh-11c/';
    const guideSource=await fetch(guideBase+'room/view-pipeline.js?v=dh11c5d-geometry-guides-v1',{
     headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)
