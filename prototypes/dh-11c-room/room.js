@@ -138,7 +138,7 @@ const group=(parent,x=0,y=0,z=0)=>{
 };
 const capture=(id,g)=>{
  const targets=[];
- g.traverse(o=>{if(o.isMesh){o.userData.objectId=id;selectable.push(o);targets.push(o);}});
+ g.traverse(o=>{if(o.isMesh&&!o.userData?.decorativeOnly){o.userData.objectId=id;selectable.push(o);targets.push(o);}});
  objects.set(id,{group:g,targets});
  return g;
 };

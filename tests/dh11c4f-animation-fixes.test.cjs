@@ -283,7 +283,7 @@ test('GLB gold book markings register as selectable children before replacing th
  const marker=room.slice(room.indexOf('function markFeaturedBook('),room.indexOf('function makeBookcase('));
  assert.ok(marker.includes('mesh.add(accent);'));
  assert.ok(marker.includes('accent.userData.featuredBookIndex=index'));
- assert.ok(room.includes('g.traverse(o=>{if(o.isMesh){o.userData.objectId=id;selectable.push(o);targets.push(o);}});'),
+ assert.ok(room.includes('g.traverse(o=>{if(o.isMesh&&!o.userData?.decorativeOnly){o.userData.objectId=id;selectable.push(o);targets.push(o);}});'),
   'capture must register book inlays as selectable raycast targets');
 });
 

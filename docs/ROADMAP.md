@@ -1,6 +1,10 @@
 # DaveHub development roadmap
 
-**Updated:** 3 November 2026. **Current stage:** DH-11C.5D.3C isolated book-spine variation experiment on top of 5D.3B model-bound illustrated 3D art. Owner visual approval of both versions remains pending. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+**Updated:** 3 November 2026. **Current stage:** DH-11C.5D.3D sculpted bookcase detail following owner approval of the illustrated-3D direction. A separate review version preserves the original room and earlier art passes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+
+## DH-11C.5D.3D — Sculpted bookcase geometry and surface detail
+
+Created a separate working 3D artwork variant with actual crown, upright, shelf and book ornaments positioned from canonical GLB mesh bounds. The pieces inherit the original model coordinate system and are expressly excluded from click selection. The source room, furniture motion, camera plan, previous V2 art and published Writing page are unchanged. [Technical scope and approval gate](DH11C5D3D_SCULPTED_BOOKCASE.md). Awaiting visual owner review.
 
 ## DH-11C.5D.3C — Individual book-spine art refinement
 
