@@ -34,6 +34,11 @@ for asset in \
   tests/dh11c5c2b-soft-edges.test.cjs \
   tests/dh11c5c3-comic-storybook.test.cjs \
   tests/dh11c5d-view-pipeline.test.cjs \
+  tests/dh11c5d3-art-alignment.test.cjs \
+  scripts/render-dh11c5d3-overview.cjs \
+  prototypes/dh-11c-room/overview-studio.html \
+  prototypes/dh-11c-room/overview-studio.css \
+  prototypes/dh-11c-room/overview-studio.js \
   prototypes/dh-11c-room/view-pipeline.js \
   scripts/render-dh11c5d-views.cjs \
   prototypes/dh-11c-room/comic-storybook-style.js \
@@ -113,7 +118,7 @@ done
 
 # A private draft must never become a deployed page through a build bypass.
 # Validate both the empty/approved production manifest and fictional test fixtures.
-node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/dh11-worlds.test.cjs tests/dh11c-cabinet-geometry.test.cjs tests/dh11c-room.test.cjs tests/dh11c-drawer-picking.test.cjs tests/dh11c-art-direction.test.cjs tests/dh11c4-cabinet-glb.test.cjs tests/dh11c4b-blender.test.cjs tests/dh11c4c-room-architecture.test.cjs tests/dh11c4d-immersive-viewport.test.cjs tests/dh11c4e-room-shell.test.cjs tests/dh11c4f-furniture.test.cjs tests/dh11c4f-animation-fixes.test.cjs tests/dh11c5a-desk-materials.test.cjs tests/dh11c5b-archive-materials.test.cjs tests/dh11c5c-illustrated-style.test.cjs tests/dh11c5c2a-painted-surfaces.test.cjs tests/dh11c5c2b-soft-edges.test.cjs tests/dh11c5c3-comic-storybook.test.cjs tests/dh11c5d-view-pipeline.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs tests/dh10c-editorial.test.cjs tests/dh10c-hosted-http.test.cjs
+node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/dh11-worlds.test.cjs tests/dh11c-cabinet-geometry.test.cjs tests/dh11c-room.test.cjs tests/dh11c-drawer-picking.test.cjs tests/dh11c-art-direction.test.cjs tests/dh11c4-cabinet-glb.test.cjs tests/dh11c4b-blender.test.cjs tests/dh11c4c-room-architecture.test.cjs tests/dh11c4d-immersive-viewport.test.cjs tests/dh11c4e-room-shell.test.cjs tests/dh11c4f-furniture.test.cjs tests/dh11c4f-animation-fixes.test.cjs tests/dh11c5a-desk-materials.test.cjs tests/dh11c5b-archive-materials.test.cjs tests/dh11c5c-illustrated-style.test.cjs tests/dh11c5c2a-painted-surfaces.test.cjs tests/dh11c5c2b-soft-edges.test.cjs tests/dh11c5c3-comic-storybook.test.cjs tests/dh11c5d-view-pipeline.test.cjs tests/dh11c5d3-art-alignment.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs tests/dh10c-editorial.test.cjs tests/dh10c-hosted-http.test.cjs
 node -e "const {validateManifest}=require('./scripts/davehub-manifest.cjs'); const data=require('./davehub.json'); const result=validateManifest(data,'tametheboardgame/davehub');if(!result.valid)throw new Error(result.errors.join('; '));"
 # Fail closed: only individually owner-approved records and links enter production.
 node scripts/content-check.cjs content/public/catalogue.json
@@ -122,7 +127,7 @@ node scripts/content-check.cjs content/examples/fictional.json
 node scripts/dh09d-topology.cjs check
 
 rm -rf dist
-mkdir -p dist/assets/worlds/writing dist/assets/branding dist/assets/homepage dist/assets/characters/dave dist/previews/dh-07c dist/previews/dh-08 dist/previews/dh-08b dist/previews/dh-08c dist/previews/dh-11c/cabinet dist/previews/dh-11c/room/vendor dist/previews/dh-11c/art-lab dist/previews/dh-11c/cabinet-glb dist/previews/dh-11c/architecture dist/previews/dh-11c/room-shell dist/previews/dh-11c/furniture dist/previews/dh-11c/illustrated dist/previews/dh-11c/illustrated-v2 dist/previews/dh-11c/illustrated-v3 dist/previews/dh-11c/comic-storybook dist/previews/dh-11c/illustrated-views dist/previews/dh-11c/room/models dist/content dist/assets/content
+mkdir -p dist/assets/worlds/writing dist/assets/branding dist/assets/homepage dist/assets/characters/dave dist/previews/dh-07c dist/previews/dh-08 dist/previews/dh-08b dist/previews/dh-08c dist/previews/dh-11c/cabinet dist/previews/dh-11c/room/vendor dist/previews/dh-11c/art-lab dist/previews/dh-11c/cabinet-glb dist/previews/dh-11c/architecture dist/previews/dh-11c/room-shell dist/previews/dh-11c/furniture dist/previews/dh-11c/illustrated dist/previews/dh-11c/illustrated-v2 dist/previews/dh-11c/illustrated-v3 dist/previews/dh-11c/comic-storybook dist/previews/dh-11c/illustrated-views dist/previews/dh-11c/illustrated-overview dist/previews/dh-11c/room/models dist/content dist/assets/content
 
 cp index.html styles.css main.js catalogue.js dist/
 cp assets/branding/davehub-logo-faithful.svg dist/assets/branding/
@@ -152,6 +157,10 @@ node scripts/render-dh11c5c2a-painted.cjs dist/previews/dh-11c/illustrated-v2
 node scripts/render-dh11c5c2b-handdrawn.cjs dist/previews/dh-11c/illustrated-v3
 node scripts/render-dh11c5c3-comic.cjs dist/previews/dh-11c/comic-storybook
 node scripts/render-dh11c5d-views.cjs dist/previews/dh-11c/illustrated-views
+node scripts/render-dh11c5d3-overview.cjs dist/previews/dh-11c/illustrated-overview
+cp prototypes/dh-11c-room/overview-studio.css prototypes/dh-11c-room/overview-studio.js dist/previews/dh-11c/illustrated-overview/
+mv dist/previews/dh-11c/illustrated-overview/overview-studio.css dist/previews/dh-11c/illustrated-overview/overview.css
+mv dist/previews/dh-11c/illustrated-overview/overview-studio.js dist/previews/dh-11c/illustrated-overview/overview.js
 cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js prototypes/dh-11c-room/view-guides.css dist/previews/dh-11c/illustrated-views/
 cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js prototypes/dh-11c-room/illustrated.css dist/previews/dh-11c/comic-storybook/
 cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js prototypes/dh-11c-room/illustrated.css dist/previews/dh-11c/illustrated-v3/
@@ -227,6 +236,9 @@ check('dist/previews/dh-11c/room/view-pipeline.js',['DH11IllustratedViews','func
 check('dist/previews/dh-11c/illustrated-views/view-guides.css',['view-guide-panel','view-guide-buttons','focus-visible']);
 check('dist/previews/dh-11c/illustrated-views/index.html',['DH-11C.5D','data-illustrated-view-proof="true"','view-pipeline.js?v=dh11c5d-geometry-guides-v1','capture-view-guide','export-view-guide']);
 check('dist/previews/dh-11c/illustrated-views/camera-contract.json',['"views"','"home"','"desk"','"cabinet"','"bookcase"','"window"']);
+check('dist/previews/dh-11c/illustrated-overview/index.html',['DH-11C.5D.3A','data-overview-studio="true"','room-plan.js?v=dh11c5d-geometry-guides-v1','view-pipeline.js?v=dh11c5d-geometry-guides-v1','/assets/worlds/writing/manuscript-room-v1.avif','id="projection-map"']);
+check('dist/previews/dh-11c/illustrated-overview/overview.js',['home.targets.desktop.anchors','URL.createObjectURL(candidate)','URL.revokeObjectURL(objectUrl)']);
+check('dist/previews/dh-11c/illustrated-overview/overview.css',['.review-grid','.projection-map','focus-visible']);
 check('dist/previews/dh-11c/comic-storybook/index.html',['DH-11C.5C.3','data-illustrated-v4="true"','comic-storybook-style.js?v=dh11c5c-comic-storybook-v4','comic-storybook-dressing.js?v=dh11c5c-comic-storybook-v4','room.js?v=dh11c5c-comic-storybook-v4']);
 check('dist/previews/dh-11c/illustrated-v3/illustrated.css',['data-illustrated-proof','illustration-choices','aria-pressed']);
 check('dist/previews/dh-11c/illustrated-v3/index.html',['DH-11C.5C.2B','data-illustrated-v3="true"','room.js?v=dh11c5c-soft-edges-v3','illustrated-style-v3.js?v=dh11c5c-soft-edges-v3','data-illustration-mode="painterly"','data-illustration-mode="reference"']);
