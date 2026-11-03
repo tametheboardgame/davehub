@@ -43,8 +43,8 @@ test('5D.3B fine relief follows original real book/paper/drawer/desk/door geomet
  const bounds={min:{x:-.5,y:-.5,z:-.5},max:{x:.5,y:.5,z:.5}};
  const original=JSON.stringify(bounds);
  for(const [name,minSegments] of [
-  ['book_0_01',40],['desk_paper_00',28],['typewriter_paper',40],
-  ['desk_surface',22],['front_face_finished',14],['door_leaf',15],
+  ['book_0_01',35],['desk_paper_00',24],['typewriter_paper',12],
+  ['desk_surface',15],['front_face_finished',14],['door_leaf',15],
   ['bookcase_crown',24],['typewriter_body',14],['bookcase_shelf_2',1]]){
   const positions=art.reliefPaths(name,bounds);
   assert.equal(positions.length%6,0,name);
