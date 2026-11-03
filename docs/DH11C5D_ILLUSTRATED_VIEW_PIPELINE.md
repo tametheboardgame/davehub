@@ -18,6 +18,14 @@ Canonical sources are the existing `room-plan.js`, the validated furniture GLB, 
 6. **5D.6 — State and animation feasibility gate:** prove one drawer closed/half/open, one paper moving and lamp on/off using consistent rig/camera-derived rendering. Compare plate and motion layers at all intermediate states. Reject any technique with obvious perspective or edge discontinuities.
 7. **5D.7 — Final staging experience and QA:** content approval isolation, camera transitions, mobile/desktop composition, keyboard/touch, reduced-motion alternative, asset sizes, cross-browser QA and owner sign-off before any real Writing page or production migration.
 
+## DH-11C.5D.3A — Illustration/geometry alignment review
+
+The first high-illustration candidate was generated separately for art-direction exploration. It is **not** a valid finished hero plate: it was not painted against an actual exported HOME screenshot and includes baked-in interface elements and furniture placement that has not passed geometry alignment. Do not publish it over the interactive scene.
+
+The staging-only `/previews/dh-11c/illustrated-overview/?v=dh11c5d3a-align-v1` is a comparison bench, not an interactive replacement. It presents the **existing Writing-room illustrated key art as style reference** alongside the actual canonical 3D reference. It also projects the seven object centres from the HOME contract without inventing hotspots and allows an on-device comparison image to be displayed locally without upload or persistence. This makes it clear where illustration quality and geometry registration diverge.
+
+**Acceptance still outstanding:** a new high-resolution hero image generated or painted using the actual exported HOME camera screenshot and geometry/depth constraints, with no text, numbered badges, navigation chrome, extra doors/windows or non-modelled interactive objects baked into pixels. Then review landmark alignment across desktop/mobile crops, plus support for 3D moving objects that can remain coherent as states change. No promotion until owner accepts both artwork and projection.
+
 ## Reference workflow
 
 - Keep the existing C5B/5C previews for direct comparison.
