@@ -1,6 +1,6 @@
 # DaveHub development roadmap
 
-**Updated:** 2 November 2026. **Current stage:** DH-11C.5C.3 comic-storybook rendering and physical scene dressing, based on owner-supplied illustration-style reference while preserving the existing room layout. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+**Updated:** 2 November 2026. **Current stage:** DH-11C.5D.1–5D.2 geometry-locked illustrated-view camera contract and structural capture foundation; high-illustration art authoring not yet complete. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
 
 ## Design baseline
 
@@ -69,6 +69,10 @@
 | DH-11C.7 | Deep physical interactions and approved manuscript content | Five drawers and folder lift/inspect/return, other object mechanics, deterministic approved-only content adapter and full accessible fallbacks | Planned; no new content approval granted |
 | DH-11C.8 | Staging integration and release QA | Cross-browser/mobile QA, cold-load/fps checks, content and game regressions, reversible staging integration and owner approval | Planned; **no production-domain changes** |
 | DH-11C.9 | Optional reusable 3D world primitives | Extract proven shared camera/input/loader contracts after Writing v1, without enforcing one generic world style | Later, conditional on C8 approval |
+
+## DH-11C.5D — Geometry-locked illustrated-view pipeline (3 November 2026)
+
+The owner rejected further shader tuning as insufficient to reach the high-illustration quality of the DaveHub homepage and prior Writing-room key art, and approved a **fixed-camera illustrated-view pipeline**, preserving the approved 3D room and mechanisms. [Implementation contract](DH11C5D_ILLUSTRATED_VIEW_PIPELINE.md). **DH-11C.5D.1–5D.2 foundation on staging:** machine-readable eight-camera contract derived directly from room-plan.js, desktop/mobile projections for each object anchor and a dedicated real-WebGL structural-reference screenshot + JSON export route `/previews/dh-11c/illustrated-views/?v=dh11c5d-geometry-guides-v1`. Screenshot output is intentionally labelled **structural reference**, not finished illustrated art. Next stages are authoring a high-quality painted overview and desk close-up, then proving geometry-aligned animation without fake 2D state compositing. Published Writing and production remain unchanged; final art and visual acceptance pending.
 
 ## DH-11C.5C.3 — Comic Storybook Style Calibration (2 November 2026)
 
