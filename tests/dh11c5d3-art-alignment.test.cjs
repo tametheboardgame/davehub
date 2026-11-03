@@ -16,7 +16,7 @@ test('5D.3A preview compares approved high-illustration target with actual locke
   'view-pipeline.js?v=dh11c5d-geometry-guides-v1',
   'room-plan.js?v=dh11c5d-geometry-guides-v1',
   'Art direction review, not a replacement for the 3D room.',
-  'no artwork is saved or uploaded','geometry-registered'
+  'No new artwork is saved or uploaded','geometry-registered'
  ])assert.ok(html.toLowerCase().includes(marker.toLowerCase()),'Missing alignment marker: '+marker);
  assert.ok(!html.includes('data-illustration-mode'),'must not substitute the shader experiment for a plate');
  assert.ok(!html.includes('data-room-target='),'no fake static image hotspots');
