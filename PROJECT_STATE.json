@@ -1067,7 +1067,18 @@
       "heroCandidateStatus": "art-direction concept generated separately, not aligned or integrated into moving scene",
       "liveArtRoute": "/previews/dh-11c/authored-3d/?v=dh11c5d3b-authored-3d-v1",
       "liveArtSource": "prototypes/dh-11c-room/high-illustration-3d.js",
-      "ownerCorrection": "The image style must be applied to the genuine working 3D models, not as illustrated camera plates or separate compositions"
+      "ownerCorrection": "The image style must be applied to the genuine working 3D models, not as illustrated camera plates or separate compositions",
+      "spineArtCandidate": {
+        "stage": "DH-11C.5D.3C",
+        "status": "feature_branch_awaiting_CI_and_owner_visual_review",
+        "route": "/previews/dh-11c/authored-3d-v2/?v=dh11c5d3c-unique-spines-v1",
+        "source": "prototypes/dh-11c-room/high-illustration-3d-v2.js",
+        "documentation": "docs/DH11C5D3C_BOOK_SPINE_ART.md",
+        "approval": "pending",
+        "keepsV5": true,
+        "publishedWritingChanged": false,
+        "productionChanged": false
+      }
     }
   }
 }

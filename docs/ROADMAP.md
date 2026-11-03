@@ -1,6 +1,10 @@
 # DaveHub development roadmap
 
-**Updated:** 2 November 2026. **Current stage:** DH-11C.5D.3B model-bound illustrated 3D art production, correcting an earlier image-plate misunderstanding. Real illustrated 3D visual quality pending owner review. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+**Updated:** 3 November 2026. **Current stage:** DH-11C.5D.3C isolated book-spine variation experiment on top of 5D.3B model-bound illustrated 3D art. Owner visual approval of both versions remains pending. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+
+## DH-11C.5D.3C — Individual book-spine art refinement
+
+The second real-3D artwork preview adds four deterministic UV-painted spine emblems distributed across the existing 80 physical book meshes, with four reusable texture variants per binding-map family. This is a separate candidate at `/previews/dh-11c/authored-3d-v2/`; the initial 5D.3B preview, camera guides, approved geometry, interactions and published Writing remain unchanged. [Scope and review gate](DH11C5D3C_BOOK_SPINE_ART.md). Visual acceptance remains pending.
 
 ## Design baseline
 
