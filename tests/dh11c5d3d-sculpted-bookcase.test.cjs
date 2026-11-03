@@ -48,7 +48,7 @@ test('5D.3D painterly and reference modes switch attached physical details, not 
  const THREE={BoxGeometry,CylinderGeometry,Float32BufferAttribute,BufferGeometry,LineBasicMaterial,MeshStandardMaterial,Mesh,LineSegments};
  const original=new Mat(),crown=new Mesh({boundingBox:b(3.3,.16,.97)},original);
  crown.name='bookcase_crown';
- const root={traverse(fn){const visit=node=>{fn(node);for(const ch of node.children)visit(ch);};visit(crown);}};
+ const root={traverse(fn){const visit=node=>{fn(node);for(const ch of node.children||[])visit(ch);};visit(crown);}};
  const light=(v,n)=>({color:new C(v),intensity:n});
  const scene={background:new C('old'),fog:{color:new C('fog'),near:17,far:32}};
  const lights={ambient:{...light('ambient',2),groundColor:new C('ground')},sun:light('sun',3),window:light('window',12),lamp:{...light('lamp',25),userData:{litIntensity:25}}};
