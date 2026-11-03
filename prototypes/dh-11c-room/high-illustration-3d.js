@@ -215,7 +215,7 @@
   return P;
  }
  function createRuntime({THREE,scene,renderer,lights}){
-  const registered=new WeakSet(),entries=[],mapCache=new WeakMap();
+  const registered=new WeakSet(),entries=[],mapCache=new WeakMap(),fallbackCache=new Map();
   const strokes=new THREE.LineBasicMaterial({color:'#f0c782',transparent:true,opacity:.88,
    depthTest:true,depthWrite:false,toneMapped:false});
   const inkStroke=new THREE.LineBasicMaterial({color:'#4b3149',transparent:true,opacity:.84,
@@ -233,6 +233,7 @@
   let mode='reference';
   function paintMap(source,kind){
    if(!source&&typeof document==='undefined')return null;
+   if(!source&&fallbackCache.has(kind))return fallbackCache.get(kind);
    if(source){
     let versions=mapCache.get(source);
     if(versions?.has(kind))return versions.get(kind);
@@ -273,7 +274,7 @@
     let versions=mapCache.get(source);
     if(!versions){versions=new Map();mapCache.set(source,versions);}
     versions.set(kind,texture);
-   }
+   }else fallbackCache.set(kind,texture);
    return texture;
   }
   function register(root){
