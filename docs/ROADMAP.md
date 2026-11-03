@@ -1,6 +1,6 @@
 # DaveHub development roadmap
 
-**Updated:** 2 November 2026. **Current stage:** DH-11C.5D.3A high-illustration/geometry alignment bench following first art-direction candidate; final geometry-registered painting not yet complete. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+**Updated:** 2 November 2026. **Current stage:** DH-11C.5D.3B model-bound illustrated 3D art production, correcting an earlier image-plate misunderstanding. Real illustrated 3D visual quality pending owner review. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
 
 ## Design baseline
 
@@ -69,6 +69,10 @@
 | DH-11C.7 | Deep physical interactions and approved manuscript content | Five drawers and folder lift/inspect/return, other object mechanics, deterministic approved-only content adapter and full accessible fallbacks | Planned; no new content approval granted |
 | DH-11C.8 | Staging integration and release QA | Cross-browser/mobile QA, cold-load/fps checks, content and game regressions, reversible staging integration and owner approval | Planned; **no production-domain changes** |
 | DH-11C.9 | Optional reusable 3D world primitives | Extract proven shared camera/input/loader contracts after Writing v1, without enforcing one generic world style | Later, conditional on C8 approval |
+
+## DH-11C.5D.3B — High-Illustration 3D Art Production (3 November 2026)
+
+Owner clarified the goal: **make the genuine moving 3D Manuscript Hoard itself appear like a polished, richly illustrated environment**; no camera-matched stills, unrelated compositions or flat scene plates should substitute for physical furniture. [DH-11C.5D.3B art contract](DH11C5D3B_AUTHORED_3D_ART.md). First staging slice at `/previews/dh-11c/authored-3d/?v=dh11c5d3b-authored-3d-v1`: purpose-authored CanvasTexture UV artwork for wood, parchment, old bindings, metal, leather and architectural finishes, plus local-geometry ornament strokes on the same animated desk, papers, books, cabinet fronts and door. This approach builds actual 3D surface character, not another post-process shader. Original material identity and light settings are reversible; featured books and lamp mechanism are protected, late-loaded GLBs supported. **Artistic quality not yet owner-approved**; deeper Blender model detail and highly authored texture assets may be required. Earlier plate/painting approaches remain comparison references, production and published Writing unchanged.
 
 ## DH-11C.5D.3A — High-Illustration Overview Alignment Bench (3 November 2026)
 

@@ -759,12 +759,12 @@
     "liveDomainChange": "none"
   },
   "dh11_3d_production": {
-    "planStatus": "dh11c5d3a_art_geometry_alignment_bench_pending_final_plate",
+    "planStatus": "dh11c5d3b_live_high_illustration_3d_initial_art_pass",
     "scope": "Writing / The Manuscript Hoard 3D world",
     "foundation": "DH-11C.4 furniture mechanics approved by owner on 2026-11-01; 197 named source parts and GLB/Blender pipeline retained",
     "architectureDecision": "ADR-0012",
     "documentation": "docs/DH11C_3D_PRODUCTION_ROADMAP.md",
-    "currentGate": "DH-11C.5D.3A: compare high-illustration target with locked 3D HOME camera and source-projected object centres; rendered hero art still not geometry-aligned",
+    "currentGate": "DH-11C.5D.3B: owner review of newly authored UV painted 3D room and attached artwork, not image plates",
     "milestones": [
       {
         "id": "DH-11C.3",
@@ -822,7 +822,7 @@
       "reuse real geometry, not AI image-state compositing"
     ],
     "implementationStarted": true,
-    "next": "Create a high-resolution art plate directly from the exported HOME screenshot and verified scene depth, then validate against physical furniture and dynamic state",
+    "next": "Review real 3D HOME/desk/bookcase/cabinet visual quality and author richer sculpted GLB shapes and UV assets where fidelity still falls short",
     "artDirection": {
       "status": "three_material_colour_and_light_candidates_owner_review_pending",
       "preferredDraft": "amber-ink",
@@ -1044,8 +1044,8 @@
     },
     "illustratedViewPipeline": {
       "milestone": "DH-11C.5D",
-      "stage": "5D.3A art/geometry comparison; final painted overview still pending",
-      "status": "art_alignment_bench_implemented_pending_art_asset",
+      "stage": "5D.3B active 3D material and model-bound art calibration",
+      "status": "live_3d_art_staging_pending_visual_review",
       "route": "/previews/dh-11c/illustrated-views/?v=dh11c5d-geometry-guides-v1",
       "contract": "prototypes/dh-11c-room/view-pipeline.js",
       "renderSource": "scripts/render-dh11c5d-views.cjs",
@@ -1058,13 +1058,16 @@
         "camera/projection/state JSON",
         "deterministic server-generated camera-contract.json"
       ],
-      "highIllustrationHeroPlates": "not_yet_geometry_registered",
+      "highIllustrationHeroPlates": "not_required_for_primary_working_3d_solution",
       "publishedWritingChanged": false,
       "productionChanged": false,
       "ownerArtApproval": "pending",
       "preserveADR0012": true,
       "reviewRoute": "/previews/dh-11c/illustrated-overview/?v=dh11c5d3a-align-v1",
-      "heroCandidateStatus": "art-direction concept generated separately, not aligned or integrated into moving scene"
+      "heroCandidateStatus": "art-direction concept generated separately, not aligned or integrated into moving scene",
+      "liveArtRoute": "/previews/dh-11c/authored-3d/?v=dh11c5d3b-authored-3d-v1",
+      "liveArtSource": "prototypes/dh-11c-room/high-illustration-3d.js",
+      "ownerCorrection": "The image style must be applied to the genuine working 3D models, not as illustrated camera plates or separate compositions"
     }
   }
 }

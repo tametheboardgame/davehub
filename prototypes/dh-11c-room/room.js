@@ -536,7 +536,8 @@ if(artLab){
 // moving meshes and camera stops are unchanged; materials, drawn contour
 // children and lighting are the only calibrated properties.
 if(illustratedProof){
- const system=document.body.dataset.illustratedV4==='true'?window.DH11ComicStorybookStyle:
+ const system=document.body.dataset.illustratedV5==='true'?window.DH11HighIllustration3D:
+  document.body.dataset.illustratedV4==='true'?window.DH11ComicStorybookStyle:
   document.body.dataset.illustratedV3==='true'?window.DH11IllustratedStyleV3:
   document.body.dataset.illustratedV2==='true'?window.DH11IllustratedStyleV2:window.DH11IllustratedStyle;
  const options=[...document.querySelectorAll('[data-illustration-mode]')];
