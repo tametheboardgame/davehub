@@ -162,7 +162,7 @@
   ctx.restore();
  }
  function spineVariant(name){
-  const match=/^book_([0-3])_(\\d{2})$/.exec(name||'');
+  const match=/^book_([0-3])_(\d{2})$/.exec(name||'');
   return match?(Number(match[1])*3+Number(match[2]))%4:0;
  }
  function paintCanvas(ctx,size,kind,hasSource,variant=0){
