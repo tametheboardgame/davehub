@@ -224,7 +224,7 @@ check('dist/previews/dh-11c/room/illustrated-style-v3.js',['DH11IllustratedStyle
 check('dist/previews/dh-11c/room/comic-storybook-style.js',['DH11ComicStorybookStyle','sketchEdgeSegments','parchmentInk','new THREE.DataTexture','gouache']);
 check('dist/previews/dh-11c/room/comic-storybook-dressing.js',['DH11ComicDressing','floorManuscripts','wallNotes','ivy','decorativeOnly']);
 check('dist/previews/dh-11c/room/view-pipeline.js',['DH11IllustratedViews','function project','function contract','stateSummary','structural reference only']);
-check('dist/previews/dh-11c/illustrated-views/view-guides.css',['view-guide-panel','capture-view-guide','aria']);
+check('dist/previews/dh-11c/illustrated-views/view-guides.css',['view-guide-panel','view-guide-buttons','focus-visible']);
 check('dist/previews/dh-11c/illustrated-views/index.html',['DH-11C.5D','data-illustrated-view-proof="true"','view-pipeline.js?v=dh11c5d-geometry-guides-v1','capture-view-guide','export-view-guide']);
 check('dist/previews/dh-11c/illustrated-views/camera-contract.json',['"views"','"home"','"desk"','"cabinet"','"bookcase"','"window"']);
 check('dist/previews/dh-11c/comic-storybook/index.html',['DH-11C.5C.3','data-illustrated-v4="true"','comic-storybook-style.js?v=dh11c5c-comic-storybook-v4','comic-storybook-dressing.js?v=dh11c5c-comic-storybook-v4','room.js?v=dh11c5c-comic-storybook-v4']);
