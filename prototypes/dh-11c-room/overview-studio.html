@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="davehub-illustration-stage" content="DH-11C.5D.3A">
+<title>DaveHub | High-Illustration Overview Studio</title>
+<link rel="stylesheet" href="./overview.css?v=dh11c5d3a-align-v1">
+<script defer src="../room/room-plan.js?v=dh11c5d-geometry-guides-v1"></script>
+<script defer src="../room/view-pipeline.js?v=dh11c5d-geometry-guides-v1"></script>
+<script defer src="./overview.js?v=dh11c5d3a-align-v1"></script>
+</head>
+<body data-overview-studio="true">
+<header class="masthead">
+ <a class="brand" href="/">Dave<span>Hub</span></a>
+ <div><span class="eyebrow">DH-11C.5D.3A / ILLUSTRATION STUDIO</span><h1>The Manuscript Hoard, painted to life</h1></div>
+ <a href="../illustrated-views/?v=dh11c5d-geometry-guides-v1" class="header-link">Camera pipeline</a>
+</header>
+<main>
+ <p class="intro"><strong>Art direction review, not a replacement for the 3D room.</strong>
+ The old illustrated Writing artwork establishes the quality and visual language we want.
+ The right-hand view is the actual geometry-locked 3D room. Use these together to judge style while protecting the real desk, typewriter, five drawers, books and moving paper.</p>
+ <div class="review-grid">
+  <section class="panel" aria-label="High-illustration visual target">
+   <header><span>01 / ILLUSTRATION QUALITY TARGET</span><small>Existing approved visual reference, not geometry-registered</small></header>
+   <div class="art-frame" id="art-frame">
+    <img id="illustration-image" src="/assets/worlds/writing/manuscript-room-v1.avif" alt="Previously illustrated Writing-room concept art showing a chaotic fantasy study. This is a style reference, not a source of interactive furniture geometry." loading="eager">
+    <div id="reference-stamp">STYLE REFERENCE ONLY</div>
+   </div>
+   <div class="action-row">
+    <label for="new-art-file" class="file-label">Compare a new illustration on this device</label>
+    <input id="new-art-file" type="file" accept="image/png,image/jpeg,image/webp,image/avif">
+    <button type="button" id="restore-art">Restore existing Writing reference</button>
+   </div>
+   <p class="note" id="art-status" role="status" aria-live="polite">No new artwork is saved or uploaded; local comparison images stay in this browser session.</p>
+  </section>
+  <section class="panel" aria-label="Canonical three-dimensional room camera">
+   <header><span>02 / PHYSICAL ROOM, LOCKED HOME VIEW</span><small>Actual GLBs, camera, hit targets and interactions</small></header>
+   <div class="model-frame">
+    <iframe title="Live source geometry, overview camera; interact with the original room" loading="eager" src="../illustrated-views/?v=dh11c5d-geometry-guides-v1" allow="fullscreen"></iframe>
+   </div>
+   <p class="note">This is the real working model. Its geometry defines the room, even when the illustration is more expressive. If a painted cabinet, doorway or bookcase contradicts it, the plate needs correcting, not the mechanism.</p>
+  </section>
+ </div>
+ <section class="anchor-panel" aria-label="Locked projection landmarks">
+  <div class="anchor-head"><div><span class="eyebrow">CANONICAL PERSPECTIVE</span><h2>Where the seven real objects sit in the HOME camera</h2></div>
+  <div class="switches"><button type="button" id="toggle-projection" aria-pressed="true">Show anchor guides</button><a href="../illustrated-views/camera-contract.json?v=dh11c5d-geometry-guides-v1">Camera contract JSON</a></div></div>
+  <div class="projection-shell"><div class="projection-map" id="projection-map" role="img" aria-label="A geometry-derived map of the writing desk, cabinet, bookcase, typewriter, paper bin, door and window anchor positions."></div></div>
+  <p class="note">This is a projection guide, not clickable hotspots or a substitute for rigging. The final painting must match the shared vanishing point, relative size and occlusion of these physical parts, not just these centre points.</p>
+ </section>
+ <footer>
+  <span>Next gate: a new detailed hero plate painted against the same camera, without baked-in buttons, labels or invented moving states.</span>
+  <span>Staging only. The published Writing room and production domain have not changed.</span>
+ </footer>
+</main>
+</body>
+</html>

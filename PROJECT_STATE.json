@@ -759,12 +759,12 @@
     "liveDomainChange": "none"
   },
   "dh11_3d_production": {
-    "planStatus": "dh11c5d_camera_guide_foundation_staging_review",
+    "planStatus": "dh11c5d3a_art_geometry_alignment_bench_pending_final_plate",
     "scope": "Writing / The Manuscript Hoard 3D world",
     "foundation": "DH-11C.4 furniture mechanics approved by owner on 2026-11-01; 197 named source parts and GLB/Blender pipeline retained",
     "architectureDecision": "ADR-0012",
     "documentation": "docs/DH11C_3D_PRODUCTION_ROADMAP.md",
-    "currentGate": "DH-11C.5D.1–5D.2: eight geometry-locked cameras and source-model PNG/projection JSON guide; high-illustration plates still unbuilt",
+    "currentGate": "DH-11C.5D.3A: compare high-illustration target with locked 3D HOME camera and source-projected object centres; rendered hero art still not geometry-aligned",
     "milestones": [
       {
         "id": "DH-11C.3",
@@ -822,7 +822,7 @@
       "reuse real geometry, not AI image-state compositing"
     ],
     "implementationStarted": true,
-    "next": "Author and review a high-illustration HOME overview plate and desk plate aligned to the canonical cameras and true moving 3D source",
+    "next": "Create a high-resolution art plate directly from the exported HOME screenshot and verified scene depth, then validate against physical furniture and dynamic state",
     "artDirection": {
       "status": "three_material_colour_and_light_candidates_owner_review_pending",
       "preferredDraft": "amber-ink",
@@ -1044,8 +1044,8 @@
     },
     "illustratedViewPipeline": {
       "milestone": "DH-11C.5D",
-      "stage": "5D.1–5D.2 canonical camera/source-reference export",
-      "status": "implemented_pending_owner_review",
+      "stage": "5D.3A art/geometry comparison; final painted overview still pending",
+      "status": "art_alignment_bench_implemented_pending_art_asset",
       "route": "/previews/dh-11c/illustrated-views/?v=dh11c5d-geometry-guides-v1",
       "contract": "prototypes/dh-11c-room/view-pipeline.js",
       "renderSource": "scripts/render-dh11c5d-views.cjs",
@@ -1058,11 +1058,13 @@
         "camera/projection/state JSON",
         "deterministic server-generated camera-contract.json"
       ],
-      "highIllustrationHeroPlates": "not_started",
+      "highIllustrationHeroPlates": "not_yet_geometry_registered",
       "publishedWritingChanged": false,
       "productionChanged": false,
       "ownerArtApproval": "pending",
-      "preserveADR0012": true
+      "preserveADR0012": true,
+      "reviewRoute": "/previews/dh-11c/illustrated-overview/?v=dh11c5d3a-align-v1",
+      "heroCandidateStatus": "art-direction concept generated separately, not aligned or integrated into moving scene"
     }
   }
 }

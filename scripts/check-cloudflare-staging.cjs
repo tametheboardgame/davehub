@@ -13,6 +13,7 @@ const checks=[
  {path:'/creations/stephen-martin-project/',required:['<style data-davehub-inline="worlds">','The Stephen Martin Project','Play on DaveHub','href="/games/stephen-martin/"','stephen-martin-project.pages.dev'],forbidden:['DESIGN REVIEW ONLY']},
  {path:'/creations/tame-the-board-game/',required:['<style data-davehub-inline="worlds">','Tame The Board Game','Miriam','tametheboardgame.com/about/'],forbidden:['DESIGN REVIEW ONLY']},
  {path:'/previews/dh-11c/furniture/',required:['DH-11C.4F','data-furniture-model-proof="true"','data-immersive-room="true"','id="furniture-model-status"','dh11c5b-archive-v1','room.js?v=dh11c5b-archive-v1','room-plan.js?v=dh11c5b-archive-v1','desk-materials.js?v=dh11c5a-desk-v1','archive-materials.js?v=dh11c5b-archive-v1'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
+ {path:'/previews/dh-11c/illustrated-overview/',required:['DH-11C.5D.3A','data-overview-studio="true"','dh11c5d3a-align-v1','/assets/worlds/writing/manuscript-room-v1.avif','id="projection-map"','id="new-art-file"','../illustrated-views/?v=dh11c5d-geometry-guides-v1'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/illustrated-views/',required:['DH-11C.5D','data-illustrated-view-proof="true"','dh11c5d-geometry-guides-v1','view-pipeline.js?v=dh11c5d-geometry-guides-v1','room.js?v=dh11c5d-geometry-guides-v1','capture-view-guide','export-view-guide'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/comic-storybook/',required:['DH-11C.5C.3','data-illustrated-v4="true"','dh11c5c-comic-storybook-v4','comic-storybook-style.js?v=dh11c5c-comic-storybook-v4','comic-storybook-dressing.js?v=dh11c5c-comic-storybook-v4','room.js?v=dh11c5c-comic-storybook-v4','data-illustration-mode="reference"','data-illustration-mode="painterly"'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/illustrated-v3/',required:['DH-11C.5C.2B','data-illustrated-v3="true"','dh11c5c-soft-edges-v3','illustrated-style-v3.js?v=dh11c5c-soft-edges-v3','room.js?v=dh11c5c-soft-edges-v3','data-illustration-mode="reference"','data-illustration-mode="painterly"'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
@@ -45,7 +46,8 @@ async function main(){
   try{
    const results=[];
    for(const c of checks){
-    const version=c.path==='/previews/dh-11c/illustrated-views/'?'?dh11c5d-geometry-guides-v1=1':
+    const version=c.path==='/previews/dh-11c/illustrated-overview/'?'?dh11c5d3a-align-v1=1':
+     c.path==='/previews/dh-11c/illustrated-views/'?'?dh11c5d-geometry-guides-v1=1':
      c.path==='/previews/dh-11c/comic-storybook/'?'?dh11c5c-comic-storybook-v4=1':
      c.path==='/previews/dh-11c/illustrated-v3/'?'?dh11c5c-soft-edges-v3=1':
      c.path==='/previews/dh-11c/illustrated-v2/'?'?dh11c5c-painted-surfaces-v2=1':
@@ -310,6 +312,20 @@ async function main(){
     if(!captureCode.includes(marker))throw Error('Missing same-source capture contract '+marker);
    }
    console.log('PASS hosted DH-11C.5D eight canonical 3D camera views, projection metadata and same-source PNG capture');
+   for(const dep of [
+    {name:'overview.js',type:'javascript',markers:['home.targets.desktop.anchors','URL.createObjectURL(candidate)','plan.find(anchor.id)','map.dataset.guides']},
+    {name:'overview.css',type:'text/css',markers:['.review-grid','.projection-map','@media(max-width:1050px)']}
+   ]){
+    const asset=await fetch(guideBase+'illustrated-overview/'+dep.name+'?v=dh11c5d3a-align-v1',{
+     headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)
+    });
+    if(!asset.ok||!(asset.headers.get('content-type')||'').includes(dep.type))
+     throw Error('Missing geometry/illustration comparison '+dep.name+' (HTTP '+asset.status+')');
+    const body=await asset.text();
+    for(const marker of dep.markers)if(!body.includes(marker))
+     throw Error('Stale illustration review asset '+dep.name+': '+marker);
+   }
+   console.log('PASS hosted DH-11C.5D.3A source-art comparison, projected canonical anchors and local-only candidate inspection');
 
    const model=await fetch(BASE+'/previews/dh-11c/room/models/cabinet-prototype.glb?dh11c4=1',{headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)});
    if(!model.ok)throw Error('GLB asset HTTP '+model.status);

@@ -1,6 +1,6 @@
 # DaveHub development roadmap
 
-**Updated:** 2 November 2026. **Current stage:** DH-11C.5D.1–5D.2 geometry-locked illustrated-view camera contract and structural capture foundation; high-illustration art authoring not yet complete. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+**Updated:** 2 November 2026. **Current stage:** DH-11C.5D.3A high-illustration/geometry alignment bench following first art-direction candidate; final geometry-registered painting not yet complete. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
 
 ## Design baseline
 
@@ -69,6 +69,10 @@
 | DH-11C.7 | Deep physical interactions and approved manuscript content | Five drawers and folder lift/inspect/return, other object mechanics, deterministic approved-only content adapter and full accessible fallbacks | Planned; no new content approval granted |
 | DH-11C.8 | Staging integration and release QA | Cross-browser/mobile QA, cold-load/fps checks, content and game regressions, reversible staging integration and owner approval | Planned; **no production-domain changes** |
 | DH-11C.9 | Optional reusable 3D world primitives | Extract proven shared camera/input/loader contracts after Writing v1, without enforcing one generic world style | Later, conditional on C8 approval |
+
+## DH-11C.5D.3A — High-Illustration Overview Alignment Bench (3 November 2026)
+
+A new comic-fantasy illustration candidate was generated for art-direction review, but it copied UI and unsupported spatial detail from an earlier reference. **It has not passed the geometry-first acceptance gate and is not embedded over the moving 3D room.** To support an actual review rather than claim a false visual milestone, the staging `/previews/dh-11c/illustrated-overview/?v=dh11c5d3a-align-v1` now compares the existing finished Writing-room key art with the real geometry-locked home camera side-by-side. A separate on-page projected guide locates all seven physical targets from the canonical camera contract. A locally supplied candidate image can be inspected without uploading, storing or adding fake click targets. The substantial final task is still to author a new image against the actual HOME PNG and scene depth, omitting baked-in menu controls and preserving movable furniture. Owner visual approval pending; production unchanged.
 
 ## DH-11C.5D — Geometry-locked illustrated-view pipeline (3 November 2026)
 
