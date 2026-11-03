@@ -13,6 +13,7 @@ const checks=[
  {path:'/creations/stephen-martin-project/',required:['<style data-davehub-inline="worlds">','The Stephen Martin Project','Play on DaveHub','href="/games/stephen-martin/"','stephen-martin-project.pages.dev'],forbidden:['DESIGN REVIEW ONLY']},
  {path:'/creations/tame-the-board-game/',required:['<style data-davehub-inline="worlds">','Tame The Board Game','Miriam','tametheboardgame.com/about/'],forbidden:['DESIGN REVIEW ONLY']},
  {path:'/previews/dh-11c/furniture/',required:['DH-11C.4F','data-furniture-model-proof="true"','data-immersive-room="true"','id="furniture-model-status"','dh11c5b-archive-v1','room.js?v=dh11c5b-archive-v1','room-plan.js?v=dh11c5b-archive-v1','desk-materials.js?v=dh11c5a-desk-v1','archive-materials.js?v=dh11c5b-archive-v1'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
+ {path:'/previews/dh-11c/illustrated-views/',required:['DH-11C.5D','data-illustrated-view-proof="true"','dh11c5d-geometry-guides-v1','view-pipeline.js?v=dh11c5d-geometry-guides-v1','room.js?v=dh11c5d-geometry-guides-v1','capture-view-guide','export-view-guide'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/comic-storybook/',required:['DH-11C.5C.3','data-illustrated-v4="true"','dh11c5c-comic-storybook-v4','comic-storybook-style.js?v=dh11c5c-comic-storybook-v4','comic-storybook-dressing.js?v=dh11c5c-comic-storybook-v4','room.js?v=dh11c5c-comic-storybook-v4','data-illustration-mode="reference"','data-illustration-mode="painterly"'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/illustrated-v3/',required:['DH-11C.5C.2B','data-illustrated-v3="true"','dh11c5c-soft-edges-v3','illustrated-style-v3.js?v=dh11c5c-soft-edges-v3','room.js?v=dh11c5c-soft-edges-v3','data-illustration-mode="reference"','data-illustration-mode="painterly"'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/illustrated-v2/',required:['DH-11C.5C.2A','data-illustrated-v2="true"','dh11c5c-painted-surfaces-v2','illustrated-style-v2.js?v=dh11c5c-painted-surfaces-v2','room.js?v=dh11c5c-painted-surfaces-v2','data-illustration-mode="reference"','data-illustration-mode="painterly"'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
@@ -44,7 +45,8 @@ async function main(){
   try{
    const results=[];
    for(const c of checks){
-    const version=c.path==='/previews/dh-11c/comic-storybook/'?'?dh11c5c-comic-storybook-v4=1':
+    const version=c.path==='/previews/dh-11c/illustrated-views/'?'?dh11c5d-geometry-guides-v1=1':
+     c.path==='/previews/dh-11c/comic-storybook/'?'?dh11c5c-comic-storybook-v4=1':
      c.path==='/previews/dh-11c/illustrated-v3/'?'?dh11c5c-soft-edges-v3=1':
      c.path==='/previews/dh-11c/illustrated-v2/'?'?dh11c5c-painted-surfaces-v2=1':
      c.path==='/previews/dh-11c/illustrated/'?'?dh11c5c-painterly-v1=1':
@@ -275,6 +277,39 @@ async function main(){
    if(!comicCss.ok||!(comicCss.headers.get('content-type')||'').includes('css'))
     throw Error('Comic storybook comparison stylesheet missing');
    console.log('PASS hosted DH-11C.5C.3 true illustrated materials, static 3D dressing and original interactions');
+   const guideBase=BASE+'/previews/dh-11c/';
+   const guideSource=await fetch(guideBase+'room/view-pipeline.js?v=dh11c5d-geometry-guides-v1',{
+    headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)
+   });
+   if(!guideSource.ok||!(guideSource.headers.get('content-type')||'').includes('javascript'))
+    throw Error('No live geometry-locked illustrated reference JS');
+   const guideJs=await guideSource.text();
+   for(const marker of ['DH11IllustratedViews','function project','function contract','stateSummary','structural reference only']){
+    if(!guideJs.includes(marker))throw Error('Stale illustrated view reference JS: '+marker);
+   }
+   const guidePlan=await fetch(guideBase+'illustrated-views/camera-contract.json?v=dh11c5d-geometry-guides-v1',{
+    headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)
+   });
+   if(!guidePlan.ok||!(guidePlan.headers.get('content-type')||'').includes('json'))
+    throw Error('Missing deployed canonical camera contract JSON');
+   const cameraData=await guidePlan.json();
+   const sourceCameras=require('../prototypes/dh-11c-room/view-pipeline.js').contract(
+    require('../prototypes/dh-11c-room/room-plan.js'));
+   if(JSON.stringify(cameraData)!==JSON.stringify(sourceCameras))
+    throw Error('Hosted camera positions/projections do not match the canonical 3D room plan');
+   const guideRoom=await fetch(guideBase+'room/room.js?v=dh11c5d-geometry-guides-v1',{
+    headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)
+   });
+   if(!guideRoom.ok||!(guideRoom.headers.get('content-type')||'').includes('javascript'))
+    throw Error('Reference capture room JavaScript unavailable');
+   const captureCode=await guideRoom.text();
+   for(const marker of ["document.body.dataset.illustratedViewProof==='true'",
+    'camera.position.copy(desiredPosition)','renderer.render(scene,camera)',
+    "canvas.toDataURL('image/png')","scene.getObjectByName('desk_root')",
+    "scene.getObjectByName('drawer_finished')"]){
+    if(!captureCode.includes(marker))throw Error('Missing same-source capture contract '+marker);
+   }
+   console.log('PASS hosted DH-11C.5D eight canonical 3D camera views, projection metadata and same-source PNG capture');
 
    const model=await fetch(BASE+'/previews/dh-11c/room/models/cabinet-prototype.glb?dh11c4=1',{headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)});
    if(!model.ok)throw Error('GLB asset HTTP '+model.status);
