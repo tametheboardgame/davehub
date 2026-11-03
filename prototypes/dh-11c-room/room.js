@@ -572,6 +572,66 @@ const copyById={
  window:'The distant islands are simple geometry behind the window frame. Their tiny movement is a first pass at bringing the world to life.'
 };
 let state=plan.next(null,{type:'init'});
+// DH-11C.5D.2: screenshot/JSON references come from the actual Three.js
+// renderer and its locked room-plan cameras, not independent fake scene art.
+if(document.body.dataset.illustratedViewProof==='true'){
+ const contract=window.DH11IllustratedViews;
+ const capture=document.getElementById('capture-view-guide');
+ const exportGuide=document.getElementById('export-view-guide');
+ const indicator=document.getElementById('view-guide-status');
+ if(!contract||!capture||!exportGuide||!indicator)
+  throw Error('Missing DH-11C.5D camera contract or export controls');
+ const cameras=contract.contract(plan);
+ const download=(blob,name)=>{
+  const url=URL.createObjectURL(blob),link=document.createElement('a');
+  link.href=url;link.download=name;document.body.appendChild(link);link.click();link.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),60000);
+ };
+ const current=()=>{
+  const focus=state.focus||'home',view=cameras.views.find(v=>v.id===focus);
+  if(!view)throw Error('Unknown canonical camera '+focus);
+  return {focus,view};
+ };
+ const modelReady=()=>Boolean(scene.getObjectByName('desk_root')&&scene.getObjectByName('drawer_finished'));
+ const guide=()=>{
+  const {focus,view}=current(),width=renderer?.domElement.width||0,height=renderer?.domElement.height||0;
+  return {milestone:'DH-11C.5D.2',kind:'same-source geometry reference',
+   warning:'Not a finished illustration or a replacement for the real 3D rig.',
+   contractVersion:contract.VERSION,view,camera:{position:[...camera.position],target:[...focusPoint],
+   fov:camera.fov,near:camera.near,far:camera.far,aspect:camera.aspect},
+   pixels:{width,height},actualGLBsLoaded:modelReady(),
+   state:contract.stateSummary(state)};
+ };
+ capture.addEventListener('click',()=>{
+  if(!renderer||!modelReady()){
+   indicator.textContent='The furniture and cabinet GLBs must finish loading before capture.';
+   return;
+  }
+  // Lock the *actual* runtime camera to the approved stop before recording.
+  camera.position.copy(desiredPosition);
+  focusPoint.copy(desiredTarget);
+  camera.lookAt(focusPoint);
+  camera.updateMatrixWorld();
+  renderer.render(scene,camera);
+  const {focus}=current();
+  try{
+   const data=canvas.toDataURL('image/png');
+   if(!data.startsWith('data:image/png;base64,'))throw Error('PNG framebuffer unavailable');
+   const a=document.createElement('a');
+   a.href=data;a.download=contract.fileName(focus,'png');a.click();
+   indicator.textContent='Captured '+focus+' from the live GLB room. Geometry guide only.';
+  }catch(error){
+   indicator.textContent='PNG export failed. Try a browser with canvas capture enabled.';
+   console.warn('Illustrated reference capture failed',error);
+  }
+ });
+ exportGuide.addEventListener('click',()=>{
+  const {focus}=current();
+  const bytes=JSON.stringify(guide(),null,2)+'\\n';
+  download(new Blob([bytes],{type:'application/json'}),contract.fileName(focus,'json'));
+  indicator.textContent='Exported the '+focus+' camera, projection and current interactive-state guide.';
+ });
+}
 const drawerHome=cabinetDrawers.map(x=>x.position.z);
 let bookHome=pullBooks.map(x=>x.position.z);
 // All 24 keys, the platen and the paper have separate animation references.

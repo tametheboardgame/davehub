@@ -759,12 +759,12 @@
     "liveDomainChange": "none"
   },
   "dh11_3d_production": {
-    "planStatus": "dh11c5c3_comic_storybook_staging_review",
+    "planStatus": "dh11c5d_camera_guide_foundation_staging_review",
     "scope": "Writing / The Manuscript Hoard 3D world",
     "foundation": "DH-11C.4 furniture mechanics approved by owner on 2026-11-01; 197 named source parts and GLB/Blender pipeline retained",
     "architectureDecision": "ADR-0012",
     "documentation": "docs/DH11C_3D_PRODUCTION_ROADMAP.md",
-    "currentGate": "DH-11C.5C.3: owner judges illustrated colour, textures, hand-drawn contours and restrained 3D environmental character against reference style, not reference layout",
+    "currentGate": "DH-11C.5D.1–5D.2: eight geometry-locked cameras and source-model PNG/projection JSON guide; high-illustration plates still unbuilt",
     "milestones": [
       {
         "id": "DH-11C.3",
@@ -781,7 +781,7 @@
       {
         "id": "DH-11C.5",
         "phase": "Textures/UVs/material atlas",
-        "status": "C5A_approved_C5B_positive_C5C3_comic_storybook_art_review_pending",
+        "status": "C5A_approved_C5B_positive_C5C_realtime_style_not_approved_C5D_camera_reference_pipeline",
         "approval": "C5C.2B handmade silhouettes pending owner visual approval"
       },
       {
@@ -822,7 +822,7 @@
       "reuse real geometry, not AI image-state compositing"
     ],
     "implementationStarted": true,
-    "next": "Owner reviews dedicated comic-storybook staging comparison before extending art style across architecture or building further style variants",
+    "next": "Author and review a high-illustration HOME overview plate and desk plate aligned to the canonical cameras and true moving 3D source",
     "artDirection": {
       "status": "three_material_colour_and_light_candidates_owner_review_pending",
       "preferredDraft": "amber-ink",
@@ -1041,6 +1041,28 @@
       "ownerFeedback": "V3 is a better direction; user supplied densely illustrated comic-fantasy study, specifically requiring its style not its layout",
       "dressingSource": "prototypes/dh-11c-room/comic-storybook-dressing.js",
       "referenceLayoutCopied": false
+    },
+    "illustratedViewPipeline": {
+      "milestone": "DH-11C.5D",
+      "stage": "5D.1–5D.2 canonical camera/source-reference export",
+      "status": "implemented_pending_owner_review",
+      "route": "/previews/dh-11c/illustrated-views/?v=dh11c5d-geometry-guides-v1",
+      "contract": "prototypes/dh-11c-room/view-pipeline.js",
+      "renderSource": "scripts/render-dh11c5d-views.cjs",
+      "authoritativeModel": "prototypes/dh-11c-room/room-plan.js and existing real furniture/cabinet GLBs",
+      "cameraCount": 8,
+      "desktopFov": 51,
+      "mobileFov": 62,
+      "currentExports": [
+        "same-source WebGL PNG structural guide",
+        "camera/projection/state JSON",
+        "deterministic server-generated camera-contract.json"
+      ],
+      "highIllustrationHeroPlates": "not_started",
+      "publishedWritingChanged": false,
+      "productionChanged": false,
+      "ownerArtApproval": "pending",
+      "preserveADR0012": true
     }
   }
 }
