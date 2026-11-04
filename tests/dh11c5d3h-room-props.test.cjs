@@ -70,7 +70,7 @@ test('lamp base bottom was below the desktop and is lifted by 70mm in V7 only',(
    'const lampLift=mysticalRoomProof?.07:0;',
    "shade.position.set(-1.67,2.38,-.43);if(lampLift)shade.position.y+=lampLift",
    "mats.timber,-1.67,1.4,-.43",
-   "lamp.position.set(-1.97,mysticalRoomProof?2.38:2.31,.17)",
+   "lamp.position.set(-1.97,2.31,.17);if(mysticalRoomProof)lamp.position.y+=.07",
    'window.DH11RoomProps.decorateFurniture({THREE,root:content})'])
   assert.ok(room.includes(marker),marker);
 });
