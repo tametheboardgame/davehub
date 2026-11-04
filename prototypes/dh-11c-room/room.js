@@ -210,7 +210,7 @@ function wallScene(){
  sceneLights.sun=sun;scene.add(sun);
  const lamp=new THREE.PointLight('#f1b982',26,7,2);
  // Centre the light at the actual desk lamp, not elsewhere over the desk.
- lamp.position.set(-1.97,mysticalRoomProof?2.38:2.31,.17);
+ lamp.position.set(-1.97,2.31,.17);if(mysticalRoomProof)lamp.position.y+=.07;
  sceneLights.lamp=lamp;lamp.userData.litIntensity=26;scene.add(lamp);
  const glow=new THREE.PointLight('#92b8d9',15,9,2);
  glow.position.set(.25,3.7,-3.5);sceneLights.window=glow;scene.add(glow);
