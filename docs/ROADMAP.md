@@ -1,6 +1,10 @@
 # DaveHub development roadmap
 
-**Updated:** 4 November 2026. **Current stage:** DH-11C.5D.3E illustrated-3D authored detail pass following owner feedback on sculpted 5D.3D. A separate review version preserves the original room and earlier art passes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+**Updated:** 4 November 2026. **Current stage:** DH-11C.5D.3F readable manuscript-hoard refinement following owner screenshot review of V4. A separate review version preserves the original room and earlier art passes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+
+## DH-11C.5D.3F — Window fit, readable book titles and chaotic fountain pen
+
+A new separate, real-3D V5 study corrects the floating-island window by fitting artwork into four actual panes with cloud-only depth layers and fully suppressing the old GLB islands. The five filing-cabinet labels are larger, darker and bold enough for overview readability; all 80 actual books get distinctive fictional joke titles on their individual moving spines; and the 15 visible manuscript surfaces get messy crossed-out ink. Full scope and acceptance gate: [DH11C5D3F_READABLE_HOARD](DH11C5D3F_READABLE_HOARD.md). Original GLB pivots and published Writing remain unchanged. Pending visual approval.
 
 ## DH-11C.5D.3E — Authored room detail pass
 
