@@ -69,6 +69,11 @@
  function paintScrawl(ctx,width,height,index){
   const W=width,H=height,r=random(index+207),text=SCRAWLS[index];
   ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='#ead7aa';ctx.fillRect(0,0,W,H);
+  for(let n=0;n<65;n++){
+   ctx.fillStyle=n%3?'rgba(105,70,57,.035)':'rgba(255,240,200,.11)';
+   ctx.fillRect((n*71+index*37)%W,(n*61+index*11)%H,2+n%7,1+n%3);
+  }
   ctx.lineCap='round';ctx.lineJoin='round';
   const phrases=['no no NO','see margin','why??','try again','must fix',
     'WRONG','aha!','rewrite','important!','maybe'];
@@ -122,7 +127,7 @@
   };
   const attach=(mesh,art,position,size,rotationX=0)=>{
    const material=new THREE.MeshBasicMaterial({
-    map:art,transparent:true,side:THREE.DoubleSide,depthWrite:false,toneMapped:false
+    map:art,transparent:false,side:THREE.DoubleSide,depthWrite:true,toneMapped:false
    });
    const panel=new THREE.Mesh(new THREE.PlaneGeometry(...size),material);
    panel.name='dh11c5d3f_'+mesh.name+'_art';
