@@ -436,6 +436,25 @@ function markFeaturedBook(mesh,index){
   accent.userData.featuredBookIndex=index;
   mesh.add(accent);
  }
+ if(authoredDetailProof){
+  // Eight distinct physical spine emblems, preserving turquoise bindings.
+  const points=[],r=.11,cy=bounds.min.y+dy*.56,cx=x;
+  const z=bounds.max.z+.010/sz,petals=3+(index%8);
+  for(let n=0;n<petals;n++){
+   const a=Math.PI*2*n/petals+(index*.13),b=Math.PI*2*(n+1)/petals+(index*.13);
+   const p=[cx+dx*r*Math.cos(a),cy+dy*r*Math.sin(a),z];
+   const q=[cx+dx*r*Math.cos(b),cy+dy*r*Math.sin(b),z];
+   points.push(...p,...q);
+   points.push(cx,cy,z,...p);
+  }
+  const geo=new THREE.BufferGeometry();
+  geo.setAttribute('position',new THREE.Float32BufferAttribute(points,3));
+  const ink=new THREE.LineBasicMaterial({color:'#ffe9b4',transparent:true,opacity:.94,toneMapped:false});
+  const motif=new THREE.LineSegments(geo,ink);
+  motif.name='dh11c5d3e_featured_emblem_'+index;
+  motif.userData.decorativeOnly=true;motif.raycast=()=>{};
+  mesh.add(motif);
+ }
 }
 function makeBookcase(){
  const g=group(scene,4.7,0,-3.85);
