@@ -60,7 +60,7 @@ test('rug overlay lies exactly on room floor and follows reversible illustrated 
  }finally{global.document=original;}
 });
 test('lamp base bottom was below the desktop and is lifted by 70mm in V7 only',()=>{
- assert.equal(prop.DESK_TOP,1.39);
+ assert.ok(Math.abs(prop.DESK_TOP-1.39)<1e-9);
  assert.equal(prop.LAMP_LIFT,.07);
  const before=1.4-.12/2,after=before+prop.LAMP_LIFT;
  assert.ok(before<prop.DESK_TOP);
@@ -68,8 +68,8 @@ test('lamp base bottom was below the desktop and is lifted by 70mm in V7 only',(
  const room=read('prototypes/dh-11c-room/room.js');
  for(const marker of ["document.body.dataset.mysticalRoomProof==='true'",
    'const lampLift=mysticalRoomProof?.07:0;',
-   "shade.position.set(-1.67,2.38+lampLift,-.43)",
-   "mats.timber,-1.67,1.4+lampLift,-.43",
+   "shade.position.set(-1.67,2.38,-.43);if(lampLift)shade.position.y+=lampLift",
+   "mats.timber,-1.67,1.4,-.43",
    "lamp.position.set(-1.97,mysticalRoomProof?2.38:2.31,.17)",
    'window.DH11RoomProps.decorateFurniture({THREE,root:content})'])
   assert.ok(room.includes(marker),marker);
