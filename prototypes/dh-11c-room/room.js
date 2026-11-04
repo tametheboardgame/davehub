@@ -48,7 +48,8 @@ const shellProof=document.body.dataset.shellProof==='true';
 const shellModelProof=document.body.dataset.shellModelProof==='true';
 const furnitureModelProof=document.body.dataset.furnitureModelProof==='true';
 const illustratedProof=furnitureModelProof&&document.body.dataset.illustratedProof==='true';
-let illustratedRuntime=null;
+const authoredDetailProof=illustratedProof&&document.body.dataset.authoredDetailProof==='true';
+let illustratedRuntime=null,scenicWindow=null;
 let shellFallback=null;
 const blenderCompare=document.body.dataset.blenderCompare==='true';
 let glbExtension=1;
@@ -253,20 +254,55 @@ function makeCabinet(){
   box(tray,1.6,.075,.83,finish('cabinetTray')||mats.timber,0,-.207,-.39);
   for(const x of [-.78,.78])box(tray,.07,.41,.83,finish('cabinetTray')||mats.timber,x,-.015,-.39);
   box(tray,1.6,.35,.08,finish('cabinetTray')||mats.timber,0,-.055,-.81);
-  box(tray,.65,.16,.025,finish('cabinetLabel')||mats.paper,0,.095,.056);
+  box(tray,authoredDetailProof?1.02:.65,authoredDetailProof?.24:.16,.025,finish('cabinetLabel')||mats.paper,0,.095,.056);
   box(tray,.58,.055,.09,finish('cabinetBrass')||mats.brass,0,-.085,.123);
   for(let f=0;f<4;f++){
    const folder=box(tray,.23,.24,.018,finish('cabinetFolder'+f%2)||mats.paper,-.48+f*.32,.06,-.3-f*.03);
    folder.rotation.y=(f%2?.12:-.1);
   }
-  const tag=makeText(names[i],.38,.11,'#33434b','#efe0c2');
-  tag.position.set(0,.095,.074);tray.add(tag);
+  const tag=makeText(names[i],authoredDetailProof?.98:.38,authoredDetailProof?.21:.11,'#33434b','#efe0c2');
+  tag.position.set(0,.095,authoredDetailProof?.084:.074);tray.add(tag);
   cabinetDrawers.push(tray);
  }
  const mesh=capture('cabinet',g);
  return mesh;
 }
+
+function makeQuillTag(text,w,h){
+ const c=document.createElement('canvas');c.width=768;c.height=224;
+ const ctx=c.getContext('2d');const W=c.width,H=c.height;
+ // The label itself is the parchment plate, not a printout stuck on top.
+ ctx.fillStyle='#f1ddaa';ctx.fillRect(0,0,W,H);
+ for(let i=0;i<110;i++){
+  const x=(i*149)%W,y=(i*67)%H;
+  ctx.fillStyle=i%3?'rgba(122,76,58,.09)':'rgba(255,250,222,.18)';
+  ctx.fillRect(x,y,3+i%5,1+i%3);
+ }
+ ctx.strokeStyle='#986748';ctx.lineWidth=8;ctx.strokeRect(8,8,W-16,H-16);
+ ctx.lineWidth=2.6;ctx.strokeStyle='#b59468';ctx.strokeRect(23,21,W-46,H-42);
+ for(const mirror of [false,true]){
+  ctx.save();if(mirror){ctx.translate(W,0);ctx.scale(-1,1);}
+  ctx.strokeStyle='#71505b';ctx.lineWidth=2.4;
+  ctx.beginPath();ctx.moveTo(36,H/2);ctx.bezierCurveTo(59,48,99,54,110,76);
+  ctx.bezierCurveTo(83,87,66,74,63,64);ctx.stroke();
+  ctx.restore();
+ }
+ ctx.fillStyle='#3f2b44';ctx.textAlign='center';ctx.textBaseline='middle';
+ ctx.font="italic 110px 'Palatino Linotype','Book Antiqua','URW Chancery L',cursive";
+ ctx.fillText(text,W/2,H*.54,W*.75);
+ ctx.strokeStyle='rgba(74,45,64,.65)';ctx.lineWidth=3;
+ ctx.beginPath();ctx.moveTo(W*.28,H*.75);ctx.bezierCurveTo(W*.41,H*.82,W*.53,H*.69,W*.72,H*.75);ctx.stroke();
+ const tx=new THREE.CanvasTexture(c);tx.colorSpace=THREE.SRGBColorSpace;tx.anisotropy=4;
+ const mesh=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({
+  map:tx,transparent:false,side:THREE.DoubleSide,depthWrite:true
+ }));
+ mesh.name='dh11c5d3e_handwritten_'+text.toLowerCase().replace(/\s+/g,'_');
+ mesh.userData.decorativeOnly=true;
+ mesh.raycast=()=>{};
+ return mesh;
+}
 function makeText(text,w,h,colour='#30252d',fill='#e8d4b2'){
+ if(authoredDetailProof)return makeQuillTag(text,w,h);
  const c=document.createElement('canvas');c.width=512;c.height=128;
  const ctx=c.getContext('2d');
  ctx.fillStyle=fill;ctx.fillRect(0,0,512,128);
@@ -316,8 +352,10 @@ function makeDesk(){
  bulb.name='desk_lamp_bulb';lampBulbMesh=bulb;
  const base=cylinder(g,.28,.28,.12,mats.timber,-1.67,1.4,-.43);
  base.name='desk_lamp_base';
- const cup=cylinder(g,.13,.105,.26,mats.ink,-.88,1.53,.57);
- cup.rotation.z=.08;
+ if(!authoredDetailProof){
+  const cup=cylinder(g,.13,.105,.26,mats.ink,-.88,1.53,.57);
+  cup.rotation.z=.08;
+ }
  const file=group(g,-.55,1.42,-.7);
  box(file,.86,.14,.64,mats.deskLeather);
  box(file,.66,.025,.44,mats.deskParchment0,0,.09,0);
@@ -554,6 +592,7 @@ if(illustratedProof){
  function chooseIllustration(mode){
   const selected=illustratedRuntime.set(mode);
   if(comicDressing)comicDressing.setVisible(mode==='painterly');
+  if(scenicWindow)scenicWindow.setVisible(mode==='painterly');
   for(const option of options){
    option.setAttribute('aria-pressed',String(option.dataset.illustrationMode===mode));
   }
@@ -1039,8 +1078,8 @@ if(glbProof){
     if(!drawer||!front)throw Error('Missing required GLB drawer nodes: '+slugs[i]);
     // Text uses a locally drawn canvas fixed to the GLB drawer front.
     // Labels are decorations, never depth or mechanical geometry.
-    const label=makeText(drawerNames[i],.42,.1);
-    label.position.set(0,.108,.076);
+    const label=makeText(drawerNames[i],authoredDetailProof?.96:.42,authoredDetailProof?.20:.1);
+    label.position.set(0,.108,authoredDetailProof?.095:.076);
     front.add(label);
     found.push(drawer);
    }
@@ -1104,6 +1143,19 @@ if(furnitureModelProof){
     const keys=Array.from({length:TYPE_KEY_COUNT},(_,i)=>get('typewriter_key_'+Math.floor(i/8)+'_'+i%8));
     const key=keys[12],typeSheet=get('typewriter_paper'),typeRule=get('typewriter_paper_rule'),platen=get('typewriter_platen'),hinge=get('door_leaf_hinge');
     const islands=Array.from({length:3},(_,i)=>get('window_island_'+i));
+    if(authoredDetailProof){
+     // Keep the canonical GLB for reversibility, but hide the distracting cup.
+     const cup=content.getObjectByName('desk_cup');
+     if(cup){cup.visible=false;cup.userData.decorativeOnly=true;}
+     const windowRig=next.get('window');
+     try{
+      if(!window.DH11WindowIllustration)throw Error('Missing layered window artwork system');
+      scenicWindow=window.DH11WindowIllustration.mount({
+       THREE,root:windowRig,url:new URL('../../../assets/homepage/floating-islands-background.png',document.baseURI).href
+      });
+      scenicWindow.setVisible(illustratedRuntime?.mode==='painterly');
+     }catch(error){console.warn('Illustrated window unavailable; original islands retained',error);}
+    }
     // Attach the bright bindings and gold bands BEFORE capture() traverses
     // the scene. Otherwise their meshes are absent from the raycast targets.
     // This also means a failed decoration leaves the fallback untouched.
