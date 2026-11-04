@@ -1092,13 +1092,26 @@
       },
       "authoredDetailCandidate": {
         "milestone": "DH-11C.5D.3E",
-        "status": "feature_branch_pending_CI_and_visual_approval",
+        "status": "deployed_staging_owner_feedback_integrated_into_3F",
         "route": "/previews/dh-11c/authored-3d-v4/?v=dh11c5d3e-authored-details-v1",
         "source": "prototypes/dh-11c-room/high-illustration-3d-v4.js",
         "window": "prototypes/dh-11c-room/window-illustration.js",
         "documentation": "docs/DH11C5D3E_AUTHORED_DETAILS.md",
         "ownerVisualApproval": "pending",
         "preservedMechanics": true,
+        "productionChanged": false,
+        "publishedWritingChanged": false
+      },
+      "readableHoardCandidate": {
+        "stage": "DH-11C.5D.3F",
+        "status": "feature_branch_awaiting_tests_and_visual_review",
+        "route": "/previews/dh-11c/authored-3d-v5/?v=dh11c5d3f-readable-hoard-v1",
+        "windowSource": "prototypes/dh-11c-room/window-illustration-v2.js",
+        "characterSource": "prototypes/dh-11c-room/manuscript-personality.js",
+        "fictitiousBookTitles": 80,
+        "chaoticManuscriptSurfaces": 15,
+        "approval": "pending",
+        "windowClippedToPhysicalPanes": true,
         "productionChanged": false,
         "publishedWritingChanged": false
       }
