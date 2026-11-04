@@ -49,7 +49,8 @@ const shellModelProof=document.body.dataset.shellModelProof==='true';
 const furnitureModelProof=document.body.dataset.furnitureModelProof==='true';
 const illustratedProof=furnitureModelProof&&document.body.dataset.illustratedProof==='true';
 const authoredDetailProof=illustratedProof&&document.body.dataset.authoredDetailProof==='true';
-let illustratedRuntime=null,scenicWindow=null;
+const personalityProof=authoredDetailProof&&document.body.dataset.personalityProof==='true';
+let illustratedRuntime=null,scenicWindow=null,manuscriptPersonality=null;
 let shellFallback=null;
 const blenderCompare=document.body.dataset.blenderCompare==='true';
 let glbExtension=1;
@@ -254,13 +255,13 @@ function makeCabinet(){
   box(tray,1.6,.075,.83,finish('cabinetTray')||mats.timber,0,-.207,-.39);
   for(const x of [-.78,.78])box(tray,.07,.41,.83,finish('cabinetTray')||mats.timber,x,-.015,-.39);
   box(tray,1.6,.35,.08,finish('cabinetTray')||mats.timber,0,-.055,-.81);
-  box(tray,authoredDetailProof?1.02:.65,authoredDetailProof?.24:.16,.025,finish('cabinetLabel')||mats.paper,0,.095,.056);
+  box(tray,personalityProof?1.35:authoredDetailProof?1.02:.65,personalityProof?.30:authoredDetailProof?.24:.16,.025,finish('cabinetLabel')||mats.paper,0,.095,.056);
   box(tray,.58,.055,.09,finish('cabinetBrass')||mats.brass,0,-.085,.123);
   for(let f=0;f<4;f++){
    const folder=box(tray,.23,.24,.018,finish('cabinetFolder'+f%2)||mats.paper,-.48+f*.32,.06,-.3-f*.03);
    folder.rotation.y=(f%2?.12:-.1);
   }
-  const tag=makeText(names[i],authoredDetailProof?.98:.38,authoredDetailProof?.21:.11,'#33434b','#efe0c2');
+  const tag=makeText(names[i],personalityProof?1.31:authoredDetailProof?.98:.38,personalityProof?.28:authoredDetailProof?.21:.11,'#33434b','#efe0c2');
   tag.position.set(0,.095,authoredDetailProof?.084:.074);tray.add(tag);
   cabinetDrawers.push(tray);
  }
@@ -287,9 +288,13 @@ function makeQuillTag(text,w,h){
   ctx.bezierCurveTo(83,87,66,74,63,64);ctx.stroke();
   ctx.restore();
  }
- ctx.fillStyle='#3f2b44';ctx.textAlign='center';ctx.textBaseline='middle';
- ctx.font="italic 110px 'Palatino Linotype','Book Antiqua','URW Chancery L',cursive";
- ctx.fillText(text,W/2,H*.54,W*.75);
+ ctx.fillStyle=personalityProof?'#221c31':'#3f2b44';ctx.textAlign='center';ctx.textBaseline='middle';
+ ctx.font=personalityProof?'bold 146px Georgia,serif':"italic 110px 'Palatino Linotype','Book Antiqua','URW Chancery L',cursive";
+ if(personalityProof){
+  ctx.strokeStyle='#221c31';ctx.lineWidth=8;ctx.lineJoin='round';
+  ctx.strokeText(text,W/2,H*.53,W*.82);
+ }
+ ctx.fillText(text,W/2,H*.53,personalityProof?W*.82:W*.75);
  ctx.strokeStyle='rgba(74,45,64,.65)';ctx.lineWidth=3;
  ctx.beginPath();ctx.moveTo(W*.28,H*.75);ctx.bezierCurveTo(W*.41,H*.82,W*.53,H*.69,W*.72,H*.75);ctx.stroke();
  const tx=new THREE.CanvasTexture(c);tx.colorSpace=THREE.SRGBColorSpace;tx.anisotropy=4;
@@ -612,6 +617,7 @@ if(illustratedProof){
   const selected=illustratedRuntime.set(mode);
   if(comicDressing)comicDressing.setVisible(mode==='painterly');
   if(scenicWindow)scenicWindow.setVisible(mode==='painterly');
+  if(manuscriptPersonality)manuscriptPersonality.setVisible(mode==='painterly');
   for(const option of options){
    option.setAttribute('aria-pressed',String(option.dataset.illustrationMode===mode));
   }
@@ -723,7 +729,10 @@ function home(){
 const drawerNames=['Finished','Drafts','Oddities','Fragments','Field Notes'];
 function bookDescription(index){
  const shelf=Math.floor(index/2),slot=(10-shelf)%10+(index%2)*10;
- return 'Shelf '+(shelf+1)+', book '+(slot+1);
+ const names=personalityProof?window.DH11ManuscriptPersonality?.BOOK_TITLES:null;
+ const title=names?.[shelf*20+slot];
+ return title?'“'+title+'” (shelf '+(shelf+1)+', book '+(slot+1)+')':
+  'Shelf '+(shelf+1)+', book '+(slot+1);
 }
 function toggleBook(index){
  if(!Number.isInteger(index)||index<0||index>=FEATURED_BOOK_COUNT)return;
@@ -1097,8 +1106,8 @@ if(glbProof){
     if(!drawer||!front)throw Error('Missing required GLB drawer nodes: '+slugs[i]);
     // Text uses a locally drawn canvas fixed to the GLB drawer front.
     // Labels are decorations, never depth or mechanical geometry.
-    const label=makeText(drawerNames[i],authoredDetailProof?.96:.42,authoredDetailProof?.20:.1);
-    label.position.set(0,.108,authoredDetailProof?.095:.076);
+    const label=makeText(drawerNames[i],personalityProof?1.31:authoredDetailProof?.96:.42,personalityProof?.28:authoredDetailProof?.20:.1);
+    label.position.set(0,personalityProof?.06:.108,authoredDetailProof?.095:.076);
     front.add(label);
     found.push(drawer);
    }
@@ -1179,6 +1188,11 @@ if(furnitureModelProof){
     // the scene. Otherwise their meshes are absent from the raycast targets.
     // This also means a failed decoration leaves the fallback untouched.
     books.forEach((mesh,i)=>markFeaturedBook(mesh,i));
+    if(personalityProof){
+     if(!window.DH11ManuscriptPersonality)throw Error('Missing title and chaotic manuscript artwork');
+     manuscriptPersonality=window.DH11ManuscriptPersonality.create({THREE,root:content});
+     manuscriptPersonality.setVisible(illustratedRuntime?.mode==='painterly');
+    }
     if(illustratedRuntime)illustratedRuntime.register(content);
     // No procedural object is removed until the complete model contract is
     // satisfied. New raycast targets are registered together.
