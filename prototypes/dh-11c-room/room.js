@@ -906,6 +906,7 @@ function pickFromEvent(event){
   paperIndex:id==='desk'?(Number.isInteger(mesh.userData.paperIndex)?mesh.userData.paperIndex:paperIndexForMesh(mesh.name)):null,
   lampPart:id==='desk'?lampPartForMesh(mesh.name):null,
   bookIndex:id==='bookcase'?(Number.isInteger(mesh.userData.featuredBookIndex)?mesh.userData.featuredBookIndex:featuredBookIndexForMesh(mesh.name)):null,
+  spineTitle:personalityProof&&id==='bookcase'?mesh.userData.manuscriptJokeTitle||null:null,
   binPaperIndex:id==='bin'?(Number.isInteger(mesh.userData.binPaperIndex)?mesh.userData.binPaperIndex:binPaperIndexForMesh(mesh.name)):null,
   keyIndex:id==='typewriter'?typedKeyIndex(mesh.name):null};
 }
@@ -923,6 +924,7 @@ canvas.addEventListener('pointermove',event=>{
      ?(state.binPapers[pick.binPaperIndex]?'Return':'Rummage')+' crumpled paper '+(pick.binPaperIndex+1)
      :pick?.lampPart!==null&&pick?.lampPart!==undefined
      ?(state.lampOn?'Switch off':'Switch on')+' desk lamp'
+     :pick?.spineTitle?'“'+pick.spineTitle+'” (fictional archive title)'
      :hovered==='bookcase'?'Only highlighted books can be pulled out'
      :hovered==='bin'?'Click a particular crumpled paper, not the bin itself'
      :hovered?'Explore '+plan.find(hovered).label:'';
