@@ -1081,12 +1081,24 @@
       },
       "sculptedBookcaseCandidate": {
         "milestone": "DH-11C.5D.3D",
-        "status": "feature_branch_awaiting_ci_and_visual_approval",
+        "status": "merged_staging_visual_feedback_incorporated_into_v4",
         "route": "/previews/dh-11c/authored-3d-v3/?v=dh11c5d3d-sculpted-bookcase-v1",
         "source": "prototypes/dh-11c-room/high-illustration-3d-v3.js",
         "documentation": "docs/DH11C5D3D_SCULPTED_BOOKCASE.md",
         "approval": "pending",
         "preservedInteractions": true,
+        "productionChanged": false,
+        "publishedWritingChanged": false
+      },
+      "authoredDetailCandidate": {
+        "milestone": "DH-11C.5D.3E",
+        "status": "feature_branch_pending_CI_and_visual_approval",
+        "route": "/previews/dh-11c/authored-3d-v4/?v=dh11c5d3e-authored-details-v1",
+        "source": "prototypes/dh-11c-room/high-illustration-3d-v4.js",
+        "window": "prototypes/dh-11c-room/window-illustration.js",
+        "documentation": "docs/DH11C5D3E_AUTHORED_DETAILS.md",
+        "ownerVisualApproval": "pending",
+        "preservedMechanics": true,
         "productionChanged": false,
         "publishedWritingChanged": false
       }

@@ -1,6 +1,10 @@
 # DaveHub development roadmap
 
-**Updated:** 3 November 2026. **Current stage:** DH-11C.5D.3D sculpted bookcase detail following owner approval of the illustrated-3D direction. A separate review version preserves the original room and earlier art passes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+**Updated:** 4 November 2026. **Current stage:** DH-11C.5D.3E illustrated-3D authored detail pass following owner feedback on sculpted 5D.3D. A separate review version preserves the original room and earlier art passes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+
+## DH-11C.5D.3E — Authored room detail pass
+
+Isolated V4 staging preview with a layered homepage-inspired floating-island window scene, much finer material marks, individual art for 80 real book meshes and 24 manuscript objects, a cleaner desk without its cup, and larger quill-style filing-cabinet labels. Furniture pivots, click targets, earlier previews, published Writing and production remain unchanged. [Work package and review gate](DH11C5D3E_AUTHORED_DETAILS.md). Awaiting visual and mobile performance review.
 
 ## DH-11C.5D.3D — Sculpted bookcase geometry and surface detail
 
