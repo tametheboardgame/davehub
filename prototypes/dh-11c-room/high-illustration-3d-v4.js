@@ -170,7 +170,7 @@
  // 80 individual books and individual manuscript pages, not four shared stamps.
  function artVariant(name,kind){
   const b=/^book_([0-3])_(\d{2})$/.exec(name||'');
-  if(kind==='binding'&&b)return Number(b[1])*20+Number(b[2])+1;
+  if(kind==='binding'&&b&&Number(b[2])<20)return Number(b[1])*20+Number(b[2])+1;
   const p=/^desk_paper_(\d{2})$/.exec(name||'');
   if(kind==='parchment'&&p)return Number(p[1])+1;
   if(name==='desk_file_sheet')return 14;
