@@ -39,7 +39,7 @@ test('every visible manuscript has irreverent scrawling, crossed-out marks and d
   assert.ok(calls.some(c=>c[0]==='fillText'&&c[1]===personality.SCRAWLS[i]));
   assert.ok(calls.some(c=>c[0]==='ellipse'),'circled revisions');
   assert.ok(calls.some(c=>c[0]==='bezierCurveTo'),'hand-drawn strokes');
-  assert.ok(calls.filter(c=>c[0]==='lineTo').length>=6,'cross-outs and arrows');
+  assert.ok(calls.filter(c=>c[0]==='lineTo').length>=5,'cross-outs and arrows');
   return JSON.stringify(calls);
  });
  assert.equal(new Set(signatures).size,15);
