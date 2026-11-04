@@ -1,6 +1,10 @@
 # DaveHub development roadmap
 
-**Updated:** 4 November 2026. **Current stage:** DH-11C.5D.3F readable manuscript-hoard refinement following owner screenshot review of V4. A separate review version preserves the original room and earlier art passes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+**Updated:** 4 November 2026. **Current stage:** DH-11C.5D.3G clean book titles, personally authored pull-out works, separated desk/typewriter writing and handwritten cabinet labels. A separate review version preserves the original room and earlier art passes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+
+## DH-11C.5D.3G — Authored interactive books, clean spine lettering and handwriting
+
+Separate V6 review candidate removes the old central ornament relief obscuring book titles and suppresses duplicate typed-looking lines over the 14 loose desk/file papers. The eight pull-out books show candidate actual authored writing/creative work names; the typewriter page remains typed. Five smaller, hand-drawn parchment label textures replace the overbold cabinet labels. The approved V5 window and all working geometry are unchanged. [Scope, candidate titles and approval gate](DH11C5D3G_AUTHORED_HANDWRITING.md). No publication or production changes.
 
 ## DH-11C.5D.3F — Window fit, readable book titles and chaotic fountain pen
 
