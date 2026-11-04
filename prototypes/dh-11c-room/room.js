@@ -50,6 +50,7 @@ const furnitureModelProof=document.body.dataset.furnitureModelProof==='true';
 const illustratedProof=furnitureModelProof&&document.body.dataset.illustratedProof==='true';
 const authoredDetailProof=illustratedProof&&document.body.dataset.authoredDetailProof==='true';
 const personalityProof=authoredDetailProof&&document.body.dataset.personalityProof==='true';
+const handwrittenLabelProof=personalityProof&&document.body.dataset.handwrittenLabelProof==='true';
 let illustratedRuntime=null,scenicWindow=null,manuscriptPersonality=null;
 let shellFallback=null;
 const blenderCompare=document.body.dataset.blenderCompare==='true';
@@ -255,13 +256,13 @@ function makeCabinet(){
   box(tray,1.6,.075,.83,finish('cabinetTray')||mats.timber,0,-.207,-.39);
   for(const x of [-.78,.78])box(tray,.07,.41,.83,finish('cabinetTray')||mats.timber,x,-.015,-.39);
   box(tray,1.6,.35,.08,finish('cabinetTray')||mats.timber,0,-.055,-.81);
-  box(tray,personalityProof?1.35:authoredDetailProof?1.02:.65,personalityProof?.30:authoredDetailProof?.24:.16,.025,finish('cabinetLabel')||mats.paper,0,.095,.056);
+  box(tray,handwrittenLabelProof?1.08:personalityProof?1.35:authoredDetailProof?1.02:.65,handwrittenLabelProof?.23:personalityProof?.30:authoredDetailProof?.24:.16,.025,finish('cabinetLabel')||mats.paper,0,.095,.056);
   box(tray,.58,.055,.09,finish('cabinetBrass')||mats.brass,0,-.085,.123);
   for(let f=0;f<4;f++){
    const folder=box(tray,.23,.24,.018,finish('cabinetFolder'+f%2)||mats.paper,-.48+f*.32,.06,-.3-f*.03);
    folder.rotation.y=(f%2?.12:-.1);
   }
-  const tag=makeText(names[i],personalityProof?1.31:authoredDetailProof?.98:.38,personalityProof?.28:authoredDetailProof?.21:.11,'#33434b','#efe0c2');
+  const tag=makeText(names[i],handwrittenLabelProof?1.04:personalityProof?1.31:authoredDetailProof?.98:.38,handwrittenLabelProof?.21:personalityProof?.28:authoredDetailProof?.21:.11,'#33434b','#efe0c2');
   tag.position.set(0,.095,authoredDetailProof?.084:.074);tray.add(tag);
   cabinetDrawers.push(tray);
  }
@@ -306,7 +307,62 @@ function makeQuillTag(text,w,h){
  mesh.raycast=()=>{};
  return mesh;
 }
+
+function makeArchiveHandwrittenTag(text,w,h){
+ // Each label is rendered as a separate image texture: genuine irregular
+ // ink letterforms, exact text, readable from the room, without giant bold print.
+ const c=document.createElement('canvas');c.width=960;c.height=256;
+ const ctx=c.getContext('2d'),W=c.width,H=c.height;
+ const seed=[...text].reduce((n,ch)=>n+ch.charCodeAt(0),19);
+ ctx.fillStyle='#e9d4a8';ctx.fillRect(0,0,W,H);
+ const tint=ctx.createLinearGradient(0,0,0,H);
+ tint.addColorStop(0,'rgba(255,245,218,.42)');
+ tint.addColorStop(1,'rgba(104,67,52,.12)');
+ ctx.fillStyle=tint;ctx.fillRect(0,0,W,H);
+ for(let k=0;k<220;k++){
+  const x=(k*113+seed*31)%W,y=(k*59+seed*23)%H;
+  ctx.fillStyle=k%4?'rgba(96,70,48,.035)':'rgba(255,255,233,.12)';
+  ctx.fillRect(x,y,2+k%7,1+k%3);
+ }
+ ctx.strokeStyle='rgba(129,92,66,.66)';ctx.lineWidth=5;
+ ctx.strokeRect(13,12,W-26,H-24);
+ ctx.strokeStyle='rgba(174,131,87,.34)';ctx.lineWidth=2;
+ ctx.strokeRect(23,23,W-46,H-46);
+ ctx.save();
+ ctx.textAlign='left';ctx.textBaseline='middle';
+ ctx.fillStyle='#392d39';
+ ctx.strokeStyle='rgba(56,38,53,.37)';ctx.lineWidth=1.2;ctx.lineJoin='round';
+ const font="normal 112px 'Segoe Print','Bradley Hand','Comic Sans MS',cursive";
+ ctx.font=font;
+ const measured=[...text].map(ch=>ctx.measureText(ch).width);
+ const whole=measured.reduce((a,b)=>a+b,0);
+ const scale=Math.min(1,(W*.74)/whole);
+ ctx.translate(W/2-whole*scale/2,H*.53);ctx.scale(scale,1);
+ let x=0;
+ for(let i=0;i<text.length;i++){
+  const ch=text[i],rise=Math.sin(seed*.07+i*1.81)*3;
+  ctx.save();ctx.translate(x,rise);
+  ctx.rotate(Math.sin(seed+i*2.39)*.026);
+  ctx.strokeText(ch,0,0);
+  ctx.fillText(ch,0,0);
+  ctx.restore();x+=measured[i];
+ }
+ ctx.restore();
+ // Subtle fountain-pen exit strokes, never a second printed-looking underline.
+ ctx.strokeStyle='rgba(74,46,64,.45)';ctx.lineWidth=2.5;
+ const y=H*.77;
+ ctx.beginPath();ctx.moveTo(W*.32,y);
+ ctx.bezierCurveTo(W*.42,y+5,W*.56,y-3,W*.69,y+3);
+ ctx.stroke();
+ const texture=new THREE.CanvasTexture(c);texture.colorSpace=THREE.SRGBColorSpace;texture.anisotropy=4;
+ const mesh=new THREE.Mesh(new THREE.PlaneGeometry(w,h),
+  new THREE.MeshBasicMaterial({map:texture,side:THREE.DoubleSide,transparent:false}));
+ mesh.name='dh11c5d3g_handwritten_archive_'+text.toLowerCase().replace(/\s+/g,'_');
+ mesh.userData.decorativeOnly=true;mesh.raycast=()=>{};
+ return mesh;
+}
 function makeText(text,w,h,colour='#30252d',fill='#e8d4b2'){
+ if(handwrittenLabelProof)return makeArchiveHandwrittenTag(text,w,h);
  if(authoredDetailProof)return makeQuillTag(text,w,h);
  const c=document.createElement('canvas');c.width=512;c.height=128;
  const ctx=c.getContext('2d');
@@ -441,8 +497,8 @@ function markFeaturedBook(mesh,index){
   accent.userData.featuredBookIndex=index;
   mesh.add(accent);
  }
- if(authoredDetailProof){
-  // Eight distinct physical spine emblems, preserving turquoise bindings.
+ if(authoredDetailProof&&!handwrittenLabelProof){
+  // Earlier V5 only: the extra central emblems obstruct new real book titles.
   const points=[],r=.11,cy=bounds.min.y+dy*.56,cx=x;
   const z=bounds.max.z+.010/sz,petals=3+(index%8);
   for(let n=0;n<petals;n++){
@@ -729,7 +785,7 @@ function home(){
 const drawerNames=['Finished','Drafts','Oddities','Fragments','Field Notes'];
 function bookDescription(index){
  const shelf=Math.floor(index/2),slot=(10-shelf)%10+(index%2)*10;
- const names=personalityProof?window.DH11ManuscriptPersonality?.BOOK_TITLES:null;
+ const names=personalityProof?(window.DH11ManuscriptPersonality?.AUTHORED_BOOK_TITLES||window.DH11ManuscriptPersonality?.BOOK_TITLES):null;
  const title=names?.[shelf*20+slot];
  return title?'“'+title+'” (shelf '+(shelf+1)+', book '+(slot+1)+')':
   'Shelf '+(shelf+1)+', book '+(slot+1);
@@ -1108,8 +1164,8 @@ if(glbProof){
     if(!drawer||!front)throw Error('Missing required GLB drawer nodes: '+slugs[i]);
     // Text uses a locally drawn canvas fixed to the GLB drawer front.
     // Labels are decorations, never depth or mechanical geometry.
-    const label=makeText(drawerNames[i],personalityProof?1.31:authoredDetailProof?.96:.42,personalityProof?.28:authoredDetailProof?.20:.1);
-    label.position.set(0,personalityProof?.06:.108,authoredDetailProof?.095:.076);
+    const label=makeText(drawerNames[i],handwrittenLabelProof?1.04:personalityProof?1.31:authoredDetailProof?.96:.42,handwrittenLabelProof?.21:personalityProof?.28:authoredDetailProof?.20:.1);
+    label.position.set(0,handwrittenLabelProof?.085:personalityProof?.06:.108,authoredDetailProof?.095:.076);
     front.add(label);
     found.push(drawer);
    }

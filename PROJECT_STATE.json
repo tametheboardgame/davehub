@@ -1104,7 +1104,7 @@
       },
       "readableHoardCandidate": {
         "stage": "DH-11C.5D.3F",
-        "status": "feature_branch_awaiting_tests_and_visual_review",
+        "status": "merged_staging_owner_feedback_implemented_in_V6",
         "route": "/previews/dh-11c/authored-3d-v5/?v=dh11c5d3f-readable-hoard-v1",
         "windowSource": "prototypes/dh-11c-room/window-illustration-v2.js",
         "characterSource": "prototypes/dh-11c-room/manuscript-personality.js",
@@ -1114,6 +1114,21 @@
         "windowClippedToPhysicalPanes": true,
         "productionChanged": false,
         "publishedWritingChanged": false
+      },
+      "handwrittenLabelCandidate": {
+        "stage": "DH-11C.5D.3G",
+        "status": "feature_branch_awaiting_CI_and_visual_review",
+        "route": "/previews/dh-11c/authored-3d-v6/?v=dh11c5d3g-authored-handwriting-v1",
+        "source": "prototypes/dh-11c-room/manuscript-personality-v2.js",
+        "artSource": "prototypes/dh-11c-room/high-illustration-3d-v5.js",
+        "documentation": "docs/DH11C5D3G_AUTHORED_HANDWRITING.md",
+        "featuredWorkTitles": 8,
+        "featuredTitlesStatus": "candidate_visual_identity_pending_owner_confirmation",
+        "handwrittenDeskPages": 14,
+        "typedTypewriter": true,
+        "productionChanged": false,
+        "publishedWritingChanged": false,
+        "approval": "pending"
       }
     }
   }
