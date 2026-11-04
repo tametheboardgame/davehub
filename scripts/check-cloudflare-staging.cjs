@@ -15,6 +15,7 @@ const checks=[
  {path:'/previews/dh-11c/furniture/',required:['DH-11C.4F','data-furniture-model-proof="true"','data-immersive-room="true"','id="furniture-model-status"','dh11c5b-archive-v1','room.js?v=dh11c5b-archive-v1','room-plan.js?v=dh11c5b-archive-v1','desk-materials.js?v=dh11c5a-desk-v1','archive-materials.js?v=dh11c5b-archive-v1'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/illustrated-overview/',required:['DH-11C.5D.3A','data-overview-studio="true"','dh11c5d3a-align-v1','/assets/worlds/writing/manuscript-room-v1.avif','id="projection-map"','id="new-art-file"','../illustrated-views/?v=dh11c5d-geometry-guides-v1'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/illustrated-views/',required:['DH-11C.5D','data-illustrated-view-proof="true"','dh11c5d-geometry-guides-v1','view-pipeline.js?v=dh11c5d-geometry-guides-v1','room.js?v=dh11c5d-geometry-guides-v1','capture-view-guide','export-view-guide'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
+ {path:'/previews/dh-11c/authored-3d-v7/',required:['DH-11C.5D.3H','data-mystical-room-proof="true"','dh11c5d3h-mystical-room-props-v1','room-props-v7.js?v=dh11c5d3h-mystical-room-props-v1','room.js?v=dh11c5d3h-mystical-room-props-v1'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/authored-3d-v6/',required:['DH-11C.5D.3G','data-handwritten-label-proof="true"','dh11c5d3g-authored-handwriting-v1','manuscript-personality-v2.js?v=dh11c5d3g-authored-handwriting-v1','high-illustration-3d-v5.js?v=dh11c5d3g-authored-handwriting-v1','room.js?v=dh11c5d3g-authored-handwriting-v1'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/authored-3d-v5/',required:['DH-11C.5D.3F','data-personality-proof="true"','dh11c5d3f-readable-hoard-v1','manuscript-personality.js?v=dh11c5d3f-readable-hoard-v1','window-illustration-v2.js?v=dh11c5d3f-readable-hoard-v1','room.js?v=dh11c5d3f-readable-hoard-v1'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/authored-3d-v4/',required:['DH-11C.5D.3E','data-authored-detail-proof="true"','dh11c5d3e-authored-details-v1','high-illustration-3d-v4.js?v=dh11c5d3e-authored-details-v1','window-illustration.js?v=dh11c5d3e-authored-details-v1','room.js?v=dh11c5d3e-authored-details-v1'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
@@ -52,7 +53,8 @@ async function main(){
   try{
    const results=[];
    for(const c of checks){
-    const version=c.path==='/previews/dh-11c/authored-3d-v6/'?'?dh11c5d3g-authored-handwriting-v1=1':
+    const version=c.path==='/previews/dh-11c/authored-3d-v7/'?'?dh11c5d3h-mystical-room-props-v1=1':
+     c.path==='/previews/dh-11c/authored-3d-v6/'?'?dh11c5d3g-authored-handwriting-v1=1':
      c.path==='/previews/dh-11c/authored-3d-v5/'?'?dh11c5d3f-readable-hoard-v1=1':
      c.path==='/previews/dh-11c/authored-3d-v4/'?'?dh11c5d3e-authored-details-v1=1':
      c.path==='/previews/dh-11c/authored-3d-v3/'?'?dh11c5d3d-sculpted-bookcase-v1=1':

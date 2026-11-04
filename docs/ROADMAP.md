@@ -1,6 +1,10 @@
 # DaveHub development roadmap
 
-**Updated:** 4 November 2026. **Current stage:** DH-11C.5D.3G clean book titles, personally authored pull-out works, separated desk/typewriter writing and handwritten cabinet labels. A separate review version preserves the original room and earlier art passes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+**Updated:** 4 November 2026. **Current stage:** DH-11C.5D.3H real 3D lamp, waste-basket and mystical rug detail following approval of V6. A separate review version preserves the original room and earlier art passes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+
+## DH-11C.5D.3H — Grounded lamp, filled basket and celestial rug
+
+The owner accepted V6 and requested a further focused 3D polish slice. This isolated V7 view corrects the lamp's physically sunken base against the actual desk height, adds a 3D hollow basket with twelve interior crumples while keeping all nine independently interactive overflowing pieces, and replaces the rug's large repeating loops with a restrained plum/gold celestial-chart textile on the real rug surface. The previous room, camera, window, writing and project identity remain unchanged. [Work package and review gate](DH11C5D3H_MYSTICAL_ROOM_PROPS.md). Pending visual/mobile approval.
 
 ## DH-11C.5D.3G — Authored interactive books, clean spine lettering and handwriting
 

@@ -51,7 +51,9 @@ const illustratedProof=furnitureModelProof&&document.body.dataset.illustratedPro
 const authoredDetailProof=illustratedProof&&document.body.dataset.authoredDetailProof==='true';
 const personalityProof=authoredDetailProof&&document.body.dataset.personalityProof==='true';
 const handwrittenLabelProof=personalityProof&&document.body.dataset.handwrittenLabelProof==='true';
+const mysticalRoomProof=handwrittenLabelProof&&document.body.dataset.mysticalRoomProof==='true';
 let illustratedRuntime=null,scenicWindow=null,manuscriptPersonality=null;
+let mysticalRug=null,mysticalFurniture=null;
 let shellFallback=null;
 const blenderCompare=document.body.dataset.blenderCompare==='true';
 let glbExtension=1;
@@ -208,12 +210,16 @@ function wallScene(){
  sceneLights.sun=sun;scene.add(sun);
  const lamp=new THREE.PointLight('#f1b982',26,7,2);
  // Centre the light at the actual desk lamp, not elsewhere over the desk.
- lamp.position.set(-1.97,2.31,.17);
+ lamp.position.set(-1.97,2.31,.17);if(mysticalRoomProof)lamp.position.y+=.07;
  sceneLights.lamp=lamp;lamp.userData.litIntensity=26;scene.add(lamp);
  const glow=new THREE.PointLight('#92b8d9',15,9,2);
  glow.position.set(.25,3.7,-3.5);sceneLights.window=glow;scene.add(glow);
 }
 wallScene();
+if(mysticalRoomProof){
+ if(!window.DH11RoomProps)throw Error('Missing DH-11C.5D.3H real prop detail module');
+ mysticalRug=window.DH11RoomProps.makeRug({THREE,scene});
+}
 if(shellModelProof){
  // Only the isolated DH-11C.4E proof uses a GLB room shell.
  // A complete source-manifest mesh stays visible until the GLB loads, then is
@@ -381,6 +387,7 @@ const lampLitColour=new THREE.Color('#ffddb0'),lampUnlitColour=new THREE.Color('
 let paperHomes=[];
 function makeDesk(){
  const g=group(scene,-.3,0,.6);
+ const lampLift=mysticalRoomProof?.07:0;
  box(g,4.5,.2,2.15,mats.deskWalnut,0,1.29,0);
  for(const x of [-1.98,1.98])for(const z of [-.85,.85])box(g,.21,1.15,.23,mats.deskFrame,x,.61,z);
  box(g,4.04,.4,.12,mats.deskFrame,0,1.0,.94);
@@ -404,14 +411,18 @@ function makeDesk(){
  }
  // DH-11C.4K: smooth, level, open-bottomed shade and recessed bulb.
  const shade=new THREE.Mesh(new THREE.CylinderGeometry(.245,.405,.30,24,1,true),mats.lampShade);
- shade.name='desk_lamp_shade';shade.position.set(-1.67,2.38,-.43);g.add(shade);
+ shade.name='desk_lamp_shade';shade.position.set(-1.67,2.38,-.43);if(lampLift)shade.position.y+=lampLift;g.add(shade);
  const cap=cylinder(g,.245,.245,.018,mats.deskBrass,-1.67,2.522,-.43,24);
+ if(lampLift)cap.position.y+=lampLift;
  cap.name='desk_lamp_cap';
  const stem=cylinder(g,.035,.035,.96,mats.deskBrass,-1.67,1.86,-.43);
+ if(lampLift)stem.position.y+=lampLift;
  stem.name='desk_lamp_stem';
  const bulb=sphere(g,.065,mats.lampBulb,-1.67,2.345,-.43);
+ if(lampLift)bulb.position.y+=lampLift;
  bulb.name='desk_lamp_bulb';lampBulbMesh=bulb;
  const base=cylinder(g,.28,.28,.12,mats.timber,-1.67,1.4,-.43);
+ if(lampLift)base.position.y+=lampLift;
  base.name='desk_lamp_base';
  if(!authoredDetailProof){
   const cup=cylinder(g,.13,.105,.26,mats.ink,-.88,1.53,.57);
@@ -674,6 +685,8 @@ if(illustratedProof){
   if(comicDressing)comicDressing.setVisible(mode==='painterly');
   if(scenicWindow)scenicWindow.setVisible(mode==='painterly');
   if(manuscriptPersonality)manuscriptPersonality.setVisible(mode==='painterly');
+  if(mysticalRug)mysticalRug.setVisible(mode==='painterly');
+  if(mysticalFurniture)mysticalFurniture.setVisible(mode==='painterly');
   for(const option of options){
    option.setAttribute('aria-pressed',String(option.dataset.illustrationMode===mode));
   }
@@ -1245,6 +1258,10 @@ if(furnitureModelProof){
     // Attach the bright bindings and gold bands BEFORE capture() traverses
     // the scene. Otherwise their meshes are absent from the raycast targets.
     // This also means a failed decoration leaves the fallback untouched.
+    if(mysticalRoomProof){
+     mysticalFurniture=window.DH11RoomProps.decorateFurniture({THREE,root:content});
+     mysticalFurniture.setVisible(illustratedRuntime?.mode==='painterly');
+    }
     books.forEach((mesh,i)=>markFeaturedBook(mesh,i));
     if(personalityProof){
      if(!window.DH11ManuscriptPersonality)throw Error('Missing title and chaotic manuscript artwork');

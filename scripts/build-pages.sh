@@ -41,6 +41,7 @@ for asset in \
   tests/dh11c5d3e-authored-details.test.cjs \
   tests/dh11c5d3f-readable-hoard.test.cjs \
   tests/dh11c5d3g-authored-handwriting.test.cjs \
+  tests/dh11c5d3h-room-props.test.cjs \
   prototypes/dh-11c-room/high-illustration-3d.js \
   prototypes/dh-11c-room/high-illustration-3d-v2.js \
   prototypes/dh-11c-room/high-illustration-3d-v3.js \
@@ -50,6 +51,8 @@ for asset in \
   prototypes/dh-11c-room/window-illustration-v2.js \
   prototypes/dh-11c-room/manuscript-personality.js \
   prototypes/dh-11c-room/manuscript-personality-v2.js \
+  prototypes/dh-11c-room/room-props-v7.js \
+  scripts/render-dh11c5d3h-mystical-room.cjs \
   scripts/render-dh11c5d3g-authored-handwriting.cjs \
   scripts/render-dh11c5d3f-personality.cjs \
   scripts/render-dh11c5d3e-details.cjs \
@@ -139,7 +142,7 @@ done
 
 # A private draft must never become a deployed page through a build bypass.
 # Validate both the empty/approved production manifest and fictional test fixtures.
-node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/dh11-worlds.test.cjs tests/dh11c-cabinet-geometry.test.cjs tests/dh11c-room.test.cjs tests/dh11c-drawer-picking.test.cjs tests/dh11c-art-direction.test.cjs tests/dh11c4-cabinet-glb.test.cjs tests/dh11c4b-blender.test.cjs tests/dh11c4c-room-architecture.test.cjs tests/dh11c4d-immersive-viewport.test.cjs tests/dh11c4e-room-shell.test.cjs tests/dh11c4f-furniture.test.cjs tests/dh11c4f-animation-fixes.test.cjs tests/dh11c5a-desk-materials.test.cjs tests/dh11c5b-archive-materials.test.cjs tests/dh11c5c-illustrated-style.test.cjs tests/dh11c5c2a-painted-surfaces.test.cjs tests/dh11c5c2b-soft-edges.test.cjs tests/dh11c5c3-comic-storybook.test.cjs tests/dh11c5d-view-pipeline.test.cjs tests/dh11c5d3-art-alignment.test.cjs tests/dh11c5d3b-authored-3d.test.cjs tests/dh11c5d3c-spine-art.test.cjs tests/dh11c5d3d-sculpted-bookcase.test.cjs tests/dh11c5d3e-authored-details.test.cjs tests/dh11c5d3f-readable-hoard.test.cjs tests/dh11c5d3g-authored-handwriting.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs tests/dh10c-editorial.test.cjs tests/dh10c-hosted-http.test.cjs
+node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/dh11-worlds.test.cjs tests/dh11c-cabinet-geometry.test.cjs tests/dh11c-room.test.cjs tests/dh11c-drawer-picking.test.cjs tests/dh11c-art-direction.test.cjs tests/dh11c4-cabinet-glb.test.cjs tests/dh11c4b-blender.test.cjs tests/dh11c4c-room-architecture.test.cjs tests/dh11c4d-immersive-viewport.test.cjs tests/dh11c4e-room-shell.test.cjs tests/dh11c4f-furniture.test.cjs tests/dh11c4f-animation-fixes.test.cjs tests/dh11c5a-desk-materials.test.cjs tests/dh11c5b-archive-materials.test.cjs tests/dh11c5c-illustrated-style.test.cjs tests/dh11c5c2a-painted-surfaces.test.cjs tests/dh11c5c2b-soft-edges.test.cjs tests/dh11c5c3-comic-storybook.test.cjs tests/dh11c5d-view-pipeline.test.cjs tests/dh11c5d3-art-alignment.test.cjs tests/dh11c5d3b-authored-3d.test.cjs tests/dh11c5d3c-spine-art.test.cjs tests/dh11c5d3d-sculpted-bookcase.test.cjs tests/dh11c5d3e-authored-details.test.cjs tests/dh11c5d3f-readable-hoard.test.cjs tests/dh11c5d3g-authored-handwriting.test.cjs tests/dh11c5d3h-room-props.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs tests/dh10c-editorial.test.cjs tests/dh10c-hosted-http.test.cjs
 node -e "const {validateManifest}=require('./scripts/davehub-manifest.cjs'); const data=require('./davehub.json'); const result=validateManifest(data,'tametheboardgame/davehub');if(!result.valid)throw new Error(result.errors.join('; '));"
 # Fail closed: only individually owner-approved records and links enter production.
 node scripts/content-check.cjs content/public/catalogue.json
@@ -148,7 +151,7 @@ node scripts/content-check.cjs content/examples/fictional.json
 node scripts/dh09d-topology.cjs check
 
 rm -rf dist
-mkdir -p dist/assets/worlds/writing dist/assets/branding dist/assets/homepage dist/assets/characters/dave dist/previews/dh-07c dist/previews/dh-08 dist/previews/dh-08b dist/previews/dh-08c dist/previews/dh-11c/cabinet dist/previews/dh-11c/room/vendor dist/previews/dh-11c/art-lab dist/previews/dh-11c/cabinet-glb dist/previews/dh-11c/architecture dist/previews/dh-11c/room-shell dist/previews/dh-11c/furniture dist/previews/dh-11c/illustrated dist/previews/dh-11c/illustrated-v2 dist/previews/dh-11c/illustrated-v3 dist/previews/dh-11c/comic-storybook dist/previews/dh-11c/illustrated-views dist/previews/dh-11c/illustrated-overview dist/previews/dh-11c/authored-3d dist/previews/dh-11c/authored-3d-v2 dist/previews/dh-11c/authored-3d-v3 dist/previews/dh-11c/authored-3d-v4 dist/previews/dh-11c/authored-3d-v5 dist/previews/dh-11c/authored-3d-v6 dist/previews/dh-11c/room/models dist/content dist/assets/content
+mkdir -p dist/assets/worlds/writing dist/assets/branding dist/assets/homepage dist/assets/characters/dave dist/previews/dh-07c dist/previews/dh-08 dist/previews/dh-08b dist/previews/dh-08c dist/previews/dh-11c/cabinet dist/previews/dh-11c/room/vendor dist/previews/dh-11c/art-lab dist/previews/dh-11c/cabinet-glb dist/previews/dh-11c/architecture dist/previews/dh-11c/room-shell dist/previews/dh-11c/furniture dist/previews/dh-11c/illustrated dist/previews/dh-11c/illustrated-v2 dist/previews/dh-11c/illustrated-v3 dist/previews/dh-11c/comic-storybook dist/previews/dh-11c/illustrated-views dist/previews/dh-11c/illustrated-overview dist/previews/dh-11c/authored-3d dist/previews/dh-11c/authored-3d-v2 dist/previews/dh-11c/authored-3d-v3 dist/previews/dh-11c/authored-3d-v4 dist/previews/dh-11c/authored-3d-v5 dist/previews/dh-11c/authored-3d-v6 dist/previews/dh-11c/authored-3d-v7 dist/previews/dh-11c/room/models dist/content dist/assets/content
 
 cp index.html styles.css main.js catalogue.js dist/
 cp assets/branding/davehub-logo-faithful.svg dist/assets/branding/
@@ -158,7 +161,7 @@ cp assets/characters/dave/dave-animation-v1.webm dist/assets/characters/dave/
 cp prototypes/dh-07c/index.html dist/previews/dh-07c/index.html
 cp prototypes/dh-08/index.html dist/previews/dh-08/index.html
 cp prototypes/dh-11c-cabinet/index.html prototypes/dh-11c-cabinet/cabinet.css prototypes/dh-11c-cabinet/cabinet-math.js prototypes/dh-11c-cabinet/cabinet.js dist/previews/dh-11c/cabinet/
-cp prototypes/dh-11c-room/index.html prototypes/dh-11c-room/room.css prototypes/dh-11c-room/room-plan.js prototypes/dh-11c-room/room.js prototypes/dh-11c-room/drawer-picking.mjs prototypes/dh-11c-room/furniture-motion.mjs prototypes/dh-11c-room/art-palettes.js prototypes/dh-11c-room/desk-materials.js prototypes/dh-11c-room/archive-materials.js prototypes/dh-11c-room/illustrated-style.js prototypes/dh-11c-room/illustrated-style-v2.js prototypes/dh-11c-room/illustrated-style-v3.js prototypes/dh-11c-room/comic-storybook-style.js prototypes/dh-11c-room/comic-storybook-dressing.js prototypes/dh-11c-room/view-pipeline.js prototypes/dh-11c-room/high-illustration-3d.js prototypes/dh-11c-room/high-illustration-3d-v2.js prototypes/dh-11c-room/high-illustration-3d-v3.js prototypes/dh-11c-room/high-illustration-3d-v4.js prototypes/dh-11c-room/high-illustration-3d-v5.js prototypes/dh-11c-room/window-illustration.js prototypes/dh-11c-room/window-illustration-v2.js prototypes/dh-11c-room/manuscript-personality.js prototypes/dh-11c-room/manuscript-personality-v2.js dist/previews/dh-11c/room/
+cp prototypes/dh-11c-room/index.html prototypes/dh-11c-room/room.css prototypes/dh-11c-room/room-plan.js prototypes/dh-11c-room/room.js prototypes/dh-11c-room/drawer-picking.mjs prototypes/dh-11c-room/furniture-motion.mjs prototypes/dh-11c-room/art-palettes.js prototypes/dh-11c-room/desk-materials.js prototypes/dh-11c-room/archive-materials.js prototypes/dh-11c-room/illustrated-style.js prototypes/dh-11c-room/illustrated-style-v2.js prototypes/dh-11c-room/illustrated-style-v3.js prototypes/dh-11c-room/comic-storybook-style.js prototypes/dh-11c-room/comic-storybook-dressing.js prototypes/dh-11c-room/view-pipeline.js prototypes/dh-11c-room/high-illustration-3d.js prototypes/dh-11c-room/high-illustration-3d-v2.js prototypes/dh-11c-room/high-illustration-3d-v3.js prototypes/dh-11c-room/high-illustration-3d-v4.js prototypes/dh-11c-room/high-illustration-3d-v5.js prototypes/dh-11c-room/window-illustration.js prototypes/dh-11c-room/window-illustration-v2.js prototypes/dh-11c-room/manuscript-personality.js prototypes/dh-11c-room/manuscript-personality-v2.js prototypes/dh-11c-room/room-props-v7.js dist/previews/dh-11c/room/
 cp prototypes/dh-11c-room/art-lab.css dist/previews/dh-11c/art-lab/
 node scripts/render-dh11c-art-lab.cjs dist/previews/dh-11c/art-lab
 cp prototypes/dh-11c-room/vendor/three-r159.module.min.js prototypes/dh-11c-room/vendor/THREE-LICENSE.txt prototypes/dh-11c-room/vendor/GLTFLoader-r159.js prototypes/dh-11c-room/vendor/BufferGeometryUtils-r159.js dist/previews/dh-11c/room/vendor/
@@ -185,12 +188,14 @@ node scripts/render-dh11c5d3d-sculpted-bookcase.cjs dist/previews/dh-11c/authore
 node scripts/render-dh11c5d3e-details.cjs dist/previews/dh-11c/authored-3d-v4
 node scripts/render-dh11c5d3f-personality.cjs dist/previews/dh-11c/authored-3d-v5
 node scripts/render-dh11c5d3g-authored-handwriting.cjs dist/previews/dh-11c/authored-3d-v6
+node scripts/render-dh11c5d3h-mystical-room.cjs dist/previews/dh-11c/authored-3d-v7
 cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js prototypes/dh-11c-room/illustrated.css dist/previews/dh-11c/authored-3d/
 cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js prototypes/dh-11c-room/illustrated.css dist/previews/dh-11c/authored-3d-v2/
 cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js prototypes/dh-11c-room/illustrated.css dist/previews/dh-11c/authored-3d-v3/
 cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js prototypes/dh-11c-room/illustrated.css dist/previews/dh-11c/authored-3d-v4/
 cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js prototypes/dh-11c-room/illustrated.css dist/previews/dh-11c/authored-3d-v5/
 cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js prototypes/dh-11c-room/illustrated.css dist/previews/dh-11c/authored-3d-v6/
+cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js prototypes/dh-11c-room/illustrated.css dist/previews/dh-11c/authored-3d-v7/
 cp prototypes/dh-11c-room/overview-studio.css prototypes/dh-11c-room/overview-studio.js dist/previews/dh-11c/illustrated-overview/
 mv dist/previews/dh-11c/illustrated-overview/overview-studio.css dist/previews/dh-11c/illustrated-overview/overview.css
 mv dist/previews/dh-11c/illustrated-overview/overview-studio.js dist/previews/dh-11c/illustrated-overview/overview.js
@@ -273,6 +278,8 @@ check('dist/previews/dh-11c/illustrated-overview/index.html',['DH-11C.5D.3A','da
 check('dist/previews/dh-11c/illustrated-overview/overview.js',['home.targets.desktop.anchors','URL.createObjectURL(candidate)','URL.revokeObjectURL(objectUrl)']);
 check('dist/previews/dh-11c/illustrated-overview/overview.css',['.review-grid','.projection-map','focus-visible']);
 check('dist/previews/dh-11c/authored-3d/index.html',['DH-11C.5D.3B','data-illustrated-v5="true"','high-illustration-3d.js?v=dh11c5d3b-authored-3d-v1','room.js?v=dh11c5d3b-authored-3d-v1','data-illustration-mode="painterly"','data-illustration-mode="reference"']);
+check('dist/previews/dh-11c/authored-3d-v7/index.html',['DH-11C.5D.3H','data-mystical-room-proof="true"','room-props-v7.js?v=dh11c5d3h-mystical-room-props-v1','room.js?v=dh11c5d3h-mystical-room-props-v1','data-illustration-mode="painterly"']);
+check('dist/previews/dh-11c/room/room-props-v7.js',['DH11RoomProps','INNER_BALLS','LAMP_LIFT','inkRug','decorateFurniture']);
 check('dist/previews/dh-11c/authored-3d-v6/index.html',['DH-11C.5D.3G','data-handwritten-label-proof="true"','manuscript-personality-v2.js?v=dh11c5d3g-authored-handwriting-v1','high-illustration-3d-v5.js?v=dh11c5d3g-authored-handwriting-v1','room.js?v=dh11c5d3g-authored-handwriting-v1','data-illustration-mode="painterly"']);
 check('dist/previews/dh-11c/room/high-illustration-3d-v5.js',['DH11HighIllustration3D','cleanInkSurface','bareSpine']);
 check('dist/previews/dh-11c/room/manuscript-personality-v2.js',['DH11ManuscriptPersonality','AUTHORED_BOOK_TITLES','FEATURED_TITLES','typewriter_paper']);
