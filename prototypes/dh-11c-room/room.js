@@ -411,14 +411,18 @@ function makeDesk(){
  }
  // DH-11C.4K: smooth, level, open-bottomed shade and recessed bulb.
  const shade=new THREE.Mesh(new THREE.CylinderGeometry(.245,.405,.30,24,1,true),mats.lampShade);
- shade.name='desk_lamp_shade';shade.position.set(-1.67,2.38+lampLift,-.43);g.add(shade);
- const cap=cylinder(g,.245,.245,.018,mats.deskBrass,-1.67,2.522+lampLift,-.43,24);
+ shade.name='desk_lamp_shade';shade.position.set(-1.67,2.38,-.43);if(lampLift)shade.position.y+=lampLift;g.add(shade);
+ const cap=cylinder(g,.245,.245,.018,mats.deskBrass,-1.67,2.522,-.43,24);
+ if(lampLift)cap.position.y+=lampLift;
  cap.name='desk_lamp_cap';
- const stem=cylinder(g,.035,.035,.96,mats.deskBrass,-1.67,1.86+lampLift,-.43);
+ const stem=cylinder(g,.035,.035,.96,mats.deskBrass,-1.67,1.86,-.43);
+ if(lampLift)stem.position.y+=lampLift;
  stem.name='desk_lamp_stem';
- const bulb=sphere(g,.065,mats.lampBulb,-1.67,2.345+lampLift,-.43);
+ const bulb=sphere(g,.065,mats.lampBulb,-1.67,2.345,-.43);
+ if(lampLift)bulb.position.y+=lampLift;
  bulb.name='desk_lamp_bulb';lampBulbMesh=bulb;
- const base=cylinder(g,.28,.28,.12,mats.timber,-1.67,1.4+lampLift,-.43);
+ const base=cylinder(g,.28,.28,.12,mats.timber,-1.67,1.4,-.43);
+ if(lampLift)base.position.y+=lampLift;
  base.name='desk_lamp_base';
  if(!authoredDetailProof){
   const cup=cylinder(g,.13,.105,.26,mats.ink,-.88,1.53,.57);
