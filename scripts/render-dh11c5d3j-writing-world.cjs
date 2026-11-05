@@ -22,6 +22,10 @@ function render(source){
  if(!title)throw Error('Missing page title');
  put(title[0],'<title>The Manuscript Hoard | DaveHub</title>');
  put('← Existing Writing world','← DaveHub home');
+ // Replace the old no-script self-link before rewriting the header link.
+ const noscript=html.match(/<noscript>[\s\S]*?<\/noscript>/);
+ if(!noscript||html.split(noscript[0]).length!==2)throw Error('Writing scene no-script fallback missing');
+ put(noscript[0],'<noscript><p class="noscript">The Manuscript Hoard requires JavaScript and WebGL. <a href="/">Return to DaveHub home</a>.</p></noscript>');
  put('href="/worlds/writing/"','href="/"');
  put('href="#scene-nav"','href="/worlds/writing/#scene-nav"');
  put('ONE SHARED 3D WORLD','THE MANUSCRIPT HOARD');
@@ -37,9 +41,6 @@ function render(source){
  const tag=html.match(/<span class="tag">[^<]*<\/span>/);
  if(!tag||html.split(tag[0]).length!==2)throw Error('Public Writing identity tag missing');
  put(tag[0],'<span class="tag">WRITING ISLAND</span>');
- const noscript=html.match(/<noscript>[\s\S]*?<\/noscript>/);
- if(!noscript||html.split(noscript[0]).length!==2)throw Error('Writing scene no-script fallback missing');
- put(noscript[0],'<noscript><p class="noscript">The Manuscript Hoard requires JavaScript and WebGL. <a href="/">Return to DaveHub home</a>.</p></noscript>');
  if(/href="\/worlds\/writing\/"(?!#)/.test(html))throw Error('Retired Writing landing page self-link remains');
  if(!html.includes('data-exit-door-proof="true"'))throw Error('Cannot deploy a 3D room without its exit');
  return html;
