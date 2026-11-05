@@ -1,6 +1,10 @@
 # DaveHub development roadmap
 
-**Updated:** 4 November 2026. **Current stage:** DH-11C.5D.3H real 3D lamp, waste-basket and mystical rug detail following approval of V6. A separate review version preserves the original room and earlier art passes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+**Updated:** 5 November 2026. **Current stage:** DH-11C.5D.3I physical exit door to same-origin DaveHub homepage, following owner review of V7. A separate review version preserves the original room and earlier art passes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+
+## DH-11C.5D.3I — Click open, click again to leave the Manuscript Hoard
+
+A separate V8 staging candidate adds a real, usable exit to the approved Writing room study: the first scene click opens the hinged door immediately, and the second click on the open doorway returns to the same-origin DaveHub homepage. A 3D opening-sized raycast target remains behind the moving leaf, while accessible button controls use the same two-action flow. The existing GLB, V7 artwork and earlier previews are preserved. [Implementation details and review gate](DH11C5D3I_EXIT_DOOR.md). Pending hosted/owner review; no published Writing or production changes.
 
 ## DH-11C.5D.3H — Grounded lamp, filled basket and celestial rug
 
