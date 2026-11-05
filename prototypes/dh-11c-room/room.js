@@ -52,8 +52,9 @@ const authoredDetailProof=illustratedProof&&document.body.dataset.authoredDetail
 const personalityProof=authoredDetailProof&&document.body.dataset.personalityProof==='true';
 const handwrittenLabelProof=personalityProof&&document.body.dataset.handwrittenLabelProof==='true';
 const mysticalRoomProof=handwrittenLabelProof&&document.body.dataset.mysticalRoomProof==='true';
+const exitDoorProof=mysticalRoomProof&&document.body.dataset.exitDoorProof==='true';
 let illustratedRuntime=null,scenicWindow=null,manuscriptPersonality=null;
-let mysticalRug=null,mysticalFurniture=null;
+let mysticalRug=null,mysticalFurniture=null,doorExitTarget=null;
 let shellFallback=null;
 const blenderCompare=document.body.dataset.blenderCompare==='true';
 let glbExtension=1;
@@ -592,6 +593,10 @@ function makeDoor(){
  sphere(hinge,.095,mats.brass,1.85,2.1,.15);
  g.rotation.y=-Math.PI/2;
  doorLeaf=hinge;
+ if(exitDoorProof){
+  if(!window.DH11DoorExit)throw Error('Missing physical exit-door interaction contract');
+  doorExitTarget=window.DH11DoorExit.makeTarget(THREE,g);
+ }
  capture('door',g);return g;
 }
 makeDoor();
@@ -871,6 +876,22 @@ function pressTypewriter(index=null){
  activePress={index:selected,at:clock.elapsedTime};
  status.textContent='Key '+(selected+1)+' struck. '+state.typed+' characters typed; paper advances.';
 }
+function activateExitDoor(){
+ if(!exitDoorProof)return;
+ // A direct click from the overview opens the real door on the FIRST click.
+ if(state.focus!=='door')focus('door');
+ const result=window.DH11DoorExit.advance(plan,state);
+ if(result.action==='exit'){
+  status.textContent='Leaving the Manuscript Hoard for DaveHub.';
+  // Same origin. A staging preview returns to staging, never to production.
+  window.location.assign(window.DH11DoorExit.HOME_PATH);
+  return;
+ }
+ state=result.state;
+ if(doorExitTarget)doorExitTarget.visible=true;
+ status.textContent='The door opens. Click the door or doorway again to return to DaveHub.';
+ renderControls('door');
+}
 function renderControls(id){
  actions.replaceChildren();
  const add=(label,action)=>{
@@ -952,8 +973,13 @@ function renderControls(id){
   syncBinPaperControls();
  }
  else if(id==='door'){
-  add(state.doorOpen?'Close the door':'Open the door',()=>{state=plan.next(state,{type:'door'});status.textContent=state.doorOpen?'The door swings open on its hinge.':'The door swings shut.';renderControls('door');});
-  if(state.doorOpen){const a=document.createElement('a');a.href='/';a.textContent='Return to DaveHub islands ↗';actions.append(a);}
+  if(exitDoorProof){
+   // Accessible keyboard/touch counterpart to the same physical door clicks.
+   add(window.DH11DoorExit.label(state),activateExitDoor);
+  }else{
+   add(state.doorOpen?'Close the door':'Open the door',()=>{state=plan.next(state,{type:'door'});status.textContent=state.doorOpen?'The door swings open on its hinge.':'The door swings shut.';renderControls('door');});
+   if(state.doorOpen){const a=document.createElement('a');a.href='/';a.textContent='Return to DaveHub islands ↗';actions.append(a);}
+  }
  }else if(id==='window')add('Look at the islands',()=>{status.textContent='These are low-poly floating islands within the same 3D room.';});
 }
 for(const b of focusButtons)b.addEventListener('click',()=>focus(b.dataset.focus));
@@ -994,6 +1020,7 @@ canvas.addEventListener('pointermove',event=>{
      :pick?.lampPart!==null&&pick?.lampPart!==undefined
      ?(state.lampOn?'Switch off':'Switch on')+' desk lamp'
      :pick?.spineTitle?'“'+pick.spineTitle+'” (fictional archive title)'
+     :hovered==='door'&&exitDoorProof?window.DH11DoorExit.label(state)
      :hovered==='bookcase'?'Only highlighted books can be pulled out'
      :hovered==='bin'?'Click a particular crumpled paper, not the bin itself'
      :hovered?'Explore '+plan.find(hovered).label:'';
@@ -1027,12 +1054,15 @@ canvas.addEventListener('pointerup',event=>{
     if(binPaperIndex!==null)toggleBinPaper(binPaperIndex);
     else status.textContent='Click an actual crumpled paper to rummage in the bin.';
    }
+   else if(id==='door'&&exitDoorProof)activateExitDoor();
    else if(id==='door')state=plan.next(state,{type:'door'});
-   if(!['desk','bookcase','bin','typewriter'].includes(id))status.textContent=plan.find(id).label+' responds to your interaction.';
+   if(!['desk','bookcase','bin','typewriter'].includes(id)&&!(id==='door'&&exitDoorProof))status.textContent=plan.find(id).label+' responds to your interaction.';
   }
   if(!['desk','bookcase','bin'].includes(id))renderControls(id);
  }else{
   focus(id);
+  // The door opens with the first scene click, even from the overview.
+  if(id==='door'&&exitDoorProof)activateExitDoor();
   // Clicking a sheet in the overview focuses the desk and moves that sheet.
   if(id==='desk'&&lampPart!==null)toggleLamp();
   else if(id==='desk'&&paperIndex!==null)togglePaper(paperIndex);
@@ -1261,6 +1291,12 @@ if(furnitureModelProof){
     if(mysticalRoomProof){
      mysticalFurniture=window.DH11RoomProps.decorateFurniture({THREE,root:content});
      mysticalFurniture.setVisible(illustratedRuntime?.mode==='painterly');
+    }
+    if(exitDoorProof){
+     // Capture this genuine, doorway-sized 3D trigger with the GLB door rig.
+     // Its initial hidden state preserves all original closed-door hit targets.
+     doorExitTarget=window.DH11DoorExit.makeTarget(THREE,next.get('door'));
+     doorExitTarget.visible=!!state.doorOpen;
     }
     books.forEach((mesh,i)=>markFeaturedBook(mesh,i));
     if(personalityProof){
