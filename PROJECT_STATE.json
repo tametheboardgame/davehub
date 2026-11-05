@@ -1148,7 +1148,7 @@
       },
       "exitDoorCandidate": {
         "milestone": "DH-11C.5D.3I",
-        "status": "feature_branch_pending_CI_and_visual_approval",
+        "status": "merged_staging_owner_accepted_for_integration",
         "route": "/previews/dh-11c/authored-3d-v8/?v=dh11c5d3i-door-home-exit-v1",
         "source": "prototypes/dh-11c-room/door-exit.js",
         "documentation": "docs/DH11C5D3I_EXIT_DOOR.md",
@@ -1161,6 +1161,22 @@
         "ownerApproval": "pending",
         "productionChanged": false,
         "publishedWritingChanged": false
+      },
+      "writingIslandDirectRoom": {
+        "milestone": "DH-11C.5D.3J",
+        "status": "feature_branch_pending_CI_and_clickthrough_review",
+        "stagingRoute": "/worlds/writing/",
+        "sceneBase": "/worlds/writing/scene/",
+        "assetRoot": "/worlds/writing/room/",
+        "source": "scripts/render-dh11c5d3j-writing-world.cjs",
+        "documentation": "docs/DH11C5D3J_DIRECT_WRITING_WORLD.md",
+        "oldLanding": "retired_from_staging_served_route",
+        "destinationOnExit": "/",
+        "usesReal3DModels": true,
+        "interactiveDoorPreserved": true,
+        "publicCatalogueChanged": false,
+        "productionChanged": false,
+        "ownerReview": "pending"
       }
     }
   }

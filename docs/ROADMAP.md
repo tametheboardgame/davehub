@@ -1,6 +1,10 @@
 # DaveHub development roadmap
 
-**Updated:** 5 November 2026. **Current stage:** DH-11C.5D.3I physical exit door to same-origin DaveHub homepage, following owner review of V7. A separate review version preserves the original room and earlier art passes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+**Updated:** 5 November 2026. **Current stage:** DH-11C.5D.3J direct Writing island entry into the illustrated 3D Manuscript Hoard, following approval of V8 exit mechanics. A separate review version preserves the original room and earlier art passes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+
+## DH-11C.5D.3J — Writing island opens the real 3D Manuscript Hoard
+
+Replace the old staging Writing landing page at the existing `/worlds/writing/` route with the approved V8 physical room. The homepage island already links there, so no navigation detour or preview URL is needed. Serve the WebGL room and its dependent assets from independent Writing-world paths, hide development-only controls, retain accessible exploration, and keep the functioning two-click door exit back to DaveHub. The retired 2D page remains only as source/archived prototype code, not navigable staging content. [Implementation and acceptance gate](DH11C5D3J_DIRECT_WRITING_WORLD.md). No production or `main` change.
 
 ## DH-11C.5D.3I — Click open, click again to leave the Manuscript Hoard
 
