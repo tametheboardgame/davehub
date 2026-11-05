@@ -1132,7 +1132,7 @@
       },
       "mysticalRoomCandidate": {
         "milestone": "DH-11C.5D.3H",
-        "status": "feature_branch_pending_CI_and_visual_approval",
+        "status": "deployed_staging_owner_positive_feedback_preceding_V8",
         "route": "/previews/dh-11c/authored-3d-v7/?v=dh11c5d3h-mystical-room-props-v1",
         "script": "prototypes/dh-11c-room/room-props-v7.js",
         "documentation": "docs/DH11C5D3H_MYSTICAL_ROOM_PROPS.md",
@@ -1143,6 +1143,22 @@
         "rugSurfaceTexture": true,
         "approvedPriorArtPreserved": true,
         "approval": "pending",
+        "productionChanged": false,
+        "publishedWritingChanged": false
+      },
+      "exitDoorCandidate": {
+        "milestone": "DH-11C.5D.3I",
+        "status": "feature_branch_pending_CI_and_visual_approval",
+        "route": "/previews/dh-11c/authored-3d-v8/?v=dh11c5d3i-door-home-exit-v1",
+        "source": "prototypes/dh-11c-room/door-exit.js",
+        "documentation": "docs/DH11C5D3I_EXIT_DOOR.md",
+        "firstClick": "opens physical hinged door from any view",
+        "secondClick": "navigates to same-origin DaveHub homepage",
+        "destination": "/",
+        "physicalOpenDoorHitTarget": true,
+        "keyboardAccessible": true,
+        "previousArtPreserved": true,
+        "ownerApproval": "pending",
         "productionChanged": false,
         "publishedWritingChanged": false
       }
