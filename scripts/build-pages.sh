@@ -43,6 +43,8 @@ for asset in \
   tests/dh11c5d3g-authored-handwriting.test.cjs \
   tests/dh11c5d3h-room-props.test.cjs \
   tests/dh11c5d3i-exit-door.test.cjs \
+  tests/dh11c5d3j-writing-island.test.cjs \
+  scripts/render-dh11c5d3j-writing-world.cjs \
   prototypes/dh-11c-room/high-illustration-3d.js \
   prototypes/dh-11c-room/high-illustration-3d-v2.js \
   prototypes/dh-11c-room/high-illustration-3d-v3.js \
@@ -145,7 +147,7 @@ done
 
 # A private draft must never become a deployed page through a build bypass.
 # Validate both the empty/approved production manifest and fictional test fixtures.
-node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/dh11-worlds.test.cjs tests/dh11c-cabinet-geometry.test.cjs tests/dh11c-room.test.cjs tests/dh11c-drawer-picking.test.cjs tests/dh11c-art-direction.test.cjs tests/dh11c4-cabinet-glb.test.cjs tests/dh11c4b-blender.test.cjs tests/dh11c4c-room-architecture.test.cjs tests/dh11c4d-immersive-viewport.test.cjs tests/dh11c4e-room-shell.test.cjs tests/dh11c4f-furniture.test.cjs tests/dh11c4f-animation-fixes.test.cjs tests/dh11c5a-desk-materials.test.cjs tests/dh11c5b-archive-materials.test.cjs tests/dh11c5c-illustrated-style.test.cjs tests/dh11c5c2a-painted-surfaces.test.cjs tests/dh11c5c2b-soft-edges.test.cjs tests/dh11c5c3-comic-storybook.test.cjs tests/dh11c5d-view-pipeline.test.cjs tests/dh11c5d3-art-alignment.test.cjs tests/dh11c5d3b-authored-3d.test.cjs tests/dh11c5d3c-spine-art.test.cjs tests/dh11c5d3d-sculpted-bookcase.test.cjs tests/dh11c5d3e-authored-details.test.cjs tests/dh11c5d3f-readable-hoard.test.cjs tests/dh11c5d3g-authored-handwriting.test.cjs tests/dh11c5d3h-room-props.test.cjs tests/dh11c5d3i-exit-door.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs tests/dh10c-editorial.test.cjs tests/dh10c-hosted-http.test.cjs
+node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/dh11-worlds.test.cjs tests/dh11c-cabinet-geometry.test.cjs tests/dh11c-room.test.cjs tests/dh11c-drawer-picking.test.cjs tests/dh11c-art-direction.test.cjs tests/dh11c4-cabinet-glb.test.cjs tests/dh11c4b-blender.test.cjs tests/dh11c4c-room-architecture.test.cjs tests/dh11c4d-immersive-viewport.test.cjs tests/dh11c4e-room-shell.test.cjs tests/dh11c4f-furniture.test.cjs tests/dh11c4f-animation-fixes.test.cjs tests/dh11c5a-desk-materials.test.cjs tests/dh11c5b-archive-materials.test.cjs tests/dh11c5c-illustrated-style.test.cjs tests/dh11c5c2a-painted-surfaces.test.cjs tests/dh11c5c2b-soft-edges.test.cjs tests/dh11c5c3-comic-storybook.test.cjs tests/dh11c5d-view-pipeline.test.cjs tests/dh11c5d3-art-alignment.test.cjs tests/dh11c5d3b-authored-3d.test.cjs tests/dh11c5d3c-spine-art.test.cjs tests/dh11c5d3d-sculpted-bookcase.test.cjs tests/dh11c5d3e-authored-details.test.cjs tests/dh11c5d3f-readable-hoard.test.cjs tests/dh11c5d3g-authored-handwriting.test.cjs tests/dh11c5d3h-room-props.test.cjs tests/dh11c5d3i-exit-door.test.cjs tests/dh11c5d3j-writing-island.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs tests/dh10c-editorial.test.cjs tests/dh10c-hosted-http.test.cjs
 node -e "const {validateManifest}=require('./scripts/davehub-manifest.cjs'); const data=require('./davehub.json'); const result=validateManifest(data,'tametheboardgame/davehub');if(!result.valid)throw new Error(result.errors.join('; '));"
 # Fail closed: only individually owner-approved records and links enter production.
 node scripts/content-check.cjs content/public/catalogue.json
@@ -230,6 +232,14 @@ node scripts/render-review-layout.cjs dist/previews/dh-08c
 # The review desk reads public GitHub markers in the browser and writes nothing.
 # Never bundle the local Content Workshop or unapproved editorial descriptions.
 node scripts/render-editorial-review.cjs dist/review
+# DH-11C.5D.3J: the Writing island goes directly into its real 3D room.
+# Build this AFTER the legacy public content renderer, replacing ONLY the
+# staging /worlds/writing/ page. Assets have canonical, independent paths.
+mkdir -p dist/worlds/writing/scene dist/worlds/writing/cabinet-glb
+cp -R dist/previews/dh-11c/room dist/worlds/writing/
+cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js prototypes/dh-11c-room/illustrated.css dist/worlds/writing/scene/
+cp dist/previews/dh-11c/cabinet-glb/glb-proof.css dist/worlds/writing/cabinet-glb/
+node scripts/render-dh11c5d3j-writing-world.cjs dist/worlds/writing
 # Each game is independently built from its pinned upstream commit. Static
 # output is deployed under the same DaveHub origin, not embedded via iframe.
 # Fail the entire build if either pinned game cannot be built and verified.
@@ -264,7 +274,13 @@ check('dist/worlds/games/index.html',[
 for(const slug of ['unicorn-valley','stephen-martin-project','tame-the-board-game']){
  check('dist/creations/'+slug+'/index.html',['data-davehub-inline="worlds"','class="primary-launch"'],['DESIGN REVIEW ONLY']);
 }
-check('dist/worlds/writing/index.html',['data-scene="manuscript-hoard"','room-stage-image','data-room-target="desk"','data-room-target="cabinet"','data-room-target="bin"','data-room-target="bookcase"','data-room-target="typewriter"','Tame The Board Game'],['The Last Lightkeeper','The Clock of Tomorrow']);
+check('dist/worlds/writing/index.html',['DH-11C.5D.3J','data-writing-world="true"','data-exit-door-proof="true"','<base href="/worlds/writing/scene/">','room.js?v=dh11c5d3i-door-home-exit-v1','door-exit.js?v=dh11c5d3i-door-home-exit-v1','<canvas id="room-canvas"'],['data-scene="manuscript-hoard"','room-stage-image','Existing Writing world','The Last Lightkeeper','The Clock of Tomorrow']);
+check('dist/worlds/writing/room/room.js',["window.location.assign(window.DH11DoorExit.HOME_PATH)","new GLTFLoader().load('../room/models/furniture-source.glb"]);
+check('dist/worlds/writing/scene/immersive.css',['data-immersive-room']);
+check('dist/worlds/writing/room/door-exit.js',['DH11DoorExit','HOME_PATH','makeTarget']);
+for(const file of ['dist/worlds/writing/room/models/furniture-source.glb','dist/worlds/writing/room/models/room-shell-blender-verified.glb','dist/worlds/writing/cabinet-glb/glb-proof.css']){
+ if(!fs.statSync(file).size)throw Error('Missing direct Writing world asset '+file);
+}
 check('dist/previews/dh-08b/worlds/writing/index.html',['data-scene="manuscript-hoard"','Fictional design demonstration','The Last Lightkeeper']);
 check('dist/previews/dh-11c/furniture/index.html',['DH-11C.4F','data-furniture-model-proof="true"','data-immersive-room="true"','id="furniture-model-status"','room.js?v=dh11c5b-archive-v1','room-plan.js?v=dh11c5b-archive-v1','desk-materials.js?v=dh11c5a-desk-v1','archive-materials.js?v=dh11c5b-archive-v1','davehub-furniture-release']);
 check('dist/previews/dh-11c/room/furniture-asset.js',['DH11FurnitureAsset','door_leaf_hinge','desk_lamp_shade','desk_lamp_cap','desk_lamp_bulb','lampShade','lampBulb','deskWalnut','deskParchment0','deskLeather','typewriterEnamel']);
@@ -355,7 +371,7 @@ check('dist/previews/dh-11c/cabinet/index.html',['id="cabinet-model"','id="cabin
 check('dist/previews/dh-08c/index.html',[
  'data-davehub-inline="worlds"','Unicorn Valley','The Stephen Martin Project'
 ]);
-for(const world of ['writing','music','experiments','unfinished','memory-lane']){
+for(const world of ['music','experiments','unfinished','memory-lane']){
  const live='dist/worlds/'+world+'/index.html';
  const demo='dist/previews/dh-08b/worlds/'+world+'/index.html';
  check(live,['dh11-world--'+world,'data-davehub-inline="worlds"'],['The Last Lightkeeper','The Clock of Tomorrow','Glass Harbour','Fictional design demonstration']);
