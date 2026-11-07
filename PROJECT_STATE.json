@@ -1228,7 +1228,7 @@
       },
       "finishedBookExperience": {
         "stage": "DH-11C.6B",
-        "status": "feature_branch_pending_CI_and_owner_review",
+        "status": "deployed_staging_owner_reviewed_needs_6B1_polish",
         "stagingRoute": "/worlds/writing/",
         "productBooks": [
           "The Legend of the Stormrider",
@@ -1248,6 +1248,26 @@
         "productionChanged": false,
         "publishedCatalogueChanged": false,
         "documentation": "docs/DH11C6B_FINISHED_BOOKS.md",
+        "ownerApproval": "pending"
+      },
+      "bookcaseLayoutPolish": {
+        "stage": "DH-11C.6B.1",
+        "status": "feature_branch_pending_CI_and_owner_visual_review",
+        "stagingRoute": "/worlds/writing/",
+        "publishedBookPositions": [
+          "book_3_03",
+          "book_3_10",
+          "book_3_17"
+        ],
+        "ordering": "top shelf, left to right",
+        "desktopDetail": "up to 1190px wide, reduced vertical chrome, scroll only if overflow",
+        "contextPrompts": "dock opposite the selected object on desktop, reserve scene-free strip on narrow screens",
+        "exitDoorPreserved": true,
+        "older3DPreviewsPreserved": true,
+        "productionChanged": false,
+        "mainChanged": false,
+        "catalogueChanged": false,
+        "documentation": "docs/DH11C6B1_LAYOUT_POLISH.md",
         "ownerApproval": "pending"
       }
     }
