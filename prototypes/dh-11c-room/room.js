@@ -22,6 +22,13 @@ const fallback=document.getElementById('scene-fallback');
 const minimalUI=document.body.dataset.minimalUi==='true';
 // Canonical Writing room starts dark outside its window until the full scene texture is ready.
 const darkWindowPreload=minimalUI&&document.body.dataset.darkWindowPreload==='true';
+const finishedBooksEnabled=minimalUI&&document.body.dataset.finishedBooks==='true';
+const finishedBooks=finishedBooksEnabled?window.DH11FinishedBooks:null;
+const bookExperience=finishedBooksEnabled?window.DH11BookExperience?.mount({
+ catalog:finishedBooks,document
+}):null;
+if(finishedBooksEnabled&&(!finishedBooks||!bookExperience))
+ throw Error('DH-11C.6B requires the published-book catalogue and accessible detail view');
 const objectPrompt=document.getElementById('object-prompt');
 const promptTitle=document.getElementById('object-prompt-title');
 const promptCopy=document.getElementById('object-prompt-copy');
@@ -497,6 +504,9 @@ function featuredBookColour(mesh){
  }
 }
 function markFeaturedBook(mesh,index){
+ // 6B: only three finished publications have active pull-out bindings.
+ // Five previous creative-work spines remain ordinary decorative books.
+ if(finishedBooksEnabled&&!finishedBooks.canOpen(index))return;
  mesh.userData.featuredBookIndex=index;
  mesh.material=mesh.material.clone();
  // Multiplying a bright teal colour by a dark leather colour-map would
@@ -795,7 +805,7 @@ let currentHover=null;
 const minimalCopy={
  desk:'Scrawled drafts, loose pages and a temperamental lamp.',
  cabinet:'Five drawers of questionable organisation.',
- bookcase:'Eighty unlikely books, eight with stories of their own.',
+ bookcase:finishedBooksEnabled?'Three finished books. Pull one out to explore its edition and where to buy it.':'Eighty unlikely books, eight with stories of their own.',
  typewriter:'A machine still waiting for the next sentence.',
  bin:'An overflowing collection of abandoned ideas.',
  window:'A glimpse of other worlds beyond the glass.'
@@ -857,18 +867,20 @@ const drawerNames=['Finished','Drafts','Oddities','Fragments','Field Notes'];
 function bookDescription(index){
  const shelf=Math.floor(index/2),slot=(10-shelf)%10+(index%2)*10;
  const names=personalityProof?(window.DH11ManuscriptPersonality?.AUTHORED_BOOK_TITLES||window.DH11ManuscriptPersonality?.BOOK_TITLES):null;
- const title=names?.[shelf*20+slot];
+ const title=finishedBooksEnabled?finishedBooks.byIndex(index)?.title:names?.[shelf*20+slot];
  return title?'“'+title+'” (shelf '+(shelf+1)+', book '+(slot+1)+')':
   'Shelf '+(shelf+1)+', book '+(slot+1);
 }
 function toggleBook(index){
  if(!Number.isInteger(index)||index<0||index>=FEATURED_BOOK_COUNT)return;
+ if(finishedBooksEnabled&&!finishedBooks.canOpen(index))return;
  const wasPulled=state.books[index];
  state=plan.next(state,{type:'book',index});
  if(wasPulled===state.books[index])return;
  status.textContent=bookDescription(index)+(state.books[index]?
   ' slides forward. Click it again to return it.':' slides back into its original slot.');
  syncBookControls();
+ if(finishedBooksEnabled&&state.books[index])bookExperience.show(index);
 }
 function syncBookControls(){
  for(const button of actions.querySelectorAll('[data-book-index]')){
@@ -987,14 +999,16 @@ function renderControls(id){
  }
  else if(id==='bookcase'){
   const help=document.createElement('p');
-  help.textContent='Look for the eight bright turquoise spines with gold markings. Click one to pull it out, or click it again to return it.';
+  help.textContent=finishedBooksEnabled
+   ?'The three turquoise bindings are published books. Pull one out to view its cover, details and purchase links.'
+   :'Look for the eight bright turquoise spines with gold markings. Click one to pull it out, or click it again to return it.';
   actions.append(help);
   const details=document.createElement('details'),summary=document.createElement('summary');
   summary.textContent='Select a book using keyboard controls';
   details.append(summary);
   const buttons=document.createElement('div');
   buttons.className='paper-controls';
-  for(let i=0;i<FEATURED_BOOK_COUNT;i++){
+  for(let i=0;i<(finishedBooksEnabled?finishedBooks.BOOKS.length:FEATURED_BOOK_COUNT);i++){
    const button=document.createElement('button');
    button.type='button';
    button.dataset.bookIndex=String(i);
@@ -1116,7 +1130,9 @@ canvas.addEventListener('pointerup',event=>{
    else if(id==='desk'&&paperIndex!==null)togglePaper(paperIndex);
    else if(id==='bookcase'){
     if(bookIndex!==null)toggleBook(bookIndex);
-    else status.textContent='Try one of the eight highlighted book spines.';
+    else status.textContent=finishedBooksEnabled
+     ?'Pull one of the three published books with turquoise bindings.'
+     :'Try one of the eight highlighted book spines.';
    }
    else if(id==='typewriter')pressTypewriter(keyIndex);
    else if(id==='bin'){
@@ -1383,7 +1399,8 @@ if(furnitureModelProof){
     books.forEach((mesh,i)=>markFeaturedBook(mesh,i));
     if(personalityProof){
      if(!window.DH11ManuscriptPersonality)throw Error('Missing title and chaotic manuscript artwork');
-     manuscriptPersonality=window.DH11ManuscriptPersonality.create({THREE,root:content});
+     manuscriptPersonality=window.DH11ManuscriptPersonality.create({THREE,root:content,
+      finishedBooks:finishedBooksEnabled?finishedBooks:null});
      manuscriptPersonality.setVisible(illustratedRuntime?.mode==='painterly');
     }
     if(illustratedRuntime)illustratedRuntime.register(content);
