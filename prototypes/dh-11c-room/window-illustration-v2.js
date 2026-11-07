@@ -51,7 +51,7 @@
   }
   ctx.restore();
  }
- function mount({THREE,root,url}){
+ function mount({THREE,root,url,hideLegacyWhileLoading=false}){
   if(!THREE?.BufferGeometry||!THREE?.TextureLoader||!root?.getObjectByName||typeof document==='undefined')
    throw Error('Window illustration requires the original 3D aperture and WebGL textures');
   const sky=root.getObjectByName('window_sky');
@@ -90,8 +90,17 @@
   function sync(){
    const active=requested&&ready;
    group.visible=active;
-   // Hide the entire original rig, not only its decorative mesh surfaces.
-   for(const node of original)node.visible=!active;
+   // DH-11C.6A.2: the visitor route never flashes the obsolete islands while
+   // the network texture is loading (or if it fails); its dark original sky
+   // remains until the complete illustrated layer is ready. Old preview
+   // variants omit the option and keep their reversible original comparison.
+   if(hideLegacyWhileLoading){
+    sky.visible=!active;
+    for(const island of legacyIslands)island.visible=false;
+   }else{
+    // Hide the entire original rig, not only its decorative mesh surfaces.
+    for(const node of original)node.visible=!active;
+   }
    return active;
   }
   new THREE.TextureLoader().load(url,texture=>{
