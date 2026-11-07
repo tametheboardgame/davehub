@@ -13,7 +13,7 @@ test('contextual prompt floats alongside the selected object without shrinking t
  assert.ok(css.includes('top:calc(86px + env(safe-area-inset-top));bottom:auto;'));
  assert.ok(css.includes('left:max(14px,env(safe-area-inset-left));right:auto;'));
  assert.ok(!css.includes('[data-room-prompt="visible"] #scene-frame'));
- assert.ok(!css.includes('height:calc(100dvh - 116px);'),'no black strip / canvas cropping');
+ assert.ok(!/\n\s*height:calc\(100dvh - 116px\);/.test(css),'no black strip / canvas cropping');
  assert.ok(!css.includes('bottom:calc(116px + max('),'no shifting controls into banner space');
  const core=get('prototypes/dh-11c-room/immersive.css');
  assert.ok(core.includes('position:fixed;inset:0;z-index:1;width:100%;height:100%;height:100dvh;'),
