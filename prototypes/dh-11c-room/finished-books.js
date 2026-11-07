@@ -53,9 +53,19 @@
    ])
   })
  ]);
+ // The physical shelf is indexed bottom to top (0..3). The approved
+ // publications occupy three evenly spaced volumes on the HIGHEST shelf,
+ // not the old lower eight-work feature slots. Do not rewrite the GLB.
+ const TOP_SHELF=3;
+ const TOP_SHELF_SLOTS=Object.freeze([3,10,17]);
+ function indexForMesh(shelf,slot){
+  if(shelf!==TOP_SHELF||!Number.isInteger(slot))return null;
+  const index=TOP_SHELF_SLOTS.indexOf(slot);
+  return index>=0?index:null;
+ }
  const byIndex=index=>BOOKS.find(book=>book.featuredIndex===index)||null;
  const byId=id=>BOOKS.find(book=>book.id===id)||null;
  const featured=Object.freeze(BOOKS.map(x=>x.featuredIndex));
  const canOpen=index=>Boolean(byIndex(index));
- return Object.freeze({BOOKS,byIndex,byId,featured,canOpen});
+ return Object.freeze({BOOKS,byIndex,byId,featured,canOpen,TOP_SHELF,TOP_SHELF_SLOTS,indexForMesh});
 });
