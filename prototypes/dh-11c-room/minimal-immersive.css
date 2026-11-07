@@ -167,21 +167,20 @@ body[data-minimal-ui="true"] :is(.object-prompt button,.object-full-close,.objec
 /* Narrow/touch screens lack an empty side. Reserve real vertical space
    beneath the 3D canvas for the prompt rather than covering the artwork. */
 @media(max-width:899px), (max-height:559px){
- body[data-minimal-ui="true"][data-room-focus] #scene-frame{
+ body[data-minimal-ui="true"][data-room-prompt="visible"] #scene-frame{
   top:0;bottom:116px;height:calc(100dvh - 116px);
  }
- body[data-minimal-ui="true"][data-room-focus] .object-prompt{
+ body[data-minimal-ui="true"][data-room-prompt="visible"] .object-prompt{
   top:auto;bottom:max(8px,env(safe-area-inset-bottom));
   left:50%;right:auto;transform:translateX(-50%);
   width:min(570px,calc(100vw - 22px));
  }
- body[data-minimal-ui="true"][data-room-focus] .control-strip,
- body[data-minimal-ui="true"][data-room-focus] .object-menu{
+ body[data-minimal-ui="true"][data-room-prompt="visible"] .control-strip,
+ body[data-minimal-ui="true"][data-room-prompt="visible"] .object-menu{
   bottom:calc(116px + max(8px,env(safe-area-inset-bottom)));
  }
- body[data-minimal-ui="true"][data-room-focus] .interaction-tray{
-  bottom:calc(116px + max(45px,env(safe-area-inset-bottom)));
- }
+ /* Expanded controls intentionally occupy their own focused panel.
+    Dismissing the small prompt restores the full-height 3D canvas. */
 }
 @media(prefers-reduced-motion:reduce){
  body[data-minimal-ui="true"] .object-prompt,
