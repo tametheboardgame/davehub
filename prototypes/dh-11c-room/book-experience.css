@@ -1,25 +1,28 @@
 /* DH-11C.6B: a book pulled from the real shelf opens a real reading/edition page.
    No screenshot-based 3D replacement. */
 body[data-finished-books="true"] .published-book-dialog{
- width:min(940px,calc(100vw - 28px));
- max-width:940px;max-height:min(90dvh,870px);
+ width:min(1190px,calc(100vw - 42px));
+ max-width:1190px;max-height:calc(100dvh - 30px);
  padding:0;border:1px solid rgba(224,185,134,.8);
  border-radius:20px;background:#211c2c;color:#f7eadd;
- box-shadow:0 34px 100px rgba(6,4,13,.7);overflow:auto;
+ box-shadow:0 34px 100px rgba(6,4,13,.7);
+ /* The wider, tighter desktop layout fits without a permanent scrollbar.
+    Keep overflow available only when viewport dimensions really demand it. */
+ overflow-y:auto;overflow-x:hidden;
 }
 body[data-finished-books="true"] .published-book-dialog::backdrop{
  background:rgba(11,8,20,.8);
  -webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);
 }
 body[data-finished-books="true"] .published-book-dialog__content{
- display:grid;grid-template-columns:minmax(190px,36%) minmax(0,1fr);
- gap:clamp(20px,3.7vw,42px);padding:clamp(24px,4vw,43px);
+ display:grid;grid-template-columns:minmax(230px,31%) minmax(0,1fr);
+ gap:clamp(22px,3vw,36px);padding:clamp(22px,3vw,32px);
 }
 body[data-finished-books="true"] .published-book-dialog__art{
  display:flex;flex-direction:column;gap:10px;min-width:0;
 }
 body[data-finished-books="true"] .published-book-cover{
- width:100%;max-height:500px;object-fit:contain;object-position:center top;
+ width:100%;max-height:min(56dvh,460px);object-fit:contain;object-position:center top;
  border:1px solid rgba(234,191,137,.18);border-radius:8px;
  box-shadow:0 16px 38px rgba(0,0,0,.33);
 }
@@ -44,19 +47,19 @@ body[data-finished-books="true"] .published-book-eyebrow{
  color:#eec790;margin:0 0 13px;
 }
 body[data-finished-books="true"] .published-book-dialog h2{
- font:700 clamp(29px,4vw,44px)/1.08 Georgia,serif;letter-spacing:-.02em;
- margin:0 0 11px;color:#fff1df;
+ font:700 clamp(29px,3.2vw,40px)/1.08 Georgia,serif;letter-spacing:-.02em;
+ margin:0 0 8px;color:#fff1df;
 }
 body[data-finished-books="true"] .published-book-subtitle{
- color:#dbbbaf;font-size:14px;margin:0 0 25px;
+ color:#dbbbaf;font-size:13px;margin:0 0 17px;
 }
 body[data-finished-books="true"] .published-book-description{
- font:18px/1.65 Georgia,serif;margin:0 0 28px;color:#e8dfd4;
+ font:clamp(15px,1.2vw,17px)/1.52 Georgia,serif;margin:0 0 18px;color:#e8dfd4;
 }
 body[data-finished-books="true"] .published-book-facts{
  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
- gap:17px 22px;border-top:1px solid rgba(225,195,151,.22);
- padding:20px 0 24px;margin:0;
+ gap:11px 22px;border-top:1px solid rgba(225,195,151,.22);
+ padding:16px 0 18px;margin:0;
 }
 body[data-finished-books="true"] .published-book-facts div{min-width:0}
 body[data-finished-books="true"] .published-book-facts dt{
@@ -80,7 +83,7 @@ body[data-finished-books="true"] .book-buy-link--primary{
  color:#241c2c;background:#f0c995;border-color:#f0c995;
 }
 body[data-finished-books="true"] .published-book-disclaimer{
- margin:16px 0 0;font:11px/1.4 system-ui,sans-serif;
+ margin:10px 0 0;font:11px/1.4 system-ui,sans-serif;
  color:#b7aabb;
 }
 body[data-finished-books="true"] .published-book-close{
@@ -95,8 +98,22 @@ body[data-finished-books="true"] .published-book-dialog a:focus-visible,
 body[data-finished-books="true"] .published-book-close:focus-visible{
  outline:3px solid #ffdc9a;outline-offset:3px;
 }
+/* Only unusually short viewports and narrow layouts should need scrolling.
+   The natural desktop content height now fits above the fold. */
+@media(max-height:670px){
+ body[data-finished-books="true"] .published-book-dialog{
+  max-height:calc(100dvh - 16px);
+  overflow-y:auto;
+ }
+ body[data-finished-books="true"] .published-book-dialog__content{
+  padding-block:18px;
+ }
+ body[data-finished-books="true"] .published-book-cover{max-height:50dvh}
+}
 @media(max-width:650px){
- body[data-finished-books="true"] .published-book-dialog{max-height:93dvh}
+ body[data-finished-books="true"] .published-book-dialog{
+  width:calc(100vw - 18px);max-height:93dvh;overflow-y:auto;
+ }
  body[data-finished-books="true"] .published-book-dialog__content{
   grid-template-columns:1fr;gap:18px;padding:23px 20px 28px;
  }
