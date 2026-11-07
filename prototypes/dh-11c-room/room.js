@@ -845,7 +845,10 @@ function focus(id){
  const obj=plan.find(id);
  // Side-dock the visitor's prompt and expanded object controls away from
  // the selected furniture, rather than obstructing pull-out books/drawers.
- if(minimalUI)document.body.dataset.roomFocus=id;
+ if(minimalUI){
+  if(id==='door')delete document.body.dataset.roomFocus;
+  else document.body.dataset.roomFocus=id;
+ }
  desiredPosition.set(...obj.camera);
  desiredTarget.set(...obj.lookAt);
  homeButton.disabled=false;
