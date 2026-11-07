@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Cabinet geometry test | DaveHub DH-11C.1</title>
+<link rel="stylesheet" href="./cabinet.css">
+<script defer src="./cabinet-math.js"></script>
+<script defer src="./cabinet.js"></script>
+</head>
+<body>
+<a class="skip" href="#workbench">Skip to cabinet</a>
+<div class="workspace">
+  <header class="masthead">
+    <a class="wordmark" href="/">Dave<span>Hub</span></a>
+    <div class="masthead-copy">
+      <span class="eyebrow">DH-11C.1 / MECHANICS FIRST</span>
+      <h1>The Living Filing Cabinet</h1>
+      <p>Fixed-geometry prototype. Five real 3D drawer bodies. One shared camera. No generated artwork.</p>
+    </div>
+    <a class="return" href="/worlds/writing/">← Return to Writing</a>
+  </header>
+  <main id="workbench" class="main">
+    <section class="stage-section" aria-label="Interactive three-dimensional cabinet">
+      <div class="stage-head"><span>01 / GEOMETRY WORKBENCH</span><span class="stage-hint">Select a drawer or its handle</span></div>
+      <div class="perspective-stage" id="stage">
+        <div class="light-orb" aria-hidden="true"></div>
+        <div class="floor-grid" aria-hidden="true"></div>
+        <div class="cabinet-scale">
+          <div id="cabinet-model" class="cabinet-model" aria-label="Five-drawer cabinet made from shared three-dimensional geometry">
+            <div class="case-back" aria-hidden="true"></div>
+            <div class="case-left" aria-hidden="true"></div>
+            <div class="case-right" aria-hidden="true"></div>
+            <div class="case-top" aria-hidden="true"></div>
+            <div class="case-bottom" aria-hidden="true"></div>
+            <div class="case-face" aria-hidden="true"></div>
+            <div id="cabinet-slots"></div>
+          </div>
+        </div>
+        <div class="floor-shadow" aria-hidden="true"></div>
+      </div>
+      <div class="stage-foot">
+        <span><span class="legend-dot"></span> Geometry only, intentionally untextured</span>
+        <span>Perspective, tracks and drawer movement are mathematically consistent.</span>
+      </div>
+    </section>
+    <aside class="controls" aria-label="Cabinet test controls">
+      <div class="control-section">
+        <span class="eyebrow">02 / INTERACTIONS</span>
+        <h2>Open a drawer</h2>
+        <p>Each drawer is a six-sided object. When pulled out, its sides and bottom move with its front.</p>
+        <div id="drawer-controls" class="drawer-controls" role="group" aria-label="Drawer controls"></div>
+      </div>
+      <div class="control-section">
+        <span class="eyebrow">03 / PROVE THE MOVEMENT</span>
+        <label for="travel-slider">Drawer travel <output id="travel-value" for="travel-slider">0%</output></label>
+        <input id="travel-slider" type="range" min="0" max="100" value="0" step="1" aria-label="Drawer extension percentage" disabled>
+        <p class="help">Scrub the selected drawer from fully closed to fully open. All faces use the same depth coordinate.</p>
+      </div>
+      <div class="control-section">
+        <span class="eyebrow">04 / CHECK PERSPECTIVE</span>
+        <label for="yaw-slider">Camera yaw <output id="yaw-value" for="yaw-slider">−18°</output></label>
+        <input id="yaw-slider" type="range" min="-32" max="32" step="1" value="-18">
+        <label for="pitch-slider">Camera pitch <output id="pitch-value" for="pitch-slider">−9°</output></label>
+        <input id="pitch-slider" type="range" min="-20" max="15" step="1" value="-9">
+        <p class="help">Change the view angle. Unlike AI-generated image states, the drawer cannot acquire a different vanishing point.</p>
+      </div>
+      <div class="actions">
+        <button type="button" id="close-all">Close drawer</button>
+        <button type="button" id="reset" class="secondary">Reset camera</button>
+      </div>
+      <p class="announcement" id="status" role="status" aria-live="polite">Cabinet ready. Select any drawer.</p>
+      <p class="scope-note"><strong>Prototype boundary:</strong> No catalogue records, fictional stories or source media are loaded. The existing Writing island is unchanged.</p>
+    </aside>
+  </main>
+  <footer>DH-11C.1 / Geometry approval gate. Art treatment, folder interaction and persistence are separate later phases.</footer>
+</div>
+<noscript><p class="noscript">This mechanical demonstration requires JavaScript. The published Writing catalogue remains accessible via the Writing world.</p></noscript>
+</body>
+</html>
