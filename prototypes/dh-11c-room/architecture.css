@@ -1,0 +1,5 @@
+.comparison-links{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:15px 22px;background:#1d2b37;border:1px solid #637e81;border-top:0}
+.comparison-links a{font-size:12px;font-weight:750;line-height:1.35;padding:10px 13px;border:1px solid #8aa4a6;border-radius:8px;text-decoration:none;color:#d9ece7}
+.comparison-links a:hover{background:#355360}
+.comparison-links a:focus-visible{outline:3px solid #ffe0a6;outline-offset:3px}
+@media(max-width:640px){.comparison-links{padding:12px;display:grid;grid-template-columns:1fr}.comparison-links a{text-align:center}}

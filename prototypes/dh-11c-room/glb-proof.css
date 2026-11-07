@@ -1,0 +1,17 @@
+/* DH-11C.4A glTF geometry proof. No change to the existing room CSS. */
+.glb-proof-controls{background:linear-gradient(145deg,#263447,#172331);padding:23px clamp(17px,3vw,36px);border:1px solid #4c7785;border-top:0;display:grid;gap:13px;color:#e5f2ef}
+.glb-proof-controls p{font-size:13px;line-height:1.6;margin:0;color:#c5d8db}
+.proof-title{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.proof-title h2{font:700 clamp(21px,3vw,29px)/1.2 Georgia,serif;margin:6px 0}
+.proof-chip{font-size:10px;letter-spacing:.15em;color:#b2ead8;border:1px solid #72b8aa;padding:8px 12px;border-radius:50px}
+.glb-proof-controls .proof-info{background:#15414d;color:#d6ffec;border:1px solid #4ab0a3;border-radius:8px;padding:13px}
+.proof-travel{display:grid;gap:12px}
+.proof-travel label{font-weight:750;font-size:14px;display:flex;justify-content:space-between;gap:12px}
+.proof-travel output{font-variant-numeric:tabular-nums;color:#a5edcf}
+.proof-travel input[type="range"]{width:100%;accent-color:#88dec8}
+.proof-travel input:disabled{opacity:.5}
+.proof-snaps{display:flex;gap:9px;flex-wrap:wrap}
+.proof-snaps button{background:#30545b;border:1px solid #a0cdc3;border-radius:8px;color:#f6fffe;padding:11px 14px;font-weight:780;cursor:pointer}
+.proof-snaps button:not(:disabled):hover{background:#416f72}
+.proof-snaps button:disabled{opacity:.4;cursor:default}
+.glb-proof-controls .proof-boundary{font-size:12px;color:#a5b9c3}
