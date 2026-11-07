@@ -52,10 +52,10 @@ test('canonically rendered book detail is a real accessible modal, not a fake sc
   'id="published-book-subtitle"','id="published-book-author"',
   'id="published-book-publisher"','id="published-book-year"',
   'id="published-book-isbn"','id="published-book-links"',
-  'book-experience.css','book-experience.js?v=dh11c6b-finished-books-v1',
-  'finished-books.js?v=dh11c6b-finished-books-v1',
-  'room.js?v=dh11c6b-finished-books-v1',
-  'manuscript-personality-v2.js?v=dh11c6b-finished-books-v1',
+  'book-experience.css','book-experience.js?v=dh11c6b1-top-shelf-ui-v1',
+  'finished-books.js?v=dh11c6b1-top-shelf-ui-v1',
+  'room.js?v=dh11c6b1-top-shelf-ui-v1',
+  'manuscript-personality-v2.js?v=dh11c6b1-top-shelf-ui-v1',
   'data-exit-door-proof="true"','data-dark-window-preload="true"'
  ])assert.ok(html.includes(marker),marker);
  assert.ok(!html.includes('The Blood Laws'),'do not publish unpublished books as products');
@@ -79,7 +79,7 @@ test('book opening uses real 3D book pulls while only the three publications rem
  assert.ok(room.includes('pullBooks.push(bk)'));
  assert.ok(room.includes('bookHome=pullBooks.map(x=>x.position.z)'));
  const catalog=read('prototypes/dh-11c-room/manuscript-personality-v2.js');
- assert.ok(catalog.includes('const featuredIndex=FEATURED_POSITIONS.indexOf(id);'));
+ assert.ok(catalog.includes('finishedBooks.indexForMesh(Math.floor(id/20),id%20)'));
  assert.ok(catalog.includes('published?.spine||BOOK_TITLES[id]'));
  assert.ok(catalog.includes('published?.title||BOOK_TITLES[id]'));
  assert.equal(artist.FEATURED_TITLES.length,8,'historical V8 review contract retained');
@@ -91,7 +91,7 @@ test('published pages appear only on staging canonical Writing room, old preview
  assert.ok(!old.includes('published-book-dialog'));
  assert.ok(!old.includes('book-experience.js'));
  assert.ok(now.includes('data-finished-books="true"'));
- assert.equal(published.VERSION,'dh11c6b-finished-books-v1');
+ assert.equal(published.VERSION,'dh11c6b1-top-shelf-ui-v1');
  const state=JSON.parse(read('PROJECT_STATE.json'));
  assert.equal(state.dh11_3d_production.illustratedViewPipeline.finishedBookExperience.mainChanged,false);
  assert.equal(state.dh11_3d_production.illustratedViewPipeline.finishedBookExperience.stagingRoute,'/worlds/writing/');

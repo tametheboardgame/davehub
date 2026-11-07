@@ -163,8 +163,10 @@
     // In the visitor's finished-work shelf there are exactly three real
     // publications. The other bindings remain fictional decoration, not
     // suggested products or unreleased works for sale.
-    const featuredIndex=FEATURED_POSITIONS.indexOf(id);
-    const published=finishedBooks&&featuredIndex>=0
+    const featuredIndex=finishedBooks
+     ?finishedBooks.indexForMesh(Math.floor(id/20),id%20)
+     :FEATURED_POSITIONS.indexOf(id);
+    const published=finishedBooks&&featuredIndex!==null&&featuredIndex>=0
      ?finishedBooks.byIndex(featuredIndex):null;
     const titleLabel=finishedBooks?(published?.spine||BOOK_TITLES[id]):null;
     const panel=textureFrom(192,768,(ctx,w,h)=>paintSpine(ctx,w,h,id,

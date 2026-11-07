@@ -236,10 +236,12 @@ test('unmistakable gilded book spines are visible and clickable on both model re
   "if(!mesh.geometry.boundingBox)mesh.geometry.computeBoundingBox()",
   "const sy=Math.max(Math.abs(mesh.scale.y),.0001)",
   "const sz=Math.max(Math.abs(mesh.scale.z),.0001)",
-  "markFeaturedBook(bk,pullBooks.length)",
+  "markFeaturedBook(bk,publishedIndex)",
   "books.forEach((mesh,i)=>markFeaturedBook(mesh,i))",
   "pullBooks.forEach(featuredBookColour)"
  ])assert.ok(room.includes(fragment),'highlight missing or incompatible: '+fragment);
+ assert.ok(room.includes(':(featuredBook(shelf,b)?pullBooks.length:null)'),
+  'older review still selects the original eight books when publication mode is off');
  assert.doesNotMatch(room,/emissiveIntensity=\.36/,'old near-invisible glow must be removed');
  assert.doesNotMatch(room,/subtly highlighted/i,'instructions must explain the visible markings');
  // The same gilt has fixed world dimensions for both unit-cube GLB geometry
