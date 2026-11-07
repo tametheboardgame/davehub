@@ -27,15 +27,19 @@ body[data-finished-books="true"] .published-book-cover{
  box-shadow:0 16px 38px rgba(0,0,0,.33);
 }
 body[data-finished-books="true"] .published-book-cover[hidden]{display:none}
+/* Missing artwork is a SMALL title-jacket placeholder, never a full-height
+   simulated book cover. Its intrinsic dimensions must not dictate dialog height. */
 body[data-finished-books="true"] .published-book-cover-fallback{
- aspect-ratio:2/3;display:grid;place-content:center;padding:27px;text-align:center;
+ width:min(100%,260px);max-height:min(390px,48dvh);
+ aspect-ratio:2/3;flex:0 0 auto;align-self:flex-start;overflow:hidden;
+ display:grid;place-content:center;padding:clamp(12px,1.8vw,21px);text-align:center;
  background:linear-gradient(143deg,#334454 0%,#25223f 48%,#655074 100%);
  border:6px double rgba(228,184,133,.8);border-radius:6px;
  box-shadow:0 16px 38px rgba(0,0,0,.33);
 }
 body[data-finished-books="true"] .published-book-cover-fallback[hidden]{display:none}
 body[data-finished-books="true"] .published-book-cover-fallback span{
- display:block;font:700 clamp(20px,3vw,32px)/1.1 Georgia,serif;color:#f7dda6;
+ display:block;font:700 clamp(17px,2.2vw,25px)/1.15 Georgia,serif;color:#f7dda6;
 }
 body[data-finished-books="true"] .published-book-cover-fallback small{
  display:block;margin-top:18px;font:12px/1.4 Georgia,serif;letter-spacing:.12em;
@@ -120,8 +124,10 @@ body[data-finished-books="true"] .published-book-close:focus-visible{
  body[data-finished-books="true"] .published-book-dialog__art{
   align-items:center;
  }
- body[data-finished-books="true"] .published-book-cover,
- body[data-finished-books="true"] .published-book-cover-fallback{width:min(50vw,210px);max-height:270px}
+ body[data-finished-books="true"] .published-book-cover{width:min(50vw,210px);max-height:270px}
+ body[data-finished-books="true"] .published-book-cover-fallback{
+  width:min(50vw,200px);max-height:min(270px,44dvh);align-self:center;
+ }
  body[data-finished-books="true"] .published-book-dialog h2{font-size:29px}
  body[data-finished-books="true"] .published-book-description{font-size:16px}
  body[data-finished-books="true"] .published-book-facts{gap:12px}
