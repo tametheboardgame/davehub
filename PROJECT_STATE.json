@@ -1225,6 +1225,30 @@
         "olderPreviewsChanged": false,
         "productionChanged": false,
         "ownerVisualApproval": "pending"
+      },
+      "finishedBookExperience": {
+        "stage": "DH-11C.6B",
+        "status": "feature_branch_pending_CI_and_owner_review",
+        "stagingRoute": "/worlds/writing/",
+        "productBooks": [
+          "The Legend of the Stormrider",
+          "The Duck Bread Baker",
+          "Eleanor and the Mystery of the Missing Stones"
+        ],
+        "physicalFeaturedIndices": [
+          0,
+          1,
+          2
+        ],
+        "detailView": "accessible native modal with book cover, description, ISBN and HTTPS purchase links",
+        "unverifiedEleanorCover": "fallback jacket, no invented image",
+        "otherSpines": "fictional decorative only",
+        "nextTextWorkViewer": "DH-11C.6C",
+        "mainChanged": false,
+        "productionChanged": false,
+        "publishedCatalogueChanged": false,
+        "documentation": "docs/DH11C6B_FINISHED_BOOKS.md",
+        "ownerApproval": "pending"
       }
     }
   }
