@@ -816,21 +816,26 @@ const minimalCopy={
 function showObjectPrompt(id){
  if(!minimalUI)return;
  const obj=plan.find(id);
- if(!obj||id==='door'){objectPrompt.hidden=true;return;}
+ if(!obj||id==='door'){
+  objectPrompt.hidden=true;delete document.body.dataset.roomPrompt;return;
+ }
  promptTitle.textContent=obj.label;
  promptCopy.textContent=minimalCopy[id]||'Discover what is hidden here.';
  objectPrompt.hidden=false;
+ document.body.dataset.roomPrompt='visible';
  tray.hidden=true;
 }
 if(minimalUI){
  promptOpen.addEventListener('click',()=>{
   if(!state.focus||state.focus==='door')return;
   objectPrompt.hidden=true;
+  delete document.body.dataset.roomPrompt;
   tray.hidden=false;
   fullClose.focus({preventScroll:true});
  });
  promptClose.addEventListener('click',()=>{
   objectPrompt.hidden=true;
+  delete document.body.dataset.roomPrompt;
   homeButton.focus({preventScroll:true});
  });
  fullClose.addEventListener('click',()=>{
@@ -864,7 +869,10 @@ function focus(id){
 }
 function home(){
  state=plan.next(state,{type:'home'});
- if(minimalUI)delete document.body.dataset.roomFocus;
+ if(minimalUI){
+  delete document.body.dataset.roomFocus;
+  delete document.body.dataset.roomPrompt;
+ }
  desiredPosition.set(...plan.HOME.position);desiredTarget.set(...plan.HOME.target);
  cameraLabel.textContent='OVERVIEW CAMERA';homeButton.disabled=true;
  placeName.textContent='The Manuscript Hoard';placeDescription.textContent='An actual 3D study. Explore its objects.';
