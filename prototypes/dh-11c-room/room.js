@@ -20,6 +20,8 @@ const fallback=document.getElementById('scene-fallback');
 // DH-11C.6A: visitor interface only, opt-in on the canonical Writing world.
 // Previews retain their existing inspector and all model/interaction machinery.
 const minimalUI=document.body.dataset.minimalUi==='true';
+// Canonical Writing room starts dark outside its window until the full scene texture is ready.
+const darkWindowPreload=minimalUI&&document.body.dataset.darkWindowPreload==='true';
 const objectPrompt=document.getElementById('object-prompt');
 const promptTitle=document.getElementById('object-prompt-title');
 const promptCopy=document.getElementById('object-prompt-copy');
@@ -615,9 +617,13 @@ const islandGroups=[];
 function makeWindow(){
  const g=group(scene,.17,3.65,-5.31);
  if(!shellProof)box(g,3.4,2.75,.06,mats.edge,0,0,-.08);
- box(g,3.13,2.47,.04,mats.sky,0,0,shellProof?-.54:-.032);
- // Islands are low-poly forms against a sky plane, never photographs.
- for(let i=0;i<3;i++){
+ const initialSky=darkWindowPreload
+  ?new THREE.MeshBasicMaterial({color:'#111827',side:THREE.DoubleSide})
+  :mats.sky;
+ box(g,3.13,2.47,.04,initialSky,0,0,shellProof?-.54:-.032);
+ // Suppress the temporary low-poly islands in the canonical Writing room.
+ // They must not appear during GLB loading or while the image is downloading.
+ if(!darkWindowPreload)for(let i=0;i<3;i++){
   const cx=[-.9,.36,1.04][i],cy=[.1,.55,-.27][i],size=[.46,.56,.33][i];
   const island=group(g,cx,cy,shellProof?-.19:.035);
   const cone=new THREE.Mesh(new THREE.ConeGeometry(size*.8,size*.63,7),mats.island);
@@ -1335,6 +1341,14 @@ if(furnitureModelProof){
     const keys=Array.from({length:TYPE_KEY_COUNT},(_,i)=>get('typewriter_key_'+Math.floor(i/8)+'_'+i%8));
     const key=keys[12],typeSheet=get('typewriter_paper'),typeRule=get('typewriter_paper_rule'),platen=get('typewriter_platen'),hinge=get('door_leaf_hinge');
     const islands=Array.from({length:3},(_,i)=>get('window_island_'+i));
+    if(darkWindowPreload){
+     // The GLB is still off-scene: make it safe BEFORE it can be rendered.
+     // A dark, unlit sky fills the opening without the obsolete island shapes.
+     get('window_sky').material=new THREE.MeshBasicMaterial({
+      color:'#111827',side:THREE.DoubleSide
+     });
+     islands.forEach(island=>{island.visible=false;});
+    }
     if(authoredDetailProof){
      // Keep the canonical GLB for reversibility, but hide the distracting cup.
      const cup=content.getObjectByName('desk_cup');
@@ -1343,10 +1357,15 @@ if(furnitureModelProof){
      try{
       if(!window.DH11WindowIllustration)throw Error('Missing layered window artwork system');
       scenicWindow=window.DH11WindowIllustration.mount({
-       THREE,root:windowRig,url:new URL('../../../assets/homepage/floating-islands-background.png',document.baseURI).href
+       THREE,root:windowRig,url:new URL('../../../assets/homepage/floating-islands-background.png',document.baseURI).href,
+       hideLegacyWhileLoading:darkWindowPreload
       });
       scenicWindow.setVisible(illustratedRuntime?.mode==='painterly');
-     }catch(error){console.warn('Illustrated window unavailable; original islands retained',error);}
+     }catch(error){
+      console.warn(darkWindowPreload
+       ?'Illustrated window unavailable; dark window retained'
+       :'Illustrated window unavailable; original islands retained',error);
+     }
     }
     // Attach the bright bindings and gold bands BEFORE capture() traverses
     // the scene. Otherwise their meshes are absent from the raycast targets.

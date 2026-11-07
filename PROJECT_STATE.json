@@ -1198,7 +1198,7 @@
       },
       "emptySceneryReturn": {
         "stage": "DH-11C.6A.1",
-        "status": "feature_branch_pending_CI_and_Cloudflare",
+        "status": "deployed_staging_owner_approved",
         "stagingRoute": "/worlds/writing/",
         "marker": "DH-11C.6A.1",
         "cacheVersion": "dh11c6a1-background-return-v1",
@@ -1209,6 +1209,21 @@
         "productionChanged": false,
         "publishedCatalogueChanged": false,
         "documentation": "docs/DH11C6A1_BACKGROUND_CLICK.md",
+        "ownerVisualApproval": "pending"
+      },
+      "darkWindowPreload": {
+        "milestone": "DH-11C.6A.2",
+        "status": "feature_branch_awaiting_CI_and_visual_review",
+        "stagingRoute": "/worlds/writing/",
+        "flag": "data-dark-window-preload=true",
+        "darkColour": "#111827",
+        "source": "prototypes/dh-11c-room/window-illustration-v2.js",
+        "documentation": "docs/DH11C6A2_DARK_WINDOW_PRELOAD.md",
+        "onLoading": "dark sky, no old islands",
+        "onLoaded": "illustrated four-pane scene, old geometry suppressed",
+        "onError": "dark sky, no old islands",
+        "olderPreviewsChanged": false,
+        "productionChanged": false,
         "ownerVisualApproval": "pending"
       }
     }

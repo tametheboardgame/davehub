@@ -10,10 +10,12 @@ function render(source){
   if(n!==1)throw Error('Minimal Writing interface anchor changed ('+n+'): '+from.slice(0,105));
   html=html.replace(from,to);
  }
- put('data-writing-world="true">','data-writing-world="true" data-minimal-ui="true">');
+ put('data-writing-world="true">','data-writing-world="true" data-minimal-ui="true" data-dark-window-preload="true">');
  // Canonical page only: refresh the room module after adding background-click navigation.
  // Old isolated V8 and art previews keep their own URLs and modes.
- put('room.js?v=dh11c5d3i-door-home-exit-v1','room.js?v=dh11c6a1-background-return-v1');
+ put('room.js?v=dh11c5d3i-door-home-exit-v1','room.js?v=dh11c6a2-dark-window-v1');
+ put('window-illustration-v2.js?v=dh11c5d3i-door-home-exit-v1',
+  'window-illustration-v2.js?v=dh11c6a2-dark-window-v1');
  put('<a class="brand" href="/">Dave<span>Hub</span></a>',
   '<a class="brand" href="/" aria-label="DaveHub home">'+
   '<img src="/assets/branding/davehub-logo-faithful.svg" width="160" height="50" alt="DaveHub"></a>');
@@ -22,7 +24,8 @@ function render(source){
  put('Explore objects','Objects');
  put('</head>','<link rel="stylesheet" href="./minimal-immersive.css">\n'+
   '<meta name="davehub-ui-stage" content="'+MARKER+'">\n'+
-  '<meta name="davehub-navigation-stage" content="DH-11C.6A.1">\n</head>');
+  '<meta name="davehub-navigation-stage" content="DH-11C.6A.1">\n'+
+  '<meta name="davehub-window-stage" content="DH-11C.6A.2">\n</head>');
  const prompt=[
   '<section class="object-prompt" id="object-prompt" aria-label="Selected room object" hidden>',
   ' <div class="object-prompt__copy">',
