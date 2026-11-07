@@ -1,6 +1,10 @@
 # DaveHub development roadmap
 
-**Updated:** 7 November 2026. **Current stage:** DH-11C.6A.2 dark window preload, after approved click-to-overview navigation. Previous stage: DH-11C.6A.1 click-empty-scene to leave an object view, building on the accepted minimal Writing interface, after accepting the 3D Manuscript Hoard core and the direct Writing island route. A separate review version preserves the original room and earlier art passes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+**Updated:** 7 November 2026. **Current stage:** DH-11C.6B finished-book product pages, after approved DH-11C.6A.2 dark window preload., after approved click-to-overview navigation. Previous stage: DH-11C.6A.1 click-empty-scene to leave an object view, building on the accepted minimal Writing interface, after accepting the 3D Manuscript Hoard core and the direct Writing island route. A separate review version preserves the original room and earlier art passes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+
+## DH-11C.6B — Finished bookcase: pull a book, explore its published edition
+
+The Writing Room's visual and interaction core is merged separately into main. The next staged experience connects three actual published books to the real 3D pull-out shelf: **The Legend of the Stormrider**, **The Duck Bread Baker**, and **Eleanor and the Mystery of the Missing Stones**. A pulled volume opens an accessible edition page with genuine cover where verified, description, year, ISBN, publisher and retailer/purchase links. Other manuscript/book titles remain decorative; no unpublished texts are accidentally sold. Follow-up **DH-11C.6C** will design a distinct text/work viewer for desk, typewriter and filing cabinet content, once sharing is approved. [Scope and review gate](DH11C6B_FINISHED_BOOKS.md).
 
 ## DH-11C.6A.2 — Dark window until the illustrated islands are ready
 
