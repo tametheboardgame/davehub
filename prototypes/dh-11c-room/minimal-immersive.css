@@ -132,6 +132,57 @@ body[data-minimal-ui="true"] :is(.object-prompt button,.object-full-close,.objec
  body[data-minimal-ui="true"] .object-prompt{bottom:calc(max(9px,env(safe-area-inset-bottom)) + 44px)}
  body[data-minimal-ui="true"] .interaction-tray{max-height:70dvh;bottom:52px}
 }
+/* DH-11C.6B.1: the scene is the subject. A selected object never
+   shares the central screen area with its own contextual controls.
+   The furniture is centred by its camera, so side-dock prompts/trays. */
+@media(min-width:900px) and (min-height:560px){
+ body[data-minimal-ui="true"][data-room-focus] .object-prompt{
+  top:52%;bottom:auto;left:auto;
+  right:max(18px,env(safe-area-inset-right));
+  transform:translateY(-50%);
+  width:clamp(220px,24vw,340px);
+  flex-direction:column;align-items:stretch;
+  gap:11px;padding:16px 17px;
+ }
+ body[data-minimal-ui="true"][data-room-focus="bookcase"] .object-prompt,
+ body[data-minimal-ui="true"][data-room-focus="window"] .object-prompt{
+  left:max(18px,env(safe-area-inset-left));right:auto;
+ }
+ body[data-minimal-ui="true"][data-room-focus] .object-prompt__actions{
+  justify-content:flex-end;gap:8px;
+ }
+ /* The deliberate deeper inspector also docks clear of the active object. */
+ body[data-minimal-ui="true"][data-room-focus] .interaction-tray{
+  top:50%;bottom:auto;left:auto;
+  right:max(18px,env(safe-area-inset-right));
+  transform:translateY(-50%);
+  width:min(375px,calc(36vw - 8px));
+  max-height:calc(100dvh - 125px);
+ }
+ body[data-minimal-ui="true"][data-room-focus="bookcase"] .interaction-tray,
+ body[data-minimal-ui="true"][data-room-focus="window"] .interaction-tray{
+  left:max(18px,env(safe-area-inset-left));right:auto;
+ }
+}
+/* Narrow/touch screens lack an empty side. Reserve real vertical space
+   beneath the 3D canvas for the prompt rather than covering the artwork. */
+@media(max-width:899px), (max-height:559px){
+ body[data-minimal-ui="true"][data-room-focus] #scene-frame{
+  top:0;bottom:116px;height:calc(100dvh - 116px);
+ }
+ body[data-minimal-ui="true"][data-room-focus] .object-prompt{
+  top:auto;bottom:max(8px,env(safe-area-inset-bottom));
+  left:50%;right:auto;transform:translateX(-50%);
+  width:min(570px,calc(100vw - 22px));
+ }
+ body[data-minimal-ui="true"][data-room-focus] .control-strip,
+ body[data-minimal-ui="true"][data-room-focus] .object-menu{
+  bottom:calc(116px + max(8px,env(safe-area-inset-bottom)));
+ }
+ body[data-minimal-ui="true"][data-room-focus] .interaction-tray{
+  bottom:calc(116px + max(45px,env(safe-area-inset-bottom)));
+ }
+}
 @media(prefers-reduced-motion:reduce){
  body[data-minimal-ui="true"] .object-prompt,
  body[data-minimal-ui="true"] .interaction-tray{transition:none}
