@@ -1164,7 +1164,7 @@
       },
       "writingIslandDirectRoom": {
         "milestone": "DH-11C.5D.3J",
-        "status": "feature_branch_pending_CI_and_clickthrough_review",
+        "status": "deployed_staging_owner_accepted_as_core_before_6A",
         "stagingRoute": "/worlds/writing/",
         "sceneBase": "/worlds/writing/scene/",
         "assetRoot": "/worlds/writing/room/",
@@ -1177,6 +1177,24 @@
         "publicCatalogueChanged": false,
         "productionChanged": false,
         "ownerReview": "pending"
+      },
+      "minimalImmersiveUI": {
+        "stage": "DH-11C.6A",
+        "status": "feature_branch_pending_CI_and_owner_visual_review",
+        "stagingRoute": "/worlds/writing/",
+        "renderer": "scripts/render-dh11c6a-minimal-room.cjs",
+        "stylesheet": "prototypes/dh-11c-room/minimal-immersive.css",
+        "homepageLogo": "/assets/branding/davehub-logo-faithful.svg",
+        "homeLinkLabel": "Back",
+        "persistentInspector": false,
+        "focusPrompt": true,
+        "expandFunction": "existing object controls until bespoke 6B work",
+        "doorTwoClickExitPreserved": true,
+        "previousPreviewsIsolated": true,
+        "publishedCatalogueChanged": false,
+        "productionChanged": false,
+        "documentation": "docs/DH11C6A_MINIMAL_IMMERSIVE_UI.md",
+        "ownerApproval": "pending"
       }
     }
   }
