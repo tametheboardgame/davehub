@@ -1252,7 +1252,7 @@
       },
       "bookcaseLayoutPolish": {
         "stage": "DH-11C.6B.1",
-        "status": "feature_branch_pending_CI_and_owner_visual_review",
+        "status": "deployed_staging_owner_requested_6B2_correction",
         "stagingRoute": "/worlds/writing/",
         "publishedBookPositions": [
           "book_3_03",
@@ -1269,6 +1269,23 @@
         "catalogueChanged": false,
         "documentation": "docs/DH11C6B1_LAYOUT_POLISH.md",
         "ownerApproval": "pending"
+      },
+      "floatingPromptAndCompactJacket": {
+        "stage": "DH-11C.6B.2",
+        "status": "feature_branch_pending_CI_and_owner_visual_review",
+        "stagingRoute": "/worlds/writing/",
+        "fullHeight3D": true,
+        "noReservedFooter": true,
+        "promptPlacement": "beside selected object within unaltered 3D scene; compact corner for narrow viewports",
+        "desktopBreakpoint": "640 CSS px, independent of viewport height",
+        "eleanorFallback": "max 260px wide x 390px tall (48dvh), mobile max 200px x 270px",
+        "otherCoversChanged": false,
+        "physicalBookPositionsChanged": false,
+        "mainChanged": false,
+        "productionChanged": false,
+        "catalogueChanged": false,
+        "documentation": "docs/DH11C6B2_FLOATING_PROMPTS.md",
+        "ownerVisualApproval": "pending"
       }
     }
   }
