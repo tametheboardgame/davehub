@@ -1,7 +1,7 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path');
 const prior=require('./render-dh11c6a-minimal-room.cjs');
-const VERSION='dh11c6b-finished-books-v1';
+const VERSION='dh11c6b1-top-shelf-ui-v1';
 const MARKER='DH-11C.6B';
 function render(source){
  let html=prior.render(source);
@@ -19,6 +19,11 @@ function render(source){
  const roomScript='<script type="module" src="../room/room.js?v='+VERSION+'"></script>';
  put(roomScript,'<script defer src="../room/finished-books.js?v='+VERSION+'"></script>\n'+
   '<script defer src="../room/book-experience.js?v='+VERSION+'"></script>\n'+roomScript);
+ put('href="./minimal-immersive.css"','href="./minimal-immersive.css?v='+VERSION+'"');
+ put('href="./book-experience.css"','href="./book-experience.css?v='+VERSION+'"');
+ put('<meta name="davehub-book-stage" content="'+MARKER+'">',
+  '<meta name="davehub-book-stage" content="'+MARKER+'">'+
+  '<meta name="davehub-layout-stage" content="DH-11C.6B.1">');
  const modal=[
   '<dialog id="published-book-dialog" class="published-book-dialog" aria-labelledby="published-book-title" aria-describedby="published-book-description">',
   '<button id="published-book-close" class="published-book-close" type="button" aria-label="Close book details">×</button>',
