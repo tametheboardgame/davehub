@@ -1,0 +1,138 @@
+/* DH-11C.6A: The real room is the interface.
+   Canonical Writing world only. Earlier 3D review routes remain unchanged. */
+body[data-writing-world="true"][data-minimal-ui="true"] .topbar{
+ min-height:54px;
+ padding:calc(6px + env(safe-area-inset-top)) clamp(12px,2vw,22px) 6px;
+ background:linear-gradient(180deg,rgba(16,13,27,.88),rgba(16,13,27,.34));
+ border-bottom:1px solid rgba(225,181,138,.17);
+ box-shadow:none;
+}
+body[data-minimal-ui="true"] .brand{
+ display:inline-flex;align-items:center;justify-content:flex-start;
+ width:clamp(116px,10vw,158px);min-width:106px;
+ line-height:0;text-decoration:none;
+}
+body[data-minimal-ui="true"] .brand img{
+ display:block;width:100%;height:auto;max-height:49px;object-fit:contain;object-position:left center;
+ filter:drop-shadow(0 2px 6px rgba(0,0,0,.18));
+}
+body[data-minimal-ui="true"] .project-id strong{
+ font-size:clamp(10px,1vw,13px);letter-spacing:.095em;
+}
+body[data-minimal-ui="true"] .project-id .tag{
+ font-size:9px;letter-spacing:.09em;opacity:.68;
+}
+body[data-minimal-ui="true"] .back-to-islands{
+ min-width:70px;text-align:center;padding:8px 11px;
+ border-radius:999px;border-color:rgba(235,190,151,.44);
+ background:rgba(19,18,29,.42);font-size:clamp(12px,1.2vw,14px);
+ box-shadow:none;
+}
+body[data-minimal-ui="true"] .frame-topline,
+body[data-minimal-ui="true"] .reticle{
+ display:none!important;
+}
+body[data-minimal-ui="true"] .control-strip{
+ bottom:max(12px,env(safe-area-inset-bottom));
+ right:max(12px,env(safe-area-inset-right));
+}
+body[data-minimal-ui="true"] .home-button{
+ min-height:42px;padding:8px 14px;border-radius:999px;
+ background:rgba(23,19,31,.72);border-color:rgba(239,200,154,.55);
+ box-shadow:0 3px 14px rgba(0,0,0,.22);font-size:12px;
+}
+body[data-minimal-ui="true"] .home-button:disabled{display:none}
+body[data-minimal-ui="true"] .object-menu{
+ left:max(12px,env(safe-area-inset-left));bottom:max(12px,env(safe-area-inset-bottom));
+ width:auto;max-width:min(320px,calc(100vw - 28px));
+ border:1px solid rgba(239,200,154,.55);border-radius:999px;
+ background:rgba(23,19,31,.72);box-shadow:0 3px 14px rgba(0,0,0,.22);
+}
+body[data-minimal-ui="true"] .object-menu[open]{
+ width:min(315px,calc(100vw - 28px));border-radius:14px;
+ background:rgba(23,19,31,.94);
+}
+body[data-minimal-ui="true"] .object-menu>summary{
+ min-height:42px;padding:9px 14px;display:flex;align-items:center;
+ font-weight:650;font-size:12px;
+}
+body[data-minimal-ui="true"] .object-menu .scene-nav{
+ max-height:min(65dvh,520px);overflow:auto;
+}
+body[data-minimal-ui="true"] .object-prompt{
+ position:fixed;z-index:24;
+ left:50%;bottom:calc(max(12px,env(safe-area-inset-bottom)) + 54px);
+ transform:translateX(-50%);
+ width:min(420px,calc(100vw - 32px));
+ display:flex;align-items:center;justify-content:space-between;gap:12px;
+ border:1px solid rgba(239,200,154,.64);border-radius:16px;
+ padding:12px 13px 12px 17px;color:#f9e8d6;
+ background:rgba(29,24,37,.88);
+ box-shadow:0 10px 28px rgba(0,0,0,.32);
+ -webkit-backdrop-filter:blur(11px);backdrop-filter:blur(11px);
+}
+body[data-minimal-ui="true"] .object-prompt[hidden]{display:none}
+body[data-minimal-ui="true"] .object-prompt__copy{min-width:0;flex:1}
+body[data-minimal-ui="true"] .object-prompt h2{
+ margin:0 0 3px;font-size:clamp(16px,1.2vw,19px);
+ line-height:1.2;font-weight:750;letter-spacing:.02em;
+}
+body[data-minimal-ui="true"] .object-prompt p{
+ margin:0;font-size:11px;line-height:1.35;
+ color:rgba(251,236,217,.77);
+}
+body[data-minimal-ui="true"] .object-prompt__actions{
+ display:flex;flex:none;align-items:center;gap:5px;
+}
+body[data-minimal-ui="true"] .object-prompt__open{
+ border:1px solid #edc38e;border-radius:10px;
+ padding:9px 11px;min-height:38px;
+ color:#281d2a;background:#f5ce93;
+ font:inherit;font-size:11px;font-weight:750;cursor:pointer;white-space:nowrap;
+}
+body[data-minimal-ui="true"] .object-prompt__dismiss,
+body[data-minimal-ui="true"] .object-full-close{
+ display:inline-flex;align-items:center;justify-content:center;
+ width:34px;height:34px;min-height:34px;padding:0;
+ border:1px solid rgba(239,200,154,.35);border-radius:50%;
+ background:rgba(25,22,33,.62);color:#f4ddc1;
+ font:inherit;font-size:22px;line-height:1;cursor:pointer;
+}
+body[data-minimal-ui="true"] .interaction-tray{
+ z-index:26;width:min(440px,calc(100vw - 28px));
+ max-height:min(69dvh,590px);
+ bottom:calc(max(12px,env(safe-area-inset-bottom)) + 50px);
+ left:max(14px,env(safe-area-inset-left));
+ padding:18px 16px 15px;
+ background:rgba(28,24,36,.96);
+ border:1px solid rgba(239,200,154,.75);border-radius:17px;
+ box-shadow:0 20px 60px rgba(0,0,0,.47);
+}
+body[data-minimal-ui="true"] .interaction-tray[hidden]{display:none}
+body[data-minimal-ui="true"] .interaction-tray .interaction-intro{padding-right:35px}
+body[data-minimal-ui="true"] .object-full-close{
+ position:absolute;right:13px;top:13px;
+}
+body[data-minimal-ui="true"] :is(.object-prompt button,.object-full-close,.object-menu>summary,.home-button):focus-visible{
+ outline:3px solid #ffda9c;outline-offset:3px;
+}
+@media(max-width:680px){
+ body[data-minimal-ui="true"] .brand{width:clamp(94px,23vw,126px);min-width:94px}
+ body[data-minimal-ui="true"] .project-id strong{font-size:9px;letter-spacing:.025em}
+ body[data-minimal-ui="true"] .project-id .tag{display:none}
+ body[data-minimal-ui="true"] .topbar{gap:5px;min-height:54px}
+ body[data-minimal-ui="true"] .back-to-islands{min-width:60px;padding:8px;font-size:11px}
+ body[data-minimal-ui="true"] .object-prompt{padding:11px 10px 11px 12px;gap:8px}
+ body[data-minimal-ui="true"] .object-prompt h2{font-size:15px}
+ body[data-minimal-ui="true"] .object-prompt p{font-size:10px}
+ body[data-minimal-ui="true"] .object-prompt__open{font-size:10px;padding:8px}
+ body[data-minimal-ui="true"] .interaction-tray{max-height:70dvh}
+}
+@media(max-height:520px){
+ body[data-minimal-ui="true"] .object-prompt{bottom:calc(max(9px,env(safe-area-inset-bottom)) + 44px)}
+ body[data-minimal-ui="true"] .interaction-tray{max-height:70dvh;bottom:52px}
+}
+@media(prefers-reduced-motion:reduce){
+ body[data-minimal-ui="true"] .object-prompt,
+ body[data-minimal-ui="true"] .interaction-tray{transition:none}
+}
