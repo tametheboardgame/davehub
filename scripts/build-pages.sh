@@ -63,6 +63,8 @@ node scripts/render-content.cjs content/examples/fictional.json dist/previews/dh
 # Publicly visible, LAYOUT-ONLY review of three existing public project names.
 # It never includes unapproved editorial text, outgoing links or private drafts.
 node scripts/render-review-layout.cjs dist/previews/dh-08c
+# Owner-approved 3D Writing Room only. Other staging worlds and editorial work stay out.
+node scripts/build-writing-room-release.cjs dist
 # Each game is independently built from its pinned upstream commit. Static
 # output is deployed under the same DaveHub origin, not embedded via iframe.
 # Fail the entire build if either pinned game cannot be built and verified.
@@ -96,6 +98,15 @@ check('dist/worlds/games/index.html',[
 ],['data-davehub-inline="staging"','Nothing has landed here yet']);
 for(const slug of ['unicorn-valley','stephen-martin-project','tame-the-board-game']){
  check('dist/creations/'+slug+'/index.html',['data-davehub-inline="worlds"','class="primary-launch"'],['DESIGN REVIEW ONLY']);
+}
+check('dist/worlds/writing/index.html',[
+ 'data-writing-world="true"','data-minimal-ui="true"',
+ 'data-dark-window-preload="true"','data-exit-door-proof="true"',
+ 'DH-11C.6A.2','<base href="/worlds/writing/scene/">'
+],['data-scene="manuscript-hoard"','room-stage-image']);
+for(const model of ['furniture-source.glb','cabinet-blender-verified.glb','room-shell-blender-verified.glb']){
+ const file='dist/worlds/writing/room/models/'+model;
+ if(fs.statSync(file).size<2000)throw Error('Missing approved model '+file);
 }
 check('dist/previews/dh-08c/index.html',[
  'data-davehub-inline="worlds"','Unicorn Valley','The Stephen Martin Project'
