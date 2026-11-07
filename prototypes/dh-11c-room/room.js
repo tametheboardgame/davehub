@@ -567,8 +567,11 @@ function makeBookcase(){
    const bookMat=furnitureModelProof?mats['bookBinding'+materialIndex]:matte(colours[materialIndex]);
    const bk=box(g,.111,height,.43,bookMat,x,y,.44);
    bk.name='book_'+shelf+'_'+String(b).padStart(2,'0');
-   if(featuredBook(shelf,b)){
-    markFeaturedBook(bk,pullBooks.length);
+   const publishedIndex=finishedBooksEnabled
+    ?finishedBooks.indexForMesh(shelf,b)
+    :(featuredBook(shelf,b)?pullBooks.length:null);
+   if(publishedIndex!==null){
+    markFeaturedBook(bk,publishedIndex);
     pullBooks.push(bk);
    }
    // Art lab recolours the actual mesh material, including selected books.
@@ -840,6 +843,9 @@ function focus(id){
  if(!plan.find(id))return;
  state=plan.next(state,{type:'focus',id});
  const obj=plan.find(id);
+ // Side-dock the visitor's prompt and expanded object controls away from
+ // the selected furniture, rather than obstructing pull-out books/drawers.
+ if(minimalUI)document.body.dataset.roomFocus=id;
  desiredPosition.set(...obj.camera);
  desiredTarget.set(...obj.lookAt);
  homeButton.disabled=false;
@@ -855,6 +861,7 @@ function focus(id){
 }
 function home(){
  state=plan.next(state,{type:'home'});
+ if(minimalUI)delete document.body.dataset.roomFocus;
  desiredPosition.set(...plan.HOME.position);desiredTarget.set(...plan.HOME.target);
  cameraLabel.textContent='OVERVIEW CAMERA';homeButton.disabled=true;
  placeName.textContent='The Manuscript Hoard';placeDescription.textContent='An actual 3D study. Explore its objects.';
@@ -867,7 +874,10 @@ const drawerNames=['Finished','Drafts','Oddities','Fragments','Field Notes'];
 function bookDescription(index){
  const shelf=Math.floor(index/2),slot=(10-shelf)%10+(index%2)*10;
  const names=personalityProof?(window.DH11ManuscriptPersonality?.AUTHORED_BOOK_TITLES||window.DH11ManuscriptPersonality?.BOOK_TITLES):null;
- const title=finishedBooksEnabled?finishedBooks.byIndex(index)?.title:names?.[shelf*20+slot];
+ const published=finishedBooksEnabled?finishedBooks.byIndex(index):null;
+ const physicalSlot=published?finishedBooks.TOP_SHELF_SLOTS[index]:slot;
+ const title=published?.title||names?.[shelf*20+slot];
+ if(published)return '“'+title+'” (top shelf, book '+(physicalSlot+1)+')';
  return title?'“'+title+'” (shelf '+(shelf+1)+', book '+(slot+1)+')':
   'Shelf '+(shelf+1)+', book '+(slot+1);
 }
@@ -1077,7 +1087,9 @@ function pickFromEvent(event){
  return {id,drawerIndex:id==='cabinet'?drawerIndexForMesh(mesh,cabinetDrawers):null,
   paperIndex:id==='desk'?(Number.isInteger(mesh.userData.paperIndex)?mesh.userData.paperIndex:paperIndexForMesh(mesh.name)):null,
   lampPart:id==='desk'?lampPartForMesh(mesh.name):null,
-  bookIndex:id==='bookcase'?(Number.isInteger(mesh.userData.featuredBookIndex)?mesh.userData.featuredBookIndex:featuredBookIndexForMesh(mesh.name)):null,
+  bookIndex:id==='bookcase'?(Number.isInteger(mesh.userData.featuredBookIndex)
+   ?mesh.userData.featuredBookIndex
+   :(finishedBooksEnabled?null:featuredBookIndexForMesh(mesh.name))):null,
   spineTitle:personalityProof&&id==='bookcase'?mesh.userData.manuscriptJokeTitle||null:null,
   binPaperIndex:id==='bin'?(Number.isInteger(mesh.userData.binPaperIndex)?mesh.userData.binPaperIndex:binPaperIndexForMesh(mesh.name)):null,
   keyIndex:id==='typewriter'?typedKeyIndex(mesh.name):null};
@@ -1349,8 +1361,11 @@ if(furnitureModelProof){
     const crumples=Array.from({length:BIN_PAPER_COUNT},(_,i)=>get('bin_paper_'+i));
     crumples.forEach((mesh,i)=>{mesh.userData.binPaperIndex=i;});
     const books=[];
-    for(let shelf=0;shelf<4;shelf++)for(let b=0;b<20;b++)
-     if(featuredBook(shelf,b))books.push(get('book_'+shelf+'_'+String(b).padStart(2,'0')));
+    for(let shelf=0;shelf<4;shelf++)for(let b=0;b<20;b++){
+     const isPublished=finishedBooksEnabled&&finishedBooks.indexForMesh(shelf,b)!==null;
+     if(isPublished||(!finishedBooksEnabled&&featuredBook(shelf,b)))
+      books.push(get('book_'+shelf+'_'+String(b).padStart(2,'0')));
+    }
     // GLB lamp must preserve the same five named click targets as fallback.
     for(const part of ['shade','cap','stem','bulb','base'])get('desk_lamp_'+part);
     const glbBulb=get('desk_lamp_bulb');
