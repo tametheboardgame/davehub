@@ -72,12 +72,12 @@ test('wide book-detail pages reduce vertical stacking and scroll only when neede
  assert.ok(css.includes('.published-book-facts'));
  assert.ok(css.includes('.book-buy-link--primary'));
 });
-test('compact prompts dock away from objects, never obscure the central bookcase',()=>{
+test('compact prompts side-dock beside the inspected object at all desktop heights',()=>{
  const css=get('prototypes/dh-11c-room/minimal-immersive.css');
  const room=get('prototypes/dh-11c-room/room.js');
- assert.ok(css.includes('@media(min-width:900px) and (min-height:560px)'));
+ assert.ok(css.includes('@media(min-width:640px){'));
  assert.ok(css.includes('[data-room-focus="bookcase"] .object-prompt'));
- assert.ok(css.includes('left:max(18px,env(safe-area-inset-left));right:auto;'));
+ assert.ok(css.includes('left:max(14px,env(safe-area-inset-left));right:auto;'));
  assert.ok(css.includes('body[data-minimal-ui="true"][data-room-focus] .interaction-tray'));
  assert.ok(css.includes('[data-room-focus="bookcase"] .interaction-tray'));
  assert.ok(css.includes('transform:translateY(-50%)'));
@@ -85,29 +85,30 @@ test('compact prompts dock away from objects, never obscure the central bookcase
  assert.ok(room.includes("if(id==='door')delete document.body.dataset.roomFocus;"));
  assert.ok(room.includes('delete document.body.dataset.roomFocus;'));
 });
-test('on narrow screens the visible prompt gets space below the 3D viewport; dismissal restores scene',()=>{
+test('small screens keep the 3D viewport whole, using a floating corner prompt',()=>{
  const css=get('prototypes/dh-11c-room/minimal-immersive.css');
  const room=get('prototypes/dh-11c-room/room.js');
- assert.ok(css.includes('@media(max-width:899px), (max-height:559px)'));
- assert.ok(css.includes('[data-room-prompt="visible"] #scene-frame'));
- assert.ok(css.includes('height:calc(100dvh - 116px)'));
- assert.ok(css.includes('[data-room-prompt="visible"] .control-strip'));
+ assert.ok(css.includes('@media(max-width:639px){'));
+ assert.ok(css.includes('top:calc(86px + env(safe-area-inset-top));bottom:auto;'));
+ assert.ok(css.includes('width:min(220px,49vw)'));
+ assert.ok(!css.includes('[data-room-prompt="visible"] #scene-frame'));
+ assert.ok(!css.includes('height:calc(100dvh - 116px)'));
+ assert.ok(!css.includes('bottom:calc(116px + max('));
  assert.ok(room.includes("document.body.dataset.roomPrompt='visible';"));
  assert.ok(room.includes('delete document.body.dataset.roomPrompt;'));
- assert.ok(css.includes('[data-room-prompt="visible"] .object-prompt'));
 });
 test('canonical-only cache bust does not change earlier 3D reviews or the released main branch',()=>{
  const source=get('prototypes/dh-11c-room/index.html');
  const html=current.render(source),legacy=previous.render(source);
- assert.equal(current.VERSION,'dh11c6b1-top-shelf-ui-v1');
+ assert.equal(current.VERSION,'dh11c6b2-floating-prompt-v1');
  for(const marker of [
   'DH-11C.6B.1',
   'data-finished-books="true"',
-  'room.js?v=dh11c6b1-top-shelf-ui-v1',
-  'manuscript-personality-v2.js?v=dh11c6b1-top-shelf-ui-v1',
-  'finished-books.js?v=dh11c6b1-top-shelf-ui-v1',
-  'book-experience.css?v=dh11c6b1-top-shelf-ui-v1',
-  'minimal-immersive.css?v=dh11c6b1-top-shelf-ui-v1',
+  'room.js?v=dh11c6b2-floating-prompt-v1',
+  'manuscript-personality-v2.js?v=dh11c6b2-floating-prompt-v1',
+  'finished-books.js?v=dh11c6b2-floating-prompt-v1',
+  'book-experience.css?v=dh11c6b2-floating-prompt-v1',
+  'minimal-immersive.css?v=dh11c6b2-floating-prompt-v1',
   'id="published-book-dialog"',
   'data-exit-door-proof="true"'
  ])assert.ok(html.includes(marker),marker);
