@@ -56,7 +56,8 @@ test('UI state transitions preserve all real 3D object mechanics and keyboard na
  for(const marker of [
   "const minimalUI=document.body.dataset.minimalUi==='true'",
   'function showObjectPrompt(id){',
-  'if(!obj||id===\'door\'){objectPrompt.hidden=true;return;}',
+  'if(!obj||id===\'door\'){',
+  'objectPrompt.hidden=true;delete document.body.dataset.roomPrompt;return;',
   'objectPrompt.hidden=false;',
   'tray.hidden=true;',
   'promptOpen.addEventListener(\'click\'',
