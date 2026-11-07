@@ -1089,7 +1089,13 @@ canvas.addEventListener('pointerup',event=>{
  if(!pointerStart||Math.hypot(pointerStart.x-event.clientX,pointerStart.y-event.clientY)>8){pointerStart=null;return;}
  pointerStart=null;
  const pick=pickFromEvent(event);
- if(!pick)return;
+ if(!pick){
+  // DH-11C.6A.1: tapping empty scenery (walls, floor or sky) while zoomed
+  // into an object returns to the whole room. A drag is ignored above.
+  // Gate to the minimal Writing UI so earlier 3D previews stay unchanged.
+  if(minimalUI&&state.focus)home();
+  return;
+ }
  const {id,drawerIndex,paperIndex,bookIndex,binPaperIndex,lampPart,keyIndex}=pick;
  if(state.focus===id){
   if(id==='cabinet'){

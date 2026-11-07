@@ -1195,6 +1195,21 @@
         "productionChanged": false,
         "documentation": "docs/DH11C6A_MINIMAL_IMMERSIVE_UI.md",
         "ownerApproval": "pending"
+      },
+      "emptySceneryReturn": {
+        "stage": "DH-11C.6A.1",
+        "status": "feature_branch_pending_CI_and_Cloudflare",
+        "stagingRoute": "/worlds/writing/",
+        "marker": "DH-11C.6A.1",
+        "cacheVersion": "dh11c6a1-background-return-v1",
+        "behaviour": "click non-interactive scenery from focused object returns to whole room",
+        "guard": "data-minimal-ui=true and state.focus nonnull and pointer movement <= 8px",
+        "olderPreviewsChanged": false,
+        "doorAnd3DMechanicsChanged": false,
+        "productionChanged": false,
+        "publishedCatalogueChanged": false,
+        "documentation": "docs/DH11C6A1_BACKGROUND_CLICK.md",
+        "ownerVisualApproval": "pending"
       }
     }
   }

@@ -1,6 +1,10 @@
 # DaveHub development roadmap
 
-**Updated:** 7 November 2026. **Current stage:** DH-11C.6A minimal immersive Writing-room interface, after accepting the 3D Manuscript Hoard core and the direct Writing island route. A separate review version preserves the original room and earlier art passes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+**Updated:** 7 November 2026. **Current stage:** DH-11C.6A.1 click-empty-scene to leave an object view, building on the accepted minimal Writing interface, after accepting the 3D Manuscript Hoard core and the direct Writing island route. A separate review version preserves the original room and earlier art passes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+
+## DH-11C.6A.1 — Click scenery to return to the whole room
+
+In the canonical staging Writing room, a click on empty wall, floor or background while inspecting an object immediately returns to the overview camera and closes the object UI. Existing click/touch interactions, drag rejection, accessible Room button, two-click door exit and old comparison previews remain unchanged. [Behaviour contract and testing](DH11C6A1_BACKGROUND_CLICK.md). No production or catalogue changes.
 
 ## DH-11C.6A — Minimal, room-first immersive interface
 

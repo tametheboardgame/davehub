@@ -7,7 +7,7 @@ const checks=[
  {path:'/worlds/',required:['<style data-davehub-inline="worlds">','3 creations','2 creations'],forbidden:['data-davehub-inline="staging"']},
  {path:'/worlds/games/',required:['<style data-davehub-inline="worlds">','Unicorn Valley','The Stephen Martin Project','Tame The Board Game','3 creations in this world'],forbidden:['data-davehub-inline="staging"','DESIGN REVIEW ONLY']},
  {path:'/worlds/projects/',required:['<style data-davehub-inline="worlds">','Unicorn Valley','The Stephen Martin Project']},
- {path:'/worlds/writing/',required:['DH-11C.6A','data-minimal-ui="true"','davehub-logo-faithful.svg','← Back','id="object-prompt"','id="object-prompt-open"','id="object-full-close"','minimal-immersive.css','DH-11C.5D.3J','data-writing-world="true"','<base href="/worlds/writing/scene/">','data-exit-door-proof="true"','door-exit.js?v=dh11c5d3i-door-home-exit-v1','room.js?v=dh11c5d3i-door-home-exit-v1','<canvas id="room-canvas"','WRITING ISLAND'],forbidden:['data-scene="manuscript-hoard"','room-stage-image','Existing Writing world','The Last Lightkeeper','The Clock of Tomorrow']},
+ {path:'/worlds/writing/',required:['DH-11C.6A','DH-11C.6A.1','data-minimal-ui="true"','davehub-logo-faithful.svg','← Back','id="object-prompt"','id="object-prompt-open"','id="object-full-close"','minimal-immersive.css','DH-11C.5D.3J','data-writing-world="true"','<base href="/worlds/writing/scene/">','data-exit-door-proof="true"','door-exit.js?v=dh11c5d3i-door-home-exit-v1','room.js?v=dh11c6a1-background-return-v1','<canvas id="room-canvas"','WRITING ISLAND'],forbidden:['data-scene="manuscript-hoard"','room-stage-image','Existing Writing world','The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-08b/worlds/writing/',required:['Fictional design demonstration','data-scene="manuscript-hoard"','data-room-panel="bookcase"','The Last Lightkeeper'],forbidden:['href="/creations/last-lightkeeper/"']},
  {path:'/creations/unicorn-valley/',required:['<style data-davehub-inline="worlds">','Unicorn Valley','Play on DaveHub','href="/games/unicorn-valley/"','unicorn-valley.pages.dev','View development repository'],forbidden:['DESIGN REVIEW ONLY']},
  {path:'/creations/stephen-martin-project/',required:['<style data-davehub-inline="worlds">','The Stephen Martin Project','Play on DaveHub','href="/games/stephen-martin/"','stephen-martin-project.pages.dev'],forbidden:['DESIGN REVIEW ONLY']},
@@ -54,7 +54,7 @@ async function main(){
   try{
    const results=[];
    for(const c of checks){
-    const version=c.path==='/worlds/writing/'?'?dh11c6a-minimal-room-v1=1':
+    const version=c.path==='/worlds/writing/'?'?dh11c6a1-background-return-v1=1':
      c.path==='/previews/dh-11c/authored-3d-v8/'?'?dh11c5d3i-door-home-exit-v1=1':
      c.path==='/previews/dh-11c/authored-3d-v7/'?'?dh11c5d3h-mystical-room-props-v1=1':
      c.path==='/previews/dh-11c/authored-3d-v6/'?'?dh11c5d3g-authored-handwriting-v1=1':
