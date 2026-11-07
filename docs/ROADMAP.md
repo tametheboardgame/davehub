@@ -1,10 +1,14 @@
 # DaveHub development roadmap
 
-**Updated:** 7 November 2026. **Current stage:** DH-11C.6B finished-book product pages, after approved DH-11C.6A.2 dark window preload., after approved click-to-overview navigation. Previous stage: DH-11C.6A.1 click-empty-scene to leave an object view, building on the accepted minimal Writing interface, after accepting the 3D Manuscript Hoard core and the direct Writing island route. A separate review version preserves the original room and earlier art passes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+**Updated:** 7 November 2026. **Current stage:** DH-11C.6B.2 floating contextual prompts and compact Eleanor jacket (staging-only). Prior stage: DH-11C.6B finished-book product pages, after approved DH-11C.6A.2 dark window preload., after approved click-to-overview navigation. Previous stage: DH-11C.6A.1 click-empty-scene to leave an object view, building on the accepted minimal Writing interface, after accepting the 3D Manuscript Hoard core and the direct Writing island route. A separate review version preserves the original room and earlier art passes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+
+## DH-11C.6B.2 — Floating prompts, unchanged scene size and compact Eleanor jacket
+
+Fix 6B.1 user feedback: return to a **full-height interactive 3D viewport** at every screen size and float small contextual prompts alongside the selected furniture, never in a black footer band. Make the text-only Eleanor fallback small enough not to stretch its book detail overlay. Earlier artistic previews and production unchanged. [Behaviour and acceptance](DH11C6B2_FLOATING_PROMPTS.md).
 
 ## DH-11C.6B.1 — Accessible book details and prompts that don't cover the furniture
 
-After the first three-book edition overlay review, expand/compact the product page to keep covers, metadata and buying links above the fold on ordinary screens. Move the three highlighted 3D books to the **top shelf**, evenly spaced, and side-dock contextual prompts away from all selected objects. On narrow screens reserve a short strip outside the canvas for prompts rather than obscuring the artwork. This remains staging-only and requires visual approval. [Scope and tests](DH11C6B1_LAYOUT_POLISH.md).
+After the first three-book edition overlay review, expand/compact the product page to keep covers, metadata and buying links above the fold on ordinary screens. Move the three highlighted 3D books to the **top shelf**, evenly spaced, and side-dock contextual prompts away from all selected objects. 6B.1 briefly reserved a strip below the 3D canvas on narrow/short viewports; 6B.2 removes that experiment and replaces it with a small floating in-scene prompt. This remains staging-only and requires visual approval. [Scope and tests](DH11C6B1_LAYOUT_POLISH.md).
 
 ## DH-11C.6B — Finished bookcase: pull a book, explore its published edition
 
