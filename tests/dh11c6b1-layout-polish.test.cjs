@@ -92,7 +92,8 @@ test('small screens keep the 3D viewport whole, using a floating corner prompt',
  assert.ok(css.includes('top:calc(86px + env(safe-area-inset-top));bottom:auto;'));
  assert.ok(css.includes('width:min(220px,49vw)'));
  assert.ok(!css.includes('[data-room-prompt="visible"] #scene-frame'));
- assert.ok(!css.includes('height:calc(100dvh - 116px)'));
+ // A popup may have a maximum height, but the 3D viewport must never shrink.
+ assert.ok(!/\[data-room-prompt[^\n]*#scene-frame\s*\{/.test(css));
  assert.ok(!css.includes('bottom:calc(116px + max('));
  assert.ok(room.includes("document.body.dataset.roomPrompt='visible';"));
  assert.ok(room.includes('delete document.body.dataset.roomPrompt;'));
