@@ -79,7 +79,7 @@ test('book opening uses real 3D book pulls while only the three publications rem
  assert.ok(room.includes('pullBooks.push(bk)'));
  assert.ok(room.includes('bookHome=pullBooks.map(x=>x.position.z)'));
  const catalog=read('prototypes/dh-11c-room/manuscript-personality-v2.js');
- assert.ok(catalog.includes('const featuredIndex=FEATURED_POSITIONS.indexOf(id);'));
+ assert.ok(catalog.includes('finishedBooks.indexForMesh(Math.floor(id/20),id%20)'));
  assert.ok(catalog.includes('published?.spine||BOOK_TITLES[id]'));
  assert.ok(catalog.includes('published?.title||BOOK_TITLES[id]'));
  assert.equal(artist.FEATURED_TITLES.length,8,'historical V8 review contract retained');
