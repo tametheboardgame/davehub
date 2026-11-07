@@ -2,6 +2,10 @@
 
 **Updated:** 7 November 2026. **Current stage:** DH-11C.6B finished-book product pages, after approved DH-11C.6A.2 dark window preload., after approved click-to-overview navigation. Previous stage: DH-11C.6A.1 click-empty-scene to leave an object view, building on the accepted minimal Writing interface, after accepting the 3D Manuscript Hoard core and the direct Writing island route. A separate review version preserves the original room and earlier art passes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
 
+## DH-11C.6B.1 — Accessible book details and prompts that don't cover the furniture
+
+After the first three-book edition overlay review, expand/compact the product page to keep covers, metadata and buying links above the fold on ordinary screens. Move the three highlighted 3D books to the **top shelf**, evenly spaced, and side-dock contextual prompts away from all selected objects. On narrow screens reserve a short strip outside the canvas for prompts rather than obscuring the artwork. This remains staging-only and requires visual approval. [Scope and tests](DH11C6B1_LAYOUT_POLISH.md).
+
 ## DH-11C.6B — Finished bookcase: pull a book, explore its published edition
 
 The Writing Room's visual and interaction core is merged separately into main. The next staged experience connects three actual published books to the real 3D pull-out shelf: **The Legend of the Stormrider**, **The Duck Bread Baker**, and **Eleanor and the Mystery of the Missing Stones**. A pulled volume opens an accessible edition page with genuine cover where verified, description, year, ISBN, publisher and retailer/purchase links. Other manuscript/book titles remain decorative; no unpublished texts are accidentally sold. Follow-up **DH-11C.6C** will design a distinct text/work viewer for desk, typewriter and filing cabinet content, once sharing is approved. [Scope and review gate](DH11C6B_FINISHED_BOOKS.md).
