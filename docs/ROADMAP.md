@@ -1,6 +1,10 @@
 # DaveHub development roadmap
 
-**Updated:** 7 November 2026. **Current stage:** DH-11C.6A.1 click-empty-scene to leave an object view, building on the accepted minimal Writing interface, after accepting the 3D Manuscript Hoard core and the direct Writing island route. A separate review version preserves the original room and earlier art passes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+**Updated:** 7 November 2026. **Current stage:** DH-11C.6A.2 dark window preload, after approved click-to-overview navigation. Previous stage: DH-11C.6A.1 click-empty-scene to leave an object view, building on the accepted minimal Writing interface, after accepting the 3D Manuscript Hoard core and the direct Writing island route. A separate review version preserves the original room and earlier art passes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+
+## DH-11C.6A.2 — Dark window until the illustrated islands are ready
+
+Fix a cold-loading visual flash: the canonical Writing room now opens with a dark, unlit window until its homepage-inspired illustrated scenery texture has completely downloaded. Suppress the old low-poly islands in both initial procedural furniture and actual GLB loading, and keep the window dark if the image fails. Earlier comparison previews retain their reversible original view. No published catalogue, interaction or production changes. [Implementation and review gate](DH11C6A2_DARK_WINDOW_PRELOAD.md).
 
 ## DH-11C.6A.1 — Click scenery to return to the whole room
 
