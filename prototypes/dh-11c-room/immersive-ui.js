@@ -18,8 +18,13 @@
    objects.open=false;
    tools.open=false;
    requestAnimationFrame(()=>{
+    // The canonical Writing room starts with a small contextual prompt.
+    // Its old detailed controls are deliberately hidden until opened.
+    const minimal=document.body.dataset.minimalUi==='true';
+    const prompt=document.getElementById('object-prompt');
+    const open=document.getElementById('object-prompt-open');
     const first=document.querySelector('#interaction-actions button, #interaction-actions a');
-    (first||home).focus({preventScroll:true});
+    (minimal&&!prompt?.hidden?open:(first||home)).focus({preventScroll:true});
    });
   });
  });

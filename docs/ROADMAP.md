@@ -1,6 +1,12 @@
 # DaveHub development roadmap
 
-**Updated:** 5 November 2026. **Current stage:** DH-11C.5D.3J direct Writing island entry into the illustrated 3D Manuscript Hoard, following approval of V8 exit mechanics. A separate review version preserves the original room and earlier art passes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+**Updated:** 7 November 2026. **Current stage:** DH-11C.6A minimal immersive Writing-room interface, after accepting the 3D Manuscript Hoard core and the direct Writing island route. A separate review version preserves the original room and earlier art passes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+
+## DH-11C.6A — Minimal, room-first immersive interface
+
+Replace the large permanently visible Writing room inspector with a small per-object prompt which only appears after focus. Reuse the exact approved homepage DaveHub logo, label the home link “Back”, hide prominent scene ribbons and permanent menu boxes, and offer “Explore further” to reveal the existing controls only when requested. Retain the real 3D interaction and accessible keyboard/touch object menu, with the two-click exit unaffected. Canonical staging route remains `/worlds/writing/`, production remains unchanged. [Full scope and acceptance criteria](DH11C6A_MINIMAL_IMMERSIVE_UI.md).
+
+**DH-11C.6B (next):** Design the richer, bespoke full-object experiences one at a time, beginning with the bookcase. Do not imply the 6A temporary control panel is the final full experience.
 
 ## DH-11C.5D.3J — Writing island opens the real 3D Manuscript Hoard
 

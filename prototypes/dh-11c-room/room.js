@@ -17,6 +17,17 @@ const placeDescription=document.getElementById('place-description');
 const title=document.getElementById('interaction-title');
 const copy=document.getElementById('interaction-copy');
 const fallback=document.getElementById('scene-fallback');
+// DH-11C.6A: visitor interface only, opt-in on the canonical Writing world.
+// Previews retain their existing inspector and all model/interaction machinery.
+const minimalUI=document.body.dataset.minimalUi==='true';
+const objectPrompt=document.getElementById('object-prompt');
+const promptTitle=document.getElementById('object-prompt-title');
+const promptCopy=document.getElementById('object-prompt-copy');
+const promptOpen=document.getElementById('object-prompt-open');
+const promptClose=document.getElementById('object-prompt-close');
+const fullClose=document.getElementById('object-full-close');
+if(minimalUI&&![objectPrompt,promptTitle,promptCopy,promptOpen,promptClose,fullClose].every(Boolean))
+ throw Error('DH-11C.6A compact object UI requires all accessible controls');
 const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
 let renderer;
 try{
@@ -775,6 +786,40 @@ const drawerHome=cabinetDrawers.map(x=>x.position.z);
 let bookHome=pullBooks.map(x=>x.position.z);
 // All 24 keys, the platen and the paper have separate animation references.
 let currentHover=null;
+const minimalCopy={
+ desk:'Scrawled drafts, loose pages and a temperamental lamp.',
+ cabinet:'Five drawers of questionable organisation.',
+ bookcase:'Eighty unlikely books, eight with stories of their own.',
+ typewriter:'A machine still waiting for the next sentence.',
+ bin:'An overflowing collection of abandoned ideas.',
+ window:'A glimpse of other worlds beyond the glass.'
+};
+function showObjectPrompt(id){
+ if(!minimalUI)return;
+ const obj=plan.find(id);
+ if(!obj||id==='door'){objectPrompt.hidden=true;return;}
+ promptTitle.textContent=obj.label;
+ promptCopy.textContent=minimalCopy[id]||'Discover what is hidden here.';
+ objectPrompt.hidden=false;
+ tray.hidden=true;
+}
+if(minimalUI){
+ promptOpen.addEventListener('click',()=>{
+  if(!state.focus||state.focus==='door')return;
+  objectPrompt.hidden=true;
+  tray.hidden=false;
+  fullClose.focus({preventScroll:true});
+ });
+ promptClose.addEventListener('click',()=>{
+  objectPrompt.hidden=true;
+  homeButton.focus({preventScroll:true});
+ });
+ fullClose.addEventListener('click',()=>{
+  tray.hidden=true;
+  if(state.focus&&state.focus!=='door')showObjectPrompt(state.focus);
+  (objectPrompt.hidden?homeButton:promptOpen).focus({preventScroll:true});
+ });
+}
 function focus(id){
  if(!plan.find(id))return;
  state=plan.next(state,{type:'focus',id});
@@ -786,8 +831,9 @@ function focus(id){
  placeName.textContent=obj.label;
  placeDescription.textContent=obj.action;
  for(const b of focusButtons)b.setAttribute('aria-pressed',String(b.dataset.focus===id));
- tray.hidden=false;title.textContent=obj.label;copy.textContent=copyById[id];
+ tray.hidden=!!minimalUI;title.textContent=obj.label;copy.textContent=copyById[id];
  renderControls(id);
+ if(minimalUI)showObjectPrompt(id);
  status.textContent=obj.label+' selected. The camera is approaching.';
  if(reduced.matches){camera.position.copy(desiredPosition);focusPoint.copy(desiredTarget);camera.lookAt(focusPoint);}
 }
@@ -798,6 +844,7 @@ function home(){
  placeName.textContent='The Manuscript Hoard';placeDescription.textContent='An actual 3D study. Explore its objects.';
  for(const b of focusButtons)b.setAttribute('aria-pressed','false');
  tray.hidden=true;
+ if(minimalUI)objectPrompt.hidden=true;
  if(reduced.matches){camera.position.copy(desiredPosition);focusPoint.copy(desiredTarget);camera.lookAt(focusPoint);}
 }
 const drawerNames=['Finished','Drafts','Oddities','Fragments','Field Notes'];
@@ -984,7 +1031,17 @@ function renderControls(id){
 }
 for(const b of focusButtons)b.addEventListener('click',()=>focus(b.dataset.focus));
 homeButton.addEventListener('click',home);
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&state.focus){e.preventDefault();home();}});
+document.addEventListener('keydown',e=>{
+ if(e.key!=='Escape'||!state.focus)return;
+ e.preventDefault();
+ if(minimalUI&&!tray.hidden){
+  tray.hidden=true;
+  showObjectPrompt(state.focus);
+  (objectPrompt.hidden?homeButton:promptOpen).focus({preventScroll:true});
+  return;
+ }
+ home();
+});
 function pickFromEvent(event){
  if(!renderer)return null;
  const rect=canvas.getBoundingClientRect();
