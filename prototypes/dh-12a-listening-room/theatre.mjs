@@ -117,6 +117,7 @@ box('proscenium-left',[.46,4.3,.55],[-4.47,2.66,-1.56],agedBrass);
 box('proscenium-right',[.46,4.3,.55],[4.47,2.66,-1.56],agedBrass);
 const arch=torus('proscenium-real-arch',4.47,.16,[0,4.43,-1.57],agedGold,scene,Math.PI);
 arch.rotation.z=0;
+arch.scale.y=.33; // A shallow physical ellipse, not a giant arch outside the camera.
 box('arch-keystone',[.65,.40,.65],[0,4.53,-1.55],agedGold);
 const sign=addLabel('THE IMPOSSIBLE THEATRE',3.3);
 sign.position.set(0,4.58,-1.13);scene.add(sign);
