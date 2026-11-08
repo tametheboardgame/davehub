@@ -2,6 +2,10 @@
 
 **DH-11C Writing Room, complete and owner-approved:** All physical interactions through DH-11C.6E.1 were selectively promoted to GitHub `main` via PR #114 on 8 November 2026. The Writing Room is now frozen for new functionality until approved real content can replace fictional demonstrations. No production custom-domain launch has occurred.
 
+## DH-12B.1 — The World Between Notes and the Record Shop
+
+The owner defines the **Impossible Theatre as a musicals-only destination**, with a physically different space for standalone songs, bands, music projects and albums. Both must be reached through a third, independently modelled **World of Music foyer** with real hinged portals: choose a door, observe it physically open and let the camera approach, then enter on a deliberate second action. A connected **Record Shop** contains three accessible pull-out racks and a silent physical turntable; its content is deliberately unpopulated until approved. The theatre exit and shop exit return to the foyer. Build and test exclusively on staging previews without touching the current public Music page. [Interaction specification and release boundary](DH12B_MUSIC_PORTALS_AND_RECORD_SHOP.md). Visual approval pending.
+
 ## DH-12A.3 — Three living miniature stage sets
 
 Develop the first prototype into a characterful miniature theatre without changing the approved close-up camera or main mechanical movements. Each original physical set becomes a distinct sculpted world: **The Clockwork Chorus** with moving birds and gears; **The Theatre Within** with hinged flats and a rising skyline; and **The Marionette Assembly** with jointed wooden performers. A visitor can click a real physical prop or use **Bring the set to life**, then let it settle before revolving to another scene. Add actual ropes, pulleys, footlights and balconies, and change real stage lighting for each act. [Geometry and interaction contract](DH12A3_LIVING_STAGE_SETS.md). Staging-only review, no real audio or unpublished work.
