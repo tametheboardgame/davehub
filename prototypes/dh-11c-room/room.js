@@ -1,5 +1,6 @@
 import * as THREE from './vendor/three-r159.module.min.js';
 import {drawerIndexForMesh} from './drawer-picking.mjs';
+import {revealReady,REVEAL_HOLD_SECONDS,keyIndexForCharacter} from './reveal-after-motion.mjs?v=dh11c6c2-motion-first-v1';
 import {paperPose,paperIndexForMesh,PAPER_LIMIT,pressDepth,typewriterFeed,TYPE_PAPER_HEIGHT,featuredBook,featuredBookIndexForMesh,FEATURED_BOOK_COUNT,bookPosition,binPaperIndexForMesh,binPaperPose,BIN_PAPER_COUNT,lampPartForMesh,typedKeyIndex,TYPE_KEY_COUNT} from './furniture-motion.mjs?v=dh11c4l-lamp-switch-v1';
 
 const plan=window.DH11RoomPlan;
@@ -30,6 +31,7 @@ const bookExperience=finishedBooksEnabled?window.DH11BookExperience?.mount({
 if(finishedBooksEnabled&&(!finishedBooks||!bookExperience))
  throw Error('DH-11C.6B requires the published-book catalogue and accessible detail view');
 const manuscriptExperienceEnabled=minimalUI&&document.body.dataset.manuscriptExperience==='true';
+const motionFirst=manuscriptExperienceEnabled&&document.body.dataset.motionFirst==='true';
 const manuscriptExperience=manuscriptExperienceEnabled?window.DH11ManuscriptExperience?.mount({
  document,onType:()=>pressTypewriter()
 }):null;
@@ -862,11 +864,17 @@ const drawerHome=cabinetDrawers.map(x=>x.position.z);
 let bookHome=pullBooks.map(x=>x.position.z);
 // All 24 keys, the platen and the paper have separate animation references.
 let currentHover=null;
+// One outstanding visual-to-content transition at a time. Moving back,
+// changing furniture or selecting a different object cancels the old reveal.
+let pendingObjectReveal=null;
+function queueObjectReveal(kind,index){
+ pendingObjectReveal={kind,index,settledAt:null};
+}
 const minimalCopy={
  desk:manuscriptExperienceEnabled?'Loose manuscripts to browse, with notes in the margins. Tap a sheet to read it.':'Scrawled drafts, loose pages and a temperamental lamp.',
  cabinet:'Five drawers of questionable organisation.',
  bookcase:finishedBooksEnabled?'Three finished books. Pull one out to explore its edition and where to buy it.':'Eighty unlikely books, eight with stories of their own.',
- typewriter:manuscriptExperienceEnabled?'A blank page and a few questionable writing prompts. Try the creative workshop.':'A machine still waiting for the next sentence.',
+ typewriter:motionFirst?'Click the little keys or type on your keyboard to move the mechanism. Explore further opens a blank writing page.':manuscriptExperienceEnabled?'A blank page and a few questionable writing prompts. Try the creative workshop.':'A machine still waiting for the next sentence.',
  bin:'An overflowing collection of abandoned ideas.',
  window:'A glimpse of other worlds beyond the glass.'
 };
@@ -906,6 +914,7 @@ if(minimalUI){
 }
 function focus(id){
  if(!plan.find(id))return;
+ pendingObjectReveal=null;
  state=plan.next(state,{type:'focus',id});
  const obj=plan.find(id);
  // Side-dock the visitor's prompt and expanded object controls away from
@@ -928,6 +937,7 @@ function focus(id){
  if(reduced.matches){camera.position.copy(desiredPosition);focusPoint.copy(desiredTarget);camera.lookAt(focusPoint);}
 }
 function home(){
+ pendingObjectReveal=null;
  state=plan.next(state,{type:'home'});
  if(minimalUI){
   delete document.body.dataset.roomFocus;
@@ -961,7 +971,10 @@ function toggleBook(index){
  status.textContent=bookDescription(index)+(state.books[index]?
   ' slides forward. Click it again to return it.':' slides back into its original slot.');
  syncBookControls();
- if(finishedBooksEnabled&&state.books[index])bookExperience.show(index);
+ if(motionFirst&&finishedBooksEnabled){
+  if(state.books[index])queueObjectReveal('book',index);
+  else pendingObjectReveal=null;
+ }else if(finishedBooksEnabled&&state.books[index])bookExperience.show(index);
 }
 function syncBookControls(){
  for(const button of actions.querySelectorAll('[data-book-index]')){
@@ -1007,7 +1020,10 @@ function togglePaper(index){
  status.textContent='Sheet '+(index+1)+(state.papers[index]?
   ' slides to its second place on the desk.':' slides back to its original place.');
  syncPaperControls();
- if(manuscriptExperienceEnabled&&state.papers[index])manuscriptExperience.openManuscript(index);
+ if(motionFirst&&manuscriptExperienceEnabled){
+  if(state.papers[index])queueObjectReveal('paper',index);
+  else pendingObjectReveal=null;
+ }else if(manuscriptExperienceEnabled&&state.papers[index])manuscriptExperience.openManuscript(index);
 }
 function syncPaperControls(){
  for(const button of actions.querySelectorAll('[data-paper-index]')){
@@ -1061,7 +1077,7 @@ function renderControls(id){
   syncLampControl();
   // Click the actual named 3D mesh; equivalent controls remain keyboard accessible.
   const help=document.createElement('p');
-  help.textContent=manuscriptExperienceEnabled?'Click an actual paper sheet to slide it out and read a sample; click again to return the sheet.':'Click a particular paper to slide it out. Click it again to return it.';
+  help.textContent=motionFirst?'Click a real sheet; watch it slide out, then read its sample. Click again to slide it back.':manuscriptExperienceEnabled?'Click an actual paper sheet to slide it out and read a sample; click again to return the sheet.':'Click a particular paper to slide it out. Click it again to return it.';
   actions.append(help);
   const details=document.createElement('details');
   const summary=document.createElement('summary');
@@ -1103,7 +1119,14 @@ function renderControls(id){
   syncBookControls();
  }
  else if(id==='typewriter'){
-  if(manuscriptExperienceEnabled)add('Open the creative workshop',()=>manuscriptExperience.openWorkshop());
+  if(manuscriptExperienceEnabled){
+   add('Open the creative workshop',()=>manuscriptExperience.openWorkshop());
+   if(motionFirst){
+    const help=document.createElement('p');
+    help.textContent='Try clicking the individual 3D keys, or type on your keyboard while focused on this machine. The keys and paper will move.';
+    actions.append(help);
+   }
+  }
   else add('Press a key',()=>pressTypewriter());
  }
  else if(id==='bin'){
@@ -1139,6 +1162,14 @@ for(const b of focusButtons)b.addEventListener('click',()=>focus(b.dataset.focus
 homeButton.addEventListener('click',home);
 document.addEventListener('keydown',e=>{
  if(document.querySelector('dialog[open]'))return;
+ // Workshop typing and scene typing are distinct: the actual machine stays
+ // playable. Don't intercept shortcuts or focused interactive HTML controls.
+ if(motionFirst&&state.focus==='typewriter'&&!e.ctrlKey&&!e.metaKey&&!e.altKey&&
+    e.key.length===1&&!e.target?.closest?.('input,textarea,select,button,a,summary,[contenteditable]')){
+  e.preventDefault();
+  pressTypewriter(keyIndexForCharacter(e.key));
+  return;
+ }
  if(e.key!=='Escape'||!state.focus)return;
  e.preventDefault();
  if(minimalUI&&!tray.hidden){
@@ -1188,6 +1219,7 @@ canvas.addEventListener('pointermove',event=>{
      :pick?.spineTitle?'“'+pick.spineTitle+'” (fictional archive title)'
      :hovered==='door'&&exitDoorProof?window.DH11DoorExit.label(state)
      :hovered==='bookcase'?'Only highlighted books can be pulled out'
+     :hovered==='typewriter'&&motionFirst?'Press the actual 3D keys or type on your keyboard'
      :hovered==='typewriter'&&manuscriptExperienceEnabled?'Open the creative writing workshop'
     :hovered==='bin'?'Click a particular crumpled paper, not the bin itself'
      :hovered?'Explore '+plan.find(hovered).label:'';
@@ -1231,8 +1263,8 @@ canvas.addEventListener('pointerup',event=>{
    }
    else if(id==='door'&&exitDoorProof)activateExitDoor();
    else if(id==='door')state=plan.next(state,{type:'door'});
-   if(id==='typewriter'&&manuscriptExperienceEnabled){
-    if(manuscriptExperienceEnabled)manuscriptExperience.openWorkshop();
+   if(id==='typewriter'&&manuscriptExperienceEnabled&&!motionFirst){
+    manuscriptExperience.openWorkshop();
    }
    if(!['desk','bookcase','bin','typewriter'].includes(id)&&!(id==='door'&&exitDoorProof))status.textContent=plan.find(id).label+' responds to your interaction.';
   }
@@ -1271,6 +1303,39 @@ if(renderer){
  else window.addEventListener('resize',resize);
 }
 const clock=new THREE.Clock();
+// Each overlay waits for BOTH the clicked physical object and the shared
+// camera to reach their real transforms. A short final hold shows the
+// extended sheet or book before the reader covers the scene.
+function revealAfterPhysicalMotion(){
+ const pending=pendingObjectReveal;
+ if(!motionFirst||!pending||!renderer)return;
+ const isBook=pending.kind==='book',index=pending.index;
+ const focusId=isBook?'bookcase':'desk';
+ const active=isBook?state.books[index]:state.papers[index];
+ if(state.focus!==focusId||active!==true){pendingObjectReveal=null;return;}
+ const mesh=isBook?pullBooks[index]:loosePapers[index];
+ const homePosition=isBook?bookHome[index]:paperHomes[index];
+ if(!mesh||homePosition===undefined)return;
+ let itemDistance;
+ if(isBook){
+  itemDistance=Math.abs(mesh.position.z-bookPosition(homePosition,true));
+ }else{
+  const end=paperPose(homePosition,index,true);
+  itemDistance=Math.max(Math.abs(mesh.position.x-end.x),
+   Math.abs(mesh.position.y-end.y),Math.abs(mesh.position.z-end.z));
+ }
+ const ready=revealReady({
+  focus:state.focus,expectedFocus:focusId,active,
+  itemDistance,cameraDistance:camera.position.distanceTo(desiredPosition),
+  aimDistance:focusPoint.distanceTo(desiredTarget)
+ });
+ if(!ready){pending.settledAt=null;return;}
+ if(pending.settledAt===null)pending.settledAt=clock.elapsedTime;
+ if(!reduced.matches&&clock.elapsedTime-pending.settledAt<REVEAL_HOLD_SECONDS)return;
+ pendingObjectReveal=null;
+ if(isBook)bookExperience.show(index);
+ else manuscriptExperience.openManuscript(index);
+}
 function render(){
  const delta=Math.min(clock.getDelta(),.08);
  if(renderer){
@@ -1341,6 +1406,7 @@ function render(){
    islandGroups.forEach((g,i)=>{g.position.y=[.1,.55,-.27][i]+Math.sin(t*.65+i)*.055;});
   }
   renderer.render(scene,camera);
+  revealAfterPhysicalMotion();
  }
  requestAnimationFrame(render);
 }
