@@ -15,7 +15,7 @@ export function actIndex(value){
  return ((Math.trunc(Number(value)||0)%STAGE_ACTS.length)+STAGE_ACTS.length)%STAGE_ACTS.length;
 }
 export function stageAngle(steps){
- return (Math.trunc(Number(steps)||0))*STAGE_STEP;
+ return -(Math.trunc(Number(steps)||0))*STAGE_STEP;
 }
 export function smoothTowards(from,to,delta,speed=5){
  if(!Number.isFinite(from)||!Number.isFinite(to))throw Error('Non-finite motion');
