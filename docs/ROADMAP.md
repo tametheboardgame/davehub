@@ -1,5 +1,12 @@
 # DaveHub development roadmap
 
+**DH-11C Writing Room, complete and owner-approved:** All physical interactions through DH-11C.6E.1 were selectively promoted to GitHub `main` via PR #114 on 8 November 2026. The Writing Room is now frozen for new functionality until approved real content can replace fictional demonstrations. No production custom-domain launch has occurred.
+
+## DH-12A.1 — The Impossible Theatre, Music world geometry-first concept
+
+The next distinct DaveHub space is **Music / The Listening Room**. Start with an isolated **`/previews/dh-12a/listening-room/`** prototype: an eccentric miniature theatre with actual sliding cloth curtains, a single rotating stage showing three physical sets, and a rotating grooved record with its own moving tonearm. No audio or unpublished content. Native buttons and 3D click/touch affordances must operate the same mechanical state. Do not replace `/worlds/music/` until owner review. [Architecture, mechanics and review gate](DH12A_IMPOSSIBLE_THEATRE.md).
+
+
 **Updated:** 8 November 2026. **Current stage:** DH-11C.6B.2 floating contextual prompts and compact Eleanor jacket (staging-only). Prior stage: DH-11C.6B finished-book product pages, after approved DH-11C.6A.2 dark window preload., after approved click-to-overview navigation. Previous stage: DH-11C.6A.1 click-empty-scene to leave an object view, building on the accepted minimal Writing interface, after accepting the 3D Manuscript Hoard core and the direct Writing island route. A separate review version preserves the original room and earlier art passes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
 
 ## DH-11C.6E.1 — Immediate uncrumple action in the scrap view
