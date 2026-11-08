@@ -16,7 +16,7 @@ function render(source){
  // disguises its interaction or a footer action below the visible fold.
  put('  <div id="discarded-folded" class="discarded-crumple">',
   '  <button id="discarded-folded" class="discarded-crumple" type="button" aria-label="Uncrumple paper and read the recovered idea">');
- put('   <p class="discarded-crumple-caption">Someone threw this away for a reason.</p>\n  </div>\n  <article id="discarded-sheet"',
+ put('   <div class="discarded-crumple-art" aria-hidden="true"></div>',\n  '   <span class="discarded-crumple-art" aria-hidden="true"></span>');\n put('   <p class="discarded-crumple-caption">Someone threw this away for a reason.</p>\n  </div>\n  <article id="discarded-sheet"',
   '   <span class="discarded-crumple-caption">Click the paper to uncrumple it</span>\n  </button>\n'+
   '  <button id="discarded-unfold" class="discarded-unfold" type="button">Uncrumple paper</button>\n'+
   '  <article id="discarded-sheet"');
