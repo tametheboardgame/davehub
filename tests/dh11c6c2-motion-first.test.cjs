@@ -85,7 +85,8 @@ test('staging build explicitly ships the pure helper and refuses a stale publish
   'prototypes/dh-11c-room/reveal-after-motion.mjs',
   'node scripts/render-dh11c6c2-motion-first.cjs dist/worlds/writing',
   "check('dist/worlds/writing/room/reveal-after-motion.mjs'",
-  'room.js?v=dh11c6c2-motion-first-v1',
+  'room.js?v=dh11c6d3-cabinet-archive-v1',
+  'node scripts/render-dh11c6d3-filing-cabinet.cjs dist/worlds/writing',
   'data-motion-first="true"'
  ])assert.ok(build.includes(token),token);
 });

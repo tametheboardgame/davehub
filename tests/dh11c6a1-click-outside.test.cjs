@@ -62,7 +62,7 @@ test('real door, paper, book, bin and typing pointer interactions are still pres
   "if(id==='bookcase'&&bookIndex!==null)toggleBook(bookIndex)",
   "if(id==='bin'&&binPaperIndex!==null)toggleBinPaper(binPaperIndex)",
   "else if(id==='typewriter')pressTypewriter(keyIndex)",
-  "if(id==='cabinet'&&drawerIndex!==null){",
+  "if(id==='cabinet'&&drawerIndex!==null)toggleCabinetDrawer(drawerIndex)",
   "if(!pointerStart||Math.hypot(pointerStart.x-event.clientX,pointerStart.y-event.clientY)>8)"
  ])assert.ok(handler.includes(anchor),anchor);
 });

@@ -1,8 +1,8 @@
 {
   "project": "DaveHub",
-  "updated": "2026-11-01",
+  "updated": "2026-11-08",
   "status": "dh10c_hosted_editorial_foundation_deployed",
-  "current_work_package": "DH-10C",
+  "current_work_package": "DH-11C.6D.1-3 living filing cabinet, staging review",
   "completed": [
     "DH-00A",
     "DH-00B",
@@ -1337,6 +1337,22 @@
         "mainChanged": false,
         "approvedContentChanged": false,
         "docs": "docs/DH11C6C2_MOTION_FIRST.md"
+      },
+      "livingFilingCabinet": {
+        "stage": "DH-11C.6D.1-3",
+        "status": "feature_branch_under_test",
+        "stagingRoute": "/worlds/writing/",
+        "scope": "physical folder meshes mounted on the five existing real drawer pivots; motion-first folder reader; public book and demo-sample links",
+        "publishedBooks": 3,
+        "fictionalDemonstrationFolders": 9,
+        "unfilledSlots": 8,
+        "dataProtection": "No real unpublished content or Drive data accessed; demonstrations explicitly invented",
+        "originalCabinetGeometryPreserved": true,
+        "earlierFurnitureMechanicsPreserved": true,
+        "mainChanged": false,
+        "productionChanged": false,
+        "docs": "docs/DH11C6D_LIVING_ARCHIVE.md",
+        "ownerVisualReview": "pending"
       }
     }
   }
