@@ -193,11 +193,11 @@ test('build and hosted smoke require correct version, real JS and CSS instead of
   'prototypes/dh-11c-room/cabinet-tray.js',
   'prototypes/dh-11c-room/cabinet-tray.css',
   "check('dist/worlds/writing/room/cabinet-tray.js'",
-  'room.js?v=dh11c6d4-overhead-tray-v1'
+  'room.js?v=dh11c6e-wastepaper-v1'
  ])assert.ok(build.includes(token),token);
  for(const token of [
   'data-cabinet-tray="true"',
-  'room.js?v=dh11c6d4-overhead-tray-v1',
+  'room.js?v=dh11c6e-wastepaper-v1',
   '/worlds/writing/room/cabinet-tray.js',
   '/worlds/writing/scene/cabinet-tray.css'
  ])assert.ok(smoke.includes(token),token);
