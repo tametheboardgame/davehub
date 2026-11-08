@@ -101,9 +101,9 @@ test('close-up view controls are keyboard accessible and do not cover mobile sce
   'aria-label="Return to the whole theatre view"',
   'id="theatre-focus-name"',
   'Escape or Whole theatre returns to the overview',
-  'theatre.mjs?v=dh12a2-camera-focus-v1',
-  'theatre.css?v=dh12a2-camera-focus-v1',
-  '<meta name="davehub-theatre-stage" content="DH-12A.2">'
+  'theatre.mjs?v=dh12a3-living-sets-v1',
+  'theatre.css?v=dh12a3-living-sets-v1',
+  '<meta name="davehub-theatre-stage" content="DH-12A.3">'
  ])assert.ok(html.includes(marker),marker);
  for(const marker of [
   'body[data-theatre-camera="motion-first"] .theatre-view',
@@ -123,11 +123,11 @@ test('staging build and Cloudflare smoke version and verify the separate camera 
   'prototypes/dh-12a-listening-room/theatre-camera.mjs',
   'node --check prototypes/dh-12a-listening-room/theatre-camera.mjs',
   "check('dist/previews/dh-12a/listening-room/theatre-camera.mjs'",
-  'DH-12A.2'
+  'DH-12A.3'
  ])assert.ok(build.includes(marker),marker);
  for(const marker of [
-  'DH-12A.2',
-  'dh12a2-camera-focus-v1',
+  'DH-12A.3',
+  'dh12a3-living-sets-v1',
   '/previews/dh-12a/listening-room/theatre-camera.mjs',
   '/previews/dh-12a/listening-room/theatre.mjs',
   '/previews/dh-12a/listening-room/'

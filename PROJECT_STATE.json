@@ -2,7 +2,7 @@
   "project": "DaveHub",
   "updated": "2026-11-08",
   "status": "dh10c_hosted_editorial_foundation_deployed",
-  "current_work_package": "DH-12A.2 Camera approach and inspection, Music world staging preview",
+  "current_work_package": "DH-12A.3 three kinetic miniature sets, staging preview",
   "completed": [
     "DH-00A",
     "DH-00B",
@@ -1401,10 +1401,10 @@
     }
   },
   "dh12_music": {
-    "stage": "DH-12A.2",
+    "stage": "DH-12A.3",
     "world": "music",
     "creativeDirection": "The Impossible Theatre, a surreal miniature stage with real moving mechanics",
-    "status": "staging_camera_focus_under_test",
+    "status": "staging_living_set_art_and_mechanics_under_test",
     "previewRoute": "/previews/dh-12a/listening-room/",
     "existingMusicRouteReplaced": false,
     "physicalCurtains": true,
@@ -1414,7 +1414,7 @@
     "ownerVisualApproval": "pending",
     "mainChanged": false,
     "productionChanged": false,
-    "docs": "docs/DH12A2_CAMERA_APPROACH.md",
+    "docs": "docs/DH12A3_LIVING_STAGE_SETS.md",
     "camera": {
       "type": "one perspective camera travelling to genuine object focus points",
       "modes": [
@@ -1427,6 +1427,15 @@
       "responsive": true,
       "reducedMotion": true,
       "originalGeometryPreserved": true
+    },
+    "scenery": {
+      "songs": "The Clockwork Chorus: organ pipes, brass gear, articulated birds",
+      "shows": "The Theatre Within: hinged painted flats and rising stage-within-stage",
+      "characters": "The Marionette Assembly: two jointed puppets, arms, strings and heads",
+      "theatre": "original geometry plus actual fly-system ropes, pulleys, balconies and footlights",
+      "action": "toggle physical animation via clicked set piece or accessible button",
+      "catalogue": "none, fictional prototypes only",
+      "allExistingMotionAndCameraPreserved": true
     }
   }
 }

@@ -7,6 +7,7 @@ import {
  recordAdvance,tonearmAngle,theatreState
 } from './theatre-mechanics.mjs?v=dh12a-blockout-v1';
 import {cameraPose,focusStatus,normalizeFocus} from './theatre-camera.mjs?v=dh12a2-camera-focus-v1';
+import {SET_SCENES,sceneForSteps,toggleScene,resetScenes,mountLivingSets} from './theatre-scenery.mjs?v=dh12a3-living-sets-v1';
 
 const canvas=document.getElementById('theatre-canvas');
 const status=document.getElementById('theatre-status');
@@ -14,12 +15,16 @@ const openCurtains=document.getElementById('theatre-curtains');
 const turnStage=document.getElementById('theatre-stage');
 const playRecord=document.getElementById('theatre-record');
 const reset=document.getElementById('theatre-reset');
+const setButton=document.getElementById('theatre-set');
+const setCaption=document.getElementById('theatre-set-caption');
+const setDescription=document.getElementById('theatre-set-description');
 const overviewButton=document.getElementById('theatre-overview');
 const viewIndicator=document.getElementById('theatre-view');
 const focusName=document.getElementById('theatre-focus-name');
-const controls=[openCurtains,turnStage,playRecord,reset,overviewButton];
+const controls=[openCurtains,turnStage,playRecord,reset,overviewButton,setButton,setCaption,setDescription];
 if(!canvas||!status||controls.some(x=>!x))throw Error('Missing DH-12A theatre controls');
 let state=theatreState();
+let activeSets=resetScenes();
 let renderer=null;
 try{
  renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false});
@@ -223,6 +228,12 @@ for(let i=0;i<3;i++){
 }
 const stageCrest=torus('inner-stage-crest',1.04,.075,[0,.25,0],agedGold,revolve);
 stageCrest.rotation.x=Math.PI/2;
+// Distinct physical miniature sets and surrounding fly-system are real mesh
+// children of the SAME revolving stage, not scene swaps or HTML cards.
+const livingSets=mountLivingSets({
+ THREE,revolve,scene,box,cylinder,torus,sphere,material,addLabel
+});
+const lightCues=SET_SCENES.map(entry=>new THREE.Color(entry.colour));
 // The original imagined listening room is represented by an actual
 // gramophone-like player. It deliberately makes no audio until approved.
 const deck=new THREE.Group();deck.name='physical-record-deck';
@@ -262,9 +273,39 @@ function registerClick(group,id){
 registerClick(curtains.left,'curtains');
 registerClick(curtains.right,'curtains');
 registerClick(revolve,'act');
+// The miniature mechanisms have priority over their parent revolving disk
+// only when an actual sculpted part is hit. No invisible picking planes.
+for(const select of livingSets.selectables){
+ select.traverse(node=>{
+  if(node.isMesh)node.userData.theatreClick='set';
+ });
+}
 registerClick(deck,'record');
 // The wire arch may be clicked even with the curtains closed as a fallback,
 // but the accessible controls always work independently of 3D occlusion.
+function syncSetControls(){
+ const scene=sceneForSteps(state.stageSteps);
+ const current=actIndex(state.stageSteps);
+ const active=activeSets[current];
+ setCaption.textContent=scene.title;
+ setDescription.textContent=scene.description;
+ setButton.textContent=active?'Let '+scene.name+' rest':'Bring '+scene.name+' to life';
+ setButton.setAttribute('aria-pressed',String(active));
+ setButton.setAttribute('aria-label',active?
+  'Stop the physical '+scene.name+' set animation':
+  'Animate the physical '+scene.name+' miniature set');
+}
+function toggleCurrentSet(){
+ // Never animate hidden scenery behind closed curtains.
+ if(!state.curtainsOpen)apply('curtains');
+ inspectObject('act');
+ const current=actIndex(state.stageSteps);
+ activeSets=toggleScene(activeSets,current);
+ syncSetControls();
+ const info=sceneForSteps(state.stageSteps);
+ status.textContent=info.title+' · '+(activeSets[current]?
+  'The real little mechanisms come to life.':'The miniature mechanisms settle back to rest.');
+}
 function describe(next,action){
  if(action==='curtains')return next.curtainsOpen?
   'The real velvet curtains slide apart. There is an actual stage behind them.':
@@ -280,20 +321,26 @@ function apply(action){
  const before=state;
  state=theatreState(state,{type:action});
  if(state===before)return;
+ if(action==='act'||action==='reset')activeSets=resetScenes();
  openCurtains.textContent=state.curtainsOpen?'Close the curtains':'Open the curtains';
  openCurtains.setAttribute('aria-pressed',String(state.curtainsOpen));
  turnStage.textContent='Turn the stage · '+STAGE_ACTS[actIndex(state.stageSteps)];
  playRecord.textContent=state.recordPlaying?'Stop the record':'Start the record';
  playRecord.setAttribute('aria-pressed',String(state.recordPlaying));
+ syncSetControls();
  status.textContent=describe(state,action);
 }
 function selectMechanism(id){
+ if(id==='set'){toggleCurrentSet();return;}
+ // The physical stage cannot be inspected if velvet is still in the way.
+ if(id==='act'&&!state.curtainsOpen)apply('curtains');
  inspectObject(id);
  apply(id);
  status.textContent+=' The camera is moving in for a closer look.';
 }
 openCurtains.addEventListener('click',()=>selectMechanism('curtains'));
 turnStage.addEventListener('click',()=>selectMechanism('act'));
+setButton.addEventListener('click',toggleCurrentSet);
 playRecord.addEventListener('click',()=>selectMechanism('record'));
 overviewButton.addEventListener('click',viewWholeTheatre);
 reset.addEventListener('click',()=>{
@@ -336,6 +383,7 @@ canvas.addEventListener('pointermove',e=>{
  canvas.style.cursor=picked?'pointer':'default';
  canvas.title=picked==='curtains'?'Approach and slide the physical velvet curtains':
   picked==='act'?'Approach and rotate the shared mechanical stage':
+  picked==='set'?'Bring the physical '+sceneForSteps(state.stageSteps).name+' set to life':
   picked==='record'?'Approach and operate the real miniature gramophone':
   cameraFocus?'Return to the whole theatre':'The Impossible Theatre';
 });
@@ -356,6 +404,7 @@ if(resizeObserver)resizeObserver.observe(canvas);
 resize();
 const clock=new THREE.Clock();
 let recordAngle=0;
+syncSetControls();
 function frame(){
  const dt=Math.min(.08,clock.getDelta());
  const cameraSpeed=reducedMotion?.matches?1000:2.75;
@@ -367,6 +416,9 @@ function frame(){
  curtains.left.position.x=smoothTowards(curtains.left.position.x,curtainX('left',state.curtainsOpen),dt,4.7);
  curtains.right.position.x=smoothTowards(curtains.right.position.x,curtainX('right',state.curtainsOpen),dt,4.7);
  revolve.rotation.y=smoothTowards(revolve.rotation.y,stageAngle(state.stageSteps),dt,4.2);
+ livingSets.update(dt,activeSets);
+ // Real colour changes fall across the physical scenery as the stage turns.
+ spotlight.color.lerp(lightCues[actIndex(state.stageSteps)],Math.min(1,dt*1.6));
  tonearm.rotation.y=smoothTowards(tonearm.rotation.y,tonearmAngle(state.recordPlaying),dt,5);
  recordAngle=recordAdvance(recordAngle,state.recordPlaying,dt);
  record.rotation.y=recordAngle;

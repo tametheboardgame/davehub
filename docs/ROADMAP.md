@@ -2,6 +2,10 @@
 
 **DH-11C Writing Room, complete and owner-approved:** All physical interactions through DH-11C.6E.1 were selectively promoted to GitHub `main` via PR #114 on 8 November 2026. The Writing Room is now frozen for new functionality until approved real content can replace fictional demonstrations. No production custom-domain launch has occurred.
 
+## DH-12A.3 — Three living miniature stage sets
+
+Develop the first prototype into a characterful miniature theatre without changing the approved close-up camera or main mechanical movements. Each original physical set becomes a distinct sculpted world: **The Clockwork Chorus** with moving birds and gears; **The Theatre Within** with hinged flats and a rising skyline; and **The Marionette Assembly** with jointed wooden performers. A visitor can click a real physical prop or use **Bring the set to life**, then let it settle before revolving to another scene. Add actual ropes, pulleys, footlights and balconies, and change real stage lighting for each act. [Geometry and interaction contract](DH12A3_LIVING_STAGE_SETS.md). Staging-only review, no real audio or unpublished work.
+
 ## DH-12A.2 — Move into each theatre mechanism
 
 Owner review: the first mechanical theatre is a promising start, but the camera should move **into** selected objects as it does in the Writing Room. Keep real curtain, revolving-stage and record-player movement. Add one interpolated, responsive camera with separate focus poses; clicking any actual mechanism or matching native control approaches it and operates it. A small Whole theatre action, Escape and clicking empty scenery return to the overview without resetting objects. The existing Music page is unchanged; this remains an isolated staging preview. [Design and acceptance](DH12A2_CAMERA_APPROACH.md).
