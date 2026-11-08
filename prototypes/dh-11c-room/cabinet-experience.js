@@ -11,7 +11,7 @@
   if(entry?.related?.type==='workshop')return 'Try the typewriter workshop';
   return null;
  };
- function mount({document,catalogue,onRelated=()=>{}}){
+ function mount({document,catalogue,onRelated=()=>{},onClose=()=>{}}){
   if(!document?.getElementById||!catalogue?.at)throw Error('Archive reader requires approved catalogue');
   const get=id=>{
    const value=document.getElementById(id);
@@ -59,8 +59,11 @@
    current=null;
    const target=navigate;navigate=null;
    if(target)onRelated(target);
-   else if(invoker?.isConnected&&typeof invoker.focus==='function')
-    invoker.focus({preventScroll:true});
+   else{
+    onClose();
+    if(invoker?.isConnected&&typeof invoker.focus==='function')
+     invoker.focus({preventScroll:true});
+   }
   });
   return Object.freeze({show,hide,relatedLabel,
    get opened(){return dialog.open;},
