@@ -61,6 +61,7 @@
   const dialog=node('discarded-dialog'),close=node('discarded-close'),
    title=node('discarded-title'),number=node('discarded-number'),
    stamp=node('discarded-stamp'),text=node('discarded-text'),reverse=node('discarded-reverse'),
+   reverseLabel=node('discarded-reverse-label'),
    folded=node('discarded-folded'),sheet=node('discarded-sheet'),
    unfold=node('discarded-unfold'),flip=node('discarded-flip'),
    feedback=node('discarded-feedback'),leave=node('discarded-leave'),
@@ -71,6 +72,7 @@
    sheet.dataset.side=side;
    text.hidden=back;
    reverse.hidden=!back;
+   reverseLabel.hidden=!back;
    flip.textContent=back?'Turn back over':'Turn over';
    flip.setAttribute('aria-label',back?'Read the front of the recovered scrap':'Read why this idea was discarded');
   }
