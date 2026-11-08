@@ -2,7 +2,7 @@
   "project": "DaveHub",
   "updated": "2026-11-08",
   "status": "dh10c_hosted_editorial_foundation_deployed",
-  "current_work_package": "DH-11C.6D.1-3 living filing cabinet, staging review",
+  "current_work_package": "DH-11C.6D.4 overhead physical-drawer inspection, staged",
   "completed": [
     "DH-00A",
     "DH-00B",
@@ -1352,6 +1352,22 @@
         "mainChanged": false,
         "productionChanged": false,
         "docs": "docs/DH11C6D_LIVING_ARCHIVE.md",
+        "ownerVisualReview": "pending"
+      },
+      "overheadCabinetTray": {
+        "stage": "DH-11C.6D.4",
+        "status": "feature_branch_under_test",
+        "stagingRoute": "/worlds/writing/",
+        "issue": "Only lowest two drawers allow reliable direct 3D folder clicks from current cabinet camera",
+        "solution": "Wait for real drawer and camera to settle, then show overhead illustrated tray with four large file buttons",
+        "closeBehaviour": "Close folder returns its 3D mesh before reopening same overhead drawer; close-drawer command moves real drawer home",
+        "keyboardTouchReducedMotion": true,
+        "originalDrawerMeshMovementPreserved": true,
+        "olderPreviewsChanged": false,
+        "mainChanged": false,
+        "productionChanged": false,
+        "publicContent": "No changes; three published books plus nine clearly fictional demonstrations",
+        "docs": "docs/DH11C6D4_OVERHEAD_DRAWER.md",
         "ownerVisualReview": "pending"
       }
     }
