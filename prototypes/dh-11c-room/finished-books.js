@@ -10,6 +10,7 @@
  const BOOKS=Object.freeze([
   Object.freeze({
    id:'stormrider',featuredIndex:0,spine:'Stormrider',
+   binding:'#36577a',glow:'#a3bfd3', // blue storm-sky tones
    title:'The Legend of the Stormrider',year:2023,
    author:'David Fairbairn',publisher:'Cricetus Cricetus Publishing',
    isbn:'9781739314552',format:'Published book',
@@ -24,6 +25,7 @@
   }),
   Object.freeze({
    id:'duck-bread-baker',featuredIndex:1,spine:'Duck Bread',
+   binding:'#ba672c',glow:'#efb86b', // bread-crust and warm golden tones
    title:'The Duck Bread Baker',year:2023,
    author:'David Fairbairn',publisher:'Cricetus Cricetus Publishing',
    isbn:'9781739314514',format:'Published book',
@@ -38,6 +40,7 @@
   }),
   Object.freeze({
    id:'eleanor-missing-stones',featuredIndex:2,spine:'Eleanor',
+   binding:'#404864',glow:'#abb2d3', // provisional while original cover is unavailable
    title:'Eleanor and the Mystery of the Missing Stones',year:2026,
    author:'David Fairbairn',publisher:'Cricetus Cricetus Publishing',
    isbn:'9781739314576',format:'Paperback',

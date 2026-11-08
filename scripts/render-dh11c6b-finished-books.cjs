@@ -1,7 +1,7 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path');
 const prior=require('./render-dh11c6a-minimal-room.cjs');
-const VERSION='dh11c6b2-floating-prompt-v1';
+const VERSION='dh11c6b3-real-edition-spines-v1';
 const MARKER='DH-11C.6B';
 function render(source){
  let html=prior.render(source);
@@ -24,7 +24,8 @@ function render(source){
  put('<meta name="davehub-book-stage" content="'+MARKER+'">',
   '<meta name="davehub-book-stage" content="'+MARKER+'">'+
   '<meta name="davehub-layout-stage" content="DH-11C.6B.1">'+
-  '<meta name="davehub-layout-fix" content="DH-11C.6B.2">');
+  '<meta name="davehub-layout-fix" content="DH-11C.6B.2">'+
+  '<meta name="davehub-spine-stage" content="DH-11C.6B.3">');
  const modal=[
   '<dialog id="published-book-dialog" class="published-book-dialog" aria-labelledby="published-book-title" aria-describedby="published-book-description">',
   '<button id="published-book-close" class="published-book-close" type="button" aria-label="Close book details">×</button>',

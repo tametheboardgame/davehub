@@ -35,14 +35,14 @@ test('Eleanor text-only cover has a compact fixed limit and cannot stretch the p
 });
 test('new CSS and JS versions are included only in staged Writing room route',()=>{
  const html=renderer.render(get('prototypes/dh-11c-room/index.html'));
- assert.equal(renderer.VERSION,'dh11c6b2-floating-prompt-v1');
+ assert.equal(renderer.VERSION,'dh11c6b3-real-edition-spines-v1');
  for(const snippet of [
   'DH-11C.6B.1','DH-11C.6B.2',
-  'room.js?v=dh11c6b2-floating-prompt-v1',
-  'finished-books.js?v=dh11c6b2-floating-prompt-v1',
-  'book-experience.js?v=dh11c6b2-floating-prompt-v1',
-  'minimal-immersive.css?v=dh11c6b2-floating-prompt-v1',
-  'book-experience.css?v=dh11c6b2-floating-prompt-v1',
+  'room.js?v=dh11c6b3-real-edition-spines-v1',
+  'finished-books.js?v=dh11c6b3-real-edition-spines-v1',
+  'book-experience.js?v=dh11c6b3-real-edition-spines-v1',
+  'minimal-immersive.css?v=dh11c6b3-real-edition-spines-v1',
+  'book-experience.css?v=dh11c6b3-real-edition-spines-v1',
   'id="published-book-cover-fallback"',
   'id="object-prompt"',
   'data-exit-door-proof="true"'

@@ -39,10 +39,10 @@
   let n=(seed*1664525+1013904223)>>>0;
   return ()=>{n=(Math.imul(n,1664525)+1013904223)>>>0;return n/4294967296;};
  }
- function paintSpine(ctx,width,height,index,featured=false,overrideTitle=null){
+ function paintSpine(ctx,width,height,index,featured=false,overrideTitle=null,overridePalette=null){
   const r=random(index+67),W=width,H=height;
   ctx.clearRect(0,0,W,H);
-  const palette=featured?'#107b88':COLOURS[(index*7+Math.floor(index/20)*3)%COLOURS.length];
+  const palette=overridePalette||(featured?'#107b88':COLOURS[(index*7+Math.floor(index/20)*3)%COLOURS.length]);
   ctx.fillStyle=palette;ctx.fillRect(0,0,W,H);
   for(let i=0;i<18;i++){
    ctx.strokeStyle=i%3===0?'rgba(250,211,152,.22)':'rgba(14,23,36,.17)';
@@ -170,7 +170,8 @@
      ?finishedBooks.byIndex(featuredIndex):null;
     const titleLabel=finishedBooks?(published?.spine||BOOK_TITLES[id]):null;
     const panel=textureFrom(192,768,(ctx,w,h)=>paintSpine(ctx,w,h,id,
-     finishedBooks?Boolean(published):Number.isInteger(mesh.userData?.featuredBookIndex),titleLabel));
+     finishedBooks?Boolean(published):Number.isInteger(mesh.userData?.featuredBookIndex),
+     titleLabel,published?.binding||null));
     attach(mesh,panel,[x,y,b.max.z+.009/sz],[dx*.84,dy*.90]);
     mesh.userData.manuscriptJokeTitle=finishedBooks
      ?(published?.title||BOOK_TITLES[id]):AUTHORED_BOOK_TITLES[id];
