@@ -220,6 +220,7 @@ body[data-uncrumple-direct="true"] .discarded-crumple{
  cursor:pointer;
 }
 body[data-uncrumple-direct="true"] .discarded-crumple-art{
+ display:block;
  transition:filter .15s ease;
 }
 body[data-uncrumple-direct="true"] .discarded-crumple:hover .discarded-crumple-art,
