@@ -58,10 +58,12 @@ for asset in \
   tests/dh11c6e-wastepaper.test.cjs \
   tests/dh11c6e1-uncrumple.test.cjs \
   tests/dh12a-theatre.test.cjs \
+  tests/dh12a2-camera-focus.test.cjs \
   prototypes/dh-12a-listening-room/index.html \
   prototypes/dh-12a-listening-room/theatre.css \
   prototypes/dh-12a-listening-room/theatre.mjs \
   prototypes/dh-12a-listening-room/theatre-mechanics.mjs \
+  prototypes/dh-12a-listening-room/theatre-camera.mjs \
   scripts/render-dh11c6e1-visible-uncrumple.cjs \
   scripts/render-dh11c6e-wastepaper-bin.cjs \
   prototypes/dh-11c-room/discarded-ideas.js \
@@ -188,7 +190,7 @@ done
 
 # A private draft must never become a deployed page through a build bypass.
 # Validate both the empty/approved production manifest and fictional test fixtures.
-node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/dh11-worlds.test.cjs tests/dh11c-cabinet-geometry.test.cjs tests/dh11c-room.test.cjs tests/dh11c-drawer-picking.test.cjs tests/dh11c-art-direction.test.cjs tests/dh11c4-cabinet-glb.test.cjs tests/dh11c4b-blender.test.cjs tests/dh11c4c-room-architecture.test.cjs tests/dh11c4d-immersive-viewport.test.cjs tests/dh11c4e-room-shell.test.cjs tests/dh11c4f-furniture.test.cjs tests/dh11c4f-animation-fixes.test.cjs tests/dh11c5a-desk-materials.test.cjs tests/dh11c5b-archive-materials.test.cjs tests/dh11c5c-illustrated-style.test.cjs tests/dh11c5c2a-painted-surfaces.test.cjs tests/dh11c5c2b-soft-edges.test.cjs tests/dh11c5c3-comic-storybook.test.cjs tests/dh11c5d-view-pipeline.test.cjs tests/dh11c5d3-art-alignment.test.cjs tests/dh11c5d3b-authored-3d.test.cjs tests/dh11c5d3c-spine-art.test.cjs tests/dh11c5d3d-sculpted-bookcase.test.cjs tests/dh11c5d3e-authored-details.test.cjs tests/dh11c5d3f-readable-hoard.test.cjs tests/dh11c5d3g-authored-handwriting.test.cjs tests/dh11c5d3h-room-props.test.cjs tests/dh11c5d3i-exit-door.test.cjs tests/dh11c5d3j-writing-island.test.cjs tests/dh11c6a-minimal-ui.test.cjs tests/dh11c6a1-click-outside.test.cjs tests/dh11c6a2-dark-window.test.cjs tests/dh11c6b-finished-books.test.cjs tests/dh11c6b1-layout-polish.test.cjs tests/dh11c6b2-prompt-and-jacket.test.cjs tests/dh11c6b3-authentic-spines.test.cjs tests/dh11c6c1-manuscript-workshop.test.cjs tests/dh11c6c2-motion-first.test.cjs tests/dh11c6d-cabinet-archive.test.cjs tests/dh11c6d4-overhead-tray.test.cjs tests/dh11c6e-wastepaper.test.cjs tests/dh11c6e1-uncrumple.test.cjs tests/dh12a-theatre.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs tests/dh10c-editorial.test.cjs tests/dh10c-hosted-http.test.cjs
+node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/dh11-worlds.test.cjs tests/dh11c-cabinet-geometry.test.cjs tests/dh11c-room.test.cjs tests/dh11c-drawer-picking.test.cjs tests/dh11c-art-direction.test.cjs tests/dh11c4-cabinet-glb.test.cjs tests/dh11c4b-blender.test.cjs tests/dh11c4c-room-architecture.test.cjs tests/dh11c4d-immersive-viewport.test.cjs tests/dh11c4e-room-shell.test.cjs tests/dh11c4f-furniture.test.cjs tests/dh11c4f-animation-fixes.test.cjs tests/dh11c5a-desk-materials.test.cjs tests/dh11c5b-archive-materials.test.cjs tests/dh11c5c-illustrated-style.test.cjs tests/dh11c5c2a-painted-surfaces.test.cjs tests/dh11c5c2b-soft-edges.test.cjs tests/dh11c5c3-comic-storybook.test.cjs tests/dh11c5d-view-pipeline.test.cjs tests/dh11c5d3-art-alignment.test.cjs tests/dh11c5d3b-authored-3d.test.cjs tests/dh11c5d3c-spine-art.test.cjs tests/dh11c5d3d-sculpted-bookcase.test.cjs tests/dh11c5d3e-authored-details.test.cjs tests/dh11c5d3f-readable-hoard.test.cjs tests/dh11c5d3g-authored-handwriting.test.cjs tests/dh11c5d3h-room-props.test.cjs tests/dh11c5d3i-exit-door.test.cjs tests/dh11c5d3j-writing-island.test.cjs tests/dh11c6a-minimal-ui.test.cjs tests/dh11c6a1-click-outside.test.cjs tests/dh11c6a2-dark-window.test.cjs tests/dh11c6b-finished-books.test.cjs tests/dh11c6b1-layout-polish.test.cjs tests/dh11c6b2-prompt-and-jacket.test.cjs tests/dh11c6b3-authentic-spines.test.cjs tests/dh11c6c1-manuscript-workshop.test.cjs tests/dh11c6c2-motion-first.test.cjs tests/dh11c6d-cabinet-archive.test.cjs tests/dh11c6d4-overhead-tray.test.cjs tests/dh11c6e-wastepaper.test.cjs tests/dh11c6e1-uncrumple.test.cjs tests/dh12a-theatre.test.cjs tests/dh12a2-camera-focus.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs tests/dh10c-editorial.test.cjs tests/dh10c-hosted-http.test.cjs
 node -e "const {validateManifest}=require('./scripts/davehub-manifest.cjs'); const data=require('./davehub.json'); const result=validateManifest(data,'tametheboardgame/davehub');if(!result.valid)throw new Error(result.errors.join('; '));"
 # Fail closed: only individually owner-approved records and links enter production.
 node scripts/content-check.cjs content/public/catalogue.json
@@ -203,7 +205,8 @@ mkdir -p dist/assets/worlds/writing dist/assets/branding dist/assets/homepage di
 mkdir -p dist/previews/dh-12a/listening-room/vendor
 node --check prototypes/dh-12a-listening-room/theatre.mjs
 node --check prototypes/dh-12a-listening-room/theatre-mechanics.mjs
-cp prototypes/dh-12a-listening-room/index.html prototypes/dh-12a-listening-room/theatre.css prototypes/dh-12a-listening-room/theatre.mjs prototypes/dh-12a-listening-room/theatre-mechanics.mjs dist/previews/dh-12a/listening-room/
+node --check prototypes/dh-12a-listening-room/theatre-camera.mjs
+cp prototypes/dh-12a-listening-room/index.html prototypes/dh-12a-listening-room/theatre.css prototypes/dh-12a-listening-room/theatre.mjs prototypes/dh-12a-listening-room/theatre-mechanics.mjs prototypes/dh-12a-listening-room/theatre-camera.mjs dist/previews/dh-12a/listening-room/
 cp prototypes/dh-11c-room/vendor/three-r159.module.min.js prototypes/dh-11c-room/vendor/THREE-LICENSE.txt dist/previews/dh-12a/listening-room/vendor/
 cp index.html styles.css main.js catalogue.js dist/
 cp assets/branding/davehub-logo-faithful.svg dist/assets/branding/
@@ -345,17 +348,19 @@ check('dist/worlds/games/index.html',[
 for(const slug of ['unicorn-valley','stephen-martin-project','tame-the-board-game']){
  check('dist/creations/'+slug+'/index.html',['data-davehub-inline="worlds"','class="primary-launch"'],['DESIGN REVIEW ONLY']);
 }
-check('dist/previews/dh-12a/listening-room/index.html',['DH-12A.1',
+check('dist/previews/dh-12a/listening-room/index.html',['DH-12A.2','data-theatre-camera="motion-first"','id="theatre-overview"',
  'data-dh12a-theatre="true"','The Impossible Theatre','noindex,nofollow',
  'id="theatre-curtains"','id="theatre-stage"','id="theatre-record"',
- 'theatre.mjs?v=dh12a-blockout-v1','No music, lyrics or unreleased work is loaded']);
+ 'theatre.mjs?v=dh12a2-camera-focus-v1','theatre.css?v=dh12a2-camera-focus-v1','No music, lyrics or unreleased work is loaded']);
 check('dist/previews/dh-12a/listening-room/theatre.mjs',[
  'new THREE.WebGLRenderer','makeCurtain','stageAngle(state.stageSteps)',
- 'recordAngle=recordAdvance','raycaster.intersectObjects(hitTargets,false)']);
+ 'recordAngle=recordAdvance','raycaster.intersectObjects(hitTargets,false)','updateCameraDestination()','camera.lookAt(aim)']);
 check('dist/previews/dh-12a/listening-room/theatre.css',[
  '.theatre-shell','.theatre-controls','@media(max-width:700px)']);
 check('dist/previews/dh-12a/listening-room/theatre-mechanics.mjs',[
  'export function curtainX','export function theatreState','export function stageAngle']);
+check('dist/previews/dh-12a/listening-room/theatre-camera.mjs',[
+ 'export function cameraPose','export function normalizeFocus','export function focusStatus']);
 const threeSource=fs.statSync('dist/previews/dh-12a/listening-room/vendor/three-r159.module.min.js');
 if(threeSource.size<250000)throw Error('Missing actual Three.js module in DH-12A preview');
 check('dist/worlds/writing/index.html',['DH-11C.6E.1','data-uncrumple-direct="true"','discarded-ideas.js?v=dh11c6e1-uncrumple-v1','discarded-ideas.css?v=dh11c6e1-uncrumple-v1','DH-11C.6E','data-discarded-ideas="true"','discarded-dialog','discarded-unfold','discarded-reverse','DH-11C.6D.4','data-cabinet-tray="true"','archive-tray-dialog','archive-tray-slots','cabinet-tray.js?v=dh11c6d4-overhead-tray-v1','cabinet-tray.css?v=dh11c6d4-overhead-tray-v1','DH-11C.6D.3','data-cabinet-archive="true"','archive-folder-dialog','cabinet-catalogue.js?v=dh11c6d3-cabinet-archive-v1','cabinet-experience.js?v=dh11c6d3-cabinet-archive-v1','cabinet-experience.css?v=dh11c6d3-cabinet-archive-v1','DH-11C.6C.2','data-motion-first="true"','DH-11C.6A','DH-11C.6A.1','DH-11C.6A.2','DH-11C.6B','DH-11C.6B.1','DH-11C.6B.2','DH-11C.6B.3','DH-11C.6C.1','data-manuscript-experience="true"','manuscript-dialog','workshop-dialog','data-finished-books="true"','published-book-dialog','data-dark-window-preload="true"','data-minimal-ui="true"','<meta name="davehub-ui-stage" content="DH-11C.6A">','/assets/branding/davehub-logo-faithful.svg','← Back','id="object-prompt"','id="object-prompt-open"','id="object-full-close"','minimal-immersive.css','DH-11C.5D.3J','data-writing-world="true"','data-exit-door-proof="true"','<base href="/worlds/writing/scene/">','room.js?v=dh11c6e-wastepaper-v1','manuscript-experience.js?v=dh11c6c1-reading-workshop-v1','manuscript-experience.css?v=dh11c6c1-reading-workshop-v1','window-illustration-v2.js?v=dh11c6a2-dark-window-v1','door-exit.js?v=dh11c5d3i-door-home-exit-v1','<canvas id="room-canvas"'],['data-scene="manuscript-hoard"','room-stage-image','Existing Writing world','The Last Lightkeeper','The Clock of Tomorrow']);

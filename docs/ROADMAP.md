@@ -2,6 +2,10 @@
 
 **DH-11C Writing Room, complete and owner-approved:** All physical interactions through DH-11C.6E.1 were selectively promoted to GitHub `main` via PR #114 on 8 November 2026. The Writing Room is now frozen for new functionality until approved real content can replace fictional demonstrations. No production custom-domain launch has occurred.
 
+## DH-12A.2 — Move into each theatre mechanism
+
+Owner review: the first mechanical theatre is a promising start, but the camera should move **into** selected objects as it does in the Writing Room. Keep real curtain, revolving-stage and record-player movement. Add one interpolated, responsive camera with separate focus poses; clicking any actual mechanism or matching native control approaches it and operates it. A small Whole theatre action, Escape and clicking empty scenery return to the overview without resetting objects. The existing Music page is unchanged; this remains an isolated staging preview. [Design and acceptance](DH12A2_CAMERA_APPROACH.md).
+
 ## DH-12A.1 — The Impossible Theatre, Music world geometry-first concept
 
 The next distinct DaveHub space is **Music / The Listening Room**. Start with an isolated **`/previews/dh-12a/listening-room/`** prototype: an eccentric miniature theatre with actual sliding cloth curtains, a single rotating stage showing three physical sets, and a rotating grooved record with its own moving tonearm. No audio or unpublished content. Native buttons and 3D click/touch affordances must operate the same mechanical state. Do not replace `/worlds/music/` until owner review. [Architecture, mechanics and review gate](DH12A_IMPOSSIBLE_THEATRE.md).

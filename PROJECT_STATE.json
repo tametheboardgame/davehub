@@ -2,7 +2,7 @@
   "project": "DaveHub",
   "updated": "2026-11-08",
   "status": "dh10c_hosted_editorial_foundation_deployed",
-  "current_work_package": "DH-12A.1 Impossible Theatre Music world, staging preview",
+  "current_work_package": "DH-12A.2 Camera approach and inspection, Music world staging preview",
   "completed": [
     "DH-00A",
     "DH-00B",
@@ -1401,10 +1401,10 @@
     }
   },
   "dh12_music": {
-    "stage": "DH-12A.1",
+    "stage": "DH-12A.2",
     "world": "music",
     "creativeDirection": "The Impossible Theatre, a surreal miniature stage with real moving mechanics",
-    "status": "staging_geometry_first_review",
+    "status": "staging_camera_focus_under_test",
     "previewRoute": "/previews/dh-12a/listening-room/",
     "existingMusicRouteReplaced": false,
     "physicalCurtains": true,
@@ -1414,6 +1414,19 @@
     "ownerVisualApproval": "pending",
     "mainChanged": false,
     "productionChanged": false,
-    "docs": "docs/DH12A_IMPOSSIBLE_THEATRE.md"
+    "docs": "docs/DH12A2_CAMERA_APPROACH.md",
+    "camera": {
+      "type": "one perspective camera travelling to genuine object focus points",
+      "modes": [
+        "overview",
+        "curtains",
+        "act",
+        "record"
+      ],
+      "actions": "select object -> approach + operate; Whole theatre / Escape / empty scene -> overview",
+      "responsive": true,
+      "reducedMotion": true,
+      "originalGeometryPreserved": true
+    }
   }
 }

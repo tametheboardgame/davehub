@@ -150,3 +150,53 @@ button:focus-visible,a:focus-visible{
  .theatre-actions button{transition:none}
  .theatre-actions button:hover{translate:none}
 }
+
+/* DH-12A.2: a small way back, not a giant overlay over the mechanism.
+   The camera does the moving; furniture stays fixed to its real pivots. */
+body[data-theatre-camera="motion-first"] .theatre-view{
+ position:absolute;z-index:4;
+ top:clamp(13px,3vh,31px);right:clamp(14px,3vw,43px);
+ display:flex;flex-direction:column;align-items:flex-end;
+ gap:8px;max-width:38vw;
+ text-align:right;
+}
+body[data-theatre-camera="motion-first"] .theatre-view[hidden]{display:none}
+.theatre-view__name{
+ margin:0;padding:6px 11px;
+ border:1px solid #a98d6a70;
+ border-radius:12px;background:#2a2031dc;
+ color:#ffe2b4;
+ font:800 11px/1.4 system-ui,sans-serif;
+ letter-spacing:.075em;
+ text-transform:uppercase;
+ backdrop-filter:blur(5px);
+}
+#theatre-overview{
+ border:1px solid #eed4a7;border-radius:999px;
+ padding:9px 18px;min-height:43px;
+ background:#efd5aa;color:#302434;
+ box-shadow:0 5px 17px #0b0911b8;
+ cursor:pointer;
+ font:800 13px/1.25 system-ui,sans-serif;
+}
+#theatre-overview:hover{background:#ffebc9}
+body[data-theatre-focus] .theatre-hint{
+ max-width:24ch;
+}
+@media(max-width:700px){
+ body[data-theatre-camera="motion-first"] .theatre-view{
+  top:auto;right:10px;
+  bottom:calc(min(46svh,400px) + 16px);
+  max-width:calc(100vw - 20px);gap:5px;
+ }
+ .theatre-view__name{font-size:10px;max-width:100%}
+ #theatre-overview{min-height:44px;padding:9px 14px;font-size:12px}
+}
+@media(max-height:620px) and (min-width:701px){
+ body[data-theatre-camera="motion-first"] .theatre-view{top:8px;right:15px}
+ .theatre-view__name{font-size:10px}
+ #theatre-overview{padding:6px 14px;min-height:39px}
+}
+@media(prefers-reduced-motion:reduce){
+ #theatre-overview{transition:none}
+}
