@@ -47,7 +47,7 @@ test('real desk mesh and keyboard controls reach reader; real typewriter reaches
   'if(manuscriptExperienceEnabled&&state.papers[index])manuscriptExperience.openManuscript(index);',
   "add('Read a manuscript',()=>manuscriptExperience.openManuscript(0))",
   "add('Open the creative workshop',()=>manuscriptExperience.openWorkshop())",
-  "if(manuscriptExperienceEnabled)manuscriptExperience.openWorkshop();",
+  "if(id==='typewriter'&&manuscriptExperienceEnabled&&!motionFirst)",
   "if(document.querySelector('dialog[open]'))return;",
   "if(id==='desk'&&paperIndex!==null)togglePaper(paperIndex);",
   "if(id==='bookcase'&&bookIndex!==null)toggleBook(bookIndex);",
