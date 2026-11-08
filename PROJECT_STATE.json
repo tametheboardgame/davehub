@@ -1323,6 +1323,20 @@
         "productionChanged": false,
         "next": "filing cabinet and owner-approved writing excerpts",
         "documentation": "docs/DH11C6C1_MANUSCRIPT_READER_TYPEWRITER.md"
+      },
+      "motionFirstFurniture": {
+        "stage": "DH-11C.6C.2",
+        "status": "feature_branch_under_test",
+        "stagingRoute": "/worlds/writing/",
+        "dialogs": "deferred until 3D paper/book and shared camera actually settle, with 0.18s finished-pose hold",
+        "pointerTypewriter": "3D key clicks animate without opening workshop",
+        "keyboardTypewriter": "printable keys animate selected real 3D key and paper while typewriter is selected",
+        "cancellation": "focus changes, overview navigation and reversals discard pending overlays",
+        "reducedMotion": "settle test remains, with final hold skipped",
+        "productionChanged": false,
+        "mainChanged": false,
+        "approvedContentChanged": false,
+        "docs": "docs/DH11C6C2_MOTION_FIRST.md"
       }
     }
   }
