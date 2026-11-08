@@ -1224,16 +1224,16 @@ canvas.addEventListener('pointerup',event=>{
      ?'Pull one of the three gold-outlined books on the top shelf.'
      :'Try one of the eight highlighted book spines.';
    }
-   else if(id==='typewriter'){
-    pressTypewriter(keyIndex);
-    if(manuscriptExperienceEnabled)manuscriptExperience.openWorkshop();
-   }
+   else if(id==='typewriter')pressTypewriter(keyIndex);
    else if(id==='bin'){
     if(binPaperIndex!==null)toggleBinPaper(binPaperIndex);
     else status.textContent='Click an actual crumpled paper to rummage in the bin.';
    }
    else if(id==='door'&&exitDoorProof)activateExitDoor();
    else if(id==='door')state=plan.next(state,{type:'door'});
+   if(id==='typewriter'&&manuscriptExperienceEnabled){
+    if(manuscriptExperienceEnabled)manuscriptExperience.openWorkshop();
+   }
    if(!['desk','bookcase','bin','typewriter'].includes(id)&&!(id==='door'&&exitDoorProof))status.textContent=plan.find(id).label+' responds to your interaction.';
   }
   if(!['desk','bookcase','bin'].includes(id))renderControls(id);
