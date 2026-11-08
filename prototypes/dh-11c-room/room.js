@@ -43,7 +43,12 @@ const cabinetCatalogue=cabinetArchiveEnabled?window.DH11CabinetCatalogue?.create
  books:finishedBooks,manuscripts:window.DH11ManuscriptExperience?.MANUSCRIPTS
 }):null;
 const cabinetExperience=cabinetArchiveEnabled?window.DH11CabinetExperience?.mount({
- document,catalogue:cabinetCatalogue,onRelated:item=>navigateFromCabinetFolder(item)
+ document,catalogue:cabinetCatalogue,onRelated:item=>navigateFromCabinetFolder(item),
+ onClose:()=>{
+  pendingFolderReveal=null;
+  if(cabinetFolders)cabinetFolders.clear();
+  if(state.focus==='cabinet')renderControls('cabinet');
+ }
 }):null;
 if(cabinetArchiveEnabled&&(!cabinetCatalogue||!cabinetExperience))
  throw Error('DH-11C.6D requires the safe catalogue and the folder reader');
