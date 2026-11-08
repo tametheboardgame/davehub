@@ -2,7 +2,7 @@
   "project": "DaveHub",
   "updated": "2026-11-08",
   "status": "dh10c_hosted_editorial_foundation_deployed",
-  "current_work_package": "DH-11C.6E Wastepaper Bin, staging owner review",
+  "current_work_package": "DH-11C.6E.1 Visible uncrumple paper action, staging review",
   "completed": [
     "DH-00A",
     "DH-00B",
@@ -1385,6 +1385,18 @@
         "productionChanged": false,
         "docs": "docs/DH11C6E_WASTEPAPER_BIN.md",
         "ownerVisualReview": "pending"
+      },
+      "visibleUncrumple": {
+        "stage": "DH-11C.6E.1",
+        "status": "feature_branch_under_test",
+        "defect": "existing Unfold action was below viewport and central crumpled paper was not clickable",
+        "solution": "native paper button plus above-fold Uncrumple paper button; scroll-safe dialog",
+        "originalNineBinTossesPreserved": true,
+        "otherWritingExperiencesPreserved": true,
+        "ownerVisualReview": "pending",
+        "mainChanged": false,
+        "productionChanged": false,
+        "docs": "docs/DH11C6E1_VISIBLE_UNCRUMPLE.md"
       }
     }
   }
