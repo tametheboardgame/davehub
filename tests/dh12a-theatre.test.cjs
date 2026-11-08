@@ -77,11 +77,11 @@ test('concept-only preview stays public-safe, discoverable and keyboard accessib
  const html=read(source+'index.html');
  for(const token of [
   'data-dh12a-theatre="true"','noindex,nofollow',
-  'DH-12A.2','The Impossible Theatre',
+  'DH-12A.3','The Impossible Theatre',
   'id="theatre-curtains"','id="theatre-stage"','id="theatre-record"',
   'id="theatre-reset"','id="theatre-status"','id="theatre-overview"','role="status"',
   'No music, lyrics or unreleased work is loaded',
-  'theatre.mjs?v=dh12a2-camera-focus-v1',
+  'theatre.mjs?v=dh12a3-living-sets-v1',
   'href="/worlds/music/"'
  ])assert.ok(html.includes(token),token);
  assert.ok(!/<audio|<iframe|autoplay|https?:\/\//i.test(html),'no external audio or embedded third-party material');
