@@ -351,7 +351,7 @@ test('bin raycasting, fallback, GLB swap, keyboard and reversible animation are 
   "m.userData.binPaperIndex=i",
   "binPaperHomes=binPapers.map(binPaperHome)",
   "binPaperIndexForMesh(mesh.name)",
-  "const {id,drawerIndex,paperIndex,bookIndex,binPaperIndex,lampPart,keyIndex}=pick",
+  "const {id,drawerIndex,folderIndex,paperIndex,bookIndex,binPaperIndex,lampPart,keyIndex}=pick",
   "toggleBinPaper(binPaperIndex)",
   "data-bin-paper-index",
   "syncBinPaperControls()",
