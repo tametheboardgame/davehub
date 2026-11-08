@@ -6,18 +6,18 @@
  <meta name="robots" content="noindex,nofollow">
  <meta name="theme-color" content="#17101e">
  <title>DH-12A · The Impossible Theatre | DaveHub</title>
- <link rel="stylesheet" href="./theatre.css?v=dh12a2-camera-focus-v1">
- <meta name="davehub-theatre-stage" content="DH-12A.2">
+ <link rel="stylesheet" href="./theatre.css?v=dh12a3-living-sets-v1">
+ <meta name="davehub-theatre-stage" content="DH-12A.3">
 </head>
-<body data-dh12a-theatre="true" data-theatre-camera="motion-first">
+<body data-dh12a-theatre="true" data-theatre-camera="motion-first" data-living-sets="true">
  <main class="theatre-shell">
   <canvas id="theatre-canvas" aria-label="Interactive 3D miniature theatre with physical curtains, a revolving stage and a working record mechanism"></canvas>
   <div class="theatre-vignette" aria-hidden="true"></div>
   <header class="theatre-header">
    <a class="theatre-back" href="/worlds/music/">← The Music world</a>
-   <span class="theatre-tag">DH-12A · MECHANICAL CONCEPT</span>
+   <span class="theatre-tag">DH-12A · A THEATRE OF IMPOSSIBLE THINGS</span>
    <h1>The Impossible Theatre</h1>
-   <p>A place for songs that haven't yet found their stage.</p>
+   <p>A little theatre full of things that should not quite fit inside it.</p>
   </header>
   <div class="theatre-view" id="theatre-view" hidden>
    <p id="theatre-focus-name" class="theatre-view__name">Velvet curtains · close-up view</p>
@@ -26,18 +26,21 @@
   <aside class="theatre-controls" aria-labelledby="theatre-controls-title">
    <p class="theatre-eyebrow">AN EXPERIMENT IN THREE ACTS</p>
    <h2 id="theatre-controls-title">Pull the strings.</h2>
+   <p id="theatre-set-caption" class="theatre-set-caption">The Clockwork Chorus</p>
+   <p id="theatre-set-description" class="theatre-set-description">A tiny clockwork music box waits for someone to wind it.</p>
    <p class="theatre-help">Click an object or use a control to move in for a closer look. Escape or Whole theatre returns to the overview.</p>
    <div class="theatre-actions">
     <button type="button" id="theatre-curtains">Open the curtains</button>
     <button type="button" id="theatre-stage">Turn the stage · Songs</button>
+    <button type="button" id="theatre-set" class="theatre-set-action" aria-pressed="false">Bring Songs to life</button>
     <button type="button" id="theatre-record">Start the record</button>
     <button type="button" id="theatre-reset" class="theatre-subtle">Put everything back</button>
    </div>
    <p id="theatre-status" class="theatre-status" role="status" aria-live="polite">The stage is waiting.</p>
    <p class="theatre-caveat">A playable geometric sketch only. No music, lyrics or unreleased work is loaded.</p>
   </aside>
-  <p class="theatre-hint">Select the velvet curtains, revolving stage or record player to approach its real moving mechanism.</p>
+  <p class="theatre-hint">Click a miniature set piece, or Bring the set to life, to animate the scenery itself.</p>
  </main>
- <script type="module" src="./theatre.mjs?v=dh12a2-camera-focus-v1"></script>
+ <script type="module" src="./theatre.mjs?v=dh12a3-living-sets-v1"></script>
 </body>
 </html>
