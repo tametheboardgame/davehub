@@ -497,6 +497,19 @@ const pullBooks=[];
 const FEATURE_BOOK_COLOUR='#24f5da';
 const featureBookGilt=new THREE.MeshBasicMaterial({color:'#ffe681',toneMapped:false});
 function featuredBookColour(mesh){
+ if(finishedBooksEnabled){
+  const edition=finishedBooks.byIndex(mesh.userData.featuredBookIndex);
+  if(edition){
+   // A book should look like its edition, not like a turquoise UI button.
+   mesh.material.color.set(edition.binding);
+   if(mesh.material.emissive){
+    mesh.material.emissive.set(edition.glow);
+    mesh.material.emissiveIntensity=.12;
+   }
+   return;
+  }
+ }
+ // Retain the strong turquoise authored-art proof in older 3D previews.
  mesh.material.color.set(FEATURE_BOOK_COLOUR);
  if(mesh.material.emissive){
   mesh.material.emissive.set('#0f9f9e');
@@ -521,16 +534,55 @@ function markFeaturedBook(mesh,index){
  const sy=Math.max(Math.abs(mesh.scale.y),.0001);
  const sz=Math.max(Math.abs(mesh.scale.z),.0001);
  const x=(bounds.min.x+bounds.max.x)/2,z=bounds.max.z+.004/sz;
- for(const [n,part,width,height] of [
-  [0,.18,.9,.025],[1,.5,.58,.095],[2,.82,.9,.025]
- ]){
-  const accent=new THREE.Mesh(
-   new THREE.BoxGeometry(dx*width,height/sy,.006/sz),featureBookGilt);
-  accent.position.set(x,bounds.min.y+dy*part,z);
-  accent.name='featured_book_gilt_'+index+'_'+n;
-  // The gilt can be clicked too, not only the coloured book underneath.
-  accent.userData.featuredBookIndex=index;
-  mesh.add(accent);
+ if(finishedBooksEnabled){
+  // Thin, continuous gold foil around the actual front spine: an unmistakable
+  // clickable cue independent of the book's own colour. The cue is attached
+  // to the GLB mesh and moves with the genuine book pull-out animation.
+  const sx=Math.max(Math.abs(mesh.scale.x),.0001);
+  const left=bounds.min.x+dx*.075,right=bounds.max.x-dx*.075;
+  const bottom=bounds.min.y+dy*.055,top=bounds.max.y-dy*.055;
+  const edgeY=.009/sy,edgeX=.008/sx;
+  const faceZ=bounds.max.z+.025/sz;
+  const foil=new THREE.MeshBasicMaterial({
+   color:'#ffe3a0',transparent:true,opacity:.95,toneMapped:false,
+   depthWrite:false
+  });
+  const edges=[
+   [0,(left+right)/2,bottom,right-left,edgeY],
+   [1,(left+right)/2,top,right-left,edgeY],
+   [2,left,(bottom+top)/2,edgeX,top-bottom],
+   [3,right,(bottom+top)/2,edgeX,top-bottom]
+  ];
+  for(const [n,px,py,width,height] of edges){
+   const accent=new THREE.Mesh(
+    new THREE.BoxGeometry(width,height,.008/sz),foil);
+   accent.position.set(px,py,faceZ);
+   accent.name='published_book_foil_'+index+'_'+n;
+   accent.userData.featuredBookIndex=index;
+   mesh.add(accent);
+  }
+  // A tiny gilded seal at the head reinforces affordance without recolouring
+  // the book and does not replace any real book geometry.
+  const seal=new THREE.Mesh(
+   new THREE.OctahedronGeometry(.021/sx,0),foil);
+  seal.position.set(x,bounds.max.y-dy*.12,faceZ+.004/sz);
+  seal.scale.y=sx/sy;
+  seal.name='published_book_seal_'+index;
+  seal.userData.featuredBookIndex=index;
+  mesh.add(seal);
+ }else{
+  // Older illustration comparison previews keep their original gold bands.
+  for(const [n,part,width,height] of [
+   [0,.18,.9,.025],[1,.5,.58,.095],[2,.82,.9,.025]
+  ]){
+   const accent=new THREE.Mesh(
+    new THREE.BoxGeometry(dx*width,height/sy,.006/sz),featureBookGilt);
+   accent.position.set(x,bounds.min.y+dy*part,z);
+   accent.name='featured_book_gilt_'+index+'_'+n;
+   // The gilt can be clicked too, not only the coloured book underneath.
+   accent.userData.featuredBookIndex=index;
+   mesh.add(accent);
+  }
  }
  if(authoredDetailProof&&!handwrittenLabelProof){
   // Earlier V5 only: the extra central emblems obstruct new real book titles.
