@@ -1,5 +1,10 @@
 # DaveHub development roadmap
 
+**8 November 2026: DH-11C complete Writing Room approved for selective main-branch promotion.** The live domain is not configured. This checkpoint preserves the illustrated Three.js Writing Room, the published books, manuscript/workshop, overhead filing cabinet and nine interactive discarded scraps, including the visible Uncrumple paper fix. Real unpublished content is deferred until a separately authorised catalogue-connection pass. [Full release record](DH11C_COMPLETE_RELEASE.md).
+
+**Next creative space: DH-12A The Listening Room (Music).** Design a distinctive, physical interactive room or stage with coherent geometry before layering illustration, with no autoplay or unapproved recordings. Keep development on staging, and treat all actual music/lyrics/scripts/cover art as publication-gated. The first task is an environmental and interaction concept, not a new content catalogue.
+
+
 **Updated:** 27 October 2026. **Current stage:** DH-07 design locked/merged, DH-08A publication foundation merged into main, DH-08B shared world/creation page renderer complete on a review branch.
 
 ## Design baseline
