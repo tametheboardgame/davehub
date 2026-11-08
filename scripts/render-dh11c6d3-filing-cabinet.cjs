@@ -30,7 +30,7 @@ function render(source){
  '    <p id="archive-folder-summary" class="archive-folder-summary"></p>',
  '    <p id="archive-folder-notice" class="archive-folder-notice"></p>',
  '    <div class="archive-folder-actions">',
- '     <button id="archive-folder-back" type="button">Return folder to the drawer</button>',
+ '     <button id="archive-folder-back" type="button">Close file and return to the drawer</button>',
  '     <button id="archive-folder-related" class="archive-folder-related" type="button" hidden></button>',
  '    </div>',
  '   </article>',
