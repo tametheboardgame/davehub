@@ -304,7 +304,7 @@ check('dist/worlds/writing/room/room.js',["window.location.assign(window.DH11Doo
 check('dist/worlds/writing/scene/immersive.css',['data-immersive-room']);
 check('dist/worlds/writing/scene/minimal-immersive.css',['object-prompt[hidden]','home-button:disabled','object-menu[open]']);
 check('dist/worlds/writing/scene/manuscript-experience.css',['.manuscript-page','.workshop-page','@media(max-width:620px)']);
-check('dist/worlds/writing/room/manuscript-experience.js',['sample only, not a published manuscript','openWorkshop','openManuscript']);
+check('dist/worlds/writing/room/manuscript-experience.js',['Sample only, not a published manuscript','openWorkshop','openManuscript']);
 check('dist/worlds/writing/scene/book-experience.css',['published-book-dialog','published-book-cover-fallback','book-buy-link','width:min(1190px','@media(max-height:670px)','width:min(100%,260px);max-height:min(390px,48dvh)']);
 check('dist/worlds/writing/scene/minimal-immersive.css',['@media(min-width:640px)','@media(max-width:639px)','data-room-focus="bookcase"']);
 check('dist/worlds/writing/room/finished-books.js',['TOP_SHELF_SLOTS','indexForMesh']);
