@@ -1,0 +1,76 @@
+/* DH-11C.6C.1: stage-only illustrated manuscript and writing workshop. */
+body[data-manuscript-experience="true"] :is(.manuscript-dialog,.workshop-dialog){
+ position:fixed;inset:0;margin:auto;border:1px solid #c49a65;
+ width:min(960px,calc(100vw - 34px));max-width:none;
+ max-height:min(88dvh,840px);overflow:auto;padding:0;
+ border-radius:18px;color:#302936;background:#e8d7b5;
+ box-shadow:0 25px 110px #05040bef;
+}
+body[data-manuscript-experience="true"] :is(.manuscript-dialog,.workshop-dialog)::backdrop{
+ background:rgba(11,9,20,.8);backdrop-filter:blur(6px);
+}
+body[data-manuscript-experience="true"] :is(.manuscript-dialog,.workshop-dialog) button{
+ cursor:pointer;font:inherit;min-height:42px;
+}
+body[data-manuscript-experience="true"] :is(.manuscript-dialog,.workshop-dialog) button:focus-visible,
+body[data-manuscript-experience="true"] .workshop-page:focus-visible{
+ outline:3px solid #a1514b;outline-offset:3px;
+}
+.manuscript-stage{padding:clamp(24px,5vw,57px);position:relative;
+ background:radial-gradient(ellipse at 15% 10%,#fff9e7 0,transparent 65%),
+ repeating-linear-gradient(0deg,transparent 0 30px,#5e4a4520 31px 32px),#ead9b6;
+ min-height:min(65dvh,610px);
+}
+.manuscript-stage:before{content:"";position:absolute;top:0;bottom:0;left:clamp(10px,3.2vw,31px);border-left:2px solid #b265695c}
+.manuscript-topline{display:flex;gap:15px;align-items:flex-start;justify-content:space-between;padding-right:42px}
+.manuscript-eyebrow{margin:0 0 9px;text-transform:uppercase;letter-spacing:.18em;font-size:11px;color:#805b4b;font-weight:800}
+.manuscript-stage h2{font-family:Georgia,serif;font-size:clamp(28px,4.8vw,48px);line-height:1.09;max-width:740px;margin:0 0 15px;color:#362b35}
+.manuscript-kind{font-size:12px;color:#70564f;margin:0 0 24px}
+.manuscript-page{padding:clamp(18px,2.5vw,30px);border:1px solid #ad93727d;border-radius:3px;
+ background:rgba(255,252,240,.78);box-shadow:4px 6px 0 #ad87623a,8px 12px 0 #a88b7030;
+ transform:rotate(-.3deg)}
+.manuscript-page h3{font:italic 26px Georgia,serif;margin:0 0 22px;color:#5d3a43}
+.manuscript-page-text{font:clamp(16px,1.55vw,19px)/1.8 Georgia,serif;color:#3c3035;max-width:68ch}
+.manuscript-page-text p{margin:0 0 1em}
+.manuscript-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:26px}
+.manuscript-pagination{display:flex;gap:8px;align-items:center}
+.manuscript-pagination button,.workshop-toolbar button{
+ border:1px solid #916d52;border-radius:9px;padding:9px 15px;
+ background:#473747;color:#fff3da;font-size:13px;font-weight:700}
+.manuscript-pagination button:disabled{opacity:.35;cursor:not-allowed}
+.manuscript-pagination span{font:600 13px Georgia,serif;min-width:95px;text-align:center}
+.manuscript-folio{font:italic 13px Georgia,serif;color:#795a51}
+.manuscript-x,.workshop-x{position:absolute;top:15px;right:16px;z-index:2;border-radius:50%;width:39px;height:39px;
+ background:#3e2c3d;color:#fff3dd;border:1px solid #c69b68;font-size:24px!important}
+.workshop-dialog{width:min(860px,calc(100vw - 34px))!important;background:#2a2533!important;color:#f8ebd3!important}
+.workshop-stage{position:relative;padding:clamp(22px,4vw,44px);
+ background:radial-gradient(circle at 90% 4%,#61405288,transparent 48%),#272330}
+.workshop-stage h2{font:clamp(29px,4.5vw,45px)/1.1 Georgia,serif;margin:0 42px 12px 0}
+.workshop-subtitle{font-size:13px;line-height:1.6;color:#dcc6ba;max-width:65ch;margin:0 0 18px}
+.workshop-prompt{display:flex;justify-content:space-between;gap:15px;align-items:center;
+ border:1px solid #c2a0737c;border-radius:11px;background:#1c1c2b;padding:14px 17px;margin-bottom:17px}
+.workshop-prompt p{margin:0;font:italic 16px/1.5 Georgia,serif;color:#f7d9a7}
+.workshop-prompt button{border:1px solid #d5a977;border-radius:8px;background:#49384a;color:#fff1d5;padding:8px 11px;white-space:nowrap}
+.workshop-paper{background:repeating-linear-gradient(0deg,#fff4d9 0 31px,#d9c5a744 32px 33px);
+ border-radius:5px 5px 2px 2px;border:1px solid #b89d79;box-shadow:8px 11px 0 #110c1b8c;padding:14px}
+.workshop-page{display:block;resize:vertical;width:100%;min-height:220px;max-height:55dvh;border:0;outline:0;
+ background:transparent;color:#2a2932;font:17px/33px 'Courier New',monospace;padding:1px 9px;letter-spacing:.01em}
+.workshop-page::placeholder{color:#786d68}
+.workshop-toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:23px}
+.workshop-toolbar button{background:#5a4142}
+.workshop-count{font-size:13px;margin-left:auto;color:#dac8b7}
+.workshop-feedback{font-size:12px;line-height:1.5;color:#d7c4ae;margin:13px 0 0;min-height:19px}
+@media(max-width:620px){
+ body[data-manuscript-experience="true"] :is(.manuscript-dialog,.workshop-dialog){max-height:92dvh;width:calc(100vw - 18px)!important}
+ .manuscript-stage{padding:22px 18px 26px;min-height:auto}
+ .manuscript-stage:before{display:none}
+ .manuscript-page{padding:15px}
+ .manuscript-page-text{font-size:16px;line-height:1.65}
+ .manuscript-page h3{font-size:22px}
+ .manuscript-pagination span{min-width:68px}
+ .workshop-prompt{flex-direction:column;align-items:stretch}
+ .workshop-toolbar{gap:8px}
+ .workshop-count{margin-left:0;width:100%}
+ .workshop-page{font-size:15px}
+}
+@media(prefers-reduced-motion:reduce){.manuscript-page{transform:none}}
