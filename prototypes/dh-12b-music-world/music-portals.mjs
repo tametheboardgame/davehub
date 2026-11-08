@@ -26,7 +26,8 @@ export function nextDoorState(previous,id){
 }
 export function doorAngle(open,side){
  if(side!=='left'&&side!=='right')throw Error('Unknown door side');
- return (side==='left'?-1:1)*(open?1.02:0);
+ if(!open)return 0;
+ return (side==='left'?-1:1)*1.02;
 }
 export function approach(from,to,seconds,speed=3.8){
  const alpha=1-Math.exp(-Math.min(.08,Math.max(0,seconds))*speed);
