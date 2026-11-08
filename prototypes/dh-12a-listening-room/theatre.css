@@ -1,0 +1,152 @@
+/* DH-12A.1: a dark pop-up theatre in one real 3D scene.
+   Visual prototype only: no audio, lyrics, recordings or catalogue. */
+:root{color-scheme:dark;font-family:Georgia,'Times New Roman',serif}
+*{box-sizing:border-box}
+html,body{margin:0;min-width:280px;background:#171321;color:#f7ead7}
+body{min-height:100svh}
+button,a{font:inherit}
+button:focus-visible,a:focus-visible{
+ outline:3px solid #ffdc94;outline-offset:3px
+}
+.theatre-shell{
+ position:relative;width:100%;min-height:100svh;
+ background:radial-gradient(ellipse at 56% 35%,#3b283e,#171321 72%);
+ overflow:hidden;
+}
+#theatre-canvas{
+ position:absolute;inset:0;width:100%;height:100%;
+ display:block;touch-action:pan-y
+}
+.theatre-vignette{
+ position:absolute;inset:0;pointer-events:none;
+ background:radial-gradient(ellipse at 54% 50%,transparent 34%,#120e1b94 100%);
+}
+.theatre-header{
+ position:absolute;top:clamp(16px,3vh,32px);left:clamp(15px,3vw,43px);
+ z-index:2;max-width:min(510px,55vw);
+ pointer-events:none;
+}
+.theatre-back{
+ display:inline-flex;align-items:center;min-height:38px;
+ padding:7px 14px 8px;background:#2d2335dc;
+ border:1px solid #8e715c;color:#ebd9ba;
+ border-radius:999px;text-decoration:none;
+ font:700 12px/1.3 system-ui,sans-serif;letter-spacing:.015em;
+ pointer-events:auto;
+}
+.theatre-back:hover{background:#4d374d}
+.theatre-tag{
+ display:block;margin-top:clamp(15px,3vh,25px);
+ color:#d1b88b;letter-spacing:.21em;
+ font:800 11px/1.5 system-ui,sans-serif;
+ text-shadow:0 2px 10px #100d16;
+}
+.theatre-header h1{
+ margin:4px 0 11px;
+ font:clamp(31px,3.9vw,61px)/.98 Georgia,serif;
+ letter-spacing:-.025em;color:#ffe8c3;
+ text-shadow:0 4px 30px #0d0918eb;
+}
+.theatre-header p{
+ max-width:34ch;margin:0;
+ font:italic clamp(14px,1.4vw,19px)/1.45 Georgia,serif;
+ color:#e2c8ac;text-shadow:0 3px 9px #110c1b;
+}
+.theatre-controls{
+ position:absolute;z-index:3;
+ left:clamp(16px,3vw,43px);bottom:clamp(15px,3vh,29px);
+ width:min(325px,31vw);max-height:min(65vh,565px);
+ padding:clamp(16px,2.3vw,27px);
+ border:1px solid #ad8e6f;border-radius:18px 5px 19px 6px;
+ background:
+  radial-gradient(ellipse at 90% 0,#5b3f4cbd,transparent 70%),
+  linear-gradient(155deg,#29242ce8,#35263ee8);
+ box-shadow:0 18px 55px #070610c9,inset 0 0 0 2px #ae8e5a1c;
+ backdrop-filter:blur(12px);
+ overflow:auto;
+}
+.theatre-eyebrow{
+ margin:0 0 6px;
+ color:#d6b680;letter-spacing:.18em;
+ font:800 10px/1.3 system-ui,sans-serif;
+}
+.theatre-controls h2{
+ margin:0 0 10px;
+ font:clamp(22px,2.1vw,30px)/1.12 Georgia,serif;
+ color:#ffe9cd;
+}
+.theatre-help{
+ margin:0 0 15px;
+ color:#dfc4b2;
+ font:13px/1.5 system-ui,sans-serif;
+}
+.theatre-actions{display:grid;gap:8px}
+.theatre-actions button{
+ display:block;min-height:43px;width:100%;padding:9px 15px;
+ text-align:left;cursor:pointer;
+ border:1px solid #ba9b71;border-radius:8px;
+ color:#352737;background:#edcd9c;
+ font:800 12px/1.3 system-ui,sans-serif;
+ transition:background .15s ease,translate .15s ease;
+}
+.theatre-actions button:hover{background:#fbe1b8;translate:0 -2px}
+.theatre-actions button[aria-pressed=true]{
+ background:#7c596c;color:#fff0d8;border-color:#d9b885;
+}
+.theatre-actions .theatre-subtle{
+ background:#463848;color:#f1d9c6;border-color:#826b68;
+}
+.theatre-actions .theatre-subtle:hover{background:#594455}
+.theatre-status{
+ margin:12px 0 7px;min-height:2em;
+ color:#f4debd;font:italic 14px/1.4 Georgia,serif;
+}
+.theatre-caveat{
+ margin:9px 0 0;padding-top:10px;border-top:1px solid #9e84676f;
+ color:#b6a3a0;font:11px/1.4 system-ui,sans-serif;
+}
+.theatre-hint{
+ position:absolute;z-index:1;
+ right:clamp(17px,4vw,55px);bottom:16px;
+ max-width:29ch;margin:0;color:#d4bda7;
+ font:italic 13px/1.4 Georgia,serif;
+ text-align:right;text-shadow:0 2px 14px #080510;
+ pointer-events:none;
+}
+@media(max-width:950px){
+ .theatre-header{max-width:65vw}
+ .theatre-controls{width:min(305px,38vw);max-height:59vh}
+ .theatre-hint{right:14px;bottom:12px;max-width:25ch}
+}
+@media(max-width:700px){
+ .theatre-shell{min-height:100svh}
+ .theatre-header{top:14px;left:14px;max-width:calc(100vw - 28px)}
+ .theatre-back{min-height:35px;font-size:11px}
+ .theatre-tag{margin-top:7px;font-size:9px}
+ .theatre-header h1{font-size:clamp(28px,8vw,41px);margin:2px 0 4px}
+ .theatre-header p{font-size:13px}
+ .theatre-controls{
+  left:9px;right:9px;bottom:8px;width:auto;
+  max-height:min(46svh,400px);padding:12px 15px;
+  border-radius:12px
+ }
+ .theatre-controls h2{font-size:23px;margin-bottom:5px}
+ .theatre-help{font-size:11px;line-height:1.35;margin-bottom:9px}
+ .theatre-actions{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+ .theatre-actions button{min-height:45px;padding:8px 9px;font-size:11px}
+ .theatre-status{font-size:12px;margin:9px 0 0;min-height:0}
+ .theatre-caveat{font-size:10px;padding-top:7px}
+ .theatre-hint{display:none}
+}
+@media(max-height:620px) and (min-width:701px){
+ .theatre-header{top:8px}
+ .theatre-header h1{font-size:37px}
+ .theatre-tag{margin-top:8px}
+ .theatre-controls{max-height:78vh;padding:12px 16px}
+ .theatre-controls h2{font-size:23px}
+ .theatre-help,.theatre-caveat{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+ .theatre-actions button{transition:none}
+ .theatre-actions button:hover{translate:none}
+}
