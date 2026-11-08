@@ -2,7 +2,7 @@
   "project": "DaveHub",
   "updated": "2026-11-08",
   "status": "dh10c_hosted_editorial_foundation_deployed",
-  "current_work_package": "DH-11C.6E.1 Visible uncrumple paper action, staging review",
+  "current_work_package": "DH-12A.1 Impossible Theatre Music world, staging preview",
   "completed": [
     "DH-00A",
     "DH-00B",
@@ -1388,7 +1388,7 @@
       },
       "visibleUncrumple": {
         "stage": "DH-11C.6E.1",
-        "status": "feature_branch_under_test",
+        "status": "owner_approved_and_selectively_promoted_main_pr_114",
         "defect": "existing Unfold action was below viewport and central crumpled paper was not clickable",
         "solution": "native paper button plus above-fold Uncrumple paper button; scroll-safe dialog",
         "originalNineBinTossesPreserved": true,
@@ -1399,5 +1399,21 @@
         "docs": "docs/DH11C6E1_VISIBLE_UNCRUMPLE.md"
       }
     }
+  },
+  "dh12_music": {
+    "stage": "DH-12A.1",
+    "world": "music",
+    "creativeDirection": "The Impossible Theatre, a surreal miniature stage with real moving mechanics",
+    "status": "staging_geometry_first_review",
+    "previewRoute": "/previews/dh-12a/listening-room/",
+    "existingMusicRouteReplaced": false,
+    "physicalCurtains": true,
+    "stageSets": 3,
+    "recordPlayer": "rotating geometry and physically moving tonearm, no audio",
+    "content": "none; all future recordings/lyrics/cover art/characters owner-approved separately",
+    "ownerVisualApproval": "pending",
+    "mainChanged": false,
+    "productionChanged": false,
+    "docs": "docs/DH12A_IMPOSSIBLE_THEATRE.md"
   }
 }
