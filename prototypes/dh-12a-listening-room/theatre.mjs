@@ -6,6 +6,7 @@ import {
  curtainX,actIndex,stageAngle,smoothTowards,
  recordAdvance,tonearmAngle,theatreState
 } from './theatre-mechanics.mjs?v=dh12a-blockout-v1';
+import {cameraPose,focusStatus,normalizeFocus} from './theatre-camera.mjs?v=dh12a2-camera-focus-v1';
 
 const canvas=document.getElementById('theatre-canvas');
 const status=document.getElementById('theatre-status');
@@ -13,7 +14,10 @@ const openCurtains=document.getElementById('theatre-curtains');
 const turnStage=document.getElementById('theatre-stage');
 const playRecord=document.getElementById('theatre-record');
 const reset=document.getElementById('theatre-reset');
-const controls=[openCurtains,turnStage,playRecord,reset];
+const overviewButton=document.getElementById('theatre-overview');
+const viewIndicator=document.getElementById('theatre-view');
+const focusName=document.getElementById('theatre-focus-name');
+const controls=[openCurtains,turnStage,playRecord,reset,overviewButton];
 if(!canvas||!status||controls.some(x=>!x))throw Error('Missing DH-12A theatre controls');
 let state=theatreState();
 let renderer=null;
@@ -32,9 +36,44 @@ const scene=new THREE.Scene();
 scene.background=new THREE.Color('#171321');
 scene.fog=new THREE.FogExp2('#171321',.034);
 const camera=new THREE.PerspectiveCamera(43,1,.1,140);
-camera.position.set(8.0,6.0,12.5);
-const aim=new THREE.Vector3(0,2.06,-.15);
+const initialCamera=cameraPose(null);
+camera.position.set(...initialCamera.position);
+const aim=new THREE.Vector3(...initialCamera.target);
+const desiredPosition=camera.position.clone();
+const desiredAim=aim.clone();
+const reducedMotion=window.matchMedia?.('(prefers-reduced-motion: reduce)');
+let cameraFocus=null;
 camera.lookAt(aim);
+// One camera and continuous look-at point: the same movement used to inspect
+// the Writing Room, rather than moving or duplicating physical theatre pieces.
+function updateCameraDestination(){
+ const pose=cameraPose(cameraFocus,
+  canvas.clientWidth/Math.max(1,canvas.clientHeight),canvas.clientHeight);
+ desiredPosition.set(...pose.position);
+ desiredAim.set(...pose.target);
+ if(reducedMotion?.matches){
+  camera.position.copy(desiredPosition);
+  aim.copy(desiredAim);
+  camera.lookAt(aim);
+ }
+}
+function inspectObject(id){
+ const focus=normalizeFocus(id);
+ if(!focus)return;
+ cameraFocus=focus;
+ document.body.dataset.theatreFocus=focus;
+ viewIndicator.hidden=false;
+ focusName.textContent=focusStatus(focus);
+ updateCameraDestination();
+}
+function viewWholeTheatre(){
+ if(!cameraFocus)return;
+ cameraFocus=null;
+ delete document.body.dataset.theatreFocus;
+ viewIndicator.hidden=true;
+ updateCameraDestination();
+ status.textContent='The camera returns to the whole theatre. The physical mechanisms remain as you left them.';
+}
 const material=(colour,rough=.78,metalness=.0)=>new THREE.MeshStandardMaterial({
  color:colour,roughness:rough,metalness
 });
@@ -248,10 +287,27 @@ function apply(action){
  playRecord.setAttribute('aria-pressed',String(state.recordPlaying));
  status.textContent=describe(state,action);
 }
-openCurtains.addEventListener('click',()=>apply('curtains'));
-turnStage.addEventListener('click',()=>apply('act'));
-playRecord.addEventListener('click',()=>apply('record'));
-reset.addEventListener('click',()=>apply('reset'));
+function selectMechanism(id){
+ inspectObject(id);
+ apply(id);
+ status.textContent+=' The camera is moving in for a closer look.';
+}
+openCurtains.addEventListener('click',()=>selectMechanism('curtains'));
+turnStage.addEventListener('click',()=>selectMechanism('act'));
+playRecord.addEventListener('click',()=>selectMechanism('record'));
+overviewButton.addEventListener('click',viewWholeTheatre);
+reset.addEventListener('click',()=>{
+ apply('reset');
+ viewWholeTheatre();
+ status.textContent='The real curtains, stage and record player return to their original positions. Whole theatre view.';
+});
+document.addEventListener('keydown',event=>{
+ if(event.key!=='Escape'||!cameraFocus)return;
+ if(event.target?.closest?.('input,textarea,select,[contenteditable]'))return;
+ event.preventDefault();
+ viewWholeTheatre();
+ overviewButton.blur();
+});
 const raycaster=new THREE.Raycaster();
 const pointer=new THREE.Vector2();
 function hit(event){
@@ -272,15 +328,16 @@ canvas.addEventListener('pointerup',e=>{
  if(!start||Math.hypot(e.clientX-start.x,e.clientY-start.y)>9){start=null;return;}
  start=null;
  const picked=hit(e);
- if(picked)apply(picked);
+ if(picked)selectMechanism(picked);
+ else if(cameraFocus)viewWholeTheatre();
 });
 canvas.addEventListener('pointermove',e=>{
  const picked=hit(e);
  canvas.style.cursor=picked?'pointer':'default';
- canvas.title=picked==='curtains'?'Slide the physical velvet curtains':
-  picked==='act'?'Rotate the shared mechanical stage':
-  picked==='record'?'Operate the real miniature gramophone':
-  'The Impossible Theatre';
+ canvas.title=picked==='curtains'?'Approach and slide the physical velvet curtains':
+  picked==='act'?'Approach and rotate the shared mechanical stage':
+  picked==='record'?'Approach and operate the real miniature gramophone':
+  cameraFocus?'Return to the whole theatre':'The Impossible Theatre';
 });
 canvas.addEventListener('pointerleave',()=>{
  canvas.style.cursor='default';canvas.title='';
@@ -291,6 +348,7 @@ function resize(){
  renderer.setSize(width,height,false);
  camera.aspect=width/height;
  camera.updateProjectionMatrix();
+ updateCameraDestination();
 }
 window.addEventListener('resize',resize);
 const resizeObserver=typeof ResizeObserver!=='undefined'?new ResizeObserver(resize):null;
@@ -300,7 +358,12 @@ const clock=new THREE.Clock();
 let recordAngle=0;
 function frame(){
  const dt=Math.min(.08,clock.getDelta());
- const factor=1-Math.exp(-dt*4.5);
+ const cameraSpeed=reducedMotion?.matches?1000:2.75;
+ for(const axis of ['x','y','z']){
+  camera.position[axis]=smoothTowards(camera.position[axis],desiredPosition[axis],dt,cameraSpeed);
+  aim[axis]=smoothTowards(aim[axis],desiredAim[axis],dt,cameraSpeed);
+ }
+ camera.lookAt(aim);
  curtains.left.position.x=smoothTowards(curtains.left.position.x,curtainX('left',state.curtainsOpen),dt,4.7);
  curtains.right.position.x=smoothTowards(curtains.right.position.x,curtainX('right',state.curtainsOpen),dt,4.7);
  revolve.rotation.y=smoothTowards(revolve.rotation.y,stageAngle(state.stageSteps),dt,4.2);
