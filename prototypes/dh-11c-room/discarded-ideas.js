@@ -122,7 +122,10 @@
    dismiss();
    onReturnToBin(index);
   }
-  // The large physical-looking paper and the explicit button perform the\n  // identical accessible uncrumple action. Both are in the initial viewport.\n  folded.addEventListener('click',smooth);\n  unfold.addEventListener('click',smooth);
+  // The large physical-looking paper and the explicit button perform the
+  // identical accessible uncrumple action. Both are in the initial viewport.
+  folded.addEventListener('click',smooth);
+  unfold.addEventListener('click',smooth);
   flip.addEventListener('click',turn);
   close.addEventListener('click',dismiss);
   leave.addEventListener('click',dismiss);
