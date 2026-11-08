@@ -60,8 +60,8 @@
    const target=navigate;navigate=null;
    if(target)onRelated(target);
    else{
-    onClose();
-    if(invoker?.isConnected&&typeof invoker.focus==='function')
+    const shouldRestore=onClose();
+    if(shouldRestore!==false&&invoker?.isConnected&&typeof invoker.focus==='function')
      invoker.focus({preventScroll:true});
    }
   });
