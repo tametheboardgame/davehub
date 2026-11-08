@@ -1308,6 +1308,21 @@
         "publicCatalogueChanged": false,
         "documentation": "docs/DH11C6B3_REAL_BOOK_SPINES.md",
         "ownerVisualApproval": "pending"
+      },
+      "manuscriptReaderAndWorkshop": {
+        "stage": "DH-11C.6C.1",
+        "status": "feature_branch_pending_CI_and_owner_visual_review",
+        "stagingRoute": "/worlds/writing/",
+        "reader": "13 physical desk sheets; 3 fictional 2-page samples; native modal with chapter navigation",
+        "typewriter": "temporary visitor text, prompt cycling, copy and clear; physical key animation retained",
+        "realManuscriptPublicationApproved": false,
+        "visitorDataPersisted": false,
+        "globalPublicCatalogueChanged": false,
+        "olderArtPreviewsChanged": false,
+        "mainChanged": false,
+        "productionChanged": false,
+        "next": "filing cabinet and owner-approved writing excerpts",
+        "documentation": "docs/DH11C6C1_MANUSCRIPT_READER_TYPEWRITER.md"
       }
     }
   }

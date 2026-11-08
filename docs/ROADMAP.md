@@ -1,6 +1,10 @@
 # DaveHub development roadmap
 
-**Updated:** 7 November 2026. **Current stage:** DH-11C.6B.2 floating contextual prompts and compact Eleanor jacket (staging-only). Prior stage: DH-11C.6B finished-book product pages, after approved DH-11C.6A.2 dark window preload., after approved click-to-overview navigation. Previous stage: DH-11C.6A.1 click-empty-scene to leave an object view, building on the accepted minimal Writing interface, after accepting the 3D Manuscript Hoard core and the direct Writing island route. A separate review version preserves the original room and earlier art passes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+**Updated:** 8 November 2026. **Current stage:** DH-11C.6B.2 floating contextual prompts and compact Eleanor jacket (staging-only). Prior stage: DH-11C.6B finished-book product pages, after approved DH-11C.6A.2 dark window preload., after approved click-to-overview navigation. Previous stage: DH-11C.6A.1 click-empty-scene to leave an object view, building on the accepted minimal Writing interface, after accepting the 3D Manuscript Hoard core and the direct Writing island route. A separate review version preserves the original room and earlier art passes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
+
+## DH-11C.6C.1 — Manuscript reader and typewriter workshop
+
+Create two distinct experiences attached to genuine room furniture. The desk's individually moving 3D paper sheets open a folio-style, multi-page reader with clearly marked fictional samples; the typewriter opens a temporary creative writing workshop with prompts, typing, copy and clear controls. These work alongside the finished-books overlay without publishing unfinished manuscripts or saving visitor text. [Scope, safety and acceptance](DH11C6C1_MANUSCRIPT_READER_TYPEWRITER.md). Staging-only feature awaiting hosted tests and owner review.
 
 ## DH-11C.6B.3 — Published-colour spines with separate gold selection outline
 
