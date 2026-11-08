@@ -2,6 +2,10 @@
 
 **Updated:** 8 November 2026. **Current stage:** DH-11C.6B.2 floating contextual prompts and compact Eleanor jacket (staging-only). Prior stage: DH-11C.6B finished-book product pages, after approved DH-11C.6A.2 dark window preload., after approved click-to-overview navigation. Previous stage: DH-11C.6A.1 click-empty-scene to leave an object view, building on the accepted minimal Writing interface, after accepting the 3D Manuscript Hoard core and the direct Writing island route. A separate review version preserves the original room and earlier art passes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
 
+## DH-11C.6E.1 — Immediate uncrumple action in the scrap view
+
+Fix owner-observed problem: the crumpled paper reading dialog conceals its Unfold control below the visible viewport. Make the illustrated paper itself a semantic clickable button, place a prominent **Uncrumple paper** button right beneath it in the initial viewport, and use a viewport-fitted dialog with a scrollable reading area and retained footer controls. Both triggers use the identical existing unfold method. No content, geometry, drawer, other room or production changes. [Defect and test contract](DH11C6E1_VISIBLE_UNCRUMPLE.md). Staging-only, owner visual approval pending.
+
 ## DH-11C.6E — Wastepaper bin of ridiculous rejected ideas
 
 Turn the existing nine individually animated 3D crumples into an eccentric, public-safe experience without changing their reversible paths. Click a physical paper or rummage by an accessible control; it visibly tumbles over the bin rim and lands, and only after the real movement and camera settle can the visitor unfold the recovered scrap. Nine unique **explicitly fictional** absurd premises have hidden rejection reasons on the back. Leave the crumple on the floor, reread it, or throw it back via the real reversed arc. Responsive native dialog and reduced-motion support preserve the room-first design. No actual unpublished scraps are revealed. [Behaviour and staging review](DH11C6E_WASTEPAPER_BIN.md). Owner visual review pending.
