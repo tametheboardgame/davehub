@@ -12,6 +12,7 @@ const checks=[
  {path:'/creations/unicorn-valley/',required:['<style data-davehub-inline="worlds">','Unicorn Valley','Play on DaveHub','href="/games/unicorn-valley/"','unicorn-valley.pages.dev','View development repository'],forbidden:['DESIGN REVIEW ONLY']},
  {path:'/creations/stephen-martin-project/',required:['<style data-davehub-inline="worlds">','The Stephen Martin Project','Play on DaveHub','href="/games/stephen-martin/"','stephen-martin-project.pages.dev'],forbidden:['DESIGN REVIEW ONLY']},
  {path:'/creations/tame-the-board-game/',required:['<style data-davehub-inline="worlds">','Tame The Board Game','Miriam','tametheboardgame.com/about/'],forbidden:['DESIGN REVIEW ONLY']},
+ {path:'/previews/dh-12a/listening-room/',required:['DH-12A.1','data-dh12a-theatre="true"','The Impossible Theatre','id="theatre-curtains"','id="theatre-stage"','id="theatre-record"','noindex,nofollow','theatre.mjs?v=dh12a-blockout-v1','No music, lyrics or unreleased work is loaded'],forbidden:['<audio','autoplay','data-writing-world="true"']},
  {path:'/previews/dh-11c/furniture/',required:['DH-11C.4F','data-furniture-model-proof="true"','data-immersive-room="true"','id="furniture-model-status"','dh11c5b-archive-v1','room.js?v=dh11c5b-archive-v1','room-plan.js?v=dh11c5b-archive-v1','desk-materials.js?v=dh11c5a-desk-v1','archive-materials.js?v=dh11c5b-archive-v1'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/illustrated-overview/',required:['DH-11C.5D.3A','data-overview-studio="true"','dh11c5d3a-align-v1','/assets/worlds/writing/manuscript-room-v1.avif','id="projection-map"','id="new-art-file"','../illustrated-views/?v=dh11c5d-geometry-guides-v1'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
  {path:'/previews/dh-11c/illustrated-views/',required:['DH-11C.5D','data-illustrated-view-proof="true"','dh11c5d-geometry-guides-v1','view-pipeline.js?v=dh11c5d-geometry-guides-v1','room.js?v=dh11c5d-geometry-guides-v1','capture-view-guide','export-view-guide'],forbidden:['The Last Lightkeeper','The Clock of Tomorrow']},
@@ -54,7 +55,8 @@ async function main(){
   try{
    const results=[];
    for(const c of checks){
-    const version=c.path==='/worlds/writing/'?'?dh11c6e1-uncrumple-v1=1':
+    const version=c.path==='/previews/dh-12a/listening-room/'?'?dh12a-blockout-v1=1':
+     c.path==='/worlds/writing/'?'?dh11c6e1-uncrumple-v1=1':
      c.path==='/previews/dh-11c/authored-3d-v8/'?'?dh11c5d3i-door-home-exit-v1=1':
      c.path==='/previews/dh-11c/authored-3d-v7/'?'?dh11c5d3h-mystical-room-props-v1=1':
      c.path==='/previews/dh-11c/authored-3d-v6/'?'?dh11c5d3g-authored-handwriting-v1=1':
@@ -86,7 +88,11 @@ async function main(){
     {path:'/worlds/writing/room/cabinet-tray.js',type:'javascript',markers:['DH11CabinetTray','archive-tray-slots','onCloseDrawer']},
     {path:'/worlds/writing/scene/cabinet-tray.css',type:'text/css',markers:['.archive-tray-well','.archive-tray-file__tab']},
     {path:'/worlds/writing/room/discarded-ideas.js',type:'javascript',markers:['DH11DiscardedIdeas','Fictional demonstration','onReturnToBin',"folded.addEventListener('click',smooth)"]},
-    {path:'/worlds/writing/scene/discarded-ideas.css',type:'text/css',markers:['.discarded-sheet','.discarded-crumple','body[data-uncrumple-direct="true"] .discarded-dialog[open]','body[data-uncrumple-direct="true"] .discarded-stage .discarded-unfold']}
+    {path:'/worlds/writing/scene/discarded-ideas.css',type:'text/css',markers:['.discarded-sheet','.discarded-crumple','body[data-uncrumple-direct="true"] .discarded-dialog[open]','body[data-uncrumple-direct="true"] .discarded-stage .discarded-unfold']},
+    {path:'/previews/dh-12a/listening-room/theatre.mjs',type:'javascript',markers:['new THREE.WebGLRenderer','revolve.rotation.y=smoothTowards','recordAngle=recordAdvance']},
+    {path:'/previews/dh-12a/listening-room/theatre-mechanics.mjs',type:'javascript',markers:['export function curtainX','export function theatreState','export function stageAngle']},
+    {path:'/previews/dh-12a/listening-room/theatre.css',type:'text/css',markers:['.theatre-shell','.theatre-controls']},
+    {path:'/previews/dh-12a/listening-room/vendor/three-r159.module.min.js',type:'javascript',markers:['WebGLRenderer','PerspectiveCamera']}
    ]){
     const response=await fetch(BASE+asset.path+'?dh11c6c2-motion-first-v1=1',{
      headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)
