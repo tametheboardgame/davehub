@@ -33,6 +33,22 @@ if(finishedBooksEnabled&&(!finishedBooks||!bookExperience))
  throw Error('DH-11C.6B requires the published-book catalogue and accessible detail view');
 const manuscriptExperienceEnabled=minimalUI&&document.body.dataset.manuscriptExperience==='true';
 const motionFirst=manuscriptExperienceEnabled&&document.body.dataset.motionFirst==='true';
+const discardedIdeasEnabled=motionFirst&&document.body.dataset.discardedIdeas==='true';
+const discardedIdeas=discardedIdeasEnabled?window.DH11DiscardedIdeas?.mount({
+ document,onReturnToBin:index=>{
+  if(state.focus==='bin'&&state.binPapers[index])toggleBinPaper(index);
+ }
+}):null;
+if(discardedIdeasEnabled&&!discardedIdeas)
+ throw Error('DH-11C.6E requires the discarded-paper reader and fictional catalogue');
+let pendingBinReveal=null;
+function queueBinReveal(index){
+ pendingBinReveal={index,settledAt:null};
+ if(!renderer&&discardedIdeas){
+  pendingBinReveal=null;
+  discardedIdeas.show(index);
+ }
+}
 const manuscriptExperience=manuscriptExperienceEnabled?window.DH11ManuscriptExperience?.mount({
  document,onType:()=>pressTypewriter()
 }):null;
@@ -920,7 +936,7 @@ const minimalCopy={
  cabinet:cabinetTrayEnabled?'Open any physical drawer. Once it has slid out, look down into a large illustrated tray of folders.':cabinetArchiveEnabled?'Five real drawers, with physical coloured folders inside. Open a drawer, then pull out a file.':'Five drawers of questionable organisation.',
  bookcase:finishedBooksEnabled?'Three finished books. Pull one out to explore its edition and where to buy it.':'Eighty unlikely books, eight with stories of their own.',
  typewriter:motionFirst?'Click the little keys or type on your keyboard to move the mechanism. Explore further opens a blank writing page.':manuscriptExperienceEnabled?'A blank page and a few questionable writing prompts. Try the creative workshop.':'A machine still waiting for the next sentence.',
- bin:'An overflowing collection of abandoned ideas.',
+ bin:discardedIdeasEnabled?'Nine impossible ideas, each crumpled and thrown away. Click one to see why.':'An overflowing collection of abandoned ideas.',
  window:'A glimpse of other worlds beyond the glass.'
 };
 function showObjectPrompt(id){
@@ -962,6 +978,8 @@ function focus(id){
  pendingObjectReveal=null;
  pendingFolderReveal=null;
  pendingDrawerReveal=null;
+ pendingBinReveal=null;
+ if(discardedIdeas?.opened)discardedIdeas.dismiss();
  if(cabinetTray?.opened)cabinetTray.hide();
  if(cabinetFolders)cabinetFolders.clear();
  state=plan.next(state,{type:'focus',id});
@@ -989,6 +1007,8 @@ function home(){
  pendingObjectReveal=null;
  pendingFolderReveal=null;
  pendingDrawerReveal=null;
+ pendingBinReveal=null;
+ if(discardedIdeas?.opened)discardedIdeas.dismiss();
  if(cabinetTray?.opened)cabinetTray.hide();
  if(cabinetFolders)cabinetFolders.clear();
  state=plan.next(state,{type:'home'});
@@ -1087,15 +1107,31 @@ function toggleBinPaper(index){
  const wasOut=state.binPapers[index];
  state=plan.next(state,{type:'bin',index});
  if(state.binPapers[index]===wasOut)return;
+ if(discardedIdeasEnabled){
+  if(state.binPapers[index])queueBinReveal(index);
+  else if(pendingBinReveal?.index===index)pendingBinReveal=null;
+ }
  status.textContent='Crumpled paper '+(index+1)+(state.binPapers[index]?
   ' tumbles out of the bin onto the floor.':' returns to its original place in the bin.');
  syncBinPaperControls();
+}
+function rummageNextScrap(){
+ if(!discardedIdeasEnabled)return;
+ const next=state.binPapers.findIndex(out=>!out);
+ if(next!==-1)toggleBinPaper(next);
+ else{
+  status.textContent='Every discarded idea is on the floor. Revisit a recovered scrap or throw some back.';
+  discardedIdeas.show(0);
+ }
 }
 function syncBinPaperControls(){
  for(const button of actions.querySelectorAll('[data-bin-paper-index]')){
   const index=Number(button.dataset.binPaperIndex),out=state.binPapers[index];
   button.textContent='Paper '+(index+1)+(out?' · return':' · rummage');
   button.setAttribute('aria-pressed',String(out));
+ }
+ for(const button of actions.querySelectorAll('[data-bin-read-index]')){
+  button.hidden=!state.binPapers[Number(button.dataset.binReadIndex)];
  }
 }
 function syncLampControl(){
