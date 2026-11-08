@@ -6,10 +6,10 @@
  <meta name="robots" content="noindex,nofollow">
  <meta name="theme-color" content="#17101e">
  <title>DH-12A · The Impossible Theatre | DaveHub</title>
- <link rel="stylesheet" href="./theatre.css?v=dh12a-blockout-v1">
- <meta name="davehub-theatre-stage" content="DH-12A.1">
+ <link rel="stylesheet" href="./theatre.css?v=dh12a2-camera-focus-v1">
+ <meta name="davehub-theatre-stage" content="DH-12A.2">
 </head>
-<body data-dh12a-theatre="true">
+<body data-dh12a-theatre="true" data-theatre-camera="motion-first">
  <main class="theatre-shell">
   <canvas id="theatre-canvas" aria-label="Interactive 3D miniature theatre with physical curtains, a revolving stage and a working record mechanism"></canvas>
   <div class="theatre-vignette" aria-hidden="true"></div>
@@ -19,10 +19,14 @@
    <h1>The Impossible Theatre</h1>
    <p>A place for songs that haven't yet found their stage.</p>
   </header>
+  <div class="theatre-view" id="theatre-view" hidden>
+   <p id="theatre-focus-name" class="theatre-view__name">Velvet curtains · close-up view</p>
+   <button id="theatre-overview" type="button" aria-label="Return to the whole theatre view">← Whole theatre</button>
+  </div>
   <aside class="theatre-controls" aria-labelledby="theatre-controls-title">
    <p class="theatre-eyebrow">AN EXPERIMENT IN THREE ACTS</p>
    <h2 id="theatre-controls-title">Pull the strings.</h2>
-   <p class="theatre-help">These are real moving objects in one 3D room. Click them, or use the controls here.</p>
+   <p class="theatre-help">Click an object or use a control to move in for a closer look. Escape or Whole theatre returns to the overview.</p>
    <div class="theatre-actions">
     <button type="button" id="theatre-curtains">Open the curtains</button>
     <button type="button" id="theatre-stage">Turn the stage · Songs</button>
@@ -32,8 +36,8 @@
    <p id="theatre-status" class="theatre-status" role="status" aria-live="polite">The stage is waiting.</p>
    <p class="theatre-caveat">A playable geometric sketch only. No music, lyrics or unreleased work is loaded.</p>
   </aside>
-  <p class="theatre-hint">Point at the curtains, revolving stage or record player to explore their actual mechanisms.</p>
+  <p class="theatre-hint">Select the velvet curtains, revolving stage or record player to approach its real moving mechanism.</p>
  </main>
- <script type="module" src="./theatre.mjs?v=dh12a-blockout-v1"></script>
+ <script type="module" src="./theatre.mjs?v=dh12a2-camera-focus-v1"></script>
 </body>
 </html>
