@@ -154,7 +154,7 @@ test('theatre labels each miniature without publishing actual scripts, songs or 
   'aria-pressed="false"',
   'theatre.mjs?v=dh12a3-living-sets-v1',
   'theatre.css?v=dh12a3-living-sets-v1',
-  'No music, lyrics or unreleased work is loaded'
+  'A musicals-only stage prototype. These miniature sets are fictional studies, not published productions.'
  ])assert.ok(html.includes(token),token);
  assert.ok(!/<audio|<iframe|autoplay|https?:\/\//i.test(html));
  const art=read(source+'theatre-scenery.mjs');

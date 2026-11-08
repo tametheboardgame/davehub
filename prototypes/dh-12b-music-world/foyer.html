@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width,initial-scale=1">
+ <meta name="robots" content="noindex,nofollow">
+ <meta name="theme-color" content="#1c1727">
+ <title>DH-12B · The World Between Notes | DaveHub</title>
+ <meta name="davehub-stage" content="DH-12B.1">
+ <link rel="stylesheet" href="./music-world.css?v=dh12b1-music-portals-v1">
+</head>
+<body data-music-foyer="true">
+ <main class="music-foyer">
+  <canvas id="music-portals-canvas" aria-label="An interactive 3D music world entrance with two real doors, one to the Impossible Theatre for musicals, and one to the Record Shop for songs and bands"></canvas>
+  <div class="music-foyer__mist" aria-hidden="true"></div>
+  <header class="music-foyer__header">
+   <a class="music-foyer__back" href="/worlds/music/">← DaveHub Music</a>
+   <p class="music-eyebrow">A WORLD OF MUSIC · TWO DOORS</p>
+   <h1>The World Between Notes</h1>
+   <p>Some music tells a story on stage. Some needs somewhere to live on a record.</p>
+  </header>
+  <section class="music-foyer__choices" aria-label="Choose where to explore">
+   <article class="music-choice music-choice--theatre">
+    <div class="music-choice__heading">
+     <span class="music-choice__tag">MUSICALS</span>
+     <h2>The Impossible Theatre</h2>
+     <p>Productions, stories, characters and worlds waiting beyond the curtain.</p>
+    </div>
+    <button id="portal-theatre" type="button" class="music-choice__action" aria-label="Open the physical door into The Impossible Theatre">Open the theatre doors</button>
+   </article>
+   <article class="music-choice music-choice--records">
+    <div class="music-choice__heading">
+     <span class="music-choice__tag">SONGS · BANDS · PROJECTS</span>
+     <h2>The Record Shop</h2>
+     <p>A peculiar shop for singles, records, bands and other musical projects.</p>
+    </div>
+    <button id="portal-records" type="button" class="music-choice__action" aria-label="Open the physical door into The Record Shop">Open the record shop doors</button>
+   </article>
+  </section>
+  <div class="music-foyer__view" id="music-portal-view" hidden>
+   <button id="music-portal-overview" type="button">← Both doors</button>
+  </div>
+  <p id="music-portal-status" class="music-foyer__status" role="status" aria-live="polite">Choose a door. It will open before you enter.</p>
+  <p class="music-foyer__footnote">A connected, mechanical 3D preview. No unpublished recordings or musicals have been added.</p>
+ </main>
+ <script type="module" src="./foyer.mjs?v=dh12b1-music-portals-v1"></script>
+</body>
+</html>

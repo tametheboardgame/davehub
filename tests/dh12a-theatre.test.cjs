@@ -80,9 +80,9 @@ test('concept-only preview stays public-safe, discoverable and keyboard accessib
   'DH-12A.3','The Impossible Theatre',
   'id="theatre-curtains"','id="theatre-stage"','id="theatre-record"',
   'id="theatre-reset"','id="theatre-status"','id="theatre-overview"','role="status"',
-  'No music, lyrics or unreleased work is loaded',
+  'A musicals-only stage prototype. These miniature sets are fictional studies, not published productions.',
   'theatre.mjs?v=dh12a3-living-sets-v1',
-  'href="/worlds/music/"'
+  'href="/previews/dh-12b/music-foyer/"'
  ])assert.ok(html.includes(token),token);
  assert.ok(!/<audio|<iframe|autoplay|https?:\/\//i.test(html),'no external audio or embedded third-party material');
  const css=read(source+'theatre.css');
