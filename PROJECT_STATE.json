@@ -1286,6 +1286,28 @@
         "catalogueChanged": false,
         "documentation": "docs/DH11C6B2_FLOATING_PROMPTS.md",
         "ownerVisualApproval": "pending"
+      },
+      "authenticPublishedSpines": {
+        "stage": "DH-11C.6B.3",
+        "status": "feature_branch_pending_CI_and_owner_visual_review",
+        "stagingRoute": "/worlds/writing/",
+        "spineBindings": [
+          "#36577a",
+          "#ba672c",
+          "#404864"
+        ],
+        "highlight": "fine gold frame with seal; binding colour no longer defines selection",
+        "coverSources": {
+          "stormrider": "verified publisher image",
+          "duckBreadBaker": "verified publisher image",
+          "eleanor": "no verified original in Drive or accessible retailer URL; original text fallback remains"
+        },
+        "olderArtPreviewsChanged": false,
+        "productionChanged": false,
+        "mainChanged": false,
+        "publicCatalogueChanged": false,
+        "documentation": "docs/DH11C6B3_REAL_BOOK_SPINES.md",
+        "ownerVisualApproval": "pending"
       }
     }
   }
