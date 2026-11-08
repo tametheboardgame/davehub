@@ -127,7 +127,7 @@ test('staging build and Cloudflare smoke version and verify the separate camera 
  ])assert.ok(build.includes(marker),marker);
  for(const marker of [
   'DH-12A.3',
-  'dh12a2-camera-focus-v1',
+  'dh12a3-living-sets-v1',
   '/previews/dh-12a/listening-room/theatre-camera.mjs',
   '/previews/dh-12a/listening-room/theatre.mjs',
   '/previews/dh-12a/listening-room/'
