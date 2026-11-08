@@ -101,15 +101,15 @@ test('small screens keep the 3D viewport whole, using a floating corner prompt',
 test('canonical-only cache bust does not change earlier 3D reviews or the released main branch',()=>{
  const source=get('prototypes/dh-11c-room/index.html');
  const html=current.render(source),legacy=previous.render(source);
- assert.equal(current.VERSION,'dh11c6b2-floating-prompt-v1');
+ assert.equal(current.VERSION,'dh11c6b3-real-edition-spines-v1');
  for(const marker of [
   'DH-11C.6B.1',
   'data-finished-books="true"',
-  'room.js?v=dh11c6b2-floating-prompt-v1',
-  'manuscript-personality-v2.js?v=dh11c6b2-floating-prompt-v1',
-  'finished-books.js?v=dh11c6b2-floating-prompt-v1',
-  'book-experience.css?v=dh11c6b2-floating-prompt-v1',
-  'minimal-immersive.css?v=dh11c6b2-floating-prompt-v1',
+  'room.js?v=dh11c6b3-real-edition-spines-v1',
+  'manuscript-personality-v2.js?v=dh11c6b3-real-edition-spines-v1',
+  'finished-books.js?v=dh11c6b3-real-edition-spines-v1',
+  'book-experience.css?v=dh11c6b3-real-edition-spines-v1',
+  'minimal-immersive.css?v=dh11c6b3-real-edition-spines-v1',
   'id="published-book-dialog"',
   'data-exit-door-proof="true"'
  ])assert.ok(html.includes(marker),marker);
