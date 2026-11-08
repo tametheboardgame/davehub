@@ -19,6 +19,7 @@
   };
   const dialog=element('archive-tray-dialog');
   const closeButton=element('archive-tray-close');
+  const peekButton=element('archive-tray-peek');
   const shutButton=element('archive-tray-shut');
   const heading=element('archive-tray-heading');
   const count=element('archive-tray-count');
@@ -98,6 +99,7 @@
    active=null;
   }
   closeButton.addEventListener('click',hide);
+  peekButton.addEventListener('click',hide);
   shutButton.addEventListener('click',()=>{
    const drawer=active;
    hide();
