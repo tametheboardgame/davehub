@@ -39,6 +39,7 @@ const manuscriptExperience=manuscriptExperienceEnabled?window.DH11ManuscriptExpe
 if(manuscriptExperienceEnabled&&!manuscriptExperience)
  throw Error('DH-11C.6C.1 needs the manuscript reader and typewriter workshop');
 const cabinetArchiveEnabled=motionFirst&&document.body.dataset.cabinetArchive==='true';
+const cabinetTrayEnabled=cabinetArchiveEnabled&&document.body.dataset.cabinetTray==='true';
 const cabinetCatalogue=cabinetArchiveEnabled?window.DH11CabinetCatalogue?.create({
  books:finishedBooks,manuscripts:window.DH11ManuscriptExperience?.MANUSCRIPTS
 }):null;
@@ -46,8 +47,14 @@ const cabinetExperience=cabinetArchiveEnabled?window.DH11CabinetExperience?.moun
  document,catalogue:cabinetCatalogue,onRelated:item=>navigateFromCabinetFolder(item),
  onClose:()=>{
   pendingFolderReveal=null;
+  const previous=cabinetFolders?.selected;
   if(cabinetFolders)cabinetFolders.clear();
   if(state.focus==='cabinet')renderControls('cabinet');
+  if(cabinetTrayEnabled&&previous&&state.focus==='cabinet'&&state.drawer===previous.drawer){
+   // Return the real 3D folder before restoring the matching overhead view.
+   queueCabinetDrawerReveal(previous.drawer,previous.index);
+   return false;
+  }
  }
 }):null;
 if(cabinetArchiveEnabled&&(!cabinetCatalogue||!cabinetExperience))
@@ -55,7 +62,24 @@ if(cabinetArchiveEnabled&&(!cabinetCatalogue||!cabinetExperience))
 const cabinetFolders=cabinetArchiveEnabled?mountCabinetFolders({
  THREE,document,catalogue:cabinetCatalogue
 }):null;
-let pendingFolderReveal=null;
+const cabinetTray=cabinetTrayEnabled?window.DH11CabinetTray?.mount({
+ document,catalogue:cabinetCatalogue,
+ onSelect:(drawer,index)=>selectCabinetFolder(drawer,index),
+ onCloseDrawer:drawer=>{
+  if(state.focus==='cabinet'&&state.drawer===drawer)toggleCabinetDrawer(drawer);
+ }
+}):null;
+if(cabinetTrayEnabled&&!cabinetTray)
+ throw Error('DH-11C.6D.4 requires the overhead drawer inspection module');
+let pendingFolderReveal=null,pendingDrawerReveal=null;
+function queueCabinetDrawerReveal(drawer,returnFolder=null){
+ pendingDrawerReveal={drawer,returnFolder,settledAt:null};
+ // When WebGL is unavailable, the HTML archive remains keyboard-accessible.
+ if(!renderer&&cabinetTray){
+  pendingDrawerReveal=null;
+  cabinetTray.show(drawer);
+ }
+}
 const objectPrompt=document.getElementById('object-prompt');
 const promptTitle=document.getElementById('object-prompt-title');
 const promptCopy=document.getElementById('object-prompt-copy');
@@ -893,7 +917,7 @@ function queueObjectReveal(kind,index){
 }
 const minimalCopy={
  desk:manuscriptExperienceEnabled?'Loose manuscripts to browse, with notes in the margins. Tap a sheet to read it.':'Scrawled drafts, loose pages and a temperamental lamp.',
- cabinet:cabinetArchiveEnabled?'Five real drawers, with physical coloured folders inside. Open a drawer, then pull out a file.':'Five drawers of questionable organisation.',
+ cabinet:cabinetTrayEnabled?'Open any physical drawer. Once it has slid out, look down into a large illustrated tray of folders.':cabinetArchiveEnabled?'Five real drawers, with physical coloured folders inside. Open a drawer, then pull out a file.':'Five drawers of questionable organisation.',
  bookcase:finishedBooksEnabled?'Three finished books. Pull one out to explore its edition and where to buy it.':'Eighty unlikely books, eight with stories of their own.',
  typewriter:motionFirst?'Click the little keys or type on your keyboard to move the mechanism. Explore further opens a blank writing page.':manuscriptExperienceEnabled?'A blank page and a few questionable writing prompts. Try the creative workshop.':'A machine still waiting for the next sentence.',
  bin:'An overflowing collection of abandoned ideas.',
@@ -937,6 +961,8 @@ function focus(id){
  if(!plan.find(id))return;
  pendingObjectReveal=null;
  pendingFolderReveal=null;
+ pendingDrawerReveal=null;
+ if(cabinetTray?.opened)cabinetTray.hide();
  if(cabinetFolders)cabinetFolders.clear();
  state=plan.next(state,{type:'focus',id});
  const obj=plan.find(id);
@@ -962,6 +988,8 @@ function focus(id){
 function home(){
  pendingObjectReveal=null;
  pendingFolderReveal=null;
+ pendingDrawerReveal=null;
+ if(cabinetTray?.opened)cabinetTray.hide();
  if(cabinetFolders)cabinetFolders.clear();
  state=plan.next(state,{type:'home'});
  if(minimalUI){
@@ -980,10 +1008,13 @@ const drawerNames=['Finished','Drafts','Oddities','Fragments','Field Notes'];
 function toggleCabinetDrawer(index){
  if(!Number.isInteger(index)||index<0||index>=drawerNames.length)return;
  pendingFolderReveal=null;
+ pendingDrawerReveal=null;
+ if(cabinetTray?.opened)cabinetTray.hide();
  if(cabinetFolders)cabinetFolders.clear();
  state=plan.next(state,{type:'drawer',index});
+ if(cabinetTrayEnabled&&state.drawer===index)queueCabinetDrawerReveal(index);
  status.textContent=drawerNames[index]+
-  (state.drawer===index?' drawer sliding towards you. Pick a physical folder after it opens.':' drawer returning to the cabinet.');
+  (state.drawer===index?' drawer sliding towards you. '+(cabinetTrayEnabled?'The overhead inspection opens when it settles.':'Pick a physical folder after it opens.'):' drawer returning to the cabinet.');
  renderControls('cabinet');
 }
 function selectCabinetFolder(drawer,index){
@@ -1133,9 +1164,15 @@ function renderControls(id){
   drawerNames.forEach((n,i)=>add((state.drawer===i?'Close ':'Open ')+n,()=>toggleCabinetDrawer(i)));
   if(cabinetArchiveEnabled){
    const instruction=document.createElement('p');
-   instruction.textContent='Open a drawer, watch it slide, then click a coloured file inside. A folder lifts out before its contents appear. Samples are clearly marked.';
+   instruction.textContent=cabinetTrayEnabled?
+    'Open a drawer and watch it extend. A view from above then shows all four files clearly. Choose one to lift it from the real drawer.':
+    'Open a drawer, watch it slide, then click a coloured file inside. A folder lifts out before its contents appear. Samples are clearly marked.';
    actions.append(instruction);
-   if(state.drawer!==null){
+   if(cabinetTrayEnabled&&state.drawer!==null){
+    add('Look inside the open '+drawerNames[state.drawer]+' drawer',()=>{
+     queueCabinetDrawerReveal(state.drawer);
+    });
+   }else if(state.drawer!==null){
     const detail=document.createElement('details'),summary=document.createElement('summary');
     summary.textContent='Select a file using keyboard controls';
     detail.append(summary);
@@ -1332,9 +1369,10 @@ canvas.addEventListener('pointerup',event=>{
    // The case and rails are not drawer toggles. A named folder in the
    // currently extended drawer instead drives its own 3D lift motion.
    if(drawerIndex===null)return;
-   if(cabinetArchiveEnabled&&folderIndex!==null&&state.drawer===drawerIndex)
-    selectCabinetFolder(drawerIndex,folderIndex);
-   else toggleCabinetDrawer(drawerIndex);
+   if(cabinetArchiveEnabled&&folderIndex!==null&&state.drawer===drawerIndex){
+    if(cabinetTrayEnabled)queueCabinetDrawerReveal(drawerIndex);
+    else selectCabinetFolder(drawerIndex,folderIndex);
+   }else toggleCabinetDrawer(drawerIndex);
   }else{
    if(id==='desk'&&lampPart!==null)toggleLamp();
    else if(id==='desk'&&paperIndex!==null)togglePaper(paperIndex);
@@ -1419,6 +1457,27 @@ function revealAfterPhysicalMotion(){
  pendingObjectReveal=null;
  if(isBook)bookExperience.show(index);
  else manuscriptExperience.openManuscript(index);
+}
+// The top-down inspection follows the actual drawer extension and camera,
+// rather than relying on the obstructed perspective of the upper drawers.
+function revealCabinetDrawerAfterMotion(){
+ const pending=pendingDrawerReveal;
+ if(!cabinetTrayEnabled||!pending||!renderer)return;
+ if(state.focus!=='cabinet'||state.drawer!==pending.drawer){
+  pendingDrawerReveal=null;return;
+ }
+ const drawer=cabinetDrawers[pending.drawer],homePosition=drawerHome[pending.drawer];
+ if(!drawer||homePosition===undefined||!cabinetFolders.attached)return;
+ const ready=Math.abs(drawer.position.z-homePosition-(glbProof?.76*glbExtension:.65))<=.009&&
+  camera.position.distanceTo(desiredPosition)<=.10&&
+  focusPoint.distanceTo(desiredTarget)<=.10&&
+  (pending.returnFolder===null||cabinetFolders.settled(pending.drawer,pending.returnFolder))&&
+  !cabinetExperience.opened;
+ if(!ready){pending.settledAt=null;return;}
+ if(pending.settledAt===null)pending.settledAt=clock.elapsedTime;
+ if(!reduced.matches&&clock.elapsedTime-pending.settledAt<REVEAL_HOLD_SECONDS)return;
+ pendingDrawerReveal=null;
+ cabinetTray.show(pending.drawer);
 }
 // The folder opens only after the real drawer, real lifted file and
 // the actual camera are at rest. No fixed delay from the click.
@@ -1516,6 +1575,7 @@ function render(){
   renderer.render(scene,camera);
   revealAfterPhysicalMotion();
   revealCabinetFolderAfterMotion();
+  revealCabinetDrawerAfterMotion();
  }
  requestAnimationFrame(render);
 }
