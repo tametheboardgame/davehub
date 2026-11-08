@@ -1,8 +1,8 @@
 {
   "project": "DaveHub",
-  "updated": "2026-10-28",
+  "updated": "2026-11-08",
   "status": "dh09d_phase_b_staging_cloudflare_cutover_verified",
-  "current_work_package": "DH-09D",
+  "current_work_package": "DH-12A Listening Room (next staging design), DH-11C approved complete main checkpoint",
   "completed": [
     "DH-00A",
     "DH-00B",
@@ -14,7 +14,8 @@
     "DH-07C",
     "DH-07D",
     "DH-07E",
-    "DH-08A"
+    "DH-08A",
+    "DH-11C.6E.1"
   ],
   "in_progress": [
     "D",
@@ -95,6 +96,7 @@
     "DH-09 first-party game hosting and staging/live plan"
   ],
   "next": [
+    "DH-12A: design a distinctive geometry-first Listening Room on staging; approved real audio and music content later",
     "DH-10 scanner merged: monitor weekly read-only reports and reject unapproved publications",
     "Unicorn Valley PR #338 must pass final verification before its opt-in merge",
     "Inspect generated candidate artifacts and integrate with private Content Workshop after PR #21 approval",
@@ -713,5 +715,23 @@
     "gameAutoSyncNoopVerificationRun": 41104830463,
     "gameAutoSyncNoopVerification": "success_2026-10-30T18:12Z; target staging; exact deployed game SHA/version match",
     "productionPagesProjectConfigured": false
+  },
+  "writingRoomMainRelease": {
+    "ownerApprovedOn": "2026-11-08",
+    "stage": "DH-11C.6E.1",
+    "state": "approved_for_main_branch_release",
+    "finalApprovedStagingCommit": "c5757d4b3fd796e7462230243015cb772fc88624",
+    "scope": "full illustrated physical Writing Room, bookcase, desk, typewriter, overhead cabinet, nine discarded papers and visible Uncrumple action",
+    "approvedBooks": 3,
+    "fictionalDemonstrationScraps": 9,
+    "otherUnpublishedContent": "not connected; owner will approve later",
+    "doc": "docs/DH11C_COMPLETE_RELEASE.md",
+    "branch": "main",
+    "stagingHost": "https://davehub.pages.dev/worlds/writing/",
+    "productionHost": "https://davehub.co.uk/",
+    "productionConfigured": false,
+    "unchanged": "DH-09D staging/live topology, public catalogue and pinned game assets",
+    "nextCreativeSpace": "DH-12A Listening Room",
+    "mainPromotionPR": 114
   }
 }

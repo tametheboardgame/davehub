@@ -39,10 +39,10 @@
   let n=(seed*1664525+1013904223)>>>0;
   return ()=>{n=(Math.imul(n,1664525)+1013904223)>>>0;return n/4294967296;};
  }
- function paintSpine(ctx,width,height,index,featured=false){
+ function paintSpine(ctx,width,height,index,featured=false,overrideTitle=null,overridePalette=null){
   const r=random(index+67),W=width,H=height;
   ctx.clearRect(0,0,W,H);
-  const palette=featured?'#107b88':COLOURS[(index*7+Math.floor(index/20)*3)%COLOURS.length];
+  const palette=overridePalette||(featured?'#107b88':COLOURS[(index*7+Math.floor(index/20)*3)%COLOURS.length]);
   ctx.fillStyle=palette;ctx.fillRect(0,0,W,H);
   for(let i=0;i<18;i++){
    ctx.strokeStyle=i%3===0?'rgba(250,211,152,.22)':'rgba(14,23,36,.17)';
@@ -68,7 +68,7 @@
   }
   ctx.fillStyle=ink;ctx.textAlign='center';ctx.textBaseline='middle';
   ctx.save();ctx.translate(W/2,H*.51);ctx.rotate(-Math.PI/2);
-  const title=BOOK_DISPLAY_TITLES[index];
+  const title=overrideTitle||BOOK_DISPLAY_TITLES[index];
   const length=title.length;
   ctx.font=(length<12?86:length<17?75:length<22?65:54)+"px Georgia,serif";
   ctx.lineWidth=1.7;ctx.strokeStyle='rgba(19,19,31,.70)';
@@ -124,7 +124,7 @@
   ctx.lineTo(xx-27,yy+30);ctx.moveTo(xx-35,yy+44);ctx.lineTo(xx-18,yy+44);ctx.stroke();
   ctx.restore();
  }
- function create({THREE,root}){
+ function create({THREE,root,finishedBooks=null}){
   if(!THREE?.PlaneGeometry||!THREE?.CanvasTexture||!root?.traverse||typeof document==='undefined')
    throw Error('Personality artwork requires the real furniture GLB and canvas');
   const attachments=[];
@@ -160,9 +160,21 @@
    const x=(b.max.x+b.min.x)/2,y=(b.max.y+b.min.y)/2,z=(b.max.z+b.min.z)/2;
    const sx=Math.max(Math.abs(mesh.scale.x),.0001),sy=Math.max(Math.abs(mesh.scale.y),.0001),sz=Math.max(Math.abs(mesh.scale.z),.0001);
    if(id>=0){
-    const panel=textureFrom(192,768,(ctx,w,h)=>paintSpine(ctx,w,h,id,Number.isInteger(mesh.userData?.featuredBookIndex)));
+    // In the visitor's finished-work shelf there are exactly three real
+    // publications. The other bindings remain fictional decoration, not
+    // suggested products or unreleased works for sale.
+    const featuredIndex=finishedBooks
+     ?finishedBooks.indexForMesh(Math.floor(id/20),id%20)
+     :FEATURED_POSITIONS.indexOf(id);
+    const published=finishedBooks&&featuredIndex!==null&&featuredIndex>=0
+     ?finishedBooks.byIndex(featuredIndex):null;
+    const titleLabel=finishedBooks?(published?.spine||BOOK_TITLES[id]):null;
+    const panel=textureFrom(192,768,(ctx,w,h)=>paintSpine(ctx,w,h,id,
+     finishedBooks?Boolean(published):Number.isInteger(mesh.userData?.featuredBookIndex),
+     titleLabel,published?.binding||null));
     attach(mesh,panel,[x,y,b.max.z+.009/sz],[dx*.84,dy*.90]);
-    mesh.userData.manuscriptJokeTitle=AUTHORED_BOOK_TITLES[id];
+    mesh.userData.manuscriptJokeTitle=finishedBooks
+     ?(published?.title||BOOK_TITLES[id]):AUTHORED_BOOK_TITLES[id];
    }else{
     const panel=textureFrom(512,352,(ctx,w,h)=>paintScrawl(ctx,w,h,paper));
     attach(mesh,panel,[x,b.max.y+.002/sy,z],[dx*.94,dz*.89],-Math.PI/2);

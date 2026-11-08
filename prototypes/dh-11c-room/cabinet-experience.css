@@ -1,0 +1,98 @@
+/* DH-11C.6D: one oversized archive folder pulled from a REAL 3D drawer.
+   UI is a tactile reading surface, not a generic content card or bottom banner. */
+body[data-cabinet-archive="true"] .archive-folder-dialog{
+ --archive-folder-colour:#5c7184;
+ position:fixed;inset:0;margin:auto;padding:0;
+ width:min(940px,calc(100vw - 36px));max-width:none;
+ max-height:min(88dvh,780px);overflow:auto;
+ border:1px solid #e3bd82;border-radius:15px;
+ color:#302633;background:#ede0c3;
+ box-shadow:0 30px 115px #06050bfa;
+}
+body[data-cabinet-archive="true"] .archive-folder-dialog::backdrop{
+ background:rgba(13,11,23,.76);backdrop-filter:blur(5px);
+}
+body[data-cabinet-archive="true"] .archive-folder-dialog button{
+ font:inherit;cursor:pointer;min-height:42px;
+}
+body[data-cabinet-archive="true"] .archive-folder-dialog button:focus-visible{
+ outline:3px solid #a45854;outline-offset:3px;
+}
+.archive-folder-stage{
+ position:relative;padding:clamp(18px,3.7vw,36px);
+ min-height:min(70dvh,625px);
+ background:radial-gradient(ellipse at 90% 1%,#f9edc5 0,transparent 56%),
+  repeating-linear-gradient(91deg,#b99f7e14 0 2px,transparent 3px 65px),#504153;
+}
+.archive-folder-cover{
+ position:relative;max-width:100%;min-height:min(58dvh,520px);
+ padding:clamp(20px,4vw,44px);
+ background:
+  linear-gradient(93deg,rgba(44,34,48,.16),transparent 2.2%,rgba(255,248,209,.22) 2.5%,transparent 5%),
+  linear-gradient(135deg,#e2cc98 0,#d3b984 70%,#c5a977 100%);
+ border:1px solid #b28b5d;border-radius:3px 15px 5px 4px;
+ box-shadow:13px 15px 0 #16132266,17px 20px 25px #120e1c7a;
+ transform:rotate(-.6deg);
+}
+.archive-folder-cover::before{
+ content:"";position:absolute;inset:0 auto 0 0;width:18px;
+ border-right:2px solid #9f7d58ab;
+ background:linear-gradient(90deg,#99764766,transparent);
+}
+.archive-folder-tab{
+ display:inline-block;position:absolute;left:9%;top:-23px;
+ border-radius:8px 8px 0 0;
+ min-width:130px;max-width:75%;padding:12px 24px 8px;
+ background:var(--archive-folder-colour);color:#fff2d8;
+ border:1px solid #c19e6f;border-bottom:0;
+ letter-spacing:.16em;text-transform:uppercase;font:800 13px Georgia,serif;
+}
+.archive-folder-inner{
+ padding:clamp(20px,3.8vw,40px);
+ min-height:375px;max-width:760px;margin:0 auto;
+ background:repeating-linear-gradient(0deg,#fff7de 0 30px,#bba48e44 31px 32px);
+ border:1px solid #bda480;box-shadow:7px 10px 0 #b28e5d5c;
+ transform:rotate(.3deg);
+}
+.archive-folder-brow{
+ font:800 11px/1.6 system-ui,sans-serif;letter-spacing:.14em;
+ text-transform:uppercase;color:#795a54;margin:0 0 16px;
+}
+.archive-folder-inner h2{
+ font:clamp(29px,4.1vw,48px)/1.08 Georgia,serif;
+ color:#3c2e37;margin:0 0 18px;letter-spacing:-.02em;
+}
+.archive-folder-status{
+ display:inline-block;font:700 12px/1.5 system-ui,sans-serif;
+ padding:7px 11px;border:1px solid #bd9f78;border-radius:8px;
+ background:#f3e8ca;color:#755644;margin:0 0 17px;
+}
+.archive-folder-summary{font:clamp(17px,2vw,20px)/1.7 Georgia,serif;color:#3f363b;max-width:65ch;margin:0 0 22px}
+.archive-folder-notice{font:13px/1.6 system-ui,sans-serif;max-width:70ch;color:#715e53;margin:0 0 20px}
+.archive-folder-actions{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:22px}
+.archive-folder-actions button{
+ border:1px solid #745d4c;border-radius:9px;padding:9px 17px;
+ color:#fff1d8;background:#4e3d4f;font-size:13px;font-weight:700;
+}
+.archive-folder-actions .archive-folder-related{background:var(--archive-folder-colour);border-color:#5b5349}
+.archive-folder-related[hidden]{display:none}
+.archive-folder-close{
+ position:absolute;right:13px;top:12px;z-index:3;
+ width:42px;height:42px;border-radius:50%;
+ background:#3f3144;color:#fff1d4;border:1px solid #d3ab78;
+ font-size:23px!important;
+}
+@media(max-width:640px){
+ body[data-cabinet-archive="true"] .archive-folder-dialog{width:calc(100vw - 16px);max-height:94dvh}
+ .archive-folder-stage{padding:25px 11px 16px}
+ .archive-folder-cover{padding:18px 10px 12px;min-height:auto}
+ .archive-folder-inner{padding:19px 14px;min-height:330px}
+ .archive-folder-inner h2{font-size:30px}
+ .archive-folder-tab{top:-19px;min-width:100px;padding:9px 15px 6px;font-size:11px}
+ .archive-folder-summary{font-size:17px}
+ .archive-folder-actions{flex-direction:column}
+ .archive-folder-actions button{width:100%}
+}
+@media(prefers-reduced-motion:reduce){
+ .archive-folder-cover,.archive-folder-inner{transform:none}
+}

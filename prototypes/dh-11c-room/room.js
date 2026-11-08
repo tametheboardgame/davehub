@@ -1,5 +1,7 @@
 import * as THREE from './vendor/three-r159.module.min.js';
 import {drawerIndexForMesh} from './drawer-picking.mjs';
+import {revealReady,REVEAL_HOLD_SECONDS,keyIndexForCharacter} from './reveal-after-motion.mjs?v=dh11c6c2-motion-first-v1';
+import {mountCabinetFolders,folderSettled,DRAWER_SLUGS} from './cabinet-folders.mjs?v=dh11c6d3-archive-v1';
 import {paperPose,paperIndexForMesh,PAPER_LIMIT,pressDepth,typewriterFeed,TYPE_PAPER_HEIGHT,featuredBook,featuredBookIndexForMesh,FEATURED_BOOK_COUNT,bookPosition,binPaperIndexForMesh,binPaperPose,BIN_PAPER_COUNT,lampPartForMesh,typedKeyIndex,TYPE_KEY_COUNT} from './furniture-motion.mjs?v=dh11c4l-lamp-switch-v1';
 
 const plan=window.DH11RoomPlan;
@@ -22,6 +24,78 @@ const fallback=document.getElementById('scene-fallback');
 const minimalUI=document.body.dataset.minimalUi==='true';
 // Canonical Writing room starts dark outside its window until the full scene texture is ready.
 const darkWindowPreload=minimalUI&&document.body.dataset.darkWindowPreload==='true';
+const finishedBooksEnabled=minimalUI&&document.body.dataset.finishedBooks==='true';
+const finishedBooks=finishedBooksEnabled?window.DH11FinishedBooks:null;
+const bookExperience=finishedBooksEnabled?window.DH11BookExperience?.mount({
+ catalog:finishedBooks,document
+}):null;
+if(finishedBooksEnabled&&(!finishedBooks||!bookExperience))
+ throw Error('DH-11C.6B requires the published-book catalogue and accessible detail view');
+const manuscriptExperienceEnabled=minimalUI&&document.body.dataset.manuscriptExperience==='true';
+const motionFirst=manuscriptExperienceEnabled&&document.body.dataset.motionFirst==='true';
+const discardedIdeasEnabled=motionFirst&&document.body.dataset.discardedIdeas==='true';
+const discardedIdeas=discardedIdeasEnabled?window.DH11DiscardedIdeas?.mount({
+ document,onReturnToBin:index=>{
+  if(state.focus==='bin'&&state.binPapers[index])toggleBinPaper(index);
+ }
+}):null;
+if(discardedIdeasEnabled&&!discardedIdeas)
+ throw Error('DH-11C.6E requires the discarded-paper reader and fictional catalogue');
+let pendingBinReveal=null;
+function queueBinReveal(index){
+ pendingBinReveal={index,settledAt:null};
+ if(!renderer&&discardedIdeas){
+  pendingBinReveal=null;
+  discardedIdeas.show(index);
+ }
+}
+const manuscriptExperience=manuscriptExperienceEnabled?window.DH11ManuscriptExperience?.mount({
+ document,onType:()=>pressTypewriter()
+}):null;
+if(manuscriptExperienceEnabled&&!manuscriptExperience)
+ throw Error('DH-11C.6C.1 needs the manuscript reader and typewriter workshop');
+const cabinetArchiveEnabled=motionFirst&&document.body.dataset.cabinetArchive==='true';
+const cabinetTrayEnabled=cabinetArchiveEnabled&&document.body.dataset.cabinetTray==='true';
+const cabinetCatalogue=cabinetArchiveEnabled?window.DH11CabinetCatalogue?.create({
+ books:finishedBooks,manuscripts:window.DH11ManuscriptExperience?.MANUSCRIPTS
+}):null;
+const cabinetExperience=cabinetArchiveEnabled?window.DH11CabinetExperience?.mount({
+ document,catalogue:cabinetCatalogue,onRelated:item=>navigateFromCabinetFolder(item),
+ onClose:()=>{
+  pendingFolderReveal=null;
+  const previous=cabinetFolders?.selected;
+  if(cabinetFolders)cabinetFolders.clear();
+  if(state.focus==='cabinet')renderControls('cabinet');
+  if(cabinetTrayEnabled&&previous&&state.focus==='cabinet'&&state.drawer===previous.drawer){
+   // Return the real 3D folder before restoring the matching overhead view.
+   queueCabinetDrawerReveal(previous.drawer,previous.index);
+   return false;
+  }
+ }
+}):null;
+if(cabinetArchiveEnabled&&(!cabinetCatalogue||!cabinetExperience))
+ throw Error('DH-11C.6D requires the safe catalogue and the folder reader');
+const cabinetFolders=cabinetArchiveEnabled?mountCabinetFolders({
+ THREE,document,catalogue:cabinetCatalogue
+}):null;
+const cabinetTray=cabinetTrayEnabled?window.DH11CabinetTray?.mount({
+ document,catalogue:cabinetCatalogue,
+ onSelect:(drawer,index)=>selectCabinetFolder(drawer,index),
+ onCloseDrawer:drawer=>{
+  if(state.focus==='cabinet'&&state.drawer===drawer)toggleCabinetDrawer(drawer);
+ }
+}):null;
+if(cabinetTrayEnabled&&!cabinetTray)
+ throw Error('DH-11C.6D.4 requires the overhead drawer inspection module');
+let pendingFolderReveal=null,pendingDrawerReveal=null;
+function queueCabinetDrawerReveal(drawer,returnFolder=null){
+ pendingDrawerReveal={drawer,returnFolder,settledAt:null};
+ // When WebGL is unavailable, the HTML archive remains keyboard-accessible.
+ if(!renderer&&cabinetTray){
+  pendingDrawerReveal=null;
+  cabinetTray.show(drawer);
+ }
+}
 const objectPrompt=document.getElementById('object-prompt');
 const promptTitle=document.getElementById('object-prompt-title');
 const promptCopy=document.getElementById('object-prompt-copy');
@@ -281,11 +355,13 @@ function makeCabinet(){
   for(let f=0;f<4;f++){
    const folder=box(tray,.23,.24,.018,finish('cabinetFolder'+f%2)||mats.paper,-.48+f*.32,.06,-.3-f*.03);
    folder.rotation.y=(f%2?.12:-.1);
+   folder.name='folder_'+DRAWER_SLUGS[i]+'_'+f;
   }
   const tag=makeText(names[i],handwrittenLabelProof?1.04:personalityProof?1.31:authoredDetailProof?.98:.38,handwrittenLabelProof?.21:personalityProof?.28:authoredDetailProof?.21:.11,'#33434b','#efe0c2');
   tag.position.set(0,.095,authoredDetailProof?.084:.074);tray.add(tag);
   cabinetDrawers.push(tray);
  }
+ if(cabinetFolders)cabinetFolders.attach(cabinetDrawers);
  const mesh=capture('cabinet',g);
  return mesh;
 }
@@ -483,13 +559,25 @@ typePaperHome=typePaper.position.y;typePaperHomeScaleY=typePaper.scale.y;
 typePaperRuleHome=typePaperRule.position.y;typePlatenHome=typePlaten.quaternion.clone();
 
 const pullBooks=[];
-// Eight interactive books get unmistakable jewel-turquoise bindings and
-// three gilded spine marks. The unlit gilt stays vivid in the dim study.
-// Use opaque high-contrast pigment instead of relying on a faint emissive
-// accent. All eight bindings are visibly different even under poor lighting.
+// Earlier comparison previews retain eight luminous turquoise books; the
+// visitor's three published editions have their own cover-inspired colour
+// with a distinct gilded selection frame on the true GLB mesh.
 const FEATURE_BOOK_COLOUR='#24f5da';
 const featureBookGilt=new THREE.MeshBasicMaterial({color:'#ffe681',toneMapped:false});
 function featuredBookColour(mesh){
+ if(finishedBooksEnabled){
+  const edition=finishedBooks.byIndex(mesh.userData.featuredBookIndex);
+  if(edition){
+   // A book should look like its edition, not like a turquoise UI button.
+   mesh.material.color.set(edition.binding);
+   if(mesh.material.emissive){
+    mesh.material.emissive.set(edition.glow);
+    mesh.material.emissiveIntensity=.12;
+   }
+   return;
+  }
+ }
+ // Retain the strong turquoise authored-art proof in older 3D previews.
  mesh.material.color.set(FEATURE_BOOK_COLOUR);
  if(mesh.material.emissive){
   mesh.material.emissive.set('#0f9f9e');
@@ -497,10 +585,13 @@ function featuredBookColour(mesh){
  }
 }
 function markFeaturedBook(mesh,index){
+ // 6B: only three finished publications have active pull-out bindings.
+ // Five previous creative-work spines remain ordinary decorative books.
+ if(finishedBooksEnabled&&!finishedBooks.canOpen(index))return;
  mesh.userData.featuredBookIndex=index;
  mesh.material=mesh.material.clone();
- // Multiplying a bright teal colour by a dark leather colour-map would
- // hide the eight interaction targets. Keep those approved bindings vivid.
+ // The published binding's colour must be visible, so do not multiply it
+ // by the GLB's existing muted material map. Historical previews still glow.
  if(mesh.material.map){mesh.material.map=null;mesh.material.needsUpdate=true;}
  featuredBookColour(mesh);
  if(!mesh.geometry.boundingBox)mesh.geometry.computeBoundingBox();
@@ -511,16 +602,55 @@ function markFeaturedBook(mesh,index){
  const sy=Math.max(Math.abs(mesh.scale.y),.0001);
  const sz=Math.max(Math.abs(mesh.scale.z),.0001);
  const x=(bounds.min.x+bounds.max.x)/2,z=bounds.max.z+.004/sz;
- for(const [n,part,width,height] of [
-  [0,.18,.9,.025],[1,.5,.58,.095],[2,.82,.9,.025]
- ]){
-  const accent=new THREE.Mesh(
-   new THREE.BoxGeometry(dx*width,height/sy,.006/sz),featureBookGilt);
-  accent.position.set(x,bounds.min.y+dy*part,z);
-  accent.name='featured_book_gilt_'+index+'_'+n;
-  // The gilt can be clicked too, not only the coloured book underneath.
-  accent.userData.featuredBookIndex=index;
-  mesh.add(accent);
+ if(finishedBooksEnabled){
+  // Thin, continuous gold foil around the actual front spine: an unmistakable
+  // clickable cue independent of the book's own colour. The cue is attached
+  // to the GLB mesh and moves with the genuine book pull-out animation.
+  const sx=Math.max(Math.abs(mesh.scale.x),.0001);
+  const left=bounds.min.x+dx*.075,right=bounds.max.x-dx*.075;
+  const bottom=bounds.min.y+dy*.055,top=bounds.max.y-dy*.055;
+  const edgeY=.009/sy,edgeX=.008/sx;
+  const faceZ=bounds.max.z+.025/sz;
+  const foil=new THREE.MeshBasicMaterial({
+   color:'#ffe3a0',transparent:true,opacity:.95,toneMapped:false,
+   depthWrite:false
+  });
+  const edges=[
+   [0,(left+right)/2,bottom,right-left,edgeY],
+   [1,(left+right)/2,top,right-left,edgeY],
+   [2,left,(bottom+top)/2,edgeX,top-bottom],
+   [3,right,(bottom+top)/2,edgeX,top-bottom]
+  ];
+  for(const [n,px,py,width,height] of edges){
+   const accent=new THREE.Mesh(
+    new THREE.BoxGeometry(width,height,.008/sz),foil);
+   accent.position.set(px,py,faceZ);
+   accent.name='published_book_foil_'+index+'_'+n;
+   accent.userData.featuredBookIndex=index;
+   mesh.add(accent);
+  }
+  // A tiny gilded seal at the head reinforces affordance without recolouring
+  // the book and does not replace any real book geometry.
+  const seal=new THREE.Mesh(
+   new THREE.OctahedronGeometry(.021/sx,0),foil);
+  seal.position.set(x,bounds.max.y-dy*.12,faceZ+.004/sz);
+  seal.scale.y=sx/sy;
+  seal.name='published_book_seal_'+index;
+  seal.userData.featuredBookIndex=index;
+  mesh.add(seal);
+ }else{
+  // Older illustration comparison previews keep their original gold bands.
+  for(const [n,part,width,height] of [
+   [0,.18,.9,.025],[1,.5,.58,.095],[2,.82,.9,.025]
+  ]){
+   const accent=new THREE.Mesh(
+    new THREE.BoxGeometry(dx*width,height/sy,.006/sz),featureBookGilt);
+   accent.position.set(x,bounds.min.y+dy*part,z);
+   accent.name='featured_book_gilt_'+index+'_'+n;
+   // The gilt can be clicked too, not only the coloured book underneath.
+   accent.userData.featuredBookIndex=index;
+   mesh.add(accent);
+  }
  }
  if(authoredDetailProof&&!handwrittenLabelProof){
   // Earlier V5 only: the extra central emblems obstruct new real book titles.
@@ -557,8 +687,11 @@ function makeBookcase(){
    const bookMat=furnitureModelProof?mats['bookBinding'+materialIndex]:matte(colours[materialIndex]);
    const bk=box(g,.111,height,.43,bookMat,x,y,.44);
    bk.name='book_'+shelf+'_'+String(b).padStart(2,'0');
-   if(featuredBook(shelf,b)){
-    markFeaturedBook(bk,pullBooks.length);
+   const publishedIndex=finishedBooksEnabled
+    ?finishedBooks.indexForMesh(shelf,b)
+    :(featuredBook(shelf,b)?pullBooks.length:null);
+   if(publishedIndex!==null){
+    markFeaturedBook(bk,publishedIndex);
     pullBooks.push(bk);
    }
    // Art lab recolours the actual mesh material, including selected books.
@@ -792,32 +925,46 @@ const drawerHome=cabinetDrawers.map(x=>x.position.z);
 let bookHome=pullBooks.map(x=>x.position.z);
 // All 24 keys, the platen and the paper have separate animation references.
 let currentHover=null;
+// One outstanding visual-to-content transition at a time. Moving back,
+// changing furniture or selecting a different object cancels the old reveal.
+let pendingObjectReveal=null;
+function queueObjectReveal(kind,index){
+ pendingObjectReveal={kind,index,settledAt:null};
+}
 const minimalCopy={
- desk:'Scrawled drafts, loose pages and a temperamental lamp.',
- cabinet:'Five drawers of questionable organisation.',
- bookcase:'Eighty unlikely books, eight with stories of their own.',
- typewriter:'A machine still waiting for the next sentence.',
- bin:'An overflowing collection of abandoned ideas.',
+ desk:manuscriptExperienceEnabled?'Loose manuscripts to browse, with notes in the margins. Tap a sheet to read it.':'Scrawled drafts, loose pages and a temperamental lamp.',
+ cabinet:cabinetTrayEnabled?'Open any physical drawer. Once it has slid out, look down into a large illustrated tray of folders.':cabinetArchiveEnabled?'Five real drawers, with physical coloured folders inside. Open a drawer, then pull out a file.':'Five drawers of questionable organisation.',
+ bookcase:finishedBooksEnabled?'Three finished books. Pull one out to explore its edition and where to buy it.':'Eighty unlikely books, eight with stories of their own.',
+ typewriter:motionFirst?'Click the little keys or type on your keyboard to move the mechanism. Explore further opens a blank writing page.':manuscriptExperienceEnabled?'A blank page and a few questionable writing prompts. Try the creative workshop.':'A machine still waiting for the next sentence.',
+ bin:discardedIdeasEnabled?'Nine impossible ideas, each crumpled and thrown away. Click one to see why.':'An overflowing collection of abandoned ideas.',
  window:'A glimpse of other worlds beyond the glass.'
 };
 function showObjectPrompt(id){
  if(!minimalUI)return;
  const obj=plan.find(id);
- if(!obj||id==='door'){objectPrompt.hidden=true;return;}
+ if(!obj||id==='door'){
+  objectPrompt.hidden=true;delete document.body.dataset.roomPrompt;return;
+ }
  promptTitle.textContent=obj.label;
  promptCopy.textContent=minimalCopy[id]||'Discover what is hidden here.';
  objectPrompt.hidden=false;
+ document.body.dataset.roomPrompt='visible';
  tray.hidden=true;
 }
 if(minimalUI){
  promptOpen.addEventListener('click',()=>{
   if(!state.focus||state.focus==='door')return;
+  if(manuscriptExperienceEnabled&&state.focus==='typewriter'){
+   manuscriptExperience.openWorkshop();return;
+  }
   objectPrompt.hidden=true;
+  delete document.body.dataset.roomPrompt;
   tray.hidden=false;
   fullClose.focus({preventScroll:true});
  });
  promptClose.addEventListener('click',()=>{
   objectPrompt.hidden=true;
+  delete document.body.dataset.roomPrompt;
   homeButton.focus({preventScroll:true});
  });
  fullClose.addEventListener('click',()=>{
@@ -828,8 +975,21 @@ if(minimalUI){
 }
 function focus(id){
  if(!plan.find(id))return;
+ pendingObjectReveal=null;
+ pendingFolderReveal=null;
+ pendingDrawerReveal=null;
+ pendingBinReveal=null;
+ if(discardedIdeas?.opened)discardedIdeas.dismiss();
+ if(cabinetTray?.opened)cabinetTray.hide();
+ if(cabinetFolders)cabinetFolders.clear();
  state=plan.next(state,{type:'focus',id});
  const obj=plan.find(id);
+ // Side-dock the visitor's prompt and expanded object controls away from
+ // the selected furniture, rather than obstructing pull-out books/drawers.
+ if(minimalUI){
+  if(id==='door')delete document.body.dataset.roomFocus;
+  else document.body.dataset.roomFocus=id;
+ }
  desiredPosition.set(...obj.camera);
  desiredTarget.set(...obj.lookAt);
  homeButton.disabled=false;
@@ -844,7 +1004,18 @@ function focus(id){
  if(reduced.matches){camera.position.copy(desiredPosition);focusPoint.copy(desiredTarget);camera.lookAt(focusPoint);}
 }
 function home(){
+ pendingObjectReveal=null;
+ pendingFolderReveal=null;
+ pendingDrawerReveal=null;
+ pendingBinReveal=null;
+ if(discardedIdeas?.opened)discardedIdeas.dismiss();
+ if(cabinetTray?.opened)cabinetTray.hide();
+ if(cabinetFolders)cabinetFolders.clear();
  state=plan.next(state,{type:'home'});
+ if(minimalUI){
+  delete document.body.dataset.roomFocus;
+  delete document.body.dataset.roomPrompt;
+ }
  desiredPosition.set(...plan.HOME.position);desiredTarget.set(...plan.HOME.target);
  cameraLabel.textContent='OVERVIEW CAMERA';homeButton.disabled=true;
  placeName.textContent='The Manuscript Hoard';placeDescription.textContent='An actual 3D study. Explore its objects.';
@@ -854,21 +1025,75 @@ function home(){
  if(reduced.matches){camera.position.copy(desiredPosition);focusPoint.copy(desiredTarget);camera.lookAt(focusPoint);}
 }
 const drawerNames=['Finished','Drafts','Oddities','Fragments','Field Notes'];
+function toggleCabinetDrawer(index){
+ if(!Number.isInteger(index)||index<0||index>=drawerNames.length)return;
+ pendingFolderReveal=null;
+ pendingDrawerReveal=null;
+ if(cabinetTray?.opened)cabinetTray.hide();
+ if(cabinetFolders)cabinetFolders.clear();
+ state=plan.next(state,{type:'drawer',index});
+ if(cabinetTrayEnabled&&state.drawer===index)queueCabinetDrawerReveal(index);
+ status.textContent=drawerNames[index]+
+  (state.drawer===index?' drawer sliding towards you. '+(cabinetTrayEnabled?'The overhead inspection opens when it settles.':'Pick a physical folder after it opens.'):' drawer returning to the cabinet.');
+ renderControls('cabinet');
+}
+function selectCabinetFolder(drawer,index){
+ if(!cabinetArchiveEnabled||state.focus!=='cabinet'||state.drawer!==drawer)return;
+ const item=cabinetCatalogue.at(drawer,index);
+ if(!item){status.textContent='An unlabelled spare folder. Nothing is filed in this sample slot.';return;}
+ const current=cabinetFolders.selected;
+ if(current?.drawer===drawer&&current?.index===index){
+  pendingFolderReveal=null;cabinetFolders.clear();
+  status.textContent='The folder slips back between the others.';
+ }else{
+  cabinetFolders.select(drawer,index);
+  pendingFolderReveal={drawer,index,settledAt:null};
+  status.textContent='“'+item.title+'” lifts from the real drawer. Wait for it to settle before opening.';
+ }
+ renderControls('cabinet');
+}
+function navigateFromCabinetFolder(item){
+ pendingFolderReveal=null;if(cabinetFolders)cabinetFolders.clear();
+ const relation=item?.related;
+ if(!relation)return;
+ if(relation.type==='book'){
+  const book=finishedBooks?.byId(relation.id);if(!book)return;
+  focus('bookcase');
+  if(!state.books[book.featuredIndex])toggleBook(book.featuredIndex);
+  else bookExperience.show(book.featuredIndex);
+ }else if(relation.type==='manuscript'){
+  const index=window.DH11ManuscriptExperience?.MANUSCRIPTS.findIndex(x=>x.id===relation.id);
+  if(index===undefined||index<0)return;
+  focus('desk');
+  if(!state.papers[index])togglePaper(index);
+  else manuscriptExperience.openManuscript(index);
+ }else if(relation.type==='workshop'){
+  focus('typewriter');manuscriptExperience.openWorkshop();
+ }
+}
 function bookDescription(index){
  const shelf=Math.floor(index/2),slot=(10-shelf)%10+(index%2)*10;
  const names=personalityProof?(window.DH11ManuscriptPersonality?.AUTHORED_BOOK_TITLES||window.DH11ManuscriptPersonality?.BOOK_TITLES):null;
- const title=names?.[shelf*20+slot];
+ const published=finishedBooksEnabled?finishedBooks.byIndex(index):null;
+ const physicalSlot=published?finishedBooks.TOP_SHELF_SLOTS[index]:slot;
+ const title=published?.title||names?.[shelf*20+slot];
+ if(published)return '“'+title+'” (top shelf, book '+(physicalSlot+1)+')';
  return title?'“'+title+'” (shelf '+(shelf+1)+', book '+(slot+1)+')':
   'Shelf '+(shelf+1)+', book '+(slot+1);
 }
 function toggleBook(index){
  if(!Number.isInteger(index)||index<0||index>=FEATURED_BOOK_COUNT)return;
+ if(finishedBooksEnabled&&!finishedBooks.canOpen(index))return;
  const wasPulled=state.books[index];
  state=plan.next(state,{type:'book',index});
  if(wasPulled===state.books[index])return;
  status.textContent=bookDescription(index)+(state.books[index]?
   ' slides forward. Click it again to return it.':' slides back into its original slot.');
  syncBookControls();
+ if(motionFirst&&finishedBooksEnabled){
+  if(state.books[index])queueObjectReveal('book',index);
+  else pendingObjectReveal=null;
+ }else if(finishedBooksEnabled&&state.books[index])bookExperience.show(index);
 }
 function syncBookControls(){
  for(const button of actions.querySelectorAll('[data-book-index]')){
@@ -882,15 +1107,31 @@ function toggleBinPaper(index){
  const wasOut=state.binPapers[index];
  state=plan.next(state,{type:'bin',index});
  if(state.binPapers[index]===wasOut)return;
+ if(discardedIdeasEnabled){
+  if(state.binPapers[index])queueBinReveal(index);
+  else if(pendingBinReveal?.index===index)pendingBinReveal=null;
+ }
  status.textContent='Crumpled paper '+(index+1)+(state.binPapers[index]?
   ' tumbles out of the bin onto the floor.':' returns to its original place in the bin.');
  syncBinPaperControls();
+}
+function rummageNextScrap(){
+ if(!discardedIdeasEnabled)return;
+ const next=state.binPapers.findIndex(out=>!out);
+ if(next!==-1)toggleBinPaper(next);
+ else{
+  status.textContent='Every discarded idea is on the floor. Revisit a recovered scrap or throw some back.';
+  discardedIdeas.show(0);
+ }
 }
 function syncBinPaperControls(){
  for(const button of actions.querySelectorAll('[data-bin-paper-index]')){
   const index=Number(button.dataset.binPaperIndex),out=state.binPapers[index];
   button.textContent='Paper '+(index+1)+(out?' · return':' · rummage');
   button.setAttribute('aria-pressed',String(out));
+ }
+ for(const button of actions.querySelectorAll('[data-bin-read-index]')){
+  button.hidden=!state.binPapers[Number(button.dataset.binReadIndex)];
  }
 }
 function syncLampControl(){
@@ -914,6 +1155,10 @@ function togglePaper(index){
  status.textContent='Sheet '+(index+1)+(state.papers[index]?
   ' slides to its second place on the desk.':' slides back to its original place.');
  syncPaperControls();
+ if(motionFirst&&manuscriptExperienceEnabled){
+  if(state.papers[index])queueObjectReveal('paper',index);
+  else pendingObjectReveal=null;
+ }else if(manuscriptExperienceEnabled&&state.papers[index])manuscriptExperience.openManuscript(index);
 }
 function syncPaperControls(){
  for(const button of actions.querySelectorAll('[data-paper-index]')){
@@ -952,12 +1197,35 @@ function renderControls(id){
   actions.append(b);
  };
  if(id==='cabinet'){
-  drawerNames.forEach((n,i)=>add((state.drawer===i?'Close ':'Open ')+n,()=>{
-   state=plan.next(state,{type:'drawer',index:i});
-   status.textContent=n+(state.drawer===i?' drawer extended along the cabinet depth axis.':' drawer closed.');
-   renderControls('cabinet');
-  }));
+  drawerNames.forEach((n,i)=>add((state.drawer===i?'Close ':'Open ')+n,()=>toggleCabinetDrawer(i)));
+  if(cabinetArchiveEnabled){
+   const instruction=document.createElement('p');
+   instruction.textContent=cabinetTrayEnabled?
+    'Open a drawer and watch it extend. A view from above then shows all four files clearly. Choose one to lift it from the real drawer.':
+    'Open a drawer, watch it slide, then click a coloured file inside. A folder lifts out before its contents appear. Samples are clearly marked.';
+   actions.append(instruction);
+   if(cabinetTrayEnabled&&state.drawer!==null){
+    add('Look inside the open '+drawerNames[state.drawer]+' drawer',()=>{
+     queueCabinetDrawerReveal(state.drawer);
+    });
+   }else if(state.drawer!==null){
+    const detail=document.createElement('details'),summary=document.createElement('summary');
+    summary.textContent='Select a file using keyboard controls';
+    detail.append(summary);
+    const group=document.createElement('div');group.className='paper-controls';
+    for(const record of cabinetCatalogue.inDrawer(state.drawer)){
+     const button=document.createElement('button');button.type='button';
+     const selected=cabinetFolders.selected;
+     button.textContent=record.title+(selected?.drawer===state.drawer&&selected.index===record.slot?' · return folder':' · pull out');
+     button.setAttribute('aria-pressed',String(selected?.drawer===state.drawer&&selected.index===record.slot));
+     button.addEventListener('click',()=>selectCabinetFolder(record.drawer,record.slot));
+     group.append(button);
+    }
+    detail.append(group);actions.append(detail);
+   }
+  }
  }else if(id==='desk'){
+  if(manuscriptExperienceEnabled)add('Read a manuscript',()=>manuscriptExperience.openManuscript(0));
   const lampButton=document.createElement('button');
   lampButton.type='button';
   lampButton.dataset.lampToggle='true';
@@ -966,7 +1234,7 @@ function renderControls(id){
   syncLampControl();
   // Click the actual named 3D mesh; equivalent controls remain keyboard accessible.
   const help=document.createElement('p');
-  help.textContent='Click a particular paper to slide it out. Click it again to return it.';
+  help.textContent=motionFirst?'Click a real sheet; watch it slide out, then read its sample. Click again to slide it back.':manuscriptExperienceEnabled?'Click an actual paper sheet to slide it out and read a sample; click again to return the sheet.':'Click a particular paper to slide it out. Click it again to return it.';
   actions.append(help);
   const details=document.createElement('details');
   const summary=document.createElement('summary');
@@ -987,14 +1255,16 @@ function renderControls(id){
  }
  else if(id==='bookcase'){
   const help=document.createElement('p');
-  help.textContent='Look for the eight bright turquoise spines with gold markings. Click one to pull it out, or click it again to return it.';
+  help.textContent=finishedBooksEnabled
+   ?'The three gold-framed bindings on the top shelf are published books. Pull one out to view its cover, details and purchase links.'
+   :'Look for the eight bright turquoise spines with gold markings. Click one to pull it out, or click it again to return it.';
   actions.append(help);
   const details=document.createElement('details'),summary=document.createElement('summary');
   summary.textContent='Select a book using keyboard controls';
   details.append(summary);
   const buttons=document.createElement('div');
   buttons.className='paper-controls';
-  for(let i=0;i<FEATURED_BOOK_COUNT;i++){
+  for(let i=0;i<(finishedBooksEnabled?finishedBooks.BOOKS.length:FEATURED_BOOK_COUNT);i++){
    const button=document.createElement('button');
    button.type='button';
    button.dataset.bookIndex=String(i);
@@ -1005,13 +1275,26 @@ function renderControls(id){
   actions.append(details);
   syncBookControls();
  }
- else if(id==='typewriter')add('Press a key',()=>pressTypewriter());
+ else if(id==='typewriter'){
+  if(manuscriptExperienceEnabled){
+   add('Open the creative workshop',()=>manuscriptExperience.openWorkshop());
+   if(motionFirst){
+    const help=document.createElement('p');
+    help.textContent='Try clicking the individual 3D keys, or type on your keyboard while focused on this machine. The keys and paper will move.';
+    actions.append(help);
+   }
+  }
+  else add('Press a key',()=>pressTypewriter());
+ }
  else if(id==='bin'){
   const help=document.createElement('p');
-  help.textContent='Click an individual crumpled paper ball to toss it onto the floor; click it again to put it back.';
+  help.textContent=discardedIdeasEnabled?
+   'Choose a real crumpled paper, watch it tumble out of the bin, then unfold it and turn it over. Escape leaves the ball on the floor; returning it sends it back along the same arc.':
+   'Click an individual crumpled paper ball to toss it onto the floor; click it again to put it back.';
   actions.append(help);
+  if(discardedIdeasEnabled)add('Rummage for the next discarded idea',rummageNextScrap);
   const details=document.createElement('details'),summary=document.createElement('summary');
-  summary.textContent='Select a crumpled paper using keyboard controls';
+  summary.textContent='Select individual crumpled papers using keyboard controls';
   details.append(summary);
   const buttons=document.createElement('div');
   buttons.className='paper-controls';
@@ -1021,6 +1304,14 @@ function renderControls(id){
    button.dataset.binPaperIndex=String(i);
    button.addEventListener('click',()=>toggleBinPaper(i));
    buttons.append(button);
+   if(discardedIdeasEnabled){
+    const reread=document.createElement('button');
+    reread.type='button';
+    reread.dataset.binReadIndex=String(i);
+    reread.textContent='Read recovered paper '+(i+1);
+    reread.addEventListener('click',()=>discardedIdeas.show(i));
+    buttons.append(reread);
+   }
   }
   details.append(buttons);actions.append(details);
   syncBinPaperControls();
@@ -1038,6 +1329,15 @@ function renderControls(id){
 for(const b of focusButtons)b.addEventListener('click',()=>focus(b.dataset.focus));
 homeButton.addEventListener('click',home);
 document.addEventListener('keydown',e=>{
+ if(document.querySelector('dialog[open]'))return;
+ // Workshop typing and scene typing are distinct: the actual machine stays
+ // playable. Don't intercept shortcuts or focused interactive HTML controls.
+ if(motionFirst&&state.focus==='typewriter'&&!e.ctrlKey&&!e.metaKey&&!e.altKey&&
+    e.key.length===1&&!e.target?.closest?.('input,textarea,select,button,a,summary,[contenteditable]')){
+  e.preventDefault();
+  pressTypewriter(keyIndexForCharacter(e.key));
+  return;
+ }
  if(e.key!=='Escape'||!state.focus)return;
  e.preventDefault();
  if(minimalUI&&!tray.hidden){
@@ -1061,9 +1361,12 @@ function pickFromEvent(event){
  const id=mesh?.userData?.objectId;
  if(!id)return null;
  return {id,drawerIndex:id==='cabinet'?drawerIndexForMesh(mesh,cabinetDrawers):null,
+  folderIndex:id==='cabinet'&&cabinetArchiveEnabled&&Number.isInteger(mesh.userData.cabinetFolderIndex)?mesh.userData.cabinetFolderIndex:null,
   paperIndex:id==='desk'?(Number.isInteger(mesh.userData.paperIndex)?mesh.userData.paperIndex:paperIndexForMesh(mesh.name)):null,
   lampPart:id==='desk'?lampPartForMesh(mesh.name):null,
-  bookIndex:id==='bookcase'?(Number.isInteger(mesh.userData.featuredBookIndex)?mesh.userData.featuredBookIndex:featuredBookIndexForMesh(mesh.name)):null,
+  bookIndex:id==='bookcase'?(Number.isInteger(mesh.userData.featuredBookIndex)
+   ?mesh.userData.featuredBookIndex
+   :(finishedBooksEnabled?null:featuredBookIndexForMesh(mesh.name))):null,
   spineTitle:personalityProof&&id==='bookcase'?mesh.userData.manuscriptJokeTitle||null:null,
   binPaperIndex:id==='bin'?(Number.isInteger(mesh.userData.binPaperIndex)?mesh.userData.binPaperIndex:binPaperIndexForMesh(mesh.name)):null,
   keyIndex:id==='typewriter'?typedKeyIndex(mesh.name):null};
@@ -1072,7 +1375,10 @@ canvas.addEventListener('pointermove',event=>{
  const pick=pickFromEvent(event);
  const hovered=pick?.id||null;
  if(hovered!==currentHover){currentHover=hovered;canvas.classList.toggle('interactive',!!hovered);}
- canvas.title=pick?.drawerIndex!==null&&pick?.drawerIndex!==undefined
+ canvas.title=pick?.folderIndex!==null&&pick?.folderIndex!==undefined&&pick?.drawerIndex!==null&&pick?.drawerIndex!==undefined
+  ?(cabinetCatalogue.at(pick.drawerIndex,pick.folderIndex)?.title||'Unlabelled spare folder')+
+    (state.drawer===pick.drawerIndex?' · click to lift':' · open this drawer first')
+  :pick?.drawerIndex!==null&&pick?.drawerIndex!==undefined
   ?drawerNames[pick.drawerIndex]+' drawer'
   :pick?.paperIndex!==null&&pick?.paperIndex!==undefined
    ?(state.papers[pick.paperIndex]?'Return':'Move')+' sheet '+(pick.paperIndex+1)
@@ -1085,7 +1391,9 @@ canvas.addEventListener('pointermove',event=>{
      :pick?.spineTitle?'“'+pick.spineTitle+'” (fictional archive title)'
      :hovered==='door'&&exitDoorProof?window.DH11DoorExit.label(state)
      :hovered==='bookcase'?'Only highlighted books can be pulled out'
-     :hovered==='bin'?'Click a particular crumpled paper, not the bin itself'
+     :hovered==='typewriter'&&motionFirst?'Press the actual 3D keys or type on your keyboard'
+     :hovered==='typewriter'&&manuscriptExperienceEnabled?'Open the creative writing workshop'
+    :hovered==='bin'?(discardedIdeasEnabled?'Rummage in the bin or choose a real crumpled sheet':'Click a particular crumpled paper, not the bin itself')
      :hovered?'Explore '+plan.find(hovered).label:'';
 });
 canvas.addEventListener('pointerleave',()=>{currentHover=null;canvas.classList.remove('interactive');canvas.title='';});
@@ -1102,29 +1410,36 @@ canvas.addEventListener('pointerup',event=>{
   if(minimalUI&&state.focus)home();
   return;
  }
- const {id,drawerIndex,paperIndex,bookIndex,binPaperIndex,lampPart,keyIndex}=pick;
+ const {id,drawerIndex,folderIndex,paperIndex,bookIndex,binPaperIndex,lampPart,keyIndex}=pick;
  if(state.focus===id){
   if(id==='cabinet'){
-   // The cabinet case/rails are not drawers. Only a hit inside a named
-   // drawer group should toggle its own state.
+   // The case and rails are not drawer toggles. A named folder in the
+   // currently extended drawer instead drives its own 3D lift motion.
    if(drawerIndex===null)return;
-   state=plan.next(state,{type:'drawer',index:drawerIndex});
-   status.textContent=drawerNames[drawerIndex]+
-    (state.drawer===drawerIndex?' drawer opened.':' drawer closed.');
+   if(cabinetArchiveEnabled&&folderIndex!==null&&state.drawer===drawerIndex){
+    if(cabinetTrayEnabled)queueCabinetDrawerReveal(drawerIndex);
+    else selectCabinetFolder(drawerIndex,folderIndex);
+   }else toggleCabinetDrawer(drawerIndex);
   }else{
    if(id==='desk'&&lampPart!==null)toggleLamp();
    else if(id==='desk'&&paperIndex!==null)togglePaper(paperIndex);
    else if(id==='bookcase'){
     if(bookIndex!==null)toggleBook(bookIndex);
-    else status.textContent='Try one of the eight highlighted book spines.';
+    else status.textContent=finishedBooksEnabled
+     ?'Pull one of the three gold-outlined books on the top shelf.'
+     :'Try one of the eight highlighted book spines.';
    }
    else if(id==='typewriter')pressTypewriter(keyIndex);
    else if(id==='bin'){
     if(binPaperIndex!==null)toggleBinPaper(binPaperIndex);
+    else if(discardedIdeasEnabled)rummageNextScrap();
     else status.textContent='Click an actual crumpled paper to rummage in the bin.';
    }
    else if(id==='door'&&exitDoorProof)activateExitDoor();
    else if(id==='door')state=plan.next(state,{type:'door'});
+   if(id==='typewriter'&&manuscriptExperienceEnabled&&!motionFirst){
+    manuscriptExperience.openWorkshop();
+   }
    if(!['desk','bookcase','bin','typewriter'].includes(id)&&!(id==='door'&&exitDoorProof))status.textContent=plan.find(id).label+' responds to your interaction.';
   }
   if(!['desk','bookcase','bin'].includes(id))renderControls(id);
@@ -1139,11 +1454,7 @@ canvas.addEventListener('pointerup',event=>{
   if(id==='bin'&&binPaperIndex!==null)toggleBinPaper(binPaperIndex);
   // A drawer hit in the overview identifies the drawer as well as the
   // cabinet, so the first click opens that drawer after selecting the view.
-  if(id==='cabinet'&&drawerIndex!==null){
-   state=plan.next(state,{type:'drawer',index:drawerIndex});
-   status.textContent=drawerNames[drawerIndex]+' drawer opened.';
-   renderControls('cabinet');
-  }
+  if(id==='cabinet'&&drawerIndex!==null)toggleCabinetDrawer(drawerIndex);
  }
 });
 function resize(){
@@ -1162,6 +1473,106 @@ if(renderer){
  else window.addEventListener('resize',resize);
 }
 const clock=new THREE.Clock();
+// Each overlay waits for BOTH the clicked physical object and the shared
+// camera to reach their real transforms. A short final hold shows the
+// extended sheet or book before the reader covers the scene.
+function revealAfterPhysicalMotion(){
+ const pending=pendingObjectReveal;
+ if(!motionFirst||!pending||!renderer)return;
+ const isBook=pending.kind==='book',index=pending.index;
+ const focusId=isBook?'bookcase':'desk';
+ const active=isBook?state.books[index]:state.papers[index];
+ if(state.focus!==focusId||active!==true){pendingObjectReveal=null;return;}
+ const mesh=isBook?pullBooks[index]:loosePapers[index];
+ const homePosition=isBook?bookHome[index]:paperHomes[index];
+ if(!mesh||homePosition===undefined)return;
+ let itemDistance;
+ if(isBook){
+  itemDistance=Math.abs(mesh.position.z-bookPosition(homePosition,true));
+ }else{
+  const end=paperPose(homePosition,index,true);
+  itemDistance=Math.max(Math.abs(mesh.position.x-end.x),
+   Math.abs(mesh.position.y-end.y),Math.abs(mesh.position.z-end.z));
+ }
+ const ready=revealReady({
+  focus:state.focus,expectedFocus:focusId,active,
+  itemDistance,cameraDistance:camera.position.distanceTo(desiredPosition),
+  aimDistance:focusPoint.distanceTo(desiredTarget)
+ });
+ if(!ready){pending.settledAt=null;return;}
+ if(pending.settledAt===null)pending.settledAt=clock.elapsedTime;
+ if(!reduced.matches&&clock.elapsedTime-pending.settledAt<REVEAL_HOLD_SECONDS)return;
+ pendingObjectReveal=null;
+ if(isBook)bookExperience.show(index);
+ else manuscriptExperience.openManuscript(index);
+}
+// The top-down inspection follows the actual drawer extension and camera,
+// rather than relying on the obstructed perspective of the upper drawers.
+// The actual 3D crumple must land on the floor, and the real camera settle,
+// before the visitor can unfold its fictional idea. Never use a click timer.
+function revealDiscardedIdeaAfterMotion(){
+ const pending=pendingBinReveal;
+ if(!discardedIdeasEnabled||!pending||!renderer)return;
+ const index=pending.index;
+ if(state.focus!=='bin'||state.binPapers[index]!==true){
+  pendingBinReveal=null;return;
+ }
+ const home=binPaperHomes[index],mesh=binPapers[index];
+ if(!home||!mesh||binPaperProgress[index]<1-.00001)return;
+ const landed=binPaperPose(home,index,1);
+ const itemDistance=Math.max(Math.abs(mesh.position.x-landed.x),
+  Math.abs(mesh.position.y-landed.y),Math.abs(mesh.position.z-landed.z));
+ const ready=itemDistance<=.012&&
+  camera.position.distanceTo(desiredPosition)<=.10&&
+  focusPoint.distanceTo(desiredTarget)<=.10;
+ if(!ready){pending.settledAt=null;return;}
+ if(pending.settledAt===null)pending.settledAt=clock.elapsedTime;
+ if(!reduced.matches&&clock.elapsedTime-pending.settledAt<REVEAL_HOLD_SECONDS)return;
+ pendingBinReveal=null;
+ discardedIdeas.show(index);
+}
+function revealCabinetDrawerAfterMotion(){
+ const pending=pendingDrawerReveal;
+ if(!cabinetTrayEnabled||!pending||!renderer)return;
+ if(state.focus!=='cabinet'||state.drawer!==pending.drawer){
+  pendingDrawerReveal=null;return;
+ }
+ const drawer=cabinetDrawers[pending.drawer],homePosition=drawerHome[pending.drawer];
+ if(!drawer||homePosition===undefined||!cabinetFolders.attached)return;
+ const ready=Math.abs(drawer.position.z-homePosition-(glbProof?.76*glbExtension:.65))<=.009&&
+  camera.position.distanceTo(desiredPosition)<=.10&&
+  focusPoint.distanceTo(desiredTarget)<=.10&&
+  (pending.returnFolder===null||cabinetFolders.settled(pending.drawer,pending.returnFolder))&&
+  !cabinetExperience.opened;
+ if(!ready){pending.settledAt=null;return;}
+ if(pending.settledAt===null)pending.settledAt=clock.elapsedTime;
+ if(!reduced.matches&&clock.elapsedTime-pending.settledAt<REVEAL_HOLD_SECONDS)return;
+ pendingDrawerReveal=null;
+ cabinetTray.show(pending.drawer);
+}
+// The folder opens only after the real drawer, real lifted file and
+// the actual camera are at rest. No fixed delay from the click.
+function revealCabinetFolderAfterMotion(){
+ const pending=pendingFolderReveal;
+ if(!cabinetArchiveEnabled||!pending||!renderer)return;
+ const selected=cabinetFolders.selected;
+ if(state.focus!=='cabinet'||state.drawer!==pending.drawer||
+    !selected||selected.drawer!==pending.drawer||selected.index!==pending.index){
+  pendingFolderReveal=null;return;
+ }
+ const drawer=cabinetDrawers[pending.drawer],homePosition=drawerHome[pending.drawer];
+ if(!drawer||homePosition===undefined||!cabinetFolders.attached)return;
+ const distance=Math.abs(drawer.position.z-homePosition-
+  (glbProof?.76*glbExtension:.65));
+ const ready=distance<=.009&&cabinetFolders.settled(pending.drawer,pending.index)&&
+  camera.position.distanceTo(desiredPosition)<=.10&&
+  focusPoint.distanceTo(desiredTarget)<=.10;
+ if(!ready){pending.settledAt=null;return;}
+ if(pending.settledAt===null)pending.settledAt=clock.elapsedTime;
+ if(!reduced.matches&&clock.elapsedTime-pending.settledAt<REVEAL_HOLD_SECONDS)return;
+ pendingFolderReveal=null;
+ cabinetExperience.show(pending.drawer,pending.index);
+}
 function render(){
  const delta=Math.min(clock.getDelta(),.08);
  if(renderer){
@@ -1181,6 +1592,7 @@ function render(){
    const target=state.drawer===i ? (glbProof?.76*glbExtension:.65) : 0;
    cabinetDrawers[i].position.z=THREE.MathUtils.lerp(cabinetDrawers[i].position.z,drawerHome[i]+target,rate);
   }
+  if(cabinetFolders)cabinetFolders.update(rate);
   for(let i=0;i<pullBooks.length;i++){
    const target=bookPosition(bookHome[i],state.books[i]);
    pullBooks[i].position.z=THREE.MathUtils.lerp(pullBooks[i].position.z,target,rate);
@@ -1232,6 +1644,10 @@ function render(){
    islandGroups.forEach((g,i)=>{g.position.y=[.1,.55,-.27][i]+Math.sin(t*.65+i)*.055;});
   }
   renderer.render(scene,camera);
+  revealAfterPhysicalMotion();
+  revealCabinetFolderAfterMotion();
+  revealCabinetDrawerAfterMotion();
+  revealDiscardedIdeaAfterMotion();
  }
  requestAnimationFrame(render);
 }
@@ -1288,6 +1704,7 @@ if(glbProof){
      if(finish)node.material=mats[finish];
     });
    }
+   if(cabinetFolders)cabinetFolders.attach(found);
    scene.add(content);
    if(illustratedRuntime)illustratedRuntime.register(content);
    capture('cabinet',content);
@@ -1333,8 +1750,11 @@ if(furnitureModelProof){
     const crumples=Array.from({length:BIN_PAPER_COUNT},(_,i)=>get('bin_paper_'+i));
     crumples.forEach((mesh,i)=>{mesh.userData.binPaperIndex=i;});
     const books=[];
-    for(let shelf=0;shelf<4;shelf++)for(let b=0;b<20;b++)
-     if(featuredBook(shelf,b))books.push(get('book_'+shelf+'_'+String(b).padStart(2,'0')));
+    for(let shelf=0;shelf<4;shelf++)for(let b=0;b<20;b++){
+     const isPublished=finishedBooksEnabled&&finishedBooks.indexForMesh(shelf,b)!==null;
+     if(isPublished||(!finishedBooksEnabled&&featuredBook(shelf,b)))
+      books.push(get('book_'+shelf+'_'+String(b).padStart(2,'0')));
+    }
     // GLB lamp must preserve the same five named click targets as fallback.
     for(const part of ['shade','cap','stem','bulb','base'])get('desk_lamp_'+part);
     const glbBulb=get('desk_lamp_bulb');
@@ -1383,7 +1803,8 @@ if(furnitureModelProof){
     books.forEach((mesh,i)=>markFeaturedBook(mesh,i));
     if(personalityProof){
      if(!window.DH11ManuscriptPersonality)throw Error('Missing title and chaotic manuscript artwork');
-     manuscriptPersonality=window.DH11ManuscriptPersonality.create({THREE,root:content});
+     manuscriptPersonality=window.DH11ManuscriptPersonality.create({THREE,root:content,
+      finishedBooks:finishedBooksEnabled?finishedBooks:null});
      manuscriptPersonality.setVisible(illustratedRuntime?.mode==='painterly');
     }
     if(illustratedRuntime)illustratedRuntime.register(content);
