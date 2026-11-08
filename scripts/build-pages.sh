@@ -34,7 +34,7 @@ done
 
 # A private draft must never become a deployed page through a build bypass.
 # Validate both the empty/approved production manifest and fictional test fixtures.
-node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs
+node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs tests/dh11c-complete-release.test.cjs
 node -e "const {validateManifest}=require('./scripts/davehub-manifest.cjs'); const data=require('./davehub.json'); const result=validateManifest(data,'tametheboardgame/davehub');if(!result.valid)throw new Error(result.errors.join('; '));"
 # Fail closed: only individually owner-approved records and links enter production.
 node scripts/content-check.cjs content/public/catalogue.json
@@ -63,7 +63,7 @@ node scripts/render-content.cjs content/examples/fictional.json dist/previews/dh
 # Publicly visible, LAYOUT-ONLY review of three existing public project names.
 # It never includes unapproved editorial text, outgoing links or private drafts.
 node scripts/render-review-layout.cjs dist/previews/dh-08c
-# Owner-approved 3D Writing Room only. Other staging worlds and editorial work stay out.
+# Owner-approved complete 3D Writing Room, including all later reader interactions. Other staging worlds and editorial work stay out.
 node scripts/build-writing-room-release.cjs dist
 # Each game is independently built from its pinned upstream commit. Static
 # output is deployed under the same DaveHub origin, not embedded via iframe.
@@ -102,8 +102,25 @@ for(const slug of ['unicorn-valley','stephen-martin-project','tame-the-board-gam
 check('dist/worlds/writing/index.html',[
  'data-writing-world="true"','data-minimal-ui="true"',
  'data-dark-window-preload="true"','data-exit-door-proof="true"',
- 'DH-11C.6A.2','<base href="/worlds/writing/scene/">'
+ 'DH-11C.6A.2','DH-11C.6B','DH-11C.6C.1','DH-11C.6C.2',
+ 'DH-11C.6D.3','DH-11C.6D.4','DH-11C.6E','DH-11C.6E.1',
+ 'data-finished-books="true"','data-manuscript-experience="true"',
+ 'data-motion-first="true"','data-cabinet-archive="true"',
+ 'data-cabinet-tray="true"','data-discarded-ideas="true"',
+ 'data-uncrumple-direct="true"','published-book-dialog','manuscript-dialog',
+ 'workshop-dialog','archive-tray-dialog','archive-folder-dialog','discarded-dialog',
+ 'id="discarded-unfold"','<base href="/worlds/writing/scene/">'
 ],['data-scene="manuscript-hoard"','room-stage-image']);
+for(const [file,markers] of [
+ ['room/room.js',['revealDiscardedIdeaAfterMotion()','cabinetFolders.attach(found)','revealCabinetDrawerAfterMotion()']],
+ ['room/discarded-ideas.js',["folded.addEventListener('click',smooth)",'Fictional demonstration']],
+ ['room/cabinet-catalogue.js',['Published book','Fictional demonstration']],
+ ['room/cabinet-tray.js',['DH11CabinetTray','onCloseDrawer']],
+ ['scene/discarded-ideas.css',['body[data-uncrumple-direct="true"] .discarded-dialog[open]']],
+ ['scene/cabinet-tray.css',['.archive-tray-well']],
+ ['scene/book-experience.css',['.published-book-dialog']],
+ ['scene/manuscript-experience.css',['.manuscript-page']]
+ ])check('dist/worlds/writing/'+file,markers);
 for(const model of ['furniture-source.glb','cabinet-blender-verified.glb','room-shell-blender-verified.glb']){
  const file='dist/worlds/writing/room/models/'+model;
  if(fs.statSync(file).size<2000)throw Error('Missing approved model '+file);
