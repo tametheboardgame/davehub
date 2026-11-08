@@ -490,10 +490,9 @@ typePaperHome=typePaper.position.y;typePaperHomeScaleY=typePaper.scale.y;
 typePaperRuleHome=typePaperRule.position.y;typePlatenHome=typePlaten.quaternion.clone();
 
 const pullBooks=[];
-// Eight interactive books get unmistakable jewel-turquoise bindings and
-// three gilded spine marks. The unlit gilt stays vivid in the dim study.
-// Use opaque high-contrast pigment instead of relying on a faint emissive
-// accent. All eight bindings are visibly different even under poor lighting.
+// Earlier comparison previews retain eight luminous turquoise books; the
+// visitor's three published editions have their own cover-inspired colour
+// with a distinct gilded selection frame on the true GLB mesh.
 const FEATURE_BOOK_COLOUR='#24f5da';
 const featureBookGilt=new THREE.MeshBasicMaterial({color:'#ffe681',toneMapped:false});
 function featuredBookColour(mesh){
@@ -522,8 +521,8 @@ function markFeaturedBook(mesh,index){
  if(finishedBooksEnabled&&!finishedBooks.canOpen(index))return;
  mesh.userData.featuredBookIndex=index;
  mesh.material=mesh.material.clone();
- // Multiplying a bright teal colour by a dark leather colour-map would
- // hide the eight interaction targets. Keep those approved bindings vivid.
+ // The published binding's colour must be visible, so do not multiply it
+ // by the GLB's existing muted material map. Historical previews still glow.
  if(mesh.material.map){mesh.material.map=null;mesh.material.needsUpdate=true;}
  featuredBookColour(mesh);
  if(!mesh.geometry.boundingBox)mesh.geometry.computeBoundingBox();
@@ -1073,7 +1072,7 @@ function renderControls(id){
  else if(id==='bookcase'){
   const help=document.createElement('p');
   help.textContent=finishedBooksEnabled
-   ?'The three turquoise bindings are published books. Pull one out to view its cover, details and purchase links.'
+   ?'The three gold-framed bindings on the top shelf are published books. Pull one out to view its cover, details and purchase links.'
    :'Look for the eight bright turquoise spines with gold markings. Click one to pull it out, or click it again to return it.';
   actions.append(help);
   const details=document.createElement('details'),summary=document.createElement('summary');
@@ -1206,7 +1205,7 @@ canvas.addEventListener('pointerup',event=>{
    else if(id==='bookcase'){
     if(bookIndex!==null)toggleBook(bookIndex);
     else status.textContent=finishedBooksEnabled
-     ?'Pull one of the three published books with turquoise bindings.'
+     ?'Pull one of the three gold-outlined books on the top shelf.'
      :'Try one of the eight highlighted book spines.';
    }
    else if(id==='typewriter')pressTypewriter(keyIndex);
