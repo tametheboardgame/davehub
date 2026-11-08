@@ -33,6 +33,22 @@ if(finishedBooksEnabled&&(!finishedBooks||!bookExperience))
  throw Error('DH-11C.6B requires the published-book catalogue and accessible detail view');
 const manuscriptExperienceEnabled=minimalUI&&document.body.dataset.manuscriptExperience==='true';
 const motionFirst=manuscriptExperienceEnabled&&document.body.dataset.motionFirst==='true';
+const discardedIdeasEnabled=motionFirst&&document.body.dataset.discardedIdeas==='true';
+const discardedIdeas=discardedIdeasEnabled?window.DH11DiscardedIdeas?.mount({
+ document,onReturnToBin:index=>{
+  if(state.focus==='bin'&&state.binPapers[index])toggleBinPaper(index);
+ }
+}):null;
+if(discardedIdeasEnabled&&!discardedIdeas)
+ throw Error('DH-11C.6E requires the discarded-paper reader and fictional catalogue');
+let pendingBinReveal=null;
+function queueBinReveal(index){
+ pendingBinReveal={index,settledAt:null};
+ if(!renderer&&discardedIdeas){
+  pendingBinReveal=null;
+  discardedIdeas.show(index);
+ }
+}
 const manuscriptExperience=manuscriptExperienceEnabled?window.DH11ManuscriptExperience?.mount({
  document,onType:()=>pressTypewriter()
 }):null;
@@ -920,7 +936,7 @@ const minimalCopy={
  cabinet:cabinetTrayEnabled?'Open any physical drawer. Once it has slid out, look down into a large illustrated tray of folders.':cabinetArchiveEnabled?'Five real drawers, with physical coloured folders inside. Open a drawer, then pull out a file.':'Five drawers of questionable organisation.',
  bookcase:finishedBooksEnabled?'Three finished books. Pull one out to explore its edition and where to buy it.':'Eighty unlikely books, eight with stories of their own.',
  typewriter:motionFirst?'Click the little keys or type on your keyboard to move the mechanism. Explore further opens a blank writing page.':manuscriptExperienceEnabled?'A blank page and a few questionable writing prompts. Try the creative workshop.':'A machine still waiting for the next sentence.',
- bin:'An overflowing collection of abandoned ideas.',
+ bin:discardedIdeasEnabled?'Nine impossible ideas, each crumpled and thrown away. Click one to see why.':'An overflowing collection of abandoned ideas.',
  window:'A glimpse of other worlds beyond the glass.'
 };
 function showObjectPrompt(id){
@@ -962,6 +978,8 @@ function focus(id){
  pendingObjectReveal=null;
  pendingFolderReveal=null;
  pendingDrawerReveal=null;
+ pendingBinReveal=null;
+ if(discardedIdeas?.opened)discardedIdeas.dismiss();
  if(cabinetTray?.opened)cabinetTray.hide();
  if(cabinetFolders)cabinetFolders.clear();
  state=plan.next(state,{type:'focus',id});
@@ -989,6 +1007,8 @@ function home(){
  pendingObjectReveal=null;
  pendingFolderReveal=null;
  pendingDrawerReveal=null;
+ pendingBinReveal=null;
+ if(discardedIdeas?.opened)discardedIdeas.dismiss();
  if(cabinetTray?.opened)cabinetTray.hide();
  if(cabinetFolders)cabinetFolders.clear();
  state=plan.next(state,{type:'home'});
@@ -1087,15 +1107,31 @@ function toggleBinPaper(index){
  const wasOut=state.binPapers[index];
  state=plan.next(state,{type:'bin',index});
  if(state.binPapers[index]===wasOut)return;
+ if(discardedIdeasEnabled){
+  if(state.binPapers[index])queueBinReveal(index);
+  else if(pendingBinReveal?.index===index)pendingBinReveal=null;
+ }
  status.textContent='Crumpled paper '+(index+1)+(state.binPapers[index]?
   ' tumbles out of the bin onto the floor.':' returns to its original place in the bin.');
  syncBinPaperControls();
+}
+function rummageNextScrap(){
+ if(!discardedIdeasEnabled)return;
+ const next=state.binPapers.findIndex(out=>!out);
+ if(next!==-1)toggleBinPaper(next);
+ else{
+  status.textContent='Every discarded idea is on the floor. Revisit a recovered scrap or throw some back.';
+  discardedIdeas.show(0);
+ }
 }
 function syncBinPaperControls(){
  for(const button of actions.querySelectorAll('[data-bin-paper-index]')){
   const index=Number(button.dataset.binPaperIndex),out=state.binPapers[index];
   button.textContent='Paper '+(index+1)+(out?' · return':' · rummage');
   button.setAttribute('aria-pressed',String(out));
+ }
+ for(const button of actions.querySelectorAll('[data-bin-read-index]')){
+  button.hidden=!state.binPapers[Number(button.dataset.binReadIndex)];
  }
 }
 function syncLampControl(){
@@ -1252,10 +1288,13 @@ function renderControls(id){
  }
  else if(id==='bin'){
   const help=document.createElement('p');
-  help.textContent='Click an individual crumpled paper ball to toss it onto the floor; click it again to put it back.';
+  help.textContent=discardedIdeasEnabled?
+   'Choose a real crumpled paper, watch it tumble out of the bin, then unfold it and turn it over. Escape leaves the ball on the floor; returning it sends it back along the same arc.':
+   'Click an individual crumpled paper ball to toss it onto the floor; click it again to put it back.';
   actions.append(help);
+  if(discardedIdeasEnabled)add('Rummage for the next discarded idea',rummageNextScrap);
   const details=document.createElement('details'),summary=document.createElement('summary');
-  summary.textContent='Select a crumpled paper using keyboard controls';
+  summary.textContent='Select individual crumpled papers using keyboard controls';
   details.append(summary);
   const buttons=document.createElement('div');
   buttons.className='paper-controls';
@@ -1265,6 +1304,14 @@ function renderControls(id){
    button.dataset.binPaperIndex=String(i);
    button.addEventListener('click',()=>toggleBinPaper(i));
    buttons.append(button);
+   if(discardedIdeasEnabled){
+    const reread=document.createElement('button');
+    reread.type='button';
+    reread.dataset.binReadIndex=String(i);
+    reread.textContent='Read recovered paper '+(i+1);
+    reread.addEventListener('click',()=>discardedIdeas.show(i));
+    buttons.append(reread);
+   }
   }
   details.append(buttons);actions.append(details);
   syncBinPaperControls();
@@ -1346,7 +1393,7 @@ canvas.addEventListener('pointermove',event=>{
      :hovered==='bookcase'?'Only highlighted books can be pulled out'
      :hovered==='typewriter'&&motionFirst?'Press the actual 3D keys or type on your keyboard'
      :hovered==='typewriter'&&manuscriptExperienceEnabled?'Open the creative writing workshop'
-    :hovered==='bin'?'Click a particular crumpled paper, not the bin itself'
+    :hovered==='bin'?(discardedIdeasEnabled?'Rummage in the bin or choose a real crumpled sheet':'Click a particular crumpled paper, not the bin itself')
      :hovered?'Explore '+plan.find(hovered).label:'';
 });
 canvas.addEventListener('pointerleave',()=>{currentHover=null;canvas.classList.remove('interactive');canvas.title='';});
@@ -1385,6 +1432,7 @@ canvas.addEventListener('pointerup',event=>{
    else if(id==='typewriter')pressTypewriter(keyIndex);
    else if(id==='bin'){
     if(binPaperIndex!==null)toggleBinPaper(binPaperIndex);
+    else if(discardedIdeasEnabled)rummageNextScrap();
     else status.textContent='Click an actual crumpled paper to rummage in the bin.';
    }
    else if(id==='door'&&exitDoorProof)activateExitDoor();
@@ -1460,6 +1508,29 @@ function revealAfterPhysicalMotion(){
 }
 // The top-down inspection follows the actual drawer extension and camera,
 // rather than relying on the obstructed perspective of the upper drawers.
+// The actual 3D crumple must land on the floor, and the real camera settle,
+// before the visitor can unfold its fictional idea. Never use a click timer.
+function revealDiscardedIdeaAfterMotion(){
+ const pending=pendingBinReveal;
+ if(!discardedIdeasEnabled||!pending||!renderer)return;
+ const index=pending.index;
+ if(state.focus!=='bin'||state.binPapers[index]!==true){
+  pendingBinReveal=null;return;
+ }
+ const home=binPaperHomes[index],mesh=binPapers[index];
+ if(!home||!mesh||binPaperProgress[index]<1-.00001)return;
+ const landed=binPaperPose(home,index,1);
+ const itemDistance=Math.max(Math.abs(mesh.position.x-landed.x),
+  Math.abs(mesh.position.y-landed.y),Math.abs(mesh.position.z-landed.z));
+ const ready=itemDistance<=.012&&
+  camera.position.distanceTo(desiredPosition)<=.10&&
+  focusPoint.distanceTo(desiredTarget)<=.10;
+ if(!ready){pending.settledAt=null;return;}
+ if(pending.settledAt===null)pending.settledAt=clock.elapsedTime;
+ if(!reduced.matches&&clock.elapsedTime-pending.settledAt<REVEAL_HOLD_SECONDS)return;
+ pendingBinReveal=null;
+ discardedIdeas.show(index);
+}
 function revealCabinetDrawerAfterMotion(){
  const pending=pendingDrawerReveal;
  if(!cabinetTrayEnabled||!pending||!renderer)return;
@@ -1576,6 +1647,7 @@ function render(){
   revealAfterPhysicalMotion();
   revealCabinetFolderAfterMotion();
   revealCabinetDrawerAfterMotion();
+  revealDiscardedIdeaAfterMotion();
  }
  requestAnimationFrame(render);
 }

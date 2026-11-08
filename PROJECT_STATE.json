@@ -2,7 +2,7 @@
   "project": "DaveHub",
   "updated": "2026-11-08",
   "status": "dh10c_hosted_editorial_foundation_deployed",
-  "current_work_package": "DH-11C.6D.4 overhead physical-drawer inspection, staged",
+  "current_work_package": "DH-11C.6E Wastepaper Bin, staging owner review",
   "completed": [
     "DH-00A",
     "DH-00B",
@@ -1368,6 +1368,22 @@
         "productionChanged": false,
         "publicContent": "No changes; three published books plus nine clearly fictional demonstrations",
         "docs": "docs/DH11C6D4_OVERHEAD_DRAWER.md",
+        "ownerVisualReview": "pending"
+      },
+      "discardedIdeas": {
+        "stage": "DH-11C.6E",
+        "status": "feature_branch_under_test",
+        "stagingRoute": "/worlds/writing/",
+        "motion": "nine existing GLB 3D crumple arcs retained, physical landing/camera gating before content",
+        "experience": "unfold invented scrap, turn over for absurd reason, leave on floor or crumple and throw back",
+        "fictionalRecords": 9,
+        "contentPolicy": "Fictional demonstration only, no actual unpublished work",
+        "accessibility": "pointer, touch, keyboard controls, real scene focus cancellation, reduced motion",
+        "originalBinGeometryAndPathsPreserved": true,
+        "olderPreviewsChanged": false,
+        "mainChanged": false,
+        "productionChanged": false,
+        "docs": "docs/DH11C6E_WASTEPAPER_BIN.md",
         "ownerVisualReview": "pending"
       }
     }
