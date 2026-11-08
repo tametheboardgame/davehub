@@ -54,7 +54,8 @@ test('canvas pointer picks named drawer, never uses hard-coded index 0',()=>{
  assert.match(source,/const mesh=hits\[0\]\?\.object/);
  assert.match(source,/drawerIndexForMesh\(mesh,cabinetDrawers\)/);
  assert.match(source,/if\(drawerIndex===null\)return;/);
- assert.match(source,/state=plan\.next\(state,\{type:'drawer',index:drawerIndex\}\)/);
+ assert.match(source,/function toggleCabinetDrawer\(index\)/);
+ assert.match(source,/state=plan\.next\(state,\{type:'drawer',index\}\)/);
  assert.doesNotMatch(source,/if\(id==='cabinet'\)state=plan\.next\(state,\{type:'drawer',index:0\}\)/);
- assert.match(source,/if\(id==='cabinet'&&drawerIndex!==null\)/);
+ assert.match(source,/if\(id==='cabinet'&&drawerIndex!==null\)toggleCabinetDrawer\(drawerIndex\)/);
 });
