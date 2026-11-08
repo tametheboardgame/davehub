@@ -2,6 +2,10 @@
 
 **Updated:** 7 November 2026. **Current stage:** DH-11C.6B.2 floating contextual prompts and compact Eleanor jacket (staging-only). Prior stage: DH-11C.6B finished-book product pages, after approved DH-11C.6A.2 dark window preload., after approved click-to-overview navigation. Previous stage: DH-11C.6A.1 click-empty-scene to leave an object view, building on the accepted minimal Writing interface, after accepting the 3D Manuscript Hoard core and the direct Writing island route. A separate review version preserves the original room and earlier art passes. C5A desk materials and C4 mechanics owner-approved; C5B accepted as a promising first pass. Published Writing and production remain unchanged.
 
+## DH-11C.6B.3 — Published-colour spines with separate gold selection outline
+
+Replace the three turquoise visitor books with edition-inspired binding colours, using a fine gold frame and seal on the *actual* pull-out meshes to identify clickable publications. The finished-book detail panels and the eight-book art preview remain unchanged. Search connected Drive and retailers for Eleanor's original published cover; retain the existing fallback until a verified cover is available. [Scope and verification](DH11C6B3_REAL_BOOK_SPINES.md). Staging only.
+
 ## DH-11C.6B.2 — Floating prompts, unchanged scene size and compact Eleanor jacket
 
 Fix 6B.1 user feedback: return to a **full-height interactive 3D viewport** at every screen size and float small contextual prompts alongside the selected furniture, never in a black footer band. Make the text-only Eleanor fallback small enough not to stretch its book detail overlay. Earlier artistic previews and production unchanged. [Behaviour and acceptance](DH11C6B2_FLOATING_PROMPTS.md).
