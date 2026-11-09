@@ -91,7 +91,7 @@ async function main(){
    // Require the actual MIME and source bytes, not just the page's script tags.
    // Verify real script and style assets; reject Cloudflare's HTML fallback.
    for(const asset of [
-    {path:'/styles.css',type:'text/css',markers:['.island--music','left: 64.5%','left: 37%','top: 32%']},
+    {path:'/styles.css',type:'text/css',markers:['.island--music','left: 69%','left: 41%','top: 32%']},
     {path:'/worlds/writing/room/reveal-after-motion.mjs',type:'javascript',markers:['export function revealReady','REVEAL_HOLD_SECONDS']},
     {path:'/worlds/writing/room/room.js',type:'javascript',markers:['revealAfterPhysicalMotion()','keyIndexForCharacter(e.key)']},
     {path:'/worlds/writing/scene/manuscript-experience.css',type:'text/css',markers:['.manuscript-page','.workshop-page']},
