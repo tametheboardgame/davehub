@@ -68,7 +68,7 @@ test('the Working Room-style branded heading is part of the real Music foyer',()
   'music-foyer__topbar','music-foyer__brand',
   '/assets/branding/davehub-logo-faithful.svg',
   '<h1>The World Between Notes</h1>',
-  'href="/worlds/music/"','music-foyer__world-id',
+  'href="/"','music-foyer__world-id',
   'id="music-orbit-hint"',
   'id="music-orbit-reset"',
   'tabindex="0" aria-describedby="music-orbit-hint"',
