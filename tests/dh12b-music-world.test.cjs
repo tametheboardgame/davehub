@@ -148,7 +148,7 @@ test('Music world has both-way connections, but the canonical Music page is unto
  assert.ok(theatre.includes('href="/previews/dh-12b/music-foyer/"'));
  assert.ok(theatre.includes('DH-12A · THE MUSICALS WORLD'));
  assert.ok(records.includes('href="/previews/dh-12b/music-foyer/"'));
- assert.ok(foyer.includes('href="/worlds/music/"'),'the experiment can return to the existing Music page');
+ assert.ok(foyer.includes('href="/"'),'Music foyer returns to the actual homepage Music island');
  const script=read('scripts/build-pages.sh');
  assert.ok(script.includes('node scripts/render-content.cjs content/public/catalogue.json'));
  assert.ok(!script.includes('node scripts/render-music-foyer-live'),'unapproved canonical route unchanged');

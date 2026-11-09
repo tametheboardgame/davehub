@@ -2,6 +2,10 @@
 
 **DH-11C Writing Room, complete and owner-approved:** All physical interactions through DH-11C.6E.1 were selectively promoted to GitHub `main` via PR #114 on 8 November 2026. The Writing Room is now frozen for new functionality until approved real content can replace fictional demonstrations. No production custom-domain launch has occurred.
 
+## DH-12B.4 — Add the missing Music island on the homepage
+
+The user noticed the animated floating-islands homepage has no **Music** hotspot, despite the working dimensional Music foyer and its theatre/record-shop doors. Restore a fifth semantic, accessible illustrated-world island with the existing note glyph and golden glow, anchored away from the Dave animation, central logo and other hotspots with responsive desktop/tablet/mobile/short-landscape positions. It leads directly to the staging Music foyer, whose own return link now goes back to the homepage. Do not replace the existing canonical Music page or promote the home change to `main` before owner approval. [DH-12B.4 specification](DH12B4_HOME_MUSIC_ISLAND.md).
+
 ## DH-12B.3 — Orbit the foyer and recognise the actual portals
 
 Owner feedback approves the mystical direction but requests the **Writing Room's compact branded top banner**, a **Google Earth-style user-controlled orbit** around the actual floating island, and **readable portal signs with more distinctive theatre/record-shop sculpture**. Implement one spherical orbit camera controlled by mouse drag, wheel, touch orbit/pinch, arrows, plus/minus and Reset view. Preserve motion-first real double doors, fully settled enter gating, Back/Escape and publication isolation. The two portal doors gain carved marquees, theatre velvet/masks/footlights versus vinyl plates/grooves/sleeves, plus high-contrast camera-projected labels. Keep canonical Music, main, public domain, completed Writing Room and game builds unchanged. [Implementation and checks](DH12B3_FOYER_ORBIT_AND_PORTALS.md).

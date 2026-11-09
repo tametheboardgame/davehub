@@ -14,9 +14,14 @@ test('homepage Explore enters the actual new world directory',()=>{
  assert.match(html,/Skip to Explore DaveHub<\/a>/);
  assert.doesNotMatch(html,/<dialog\b/i);
 });
-test('all four islands navigate directly to their shared content worlds',()=>{
+test('the four existing home islands keep their direct world routes',()=>{
  for(const name of ['projects','writing','games','experiments'])
-  assert.match(html,new RegExp('class="island island--'+name+'" href="/worlds/'+name+'/\"'));
+  assert.match(html,new RegExp('class="island island--'+name+'" href="/worlds/'+name+'/"'));
+});
+test('the Music island opens the dimensional staging foyer instead of the unapproved canonical Music page',()=>{
+ assert.match(html,/class="island island--music" href="\/previews\/dh-12b\/music-foyer\/"/);
+ assert.match(html,/data-dh12b4-music-island="true"/);
+ assert.match(html,/<use href="#icon-music"\/><\/svg><span>Music<\/span>/);
 });
 test('old modal hashes are redirected to the appropriate deep links',()=>{
  for(const name of ['projects','writing','games','experiments','music','unfinished','memory-lane'])
