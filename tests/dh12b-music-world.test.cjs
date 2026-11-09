@@ -51,10 +51,10 @@ test('each real leaf opens from its own hinge, the same selection can be cancell
 test('real Music-world foyer has hinged door leaf geometry, real focus movement and delayed navigation',()=>{
  const html=read(base+'foyer.html'),js=read(base+'foyer.mjs');
  for(const marker of [
-  'data-music-foyer="true"','data-dimensional-art="true"','data-foyer-orbit="true"','DH-12B.3',
+  'data-music-foyer="true"','data-dimensional-art="true"','data-foyer-orbit="true"','data-foyer-minimal="true"','DH-12B.5',
   'The World Between Notes','id="portal-theatre"','id="portal-records"',
   'id="music-portal-overview"','role="status"',
-  'noindex,nofollow','foyer.mjs?v=dh12b3-orbit-portals-v1'
+  'noindex,nofollow','foyer.mjs?v=dh12b5-clean-journey-v1'
  ])assert.ok(html.includes(marker),marker);
  for(const marker of [
   'new THREE.WebGLRenderer','THREE.PerspectiveCamera',
@@ -65,11 +65,11 @@ test('real Music-world foyer has hinged door leaf geometry, real focus movement 
   'doorAngle(opened,side)',
   'function targetCamera()',
   'function choose(id)',
-  'if(selected===id&&ready)',
+  'if(!door||entering||selected===id)return;',
   'window.location.assign(door.route)',
   'const doorsDone=',
   'const cameraDone=',
-  'doorsDone&&cameraDone',
+  'shouldAutoEnter({selected,entering,doorsDone,cameraDone})',
   'function returnToCrossroads()',
   "if(e.key==='Escape'&&selected)",
   "canvas.addEventListener('pointerup'"
@@ -77,7 +77,9 @@ test('real Music-world foyer has hinged door leaf geometry, real focus movement 
   assert.ok(js.includes(marker),marker);
  assert.ok(js.includes('mark(hinge,def.id)')&&js.includes('mark(display,def.id)'));
  const navigate=js.indexOf('window.location.assign(door.route)');
- assert.ok(navigate>js.indexOf('if(selected===id&&ready)'));
+ assert.ok(navigate>js.indexOf('function enterSelectedWorld()'));
+ assert.ok(js.indexOf('shouldAutoEnter({selected,entering,doorsDone,cameraDone})')>navigate,
+  'real motion must trigger the journey without a second selection');
  const htmlFoyer=html.indexOf('The Impossible Theatre');
  const htmlRecords=html.indexOf('The Record Shop');
  assert.ok(htmlFoyer>=0&&htmlRecords>htmlFoyer);
