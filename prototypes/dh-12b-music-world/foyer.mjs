@@ -1,7 +1,8 @@
-// DH-12B.1: World Between Notes. The doors are real hinged meshes.
-// First click opens and physically approaches a threshold; Enter goes inside.
+// DH-12B.5: the doors open physically, the camera approaches, then the
+// selected destination loads automatically. One action, not two.
 import * as THREE from './vendor/three-r159.module.min.js';
-import {DOORS,doorFor,doorAngle,approach,settled} from './music-portals.mjs?v=dh12b1-music-portals-v1';
+import {DOORS,doorFor,doorAngle,approach,settled,isLocalMusicRoute} from './music-portals.mjs?v=dh12b1-music-portals-v1';
+import {makeFoyerMaterials,makePortalSignTexture} from './foyer-surfaces.mjs?v=dh12b5-clean-journey-v1';
 import {buildFoyerDimension} from './dimensional-art.mjs?v=dh12b2-dimensional-world-v1';
 import {initialOrbit,dragOrbit,zoomOrbit,zoomPinch,orbitPose,dragDistance,pointerSeparation}
  from './foyer-orbit.mjs?v=dh12b3-orbit-portals-v1';
@@ -11,12 +12,7 @@ const status=document.getElementById('music-portal-status');
 const overview=document.getElementById('music-portal-overview');
 const overviewTray=document.getElementById('music-portal-view');
 const orbitReset=document.getElementById('music-orbit-reset');
-const signs={
- theatre:document.getElementById('music-sign-theatre'),
- records:document.getElementById('music-sign-records')
-};
-if(!orbitReset||!signs.theatre||!signs.records)
- throw Error('Missing Music foyer orbit and portal signage controls');
+if(!orbitReset)throw Error('Missing foyer reset control');
 const actions=Object.fromEntries(DOORS.map(d=>[d.id,document.getElementById('portal-'+d.id)]));
 if(!canvas||!status||!overview||!overviewTray||Object.values(actions).some(x=>!x))
  throw Error('The Music world requires two reachable physical portals');
@@ -46,6 +42,8 @@ const destination=camera.position.clone(),lookAt=aim.clone();
 let orbit=initialOrbit();
 const cameraBasePosition=new THREE.Vector3(),cameraBaseTarget=new THREE.Vector3();
 function setOrbit(next){
+ // Once a physical door is selected, leave the camera journey uninterrupted.
+ if(selected)return;
  orbit=next;
  targetCamera();
 }
@@ -53,16 +51,8 @@ function resetOrbit(){
  setOrbit(initialOrbit());
 }
 orbitReset.addEventListener('click',resetOrbit);
-signs.theatre.addEventListener('click',()=>choose('theatre'));
-signs.records.addEventListener('click',()=>choose('records'));
-const golden=new THREE.MeshStandardMaterial({color:'#c9a47a',metalness:.58,roughness:.42});
-const dark=new THREE.MeshStandardMaterial({color:'#372a39',metalness:.1,roughness:.8});
-const stone=new THREE.MeshStandardMaterial({color:'#66526a',roughness:.86});
-const cream=new THREE.MeshStandardMaterial({color:'#e7d2b1',roughness:.81});
-const amethyst=new THREE.MeshStandardMaterial({color:'#614765',roughness:.75});
-const mint=new THREE.MeshStandardMaterial({color:'#588b81',roughness:.67});
-const wood=new THREE.MeshStandardMaterial({color:'#553b49',roughness:.68});
-const seam=new THREE.MeshStandardMaterial({color:'#ecc995',metalness:.42,roughness:.44});
+// Hand-authored procedural grain follows the actual curved/cast geometry.
+const {golden,dark,stone,cream,amethyst,mint,wood,seam}=makeFoyerMaterials(THREE);
 function group(name,parent=scene,xyz=[0,0,0]){
  const g=new THREE.Group();g.name=name;g.position.set(...xyz);parent.add(g);return g;
 }
@@ -82,16 +72,13 @@ function ring(name,r,t,xyz,mat,parent=scene,arc=Math.PI*2){
  const o=new THREE.Mesh(new THREE.TorusGeometry(r,t,10,66,arc),mat);
  o.name=name;o.position.set(...xyz);parent.add(o);return o;
 }
-function sign(text,w=2.2){
- const graphic=document.createElement('canvas');graphic.width=700;graphic.height=160;
- const c=graphic.getContext('2d');
- c.fillStyle='#ecddc4';c.fillRect(0,0,700,160);
- c.strokeStyle='#8c6474';c.lineWidth=12;c.strokeRect(5,5,690,150);
- c.font='bold 61px Georgia,serif';c.fillStyle='#403044';c.textAlign='center';c.textBaseline='middle';
- c.fillText(text.toUpperCase(),350,83,650);
- const tex=new THREE.CanvasTexture(graphic);tex.colorSpace=THREE.SRGBColorSpace;
- return new THREE.Mesh(new THREE.PlaneGeometry(w,w*160/700),
-  new THREE.MeshBasicMaterial({map:tex,side:THREE.DoubleSide}));
+function sign(kind,w=2.66){
+ const texture=makePortalSignTexture(THREE,kind);
+ // One high-resolution, physically attached marquee per doorway.
+ const label=new THREE.Mesh(new THREE.PlaneGeometry(w,w*350/1536),
+  new THREE.MeshBasicMaterial({map:texture,side:THREE.DoubleSide}));
+ label.castShadow=false;
+ return label;
 }
 scene.add(new THREE.HemisphereLight('#efe0ca','#352a4c',1.5));
 const moon=new THREE.DirectionalLight('#f9dbb6',1.9);moon.position.set(-3,10,8);moon.castShadow=true;moon.shadow.mapSize.set(1024,1024);scene.add(moon);
@@ -157,9 +144,8 @@ function makePortal(def,number){
   orb('interior-mystery-light-'+k,.044,
    [Math.sin(a)*.85,2.16+Math.cos(a)*1.18,-.52],number===0?cream:seam,root);
  }
- const display=sign(number===0?'THEATRE':'RECORD SHOP',2.66);
- // Full-size, high-contrast inscription on a real carved plaque, with a
- // second camera-anchored label for clarity from oblique orbit views.
+ const display=sign(def.id,2.66);
+ // One legible engraved sign, not duplicated by a camera-anchored UI card.
  const plate=box('portal-carved-marquee-'+def.id,[2.80,.57,.18],
   [0,4.47,-.03],number===0?amethyst:mint,root);
  box('marquee-gilt-underline-'+def.id,[2.68,.042,.21],
@@ -240,7 +226,7 @@ DOORS.forEach((d,i)=>{thresholds[d.id]=makePortal(d,i);});
 const dimension=buildFoyerDimension({
  THREE,scene,thresholds,reducedMotion:!!reduced?.matches
 });
-let selected=null,ready=false;
+let selected=null,entering=false;
 const clock=new THREE.Clock();
 const desiredTarget=new THREE.Vector3(0,1.95,-2);
 function targetCamera(){
