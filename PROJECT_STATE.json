@@ -2,7 +2,7 @@
   "project": "DaveHub",
   "updated": "2026-11-09",
   "status": "dh10c_hosted_editorial_foundation_deployed",
-  "current_work_package": "DH-12B.3 Foyer orbit, Writing Room-style banner and distinctive 3D portals, staging",
+  "current_work_package": "DH-12B.4 Home Music island discovery and return journey, staging",
   "completed": [
     "DH-00A",
     "DH-00B",
@@ -1401,10 +1401,10 @@
     }
   },
   "dh12_music": {
-    "stage": "DH-12B.3",
+    "stage": "DH-12B.4",
     "world": "music",
     "creativeDirection": "The Impossible Theatre, a surreal miniature stage with real moving mechanics",
-    "status": "staging_orbit_banner_portals_under_test",
+    "status": "staging_homepage_music_island_under_test",
     "previewRoute": "/previews/dh-12a/listening-room/",
     "existingMusicRouteReplaced": false,
     "physicalCurtains": true,
@@ -1414,7 +1414,7 @@
     "ownerVisualApproval": "pending",
     "mainChanged": false,
     "productionChanged": false,
-    "docs": "docs/DH12B3_FOYER_ORBIT_AND_PORTALS.md",
+    "docs": "docs/DH12B4_HOME_MUSIC_ISLAND.md",
     "camera": {
       "type": "one perspective camera travelling to genuine object focus points",
       "modes": [
@@ -1473,6 +1473,15 @@
       "shopAndTheatreUnchanged": true,
       "ownerVisualApproval": "pending",
       "docs": "docs/DH12B3_FOYER_ORBIT_AND_PORTALS.md"
+    },
+    "homepageMusicIsland": {
+      "status": "staging_only_pending_owner_review",
+      "link": "/previews/dh-12b/music-foyer/",
+      "hotspot": "fifth illustrated home island, icon-music SVG, CSS colour and responsive placement",
+      "return": "foyer topbar leads to root homepage",
+      "otherIslandsUnchanged": true,
+      "productionNotUpdated": true,
+      "docs": "docs/DH12B4_HOME_MUSIC_ISLAND.md"
     }
   }
 }
