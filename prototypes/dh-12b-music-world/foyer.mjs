@@ -3,11 +3,20 @@
 import * as THREE from './vendor/three-r159.module.min.js';
 import {DOORS,doorFor,doorAngle,approach,settled} from './music-portals.mjs?v=dh12b1-music-portals-v1';
 import {buildFoyerDimension} from './dimensional-art.mjs?v=dh12b2-dimensional-world-v1';
+import {initialOrbit,dragOrbit,zoomOrbit,zoomPinch,orbitPose,dragDistance,pointerSeparation}
+ from './foyer-orbit.mjs?v=dh12b3-orbit-portals-v1';
 
 const canvas=document.getElementById('music-portals-canvas');
 const status=document.getElementById('music-portal-status');
 const overview=document.getElementById('music-portal-overview');
 const overviewTray=document.getElementById('music-portal-view');
+const orbitReset=document.getElementById('music-orbit-reset');
+const signs={
+ theatre:document.getElementById('music-sign-theatre'),
+ records:document.getElementById('music-sign-records')
+};
+if(!orbitReset||!signs.theatre||!signs.records)
+ throw Error('Missing Music foyer orbit and portal signage controls');
 const actions=Object.fromEntries(DOORS.map(d=>[d.id,document.getElementById('portal-'+d.id)]));
 if(!canvas||!status||!overview||!overviewTray||Object.values(actions).some(x=>!x))
  throw Error('The Music world requires two reachable physical portals');
@@ -34,6 +43,18 @@ const aim=new THREE.Vector3(0,1.95,-2.0);
 camera.position.set(0,6.7,14.6);
 camera.lookAt(aim);
 const destination=camera.position.clone(),lookAt=aim.clone();
+let orbit=initialOrbit();
+const cameraBasePosition=new THREE.Vector3(),cameraBaseTarget=new THREE.Vector3();
+function setOrbit(next){
+ orbit=next;
+ targetCamera();
+}
+function resetOrbit(){
+ setOrbit(initialOrbit());
+}
+orbitReset.addEventListener('click',resetOrbit);
+signs.theatre.addEventListener('click',()=>choose('theatre'));
+signs.records.addEventListener('click',()=>choose('records'));
 const golden=new THREE.MeshStandardMaterial({color:'#c9a47a',metalness:.58,roughness:.42});
 const dark=new THREE.MeshStandardMaterial({color:'#372a39',metalness:.1,roughness:.8});
 const stone=new THREE.MeshStandardMaterial({color:'#66526a',roughness:.86});
@@ -136,8 +157,20 @@ function makePortal(def,number){
   orb('interior-mystery-light-'+k,.044,
    [Math.sin(a)*.85,2.16+Math.cos(a)*1.18,-.52],number===0?cream:seam,root);
  }
- const display=sign(number===0?'MUSICALS':'RECORDS',1.91);
- display.name='gateway-inscription-'+def.id;display.position.set(0,4.38,.06);root.add(display);
+ const display=sign(number===0?'THEATRE':'RECORD SHOP',2.66);
+ // Full-size, high-contrast inscription on a real carved plaque, with a
+ // second camera-anchored label for clarity from oblique orbit views.
+ const plate=box('portal-carved-marquee-'+def.id,[2.80,.57,.18],
+  [0,4.47,-.03],number===0?amethyst:mint,root);
+ box('marquee-gilt-underline-'+def.id,[2.68,.042,.21],
+  [0,4.17,.065],golden,root);
+ display.name='gateway-inscription-'+def.id;
+ display.position.set(0,4.47,.12);root.add(display);
+ for(let i=0;i<9;i++){
+  const x=-1.20+i*.30;
+  orb('marquee-lamp-'+def.id+'-'+i,.050,
+   [x,4.78,.12],number===0?cream:seam,root);
+ }
  // The left and right doors each have an actual hinge at the outer jamb.
  const leaves={};
  for(const side of ['left','right']){
@@ -151,6 +184,47 @@ function makePortal(def,number){
     number===0?amethyst:stone,hinge);
   }
   orb('door-handle-'+side,.09,[-direction*.98,-.02,.16],golden,hinge);
+  if(number===0){
+   // The actual double doors now resemble miniature burgundy stage wings.
+   // Real folded velvet strips travel with EACH original hinged door.
+   for(let fold=0;fold<5;fold++){
+    const x=-direction*(.15+fold*.19);
+    const vel=box('stage-velvet-fluted-panel-'+side+'-'+fold,
+     [.075,2.85,.075],[x,-.03,.14],amethyst,hinge);
+    vel.rotation.z=direction*.017*(fold-2);
+   }
+   for(let lamp=0;lamp<5;lamp++){
+    orb('stage-footlight-'+side+'-'+lamp,.058,
+     [-direction*(.16+lamp*.19),-1.49,.22],cream,hinge);
+   }
+   const mask=orb('mini-comedy-tragedy-face-'+side,.205,
+    [-direction*.55,.73,.17],cream,hinge);
+   mask.scale.set(.88,1.20,.40);
+   for(const eye of [-1,1]){
+    orb('carved-mask-eye-'+side+'-'+eye,.028,
+     [-direction*.55+eye*.070,.77,.262],dark,hinge);
+   }
+   const mouth=ring('engraved-theatre-mask-mouth-'+side,.084,.014,
+    [-direction*.55,.66,.255],golden,hinge,Math.PI*.86);
+   mouth.rotation.z=side==='left'?Math.PI:0;
+  }else{
+   // A real ornamental vinyl fixed to each door leaf, with raised grooves.
+   const plate=cylinder('real-shop-door-vinyl-'+side,.36,.36,.035,
+    [-direction*.55,.66,.15],dark,hinge);
+   plate.rotation.x=Math.PI/2;
+   for(const radius of [.24,.30]){
+    ring('shop-door-record-groove-'+side+'-'+radius,radius,.012,
+     [-direction*.55,.66,.185],seam,hinge);
+   }
+   orb('shop-door-vinyl-label-'+side,.102,
+    [-direction*.55,.66,.201],mint,hinge);
+   for(let k=0;k<3;k++){
+    const miniSleeve=box('mini-hanging-sleeve-'+side+'-'+k,
+     [.24,.27,.034],[-direction*(.30+k*.25),-.73+k*.13,.18],
+     k%2?golden:stone,hinge);
+    miniSleeve.rotation.z=direction*(k-1)*.08;
+   }
+  }
   leaves[side]=hinge;
   mark(hinge,def.id);
  }
@@ -180,7 +254,14 @@ function targetCamera(){
  }else if(narrow){
   xyz=[0,9.1,20.5];point=[0,1.60,-2.75];
  }
- destination.set(...xyz);desiredTarget.set(...point);
+ cameraBasePosition.set(...xyz);
+ cameraBaseTarget.set(...point);
+ const pose=orbitPose(xyz,point,orbit,{
+  minRadius:selected?(narrow?6.8:3.8):(narrow?10.0:5.8),
+  maxRadius:43
+ });
+ destination.set(...pose.position);
+ desiredTarget.set(...pose.target);
  if(reduced?.matches){
   camera.position.copy(destination);aim.copy(desiredTarget);camera.lookAt(aim);
  }
@@ -198,7 +279,7 @@ function updateUI(){
  overviewTray.hidden=!selected;
 }
 function returnToCrossroads(){
- selected=null;ready=false;targetCamera();updateUI();
+ selected=null;ready=false;orbit=initialOrbit();targetCamera();updateUI();
  status.textContent='Both doors are visible again. Choose where the music takes you.';
 }
 function choose(id){
@@ -207,7 +288,7 @@ function choose(id){
   // Only one of the two fixed, local, declared staging destinations.
   window.location.assign(door.route);return;
  }
- selected=id;ready=false;targetCamera();updateUI();
+ selected=id;ready=false;orbit=initialOrbit();targetCamera();updateUI();
  status.textContent=door.label+' · the real hinged doors are opening. Enter when they have opened.';
 }
 for(const d of DOORS)actions[d.id].addEventListener('click',()=>choose(d.id));
