@@ -22,11 +22,11 @@ const checks=[
  {path:'/creations/tame-the-board-game/',required:['<style data-davehub-inline="worlds">','Tame The Board Game','Miriam','tametheboardgame.com/about/'],forbidden:['DESIGN REVIEW ONLY']},
  {path:'/previews/dh-12a/listening-room/',required:['DH-12A.3','data-living-sets="true"','id="theatre-set"','data-theatre-camera="motion-first"','id="theatre-overview"','data-dh12a-theatre="true"','The Impossible Theatre','id="theatre-curtains"','id="theatre-stage"','id="theatre-record"','noindex,nofollow','theatre.mjs?v=dh12a3-living-sets-v1','theatre.css?v=dh12a3-living-sets-v1','A musicals-only stage prototype. These miniature sets are fictional studies, not published productions.','href="/previews/dh-12b/music-foyer/"'],forbidden:['<audio','autoplay','data-writing-world="true"']},
  {path:'/previews/dh-12b/music-foyer/',required:[
- 'DH-12B.5','data-music-foyer="true"','data-dimensional-art="true"',
+ 'DH-12B.5A','data-music-foyer="true"','data-dimensional-art="true"',
  'data-foyer-orbit="true"','data-foyer-minimal="true"','The World Between Notes',
  'music-foyer__topbar','davehub-logo-faithful.svg','id="music-orbit-reset"',
  'music-foyer__portal-nav','id="portal-theatre"','id="portal-records"',
- 'id="music-portal-overview"','foyer.mjs?v=dh12b5-clean-journey-v1',
+ 'id="music-portal-overview"','foyer.mjs?v=dh12b5a-marquee-front-v1',
  'music-world.css?v=dh12b5-clean-journey-v1','noindex,nofollow'],
  forbidden:['<audio','autoplay','data-writing-world="true"',
  'music-foyer__choices','music-foyer__floating-signs','music-foyer__footnote']},
@@ -74,7 +74,7 @@ async function main(){
    const results=[];
    for(const c of checks){
     const version=c.path==='/'?'?dh12b4-music-home-v1=1':
-     c.path==='/previews/dh-12b/music-foyer/'?'?dh12b5-clean-journey-v1=1':
+     c.path==='/previews/dh-12b/music-foyer/'?'?dh12b5a-marquee-front-v1=1':
      c.path==='/previews/dh-12b/record-shop/'?'?dh12b2-dimensional-world-v1=1':
      c.path==='/previews/dh-12a/listening-room/'?'?dh12a3-living-sets-v1=1':
      c.path==='/worlds/writing/'?'?dh11c6e1-uncrumple-v1=1':
