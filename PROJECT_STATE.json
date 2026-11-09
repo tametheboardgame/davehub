@@ -2,7 +2,7 @@
   "project": "DaveHub",
   "updated": "2026-11-09",
   "status": "dh10c_hosted_editorial_foundation_deployed",
-  "current_work_package": "DH-12B.4 Home Music island discovery and return journey, staging",
+  "current_work_package": "DH-12B.5 Music foyer one-click journeys, procedural texture detail and uncluttered UI, staging",
   "completed": [
     "DH-00A",
     "DH-00B",
@@ -1401,10 +1401,10 @@
     }
   },
   "dh12_music": {
-    "stage": "DH-12B.4",
+    "stage": "DH-12B.5",
     "world": "music",
     "creativeDirection": "The Impossible Theatre, a surreal miniature stage with real moving mechanics",
-    "status": "staging_homepage_music_island_under_test",
+    "status": "single_click_foyer_refinement_under_staging_test",
     "previewRoute": "/previews/dh-12a/listening-room/",
     "existingMusicRouteReplaced": false,
     "physicalCurtains": true,
@@ -1414,7 +1414,7 @@
     "ownerVisualApproval": "pending",
     "mainChanged": false,
     "productionChanged": false,
-    "docs": "docs/DH12B4_HOME_MUSIC_ISLAND.md",
+    "docs": "docs/DH12B5_MUSIC_FOYER_REFINEMENT.md",
     "camera": {
       "type": "one perspective camera travelling to genuine object focus points",
       "modes": [
@@ -1482,6 +1482,17 @@
       "otherIslandsUnchanged": true,
       "productionNotUpdated": true,
       "docs": "docs/DH12B4_HOME_MUSIC_ISLAND.md"
+    },
+    "nextRefinement": {
+      "trigger": "one physical portal selection automatically enters its fixed local destination when both hinges and camera have settled",
+      "cancel": "Escape / Cancel journey before automatic entry",
+      "art": "authored browser-generated veined moonstone, velvet, grained timber, worn gold and teal enamel textures with bump relief and short physically attached signs",
+      "interface": "no floating card sign layer, no large information cards; small bottom controls and collapsed viewing help",
+      "retains": "orbit and zoom before selection, physical 3D leaves, complete original cosmic art, separate Theatre and Record Shop scenes",
+      "stagingOnly": true,
+      "mainLastCheckpoint": "2026-11-09 owner-approved work in progress",
+      "docs": "docs/DH12B5_MUSIC_FOYER_REFINEMENT.md",
+      "ownerVisualApproval": "pending"
     }
   }
 }
