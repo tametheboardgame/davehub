@@ -408,11 +408,11 @@ check('dist/previews/dh-12b/music-foyer/foyer.mjs',[
  'window.location.assign(door.route)','shouldAutoEnter({selected,entering,doorsDone,cameraDone})',
  'enterSelectedWorld()','buildFoyerDimension','dimension.update(dt,selected)',
  'orbitPose(xyz,point,orbit,','pointerSeparation(', 'makeFoyerMaterials(THREE)',
- 'makePortalSignTexture(THREE,kind)','stage-footlight-','real-shop-door-vinyl-'],
+ 'makePortalSignTexture(THREE,kind)','FOYER_MARQUEE_DEPTH.inscription','marquee-brass-standoff-','stage-footlight-','real-shop-door-vinyl-'],
  ['positionPortalSigns()','if(selected===id&&ready)']);
 check('dist/previews/dh-12b/music-foyer/foyer-surfaces.mjs',[
  'export function makeFoyerMaterials','export function makeSurfaceCanvas',
- 'export function makePortalSignTexture','bumpMap:surface','grainValue']);
+ 'export function makePortalSignTexture','export const FOYER_MARQUEE_DEPTH','bumpMap:surface','grainValue']);
 check('dist/previews/dh-12b/music-foyer/foyer-orbit.mjs',[
  'export function orbitPose','export function dragOrbit',
  'export function zoomPinch','export function zoomOrbit','ORBIT_LIMITS']);
