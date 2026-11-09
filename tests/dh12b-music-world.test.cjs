@@ -51,10 +51,10 @@ test('each real leaf opens from its own hinge, the same selection can be cancell
 test('real Music-world foyer has hinged door leaf geometry, real focus movement and delayed navigation',()=>{
  const html=read(base+'foyer.html'),js=read(base+'foyer.mjs');
  for(const marker of [
-  'data-music-foyer="true"','data-dimensional-art="true"','data-foyer-orbit="true"','data-foyer-minimal="true"','DH-12B.5',
+  'data-music-foyer="true"','data-dimensional-art="true"','data-foyer-orbit="true"','data-foyer-minimal="true"','DH-12B.5A',
   'The World Between Notes','id="portal-theatre"','id="portal-records"',
   'id="music-portal-overview"','role="status"',
-  'noindex,nofollow','foyer.mjs?v=dh12b5-clean-journey-v1'
+  'noindex,nofollow','foyer.mjs?v=dh12b5a-marquee-front-v1'
  ])assert.ok(html.includes(marker),marker);
  for(const marker of [
   'new THREE.WebGLRenderer','THREE.PerspectiveCamera',
