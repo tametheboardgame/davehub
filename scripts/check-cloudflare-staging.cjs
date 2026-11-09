@@ -121,10 +121,10 @@ async function main(){
  'new THREE.WebGLRenderer','makePortal','shouldAutoEnter({selected,entering,doorsDone,cameraDone})',
  'enterSelectedWorld()','window.location.assign(door.route)',
  'buildFoyerDimension','dimension.update(dt,selected)','orbitPose(xyz,point,orbit,',
- 'makeFoyerMaterials(THREE)','makePortalSignTexture(THREE,kind)','stage-footlight-','real-shop-door-vinyl-']},
+ 'makeFoyerMaterials(THREE)','makePortalSignTexture(THREE,kind)','FOYER_MARQUEE_DEPTH.inscription','marquee-brass-standoff-','stage-footlight-','real-shop-door-vinyl-']},
     {path:'/previews/dh-12b/music-foyer/foyer-surfaces.mjs',type:'javascript',markers:[
      'export function makeFoyerMaterials','export function makeSurfaceCanvas',
-     'export function makePortalSignTexture','bumpMap:surface','grainValue']},
+     'export function makePortalSignTexture','export const FOYER_MARQUEE_DEPTH','bumpMap:surface','grainValue']},
     {path:'/previews/dh-12b/music-foyer/foyer-orbit.mjs',type:'javascript',markers:['export function orbitPose','export function dragOrbit','export function zoomPinch','export function zoomOrbit','ORBIT_LIMITS']},
     {path:'/previews/dh-12b/music-foyer/music-portals.mjs',type:'javascript',markers:[
  'export const DOORS','export const FOYER_ROUTE','doorAngle',
