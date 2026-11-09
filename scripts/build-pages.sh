@@ -397,22 +397,22 @@ check('dist/previews/dh-12a/listening-room/index.html',['DH-12A.3','data-living-
  'id="theatre-curtains"','id="theatre-stage"','id="theatre-record"',
  'theatre.mjs?v=dh12a3-living-sets-v1','theatre.css?v=dh12a3-living-sets-v1','A musicals-only stage prototype. These miniature sets are fictional studies, not published productions.','href="/previews/dh-12b/music-foyer/"']);
 check('dist/previews/dh-12b/music-foyer/index.html',[
- 'DH-12B.5','data-music-foyer="true"','data-dimensional-art="true"','data-foyer-orbit="true"',
+ 'DH-12B.5A','data-music-foyer="true"','data-dimensional-art="true"','data-foyer-orbit="true"',
  'data-foyer-minimal="true"','The World Between Notes','music-foyer__topbar','music-orbit-reset',
  'music-foyer__portal-nav','davehub-logo-faithful.svg','id="portal-theatre"',
  'id="portal-records"','id="music-portal-overview"',
- 'foyer.mjs?v=dh12b5-clean-journey-v1','music-world.css?v=dh12b5-clean-journey-v1','noindex,nofollow'],
+ 'foyer.mjs?v=dh12b5a-marquee-front-v1','music-world.css?v=dh12b5-clean-journey-v1','noindex,nofollow'],
  ['music-foyer__floating-signs','music-foyer__choices','music-foyer__footnote']);
 check('dist/previews/dh-12b/music-foyer/foyer.mjs',[
  'new THREE.WebGLRenderer','makePortal','doorAngle(opened,side)',
  'window.location.assign(door.route)','shouldAutoEnter({selected,entering,doorsDone,cameraDone})',
  'enterSelectedWorld()','buildFoyerDimension','dimension.update(dt,selected)',
  'orbitPose(xyz,point,orbit,','pointerSeparation(', 'makeFoyerMaterials(THREE)',
- 'makePortalSignTexture(THREE,kind)','stage-footlight-','real-shop-door-vinyl-'],
+ 'makePortalSignTexture(THREE,kind)','FOYER_MARQUEE_DEPTH.inscription','marquee-brass-standoff-','stage-footlight-','real-shop-door-vinyl-'],
  ['positionPortalSigns()','if(selected===id&&ready)']);
 check('dist/previews/dh-12b/music-foyer/foyer-surfaces.mjs',[
  'export function makeFoyerMaterials','export function makeSurfaceCanvas',
- 'export function makePortalSignTexture','bumpMap:surface','grainValue']);
+ 'export function makePortalSignTexture','export const FOYER_MARQUEE_DEPTH','bumpMap:surface','grainValue']);
 check('dist/previews/dh-12b/music-foyer/foyer-orbit.mjs',[
  'export function orbitPose','export function dragOrbit',
  'export function zoomPinch','export function zoomOrbit','ORBIT_LIMITS']);

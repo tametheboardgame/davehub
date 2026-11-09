@@ -125,7 +125,7 @@ test('the two illustrated realms retain clear navigation, publication gates, and
  assert.ok(foyer.includes('music-world.css?v=dh12b5-clean-journey-v1'));
  assert.ok(shop.includes('DH-12B.2'));
  assert.ok(shop.includes('music-world.css?v=dh12b2-dimensional-world-v1'));
- assert.ok(foyer.includes('foyer.mjs?v=dh12b5-clean-journey-v1'));
+ assert.ok(foyer.includes('foyer.mjs?v=dh12b5a-marquee-front-v1'));
  assert.ok(shop.includes('record-shop.mjs?v=dh12b2-dimensional-world-v1'));
  for(const marker of ['id="portal-theatre"','id="portal-records"','id="music-portal-overview"','role="status"'])
   assert.ok(foyer.includes(marker),marker);

@@ -48,7 +48,7 @@ test('the real frame loop navigates once automatically, without a second Enter c
 test('foyer has no large fixed cards, repeated signs, introduction or footnote over the scene',()=>{
  const html=read(dir+'foyer.html');
  for(const required of [
-  'data-foyer-minimal="true"','DH-12B.5','music-foyer__topbar',
+  'data-foyer-minimal="true"','DH-12B.5A','music-foyer__topbar',
   '<details class="music-foyer__help">','<summary','id="music-orbit-reset"',
   '<nav class="music-foyer__portal-nav"',
   'id="portal-theatre"','id="portal-records"',
@@ -138,6 +138,25 @@ test('both in-world marquees remain readable and distinct, with no floating dupl
  assert.ok(!js.includes('music-sign-theatre'));
  assert.ok(!js.includes('signs.theatre.addEventListener'));
 });
+test('both physical marquees clear the ornamented arches without fake overlay rendering',async()=>{
+ const m=await surfaces;
+ const z=m.FOYER_MARQUEE_DEPTH;
+ assert.ok(Object.isFrozen(z),'sign offsets are fixed and reusable for both destinations');
+ assert.ok(z.plate-.09>.55,'the sign backing clears the decorative swag at approximately Z .50');
+ assert.ok(z.inscription>z.plate+.09+.02,'lettering sits visibly in front of the real plaque face');
+ assert.ok(z.underline>.55&&z.lamps>.55,'physical trim and bulbs also clear the arches');
+ assert.ok(z.support+.94/2>=z.plate-.09,'the sign is supported by the actual brass standoffs');
+ const foyer=read(dir+'foyer.mjs');
+ for(const marker of [
+  'FOYER_MARQUEE_DEPTH.plate','FOYER_MARQUEE_DEPTH.inscription',
+  'FOYER_MARQUEE_DEPTH.underline','FOYER_MARQUEE_DEPTH.lamps',
+  'FOYER_MARQUEE_DEPTH.support',"marquee-brass-standoff-'+def.id",
+  "portal-carved-marquee-'+def.id","display.name='gateway-inscription-'+def.id"
+ ])assert.ok(foyer.includes(marker),marker);
+ assert.ok(foyer.includes('mark(display,def.id)'),'the physical label is still clickable');
+ assert.ok(!foyer.includes('display.renderOrder ='),'do not hide geometry faults with draw-order hacks');
+ assert.ok(!foyer.includes('positionPortalSigns()'),'do not restore floating HTML labels');
+});
 test('staging build packages the real textured foyer and keeps Record Shop and Theatre separate',()=>{
  const build=read('scripts/build-pages.sh');
  const smoke=read('scripts/check-cloudflare-staging.cjs');
@@ -146,11 +165,11 @@ test('staging build packages the real textured foyer and keeps Record Shop and T
   'prototypes/dh-12b-music-world/foyer-surfaces.mjs',
   'node --check prototypes/dh-12b-music-world/foyer-surfaces.mjs',
   "check('dist/previews/dh-12b/music-foyer/foyer-surfaces.mjs'",
-  'DH-12B.5'
+  'DH-12B.5A'
  ])assert.ok(build.includes(marker),marker);
  for(const marker of [
   '/previews/dh-12b/music-foyer/foyer-surfaces.mjs',
-  'dh12b5-clean-journey-v1','data-foyer-minimal="true"',
+  'dh12b5a-marquee-front-v1','data-foyer-minimal="true"',
   'shouldAutoEnter({selected,entering,doorsDone,cameraDone})'
  ])assert.ok(smoke.includes(marker),marker);
  assert.ok(read(dir+'record-shop.html').includes('DH-12B.2'));

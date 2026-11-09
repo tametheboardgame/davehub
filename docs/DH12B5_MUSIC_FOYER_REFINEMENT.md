@@ -40,3 +40,7 @@ The copy is intentionally short. Visitors should read the 3D scene first, not a 
 - Acceptance: click Theatre once, watch both hinged doors open and the camera approach, arrive automatically inside the Theatre. Return and click Record Shop once, verify automatic entry there. Orbit beforehand; try Escape mid-journey. Confirm no text clutter masks the floating island and new textured surfaces have visibly more variation. Test on mouse, touchscreen and keyboard.
 
 **Current state:** Awaiting owner visual approval of the staged iteration. This release does not automatically connect real audio, musical content or the final production domain.
+
+## DH-12B.5A: Physical marquee depth correction
+
+After staging review, both carved doorway signs were partly hidden by the ornate arch/ribbon geometry. The underlying issue was actual 3D depth: the sign fronts had been placed around local Z 0.12 while the arch ornaments reached about Z 0.50. Move each sign face and its carved backing physically ahead of the arch, support the plaque with visible brass standoffs, and keep the same real selectable marquee mesh. The fix uses shared measured sign depths in `foyer-surfaces.mjs`, **not** a duplicate HTML sign or a forced render-order/depth-test workaround. The test asserts sign, frame, lamps and supports genuinely clear the decorations. All existing portal opening, single-click arrival, orbit and accessibility behaviour remains unchanged. Staging-only; visual confirmation pending.

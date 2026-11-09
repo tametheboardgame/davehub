@@ -6,6 +6,18 @@ const COLOURS=Object.freeze({
  cream:[233,214,183],patina:[73,110,113]
 });
 export const SURFACE_TYPES=Object.freeze(Object.keys(COLOURS));
+// DH-12B.5A: measured positions in the real portal's local Z axis.
+// Larger positive Z is nearer the viewer at the default approach. The
+// ornate arch ribs and theatre swag sit around Z 0.12-0.50, so the entire
+// physical marquee must project beyond them instead of relying on renderOrder.
+export const FOYER_MARQUEE_DEPTH=Object.freeze({
+ support:.38,
+ plate:.83,
+ inscription:.965,
+ underline:.91,
+ lamps:.94
+});
+
 const clamp=(n,min=0,max=255)=>Math.max(min,Math.min(max,n));
 export function grainValue(kind,x,y){
  const ripples=kind==='wood'||kind==='velvet'

@@ -2,6 +2,11 @@
 
 **DH-11C Writing Room, complete and owner-approved:** All physical interactions through DH-11C.6E.1 were selectively promoted to GitHub `main` via PR #114 on 8 November 2026. The Writing Room is now frozen for new functionality until approved real content can replace fictional demonstrations. No production custom-domain launch has occurred.
 
+
+## DH-12B.5A — Restore readable physical portal signs
+
+Resolve the decorative arch occlusion reported after DH-12B.5: mount the real Theatre and Record Shop marquee plaques forward of the sculpted swag using brass struts, keep their clickable 3D labels and legible painted sign textures, and verify actual depth clearance in tests. No new HTML sign overlays; no change to one-click destination transition, Record Shop, Theatre, homepage or `main`. Staging preview only.
+
 ## DH-12B.5 — Automatic doorway journeys, richer materials and restrained UI
 
 The owner approved the mystical Music foyer's direction and wants to refine the actual scene, rather than produce more illustrations: **one click should open the real hinged doors, complete the camera approach and automatically enter the next world**. The foyer gets original procedural grained/veined materials and clear physical theatre/record-shop marquees, while the duplicate floating HTML signs, large bottom description cards, extra scene intro and verbose footnote are retired. Keep the familiar topbar, free orbit before entering, a small accessible two-destination control and optional viewing help. Escape or Cancel journey can reverse the transition before arrival. Staging-only iteration after the owner-approved main WIP checkpoint. [Acceptance and release notes](DH12B5_MUSIC_FOYER_REFINEMENT.md).
