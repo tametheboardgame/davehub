@@ -64,6 +64,8 @@ for asset in \
   tests/dh12b2-dimensional-art.test.cjs \
   tests/dh12b3-foyer-orbit.test.cjs \
   tests/dh12b4-home-music.test.cjs \
+  tests/dh12b5-foyer-journey.test.cjs \
+  prototypes/dh-12b-music-world/foyer-surfaces.mjs \
   prototypes/dh-12b-music-world/foyer-orbit.mjs \
   prototypes/dh-12b-music-world/dimensional-art.mjs \
   prototypes/dh-12b-music-world/foyer.html \
@@ -205,7 +207,7 @@ done
 
 # A private draft must never become a deployed page through a build bypass.
 # Validate both the empty/approved production manifest and fictional test fixtures.
-node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/dh11-worlds.test.cjs tests/dh11c-cabinet-geometry.test.cjs tests/dh11c-room.test.cjs tests/dh11c-drawer-picking.test.cjs tests/dh11c-art-direction.test.cjs tests/dh11c4-cabinet-glb.test.cjs tests/dh11c4b-blender.test.cjs tests/dh11c4c-room-architecture.test.cjs tests/dh11c4d-immersive-viewport.test.cjs tests/dh11c4e-room-shell.test.cjs tests/dh11c4f-furniture.test.cjs tests/dh11c4f-animation-fixes.test.cjs tests/dh11c5a-desk-materials.test.cjs tests/dh11c5b-archive-materials.test.cjs tests/dh11c5c-illustrated-style.test.cjs tests/dh11c5c2a-painted-surfaces.test.cjs tests/dh11c5c2b-soft-edges.test.cjs tests/dh11c5c3-comic-storybook.test.cjs tests/dh11c5d-view-pipeline.test.cjs tests/dh11c5d3-art-alignment.test.cjs tests/dh11c5d3b-authored-3d.test.cjs tests/dh11c5d3c-spine-art.test.cjs tests/dh11c5d3d-sculpted-bookcase.test.cjs tests/dh11c5d3e-authored-details.test.cjs tests/dh11c5d3f-readable-hoard.test.cjs tests/dh11c5d3g-authored-handwriting.test.cjs tests/dh11c5d3h-room-props.test.cjs tests/dh11c5d3i-exit-door.test.cjs tests/dh11c5d3j-writing-island.test.cjs tests/dh11c6a-minimal-ui.test.cjs tests/dh11c6a1-click-outside.test.cjs tests/dh11c6a2-dark-window.test.cjs tests/dh11c6b-finished-books.test.cjs tests/dh11c6b1-layout-polish.test.cjs tests/dh11c6b2-prompt-and-jacket.test.cjs tests/dh11c6b3-authentic-spines.test.cjs tests/dh11c6c1-manuscript-workshop.test.cjs tests/dh11c6c2-motion-first.test.cjs tests/dh11c6d-cabinet-archive.test.cjs tests/dh11c6d4-overhead-tray.test.cjs tests/dh11c6e-wastepaper.test.cjs tests/dh11c6e1-uncrumple.test.cjs tests/dh12a-theatre.test.cjs tests/dh12a2-camera-focus.test.cjs tests/dh12a3-living-sets.test.cjs tests/dh12b-music-world.test.cjs tests/dh12b2-dimensional-art.test.cjs tests/dh12b3-foyer-orbit.test.cjs tests/dh12b4-home-music.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs tests/dh10c-editorial.test.cjs tests/dh10c-hosted-http.test.cjs
+node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/dh11-worlds.test.cjs tests/dh11c-cabinet-geometry.test.cjs tests/dh11c-room.test.cjs tests/dh11c-drawer-picking.test.cjs tests/dh11c-art-direction.test.cjs tests/dh11c4-cabinet-glb.test.cjs tests/dh11c4b-blender.test.cjs tests/dh11c4c-room-architecture.test.cjs tests/dh11c4d-immersive-viewport.test.cjs tests/dh11c4e-room-shell.test.cjs tests/dh11c4f-furniture.test.cjs tests/dh11c4f-animation-fixes.test.cjs tests/dh11c5a-desk-materials.test.cjs tests/dh11c5b-archive-materials.test.cjs tests/dh11c5c-illustrated-style.test.cjs tests/dh11c5c2a-painted-surfaces.test.cjs tests/dh11c5c2b-soft-edges.test.cjs tests/dh11c5c3-comic-storybook.test.cjs tests/dh11c5d-view-pipeline.test.cjs tests/dh11c5d3-art-alignment.test.cjs tests/dh11c5d3b-authored-3d.test.cjs tests/dh11c5d3c-spine-art.test.cjs tests/dh11c5d3d-sculpted-bookcase.test.cjs tests/dh11c5d3e-authored-details.test.cjs tests/dh11c5d3f-readable-hoard.test.cjs tests/dh11c5d3g-authored-handwriting.test.cjs tests/dh11c5d3h-room-props.test.cjs tests/dh11c5d3i-exit-door.test.cjs tests/dh11c5d3j-writing-island.test.cjs tests/dh11c6a-minimal-ui.test.cjs tests/dh11c6a1-click-outside.test.cjs tests/dh11c6a2-dark-window.test.cjs tests/dh11c6b-finished-books.test.cjs tests/dh11c6b1-layout-polish.test.cjs tests/dh11c6b2-prompt-and-jacket.test.cjs tests/dh11c6b3-authentic-spines.test.cjs tests/dh11c6c1-manuscript-workshop.test.cjs tests/dh11c6c2-motion-first.test.cjs tests/dh11c6d-cabinet-archive.test.cjs tests/dh11c6d4-overhead-tray.test.cjs tests/dh11c6e-wastepaper.test.cjs tests/dh11c6e1-uncrumple.test.cjs tests/dh12a-theatre.test.cjs tests/dh12a2-camera-focus.test.cjs tests/dh12a3-living-sets.test.cjs tests/dh12b-music-world.test.cjs tests/dh12b2-dimensional-art.test.cjs tests/dh12b3-foyer-orbit.test.cjs tests/dh12b4-home-music.test.cjs tests/dh12b5-foyer-journey.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs tests/dh10c-editorial.test.cjs tests/dh10c-hosted-http.test.cjs
 node -e "const {validateManifest}=require('./scripts/davehub-manifest.cjs'); const data=require('./davehub.json'); const result=validateManifest(data,'tametheboardgame/davehub');if(!result.valid)throw new Error(result.errors.join('; '));"
 # Fail closed: only individually owner-approved records and links enter production.
 node scripts/content-check.cjs content/public/catalogue.json
@@ -230,13 +232,14 @@ cp prototypes/dh-11c-room/vendor/three-r159.module.min.js prototypes/dh-11c-room
 mkdir -p dist/previews/dh-12b/music-foyer/vendor dist/previews/dh-12b/record-shop/vendor
 node --check prototypes/dh-12b-music-world/foyer.mjs
 node --check prototypes/dh-12b-music-world/foyer-orbit.mjs
+node --check prototypes/dh-12b-music-world/foyer-surfaces.mjs
 node --check prototypes/dh-12b-music-world/music-portals.mjs
 node --check prototypes/dh-12b-music-world/record-shop.mjs
 node --check prototypes/dh-12b-music-world/record-shop-mechanics.mjs
 node --check prototypes/dh-12b-music-world/dimensional-art.mjs
 cp prototypes/dh-12b-music-world/foyer.html dist/previews/dh-12b/music-foyer/index.html
 cp prototypes/dh-12b-music-world/record-shop.html dist/previews/dh-12b/record-shop/index.html
-cp prototypes/dh-12b-music-world/foyer.mjs prototypes/dh-12b-music-world/foyer-orbit.mjs prototypes/dh-12b-music-world/music-portals.mjs prototypes/dh-12b-music-world/music-world.css prototypes/dh-12b-music-world/dimensional-art.mjs dist/previews/dh-12b/music-foyer/
+cp prototypes/dh-12b-music-world/foyer.mjs prototypes/dh-12b-music-world/foyer-orbit.mjs prototypes/dh-12b-music-world/foyer-surfaces.mjs prototypes/dh-12b-music-world/music-portals.mjs prototypes/dh-12b-music-world/music-world.css prototypes/dh-12b-music-world/dimensional-art.mjs dist/previews/dh-12b/music-foyer/
 cp prototypes/dh-12b-music-world/record-shop.mjs prototypes/dh-12b-music-world/record-shop-mechanics.mjs prototypes/dh-12b-music-world/music-world.css prototypes/dh-12b-music-world/dimensional-art.mjs dist/previews/dh-12b/record-shop/
 for world in music-foyer record-shop; do
   cp prototypes/dh-11c-room/vendor/three-r159.module.min.js prototypes/dh-11c-room/vendor/THREE-LICENSE.txt "dist/previews/dh-12b/$world/vendor/"
@@ -394,22 +397,29 @@ check('dist/previews/dh-12a/listening-room/index.html',['DH-12A.3','data-living-
  'id="theatre-curtains"','id="theatre-stage"','id="theatre-record"',
  'theatre.mjs?v=dh12a3-living-sets-v1','theatre.css?v=dh12a3-living-sets-v1','A musicals-only stage prototype. These miniature sets are fictional studies, not published productions.','href="/previews/dh-12b/music-foyer/"']);
 check('dist/previews/dh-12b/music-foyer/index.html',[
- 'DH-12B.3','data-music-foyer="true"','data-dimensional-art="true"','data-foyer-orbit="true"','The World Between Notes','music-foyer__topbar','music-orbit-reset','music-sign-theatre','music-sign-records','davehub-logo-faithful.svg',
- 'id="portal-theatre"','id="portal-records"','id="music-portal-overview"',
- 'foyer.mjs?v=dh12b3-orbit-portals-v1','music-world.css?v=dh12b3-orbit-portals-v1','noindex,nofollow',
- 'A living pocket dimension. Doors lead to empty, publication-safe worlds; no unpublished music is loaded.']);
+ 'DH-12B.5','data-music-foyer="true"','data-dimensional-art="true"','data-foyer-orbit="true"',
+ 'data-foyer-minimal="true"','The World Between Notes','music-foyer__topbar','music-orbit-reset',
+ 'music-foyer__portal-nav','davehub-logo-faithful.svg','id="portal-theatre"',
+ 'id="portal-records"','id="music-portal-overview"',
+ 'foyer.mjs?v=dh12b5-clean-journey-v1','music-world.css?v=dh12b5-clean-journey-v1','noindex,nofollow'],
+ ['music-foyer__floating-signs','music-foyer__choices','music-foyer__footnote']);
 check('dist/previews/dh-12b/music-foyer/foyer.mjs',[
  'new THREE.WebGLRenderer','makePortal','doorAngle(opened,side)',
- 'window.location.assign(door.route)','doorsDone&&cameraDone','buildFoyerDimension','dimension.update(dt,selected)',
- 'orbitPose(xyz,point,orbit,','pointerSeparation(', 'positionPortalSigns()', 'stage-footlight-',
- 'real-shop-door-vinyl-']);
+ 'window.location.assign(door.route)','shouldAutoEnter({selected,entering,doorsDone,cameraDone})',
+ 'enterSelectedWorld()','buildFoyerDimension','dimension.update(dt,selected)',
+ 'orbitPose(xyz,point,orbit,','pointerSeparation(', 'makeFoyerMaterials(THREE)',
+ 'makePortalSignTexture(THREE,kind)','stage-footlight-','real-shop-door-vinyl-'],
+ ['positionPortalSigns()','if(selected===id&&ready)']);
+check('dist/previews/dh-12b/music-foyer/foyer-surfaces.mjs',[
+ 'export function makeFoyerMaterials','export function makeSurfaceCanvas',
+ 'export function makePortalSignTexture','bumpMap:surface','grainValue']);
 check('dist/previews/dh-12b/music-foyer/foyer-orbit.mjs',[
  'export function orbitPose','export function dragOrbit',
  'export function zoomPinch','export function zoomOrbit','ORBIT_LIMITS']);
 check('dist/previews/dh-12b/music-foyer/music-portals.mjs',[
  "route:'/previews/dh-12a/listening-room/'",
  "route:'/previews/dh-12b/record-shop/'",
- "export const FOYER_ROUTE"]);
+ "export const FOYER_ROUTE",'export function shouldAutoEnter']);
 check('dist/previews/dh-12b/record-shop/index.html',[
  'DH-12B.2','data-music-record-shop="true"','data-dimensional-art="true"','The Record Shop',
  'id="record-shop-singles"','id="record-shop-bands"','id="record-shop-albums"',
@@ -423,7 +433,8 @@ check('dist/previews/dh-12b/record-shop/record-shop-mechanics.mjs',[
  'export const RACKS','export function shopDestination','export function pullPosition']);
 for(const world of ['music-foyer','record-shop']){
  check('dist/previews/dh-12b/'+world+'/music-world.css',[
-  '.music-foyer','.record-shop','.music-choice','.record-shop__actions','data-dimensional-art']);
+  '.music-foyer','.record-shop','.record-shop__actions','data-dimensional-art',
+  'body[data-foyer-minimal="true"] .music-foyer__portal-nav']);
  check('dist/previews/dh-12b/'+world+'/dimensional-art.mjs',[
   'export function buildFoyerDimension','export function buildRecordDimension','impossible-painterly-cosmic-vault','living-portal-veil-']);
  const three=fs.statSync('dist/previews/dh-12b/'+world+'/vendor/three-r159.module.min.js');
