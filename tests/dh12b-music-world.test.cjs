@@ -51,10 +51,10 @@ test('each real leaf opens from its own hinge, the same selection can be cancell
 test('real Music-world foyer has hinged door leaf geometry, real focus movement and delayed navigation',()=>{
  const html=read(base+'foyer.html'),js=read(base+'foyer.mjs');
  for(const marker of [
-  'data-music-foyer="true"','DH-12B.1',
+  'data-music-foyer="true"','data-dimensional-art="true"','DH-12B.2',
   'The World Between Notes','id="portal-theatre"','id="portal-records"',
   'id="music-portal-overview"','role="status"',
-  'noindex,nofollow','foyer.mjs?v=dh12b1-music-portals-v1'
+  'noindex,nofollow','foyer.mjs?v=dh12b2-dimensional-world-v1'
  ])assert.ok(html.includes(marker),marker);
  for(const marker of [
   'new THREE.WebGLRenderer','THREE.PerspectiveCamera',
@@ -121,8 +121,8 @@ test('record shop is genuinely separate geometry, not the theatre re-skinned or 
   'href="/previews/dh-12b/music-foyer/"',
   'id="record-shop-singles"','id="record-shop-bands"',
   'id="record-shop-albums"','id="record-shop-disc"',
-  'id="record-shop-overview"','record-shop.mjs?v=dh12b1-music-portals-v1',
-  'noindex,nofollow','No audio, private songs or unapproved band links'
+  'id="record-shop-overview"','record-shop.mjs?v=dh12b2-dimensional-world-v1',
+  'noindex,nofollow','A dreamlike listening dimension. No private songs, audio or unapproved links are loaded.'
  ])assert.ok(html.includes(marker),marker);
  for(const marker of [
   'new THREE.WebGLRenderer',
@@ -171,7 +171,7 @@ test('both previews bundle the same redistributable Three.js runtime and stage-o
   '/previews/dh-12b/record-shop/',
   '/previews/dh-12b/music-foyer/foyer.mjs',
   '/previews/dh-12b/record-shop/record-shop.mjs',
-  'dh12b1-music-portals-v1',
+  'dh12b2-dimensional-world-v1',
   'href="/previews/dh-12b/music-foyer/"'
  ])assert.ok(smoke.includes(marker),marker);
  for(const html of [read(base+'foyer.html'),read(base+'record-shop.html')])
