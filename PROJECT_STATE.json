@@ -2,7 +2,7 @@
   "project": "DaveHub",
   "updated": "2026-11-09",
   "status": "dh10c_hosted_editorial_foundation_deployed",
-  "current_work_package": "DH-12B.2 Actual mystical Music foyer and Record Shop art, staging visual review",
+  "current_work_package": "DH-12B.3 Foyer orbit, Writing Room-style banner and distinctive 3D portals, staging",
   "completed": [
     "DH-00A",
     "DH-00B",
@@ -1401,10 +1401,10 @@
     }
   },
   "dh12_music": {
-    "stage": "DH-12B.2",
+    "stage": "DH-12B.3",
     "world": "music",
     "creativeDirection": "The Impossible Theatre, a surreal miniature stage with real moving mechanics",
-    "status": "staging_code_visual_redesign_under_test",
+    "status": "staging_orbit_banner_portals_under_test",
     "previewRoute": "/previews/dh-12a/listening-room/",
     "existingMusicRouteReplaced": false,
     "physicalCurtains": true,
@@ -1414,7 +1414,7 @@
     "ownerVisualApproval": "pending",
     "mainChanged": false,
     "productionChanged": false,
-    "docs": "docs/DH12B2_DIMENSIONAL_ART.md",
+    "docs": "docs/DH12B3_FOYER_ORBIT_AND_PORTALS.md",
     "camera": {
       "type": "one perspective camera travelling to genuine object focus points",
       "modes": [
@@ -1459,6 +1459,20 @@
       "reducedMotion": true,
       "userReview": "pending",
       "docs": "docs/DH12B2_DIMENSIONAL_ART.md"
+    },
+    "foyerRefinement": {
+      "realOrbit": "drag horizontal/vertical, wheel zoom, pinch, touch and keyboard",
+      "sharedCamera": true,
+      "fullRevolution": true,
+      "banner": "Writing Room-style dark strip with original DaveHub logo and Music world identity",
+      "physicalTheatreDoor": "velvet, theatre masks, footlights, gilded physical marquee",
+      "physicalRecordDoor": "vinyl with grooves, blank sleeves, carved physical shop marquee",
+      "signs": "high-contrast labels projected from real arch points",
+      "source": "prototypes/dh-12b-music-world/foyer-orbit.mjs",
+      "originalTwoStepDoorMotionPreserved": true,
+      "shopAndTheatreUnchanged": true,
+      "ownerVisualApproval": "pending",
+      "docs": "docs/DH12B3_FOYER_ORBIT_AND_PORTALS.md"
     }
   }
 }
