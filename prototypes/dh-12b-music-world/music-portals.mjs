@@ -38,3 +38,9 @@ export function settled(a,b,epsilon=.028){
   a.every((v,i)=>Number.isFinite(v)&&Number.isFinite(b[i])&&
    Math.abs(v-b[i])<=epsilon);
 }
+
+/** A single selection should enter only AFTER both hinged leaves and the
+ * actual camera have completed their motion. False for cancelled/entered trips. */
+export function shouldAutoEnter({selected,entering,doorsDone,cameraDone}){
+ return !!doorFor(selected)&&!entering&&doorsDone===true&&cameraDone===true;
+}
