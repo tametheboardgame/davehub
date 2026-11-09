@@ -138,6 +138,25 @@ test('both in-world marquees remain readable and distinct, with no floating dupl
  assert.ok(!js.includes('music-sign-theatre'));
  assert.ok(!js.includes('signs.theatre.addEventListener'));
 });
+test('both physical marquees clear the ornamented arches without fake overlay rendering',async()=>{
+ const m=await surfaces;
+ const z=m.FOYER_MARQUEE_DEPTH;
+ assert.ok(Object.isFrozen(z),'sign offsets are fixed and reusable for both destinations');
+ assert.ok(z.plate-.09>.55,'the sign backing clears the decorative swag at approximately Z .50');
+ assert.ok(z.inscription>z.plate+.09+.02,'lettering sits visibly in front of the real plaque face');
+ assert.ok(z.underline>.55&&z.lamps>.55,'physical trim and bulbs also clear the arches');
+ assert.ok(z.support+.94/2>=z.plate-.09,'the sign is supported by the actual brass standoffs');
+ const foyer=read(dir+'foyer.mjs');
+ for(const marker of [
+  'FOYER_MARQUEE_DEPTH.plate','FOYER_MARQUEE_DEPTH.inscription',
+  'FOYER_MARQUEE_DEPTH.underline','FOYER_MARQUEE_DEPTH.lamps',
+  'FOYER_MARQUEE_DEPTH.support',"marquee-brass-standoff-'+def.id",
+  "portal-carved-marquee-'+def.id","display.name='gateway-inscription-'+def.id"
+ ])assert.ok(foyer.includes(marker),marker);
+ assert.ok(foyer.includes('mark(display,def.id)'),'the physical label is still clickable');
+ assert.ok(!foyer.includes('display.renderOrder ='),'do not hide geometry faults with draw-order hacks');
+ assert.ok(!foyer.includes('positionPortalSigns()'),'do not restore floating HTML labels');
+});
 test('staging build packages the real textured foyer and keeps Record Shop and Theatre separate',()=>{
  const build=read('scripts/build-pages.sh');
  const smoke=read('scripts/check-cloudflare-staging.cjs');
