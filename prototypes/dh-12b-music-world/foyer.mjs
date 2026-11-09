@@ -2,7 +2,7 @@
 // selected destination loads automatically. One action, not two.
 import * as THREE from './vendor/three-r159.module.min.js';
 import {DOORS,doorFor,doorAngle,approach,settled,isLocalMusicRoute,shouldAutoEnter} from './music-portals.mjs?v=dh12b1-music-portals-v1';
-import {makeFoyerMaterials,makePortalSignTexture} from './foyer-surfaces.mjs?v=dh12b5-clean-journey-v1';
+import {makeFoyerMaterials,makePortalSignTexture,FOYER_MARQUEE_DEPTH} from './foyer-surfaces.mjs?v=dh12b5-clean-journey-v1';
 import {buildFoyerDimension} from './dimensional-art.mjs?v=dh12b2-dimensional-world-v1';
 import {initialOrbit,dragOrbit,zoomOrbit,zoomPinch,orbitPose,dragDistance,pointerSeparation}
  from './foyer-orbit.mjs?v=dh12b3-orbit-portals-v1';
@@ -145,17 +145,24 @@ function makePortal(def,number){
    [Math.sin(a)*.85,2.16+Math.cos(a)*1.18,-.52],number===0?cream:seam,root);
  }
  const display=sign(def.id,2.66);
- // One legible engraved sign, not duplicated by a camera-anchored UI card.
- const plate=box('portal-carved-marquee-'+def.id,[2.80,.57,.18],
-  [0,4.47,-.03],number===0?amethyst:mint,root);
+ // Keep the ONE physical sign in front of the sculpted ribs and swag
+ // (the theatre ornament reaches forward to about Z .50). Real brass
+ // standoffs join the plaque to its arch; no camera overlays or depth hacks.
+ for(const side of [-1,1]){
+  box('marquee-brass-standoff-'+def.id+'-'+side,[.10,.12,.94],
+   [side*1.14,4.47,FOYER_MARQUEE_DEPTH.support],golden,root);
+ }
+ box('portal-carved-marquee-'+def.id,[2.80,.57,.18],
+  [0,4.47,FOYER_MARQUEE_DEPTH.plate],number===0?amethyst:mint,root);
  box('marquee-gilt-underline-'+def.id,[2.68,.042,.21],
-  [0,4.17,.065],golden,root);
+  [0,4.17,FOYER_MARQUEE_DEPTH.underline],golden,root);
  display.name='gateway-inscription-'+def.id;
- display.position.set(0,4.47,.12);root.add(display);
+ display.position.set(0,4.47,FOYER_MARQUEE_DEPTH.inscription);
+ root.add(display);
  for(let i=0;i<9;i++){
   const x=-1.20+i*.30;
   orb('marquee-lamp-'+def.id+'-'+i,.050,
-   [x,4.78,.12],number===0?cream:seam,root);
+   [x,4.78,FOYER_MARQUEE_DEPTH.lamps],number===0?cream:seam,root);
  }
  // The left and right doors each have an actual hinge at the outer jamb.
  const leaves={};
