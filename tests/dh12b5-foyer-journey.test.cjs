@@ -48,7 +48,7 @@ test('the real frame loop navigates once automatically, without a second Enter c
 test('foyer has no large fixed cards, repeated signs, introduction or footnote over the scene',()=>{
  const html=read(dir+'foyer.html');
  for(const required of [
-  'data-foyer-minimal="true"','DH-12B.5','music-foyer__topbar',
+  'data-foyer-minimal="true"','DH-12B.5A','music-foyer__topbar',
   '<details class="music-foyer__help">','<summary','id="music-orbit-reset"',
   '<nav class="music-foyer__portal-nav"',
   'id="portal-theatre"','id="portal-records"',
@@ -146,11 +146,11 @@ test('staging build packages the real textured foyer and keeps Record Shop and T
   'prototypes/dh-12b-music-world/foyer-surfaces.mjs',
   'node --check prototypes/dh-12b-music-world/foyer-surfaces.mjs',
   "check('dist/previews/dh-12b/music-foyer/foyer-surfaces.mjs'",
-  'DH-12B.5'
+  'DH-12B.5A'
  ])assert.ok(build.includes(marker),marker);
  for(const marker of [
   '/previews/dh-12b/music-foyer/foyer-surfaces.mjs',
-  'dh12b5-clean-journey-v1','data-foyer-minimal="true"',
+  'dh12b5a-marquee-front-v1','data-foyer-minimal="true"',
   'shouldAutoEnter({selected,entering,doorsDone,cameraDone})'
  ])assert.ok(smoke.includes(marker),marker);
  assert.ok(read(dir+'record-shop.html').includes('DH-12B.2'));
