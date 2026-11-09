@@ -6,10 +6,10 @@
  <meta name="robots" content="noindex,nofollow">
  <meta name="theme-color" content="#1c1727">
  <title>DH-12B · The World Between Notes | DaveHub</title>
- <meta name="davehub-stage" content="DH-12B.3">
- <link rel="stylesheet" href="./music-world.css?v=dh12b3-orbit-portals-v1">
+ <meta name="davehub-stage" content="DH-12B.5">
+ <link rel="stylesheet" href="./music-world.css?v=dh12b5-clean-journey-v1">
 </head>
-<body data-music-foyer="true" data-dimensional-art="true" data-foyer-orbit="true">
+<body data-music-foyer="true" data-dimensional-art="true" data-foyer-orbit="true" data-foyer-minimal="true">
  <main class="music-foyer">
   <canvas id="music-portals-canvas" tabindex="0" aria-describedby="music-orbit-hint" aria-label="An interactive 3D music world entrance with two real doors, one to the Impossible Theatre for musicals, and one to the Record Shop for songs and bands"></canvas>
   <div class="music-foyer__mist" aria-hidden="true"></div>
@@ -23,43 +23,23 @@
    </div>
    <a class="music-foyer__back" href="/">← Home islands</a>
   </header>
-  <p class="music-foyer__invitation">An impossible crossroads. Follow a story into the theatre, or follow the music into the record shop.</p>
-  <div class="music-foyer__orbit-tools" aria-label="Explore the three-dimensional crossroads">
-   <p id="music-orbit-hint">Drag to orbit · Scroll or pinch to zoom · Arrow keys to turn</p>
-   <button id="music-orbit-reset" type="button" aria-label="Reset the foyer camera angle and zoom">Reset view</button>
-  </div>
-  <div class="music-foyer__floating-signs" aria-label="Portal signs">
-   <button id="music-sign-theatre" class="music-foyer__floating-sign music-foyer__floating-sign--theatre" type="button" hidden>
-    <span aria-hidden="true">✦</span><strong>THE IMPOSSIBLE THEATRE</strong><small>MUSICALS</small>
-   </button>
-   <button id="music-sign-records" class="music-foyer__floating-sign music-foyer__floating-sign--records" type="button" hidden>
-    <span aria-hidden="true">◉</span><strong>THE RECORD SHOP</strong><small>SONGS · BANDS · ALBUMS</small>
-   </button>
-  </div>
-  <section class="music-foyer__choices" aria-label="Choose where to explore">
-   <article class="music-choice music-choice--theatre">
-    <div class="music-choice__heading">
-     <span class="music-choice__tag">MUSICALS</span>
-     <h2>The Impossible Theatre</h2>
-     <p>Productions, stories, characters and worlds waiting beyond the curtain.</p>
-    </div>
-    <button id="portal-theatre" type="button" class="music-choice__action" aria-label="Open the physical door into The Impossible Theatre">Open the theatre doors</button>
-   </article>
-   <article class="music-choice music-choice--records">
-    <div class="music-choice__heading">
-     <span class="music-choice__tag">SONGS · BANDS · PROJECTS</span>
-     <h2>The Record Shop</h2>
-     <p>A peculiar shop for singles, records, bands and other musical projects.</p>
-    </div>
-    <button id="portal-records" type="button" class="music-choice__action" aria-label="Open the physical door into The Record Shop">Open the record shop doors</button>
-   </article>
-  </section>
+  <p id="music-orbit-hint" class="music-foyer__sr-only">Drag or use arrow keys to rotate the world. Scroll or pinch to zoom. Select a doorway or one of the destination buttons. One selection opens the doors and automatically takes you inside.</p>
+  <details class="music-foyer__help">
+   <summary aria-label="Show viewing controls">View controls</summary>
+   <div class="music-foyer__help-content">
+    <p>Drag to look around. Scroll or pinch to zoom. Arrow keys also rotate the view.</p>
+    <button id="music-orbit-reset" type="button">Reset view</button>
+   </div>
+  </details>
+  <nav class="music-foyer__portal-nav" aria-label="Choose a Music world">
+   <button id="portal-theatre" type="button" class="music-foyer__portal-link music-foyer__portal-link--theatre" aria-label="Open The Impossible Theatre and enter automatically"><span aria-hidden="true">✦</span> Theatre</button>
+   <button id="portal-records" type="button" class="music-foyer__portal-link music-foyer__portal-link--records" aria-label="Open The Record Shop and enter automatically"><span aria-hidden="true">◉</span> Record Shop</button>
+  </nav>
   <div class="music-foyer__view" id="music-portal-view" hidden>
-   <button id="music-portal-overview" type="button">← Both doors</button>
+   <button id="music-portal-overview" type="button">← Cancel journey</button>
   </div>
-  <p id="music-portal-status" class="music-foyer__status" role="status" aria-live="polite">Choose a door. It will open before you enter.</p>
-  <p class="music-foyer__footnote">A living pocket dimension. Doors lead to empty, publication-safe worlds; no unpublished music is loaded.</p>
+  <p id="music-portal-status" class="music-foyer__sr-only" role="status" aria-live="polite">Choose a door. It will open and take you inside automatically.</p>
  </main>
- <script type="module" src="./foyer.mjs?v=dh12b3-orbit-portals-v1"></script>
+ <script type="module" src="./foyer.mjs?v=dh12b5-clean-journey-v1"></script>
 </body>
 </html>
