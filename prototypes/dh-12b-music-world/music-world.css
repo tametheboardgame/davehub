@@ -109,3 +109,171 @@ button,a{font:inherit}
 @media(prefers-reduced-motion:reduce){
  .music-choice__action,.record-shop__buttons button{transition:none}
 }
+
+/* DH-12B.2: portal-side illustration accents, never replacement scene frames.
+   Actual sky, floating architecture, lighting and vinyl live in WebGL. */
+body[data-dimensional-art="true"] .music-foyer,
+body[data-dimensional-art="true"] .record-shop{
+ background:#0b0d24;
+ isolation:isolate;
+}
+body[data-dimensional-art="true"] .music-foyer__mist,
+body[data-dimensional-art="true"] .record-shop__mist{
+ background:
+  radial-gradient(ellipse 50% 53% at 18% 52%,#8e3e7326,transparent 80%),
+  radial-gradient(ellipse 56% 48% at 82% 55%,#3dbdba27,transparent 83%),
+  radial-gradient(ellipse 70% 88% at 50% 59%,transparent 42%,#080a1cb8 98%);
+ box-shadow:inset 0 0 88px #0a0b24b3;
+}
+body[data-dimensional-art="true"] .music-foyer__mist::before,
+body[data-dimensional-art="true"] .record-shop__mist::before{
+ content:"";position:absolute;inset:-18%;pointer-events:none;
+ background:radial-gradient(circle at 32% 46%,#bc69c10b,transparent 35%),
+            radial-gradient(circle at 78% 51%,#56cdbf10,transparent 32%);
+ animation:dimensional-haze 24s ease-in-out infinite alternate;
+ mix-blend-mode:screen;
+}
+body[data-dimensional-art="true"] .music-foyer__header,
+body[data-dimensional-art="true"] .record-shop__header{
+ text-shadow:0 3px 22px #08071bdd,0 0 36px #28204c70;
+}
+body[data-dimensional-art="true"] .music-foyer__header h1,
+body[data-dimensional-art="true"] .record-shop__header h1{
+ color:#fff1d8;
+ text-shadow:0 3px 4px #140b25,0 0 29px #c191d054,0 0 70px #cba6ad3a;
+ letter-spacing:-.039em;
+}
+body[data-dimensional-art="true"] .music-eyebrow{
+ color:#f5d499;text-shadow:0 0 14px #dcac7f8c;
+}
+body[data-dimensional-art="true"] .music-foyer__back,
+body[data-dimensional-art="true"] .record-shop__back{
+ background:linear-gradient(130deg,#493052f0,#172d40ee);
+ border-color:#dbc19d;
+ box-shadow:0 0 0 1px #e8d6ab24,0 8px 25px #03031394;
+}
+body[data-dimensional-art="true"] .music-foyer__choices{
+ column-gap:clamp(12px,13vw,240px);
+ bottom:clamp(26px,4.8vh,55px);
+}
+body[data-dimensional-art="true"] .music-choice{
+ position:relative;overflow:hidden;
+ border-width:1px;border-radius:13px 4px 16px 5px;
+ box-shadow:inset 0 1px 0 #fae8ca3c,0 16px 45px #060414c9,0 0 30px #8c659027;
+ background:
+  linear-gradient(130deg,#42263bdf 0%,#271b35e3 58%,#182c3adc 100%);
+ backdrop-filter:blur(13px);
+}
+body[data-dimensional-art="true"] .music-choice--theatre{
+ border-color:#d9ab918f;
+}
+body[data-dimensional-art="true"] .music-choice--records{
+ border-color:#a1ddc88a;
+ background:linear-gradient(135deg,#163c43e6,#223543e3 52%,#372943db);
+ box-shadow:inset 0 1px 0 #c3f7df37,0 16px 45px #050f18d9,0 0 30px #4ec9b51c;
+}
+body[data-dimensional-art="true"] .music-choice::before{
+ content:"";position:absolute;inset:5px;
+ border:1px solid #f9d3a52a;border-radius:10px 3px 13px 4px;
+ pointer-events:none;
+}
+body[data-dimensional-art="true"] .music-choice::after{
+ content:"✦";position:absolute;
+ top:-7px;right:14px;
+ color:#f2d8b37d;font:25px Georgia,serif;
+ pointer-events:none;
+}
+body[data-dimensional-art="true"] .music-choice--records::after{
+ color:#b7f0e0a6;
+}
+body[data-dimensional-art="true"] .music-choice__heading,
+body[data-dimensional-art="true"] .music-choice__action{
+ position:relative;z-index:1;
+}
+body[data-dimensional-art="true"] .music-choice__tag{
+ color:#ffe1b8;font-size:10px;
+ text-shadow:0 0 12px #f5b98766;
+}
+body[data-dimensional-art="true"] .music-choice--records .music-choice__tag{
+ color:#c3fff1;text-shadow:0 0 12px #8efed378;
+}
+body[data-dimensional-art="true"] .music-choice h2{
+ color:#fff2db;text-shadow:0 0 20px #d5b1bd41;
+}
+body[data-dimensional-art="true"] .music-choice p{
+ color:#e6d6dc;
+}
+body[data-dimensional-art="true"] .music-choice__action{
+ border-radius:9px 3px 9px 3px;
+ border:1px solid #fff3c9;
+ box-shadow:0 3px 0 #80603a,0 0 20px #fad38c4a;
+}
+body[data-dimensional-art="true"] .music-choice--records .music-choice__action{
+ box-shadow:0 3px 0 #447f79,0 0 22px #75d5bd43;
+}
+body[data-dimensional-art="true"] .music-foyer__view button,
+body[data-dimensional-art="true"] .record-shop__buttons button{
+ border:1px solid #f3d9a2;
+ box-shadow:0 4px 0 #5d4254,0 0 17px #d2c69d21;
+}
+body[data-dimensional-art="true"] .record-shop__actions{
+ overflow:auto;
+ border:1px solid #bfad8f;
+ background:
+  radial-gradient(ellipse at 82% -10%,#267c8063,transparent 69%),
+  linear-gradient(143deg,#202b39e8,#2c263ce8);
+ box-shadow:inset 0 1px 0 #ffecb436,0 13px 48px #050a1bc9,0 0 35px #4ebcaf27;
+ border-radius:12px 4px 19px 5px;
+}
+body[data-dimensional-art="true"] .record-shop__actions h2{
+ color:#ffe9c8;
+ text-shadow:0 0 22px #a8e9d73f;
+}
+body[data-dimensional-art="true"] .record-shop__actions::before{
+ content:"";position:absolute;inset:5px;z-index:-1;pointer-events:none;
+ border:1px solid #ffdda522;border-radius:9px 3px 16px 4px;
+}
+body[data-dimensional-art="true"] .record-shop__buttons button{
+ background:linear-gradient(100deg,#ebd7b0,#c8e2d3);
+ color:#23373a;border-radius:8px 3px 9px 4px;
+}
+body[data-dimensional-art="true"] .record-shop__buttons button[aria-pressed="true"]{
+ background:linear-gradient(105deg,#386f7a,#82637e);
+ color:#fff2e1;border-color:#d9e7d8;
+}
+body[data-dimensional-art="true"] .music-foyer__footnote,
+body[data-dimensional-art="true"] .record-shop__footnote{
+ color:#e9d2bf;text-shadow:0 2px 9px #090913;
+}
+@keyframes dimensional-haze{
+ 0%{transform:translate(-2%,0) scale(1);opacity:.66}
+ 100%{transform:translate(2%,-1%) scale(1.09);opacity:.97}
+}
+@media(max-width:1000px){
+ body[data-dimensional-art="true"] .music-foyer__choices{
+  column-gap:clamp(9px,7vw,85px);
+ }
+}
+@media(max-width:690px){
+ body[data-dimensional-art="true"] .music-foyer__choices{
+  column-gap:8px;bottom:35px;
+ }
+ body[data-dimensional-art="true"] .music-choice{
+  padding:10px 9px;border-radius:10px 3px 11px 3px;
+ }
+ body[data-dimensional-art="true"] .music-choice::before{inset:3px}
+ body[data-dimensional-art="true"] .music-choice::after{right:7px;font-size:18px;top:-4px}
+ body[data-dimensional-art="true"] .music-choice__action{
+  font-size:10px;min-width:0;white-space:normal;
+ }
+ body[data-dimensional-art="true"] .music-choice p{
+  font-size:10px;
+ }
+ body[data-dimensional-art="true"] .record-shop__actions{
+  bottom:8px;max-height:40svh;
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ body[data-dimensional-art="true"] .music-foyer__mist::before,
+ body[data-dimensional-art="true"] .record-shop__mist::before{animation:none}
+}
