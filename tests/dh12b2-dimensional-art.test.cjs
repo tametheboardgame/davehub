@@ -117,13 +117,15 @@ test('the two illustrated realms retain clear navigation, publication gates, and
  const foyer=read(files+'foyer.html');
  const shop=read(files+'record-shop.html');
  for(const page of [foyer,shop]){
-  assert.ok(page.includes('DH-12B.2'));
   assert.ok(page.includes('data-dimensional-art="true"'));
-  assert.ok(page.includes('music-world.css?v=dh12b2-dimensional-world-v1'));
   assert.ok(page.includes('noindex,nofollow'));
   assert.ok(!/<audio|<iframe|autoplay|https?:\/\//i.test(page));
  }
- assert.ok(foyer.includes('foyer.mjs?v=dh12b2-dimensional-world-v1'));
+ assert.ok(foyer.includes('DH-12B.3'));
+ assert.ok(foyer.includes('music-world.css?v=dh12b3-orbit-portals-v1'));
+ assert.ok(shop.includes('DH-12B.2'));
+ assert.ok(shop.includes('music-world.css?v=dh12b2-dimensional-world-v1'));
+ assert.ok(foyer.includes('foyer.mjs?v=dh12b3-orbit-portals-v1'));
  assert.ok(shop.includes('record-shop.mjs?v=dh12b2-dimensional-world-v1'));
  for(const marker of ['id="portal-theatre"','id="portal-records"','id="music-portal-overview"','role="status"'])
   assert.ok(foyer.includes(marker),marker);
