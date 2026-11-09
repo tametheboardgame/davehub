@@ -24,7 +24,7 @@ test('DaveHub homepage has five individually named, keyboard accessible island l
  assert.ok(home.includes('data-dh12b4-music-island="true"'));
 });
 test('Music takes visitors into the real two-door foyer, not a historical placeholder',()=>{
- assert.match(foyer,/DH-12B\.3/);
+ assert.match(foyer,/DH-12B\.5/);
  assert.match(foyer,/data-music-foyer="true"/);
  assert.match(foyer,/id="portal-theatre"/);
  assert.match(foyer,/id="portal-records"/);

@@ -61,37 +61,39 @@ test('pointer maths distinguishes a click from mouse dragging and two-finger mov
  assert.deepEqual(m.dragOrbit(m.initialOrbit(),Infinity,0),m.initialOrbit());
  assert.deepEqual(m.zoomOrbit(m.initialOrbit(),NaN),m.initialOrbit());
 });
-test('the Working Room-style branded heading is part of the real Music foyer',()=>{
+test('the Music foyer retains its familiar topbar but has minimal overlay chrome',()=>{
  const html=read(dir+'foyer.html');
  for(const marker of [
-  'DH-12B.3','data-foyer-orbit="true"',
+  'DH-12B.5','data-foyer-orbit="true"','data-foyer-minimal="true"',
   'music-foyer__topbar','music-foyer__brand',
   '/assets/branding/davehub-logo-faithful.svg',
   '<h1>The World Between Notes</h1>',
   'href="/"','music-foyer__world-id',
-  'id="music-orbit-hint"',
-  'id="music-orbit-reset"',
+  'id="music-orbit-hint"','id="music-orbit-reset"',
   'tabindex="0" aria-describedby="music-orbit-hint"',
-  'id="music-sign-theatre"','id="music-sign-records"',
-  'THE IMPOSSIBLE THEATRE','THE RECORD SHOP',
-  'foyer.mjs?v=dh12b3-orbit-portals-v1',
-  'music-world.css?v=dh12b3-orbit-portals-v1',
   'id="portal-theatre"','id="portal-records"',
-  'noindex,nofollow'
+  'id="music-portal-overview"',
+  'music-foyer__portal-nav',
+  'foyer.mjs?v=dh12b5-clean-journey-v1',
+  'music-world.css?v=dh12b5-clean-journey-v1','noindex,nofollow'
  ])assert.ok(html.includes(marker),marker);
+ for(const removed of [
+  'music-sign-theatre','music-sign-records',
+  'music-foyer__floating-signs','music-foyer__choices',
+  'music-choice__heading','music-foyer__invitation',
+  'music-foyer__footnote'
+ ])assert.ok(!html.includes(removed),'removed duplicated scene UI: '+removed);
  const css=read(dir+'music-world.css');
  for(const marker of [
   'body[data-foyer-orbit="true"] .music-foyer__topbar',
-  'body[data-foyer-orbit="true"] .music-foyer__brand',
-  'body[data-foyer-orbit="true"] .music-foyer__orbit-tools',
-  'body[data-foyer-orbit="true"] .music-foyer__floating-sign',
-  'body[data-foyer-orbit="true"] .music-foyer__floating-sign[hidden]',
-  'body[data-foyer-orbit="true"] #music-portals-canvas',
-  'touch-action:none',
+  'body[data-foyer-minimal="true"] .music-foyer__portal-nav',
+  'body[data-foyer-minimal="true"] .music-foyer__portal-link',
+  'body[data-foyer-minimal="true"] .music-foyer__help',
+  'body[data-foyer-minimal="true"] .music-foyer__sr-only',
   '@media(max-width:690px)'
  ])assert.ok(css.includes(marker),marker);
 });
-test('mouse, touch, pinch, keyboard and wheel operate the same real shared camera',()=>{
+test('mouse, touch, pinch, keyboard and wheel continue orbiting the actual 3D camera',()=>{
  const code=read(dir+'foyer.mjs');
  for(const marker of [
   "from './foyer-orbit.mjs?v=dh12b3-orbit-portals-v1'",
@@ -114,21 +116,19 @@ test('mouse, touch, pinch, keyboard and wheel operate the same real shared camer
   "['+','=','Add'].includes(e.key)",
   "if(e.key==='Home')",
   "orbitReset.addEventListener('click',resetOrbit)",
-  'function positionPortalSigns()',
-  'new THREE.Vector3(0,5.35,.12)',
-  'worldPoint.project(camera)',
-  'signs.theatre.addEventListener',
-  'signs.records.addEventListener'
+  'if(selected)return;'
  ])assert.ok(code.includes(marker),marker);
- assert.ok(code.includes("if(id)choose(id)"),'mesh clicks still operate the physical doors');
- assert.ok(code.includes("if(selected===id&&ready)"),'deliberate second action still enters the world');
- assert.ok(code.includes('doorsDone&&cameraDone'),'real physical door motion still gates entry');
- assert.ok(!/window\.location\.assign\(id\)/.test(code),'navigation uses the fixed safe destination');
+ assert.ok(code.includes("if(id)choose(id)"),'model clicks still select actual 3D portals');
+ assert.ok(code.includes('shouldAutoEnter({selected,entering,doorsDone,cameraDone})'),
+  'fully settled doors and camera automatically trigger navigation');
+ assert.ok(!code.includes('positionPortalSigns()'),'no camera-projected HTML sign cards');
 });
-test('physical theatre and record portal decorations are distinct and remain hinged',()=>{
+test('theatre and record shop keep different physical doorway details and one legible sign each',()=>{
  const code=read(dir+'foyer.mjs');
  for(const marker of [
-  "sign(number===0?'THEATRE':'RECORD SHOP',2.66)",
+  'makeFoyerMaterials(THREE)',
+  'makePortalSignTexture(THREE,kind)',
+  'sign(def.id,2.66)',
   'portal-carved-marquee-','marquee-gilt-underline-',
   'stage-velvet-fluted-panel-','stage-footlight-',
   'mini-comedy-tragedy-face-','carved-mask-eye-',
@@ -136,7 +136,7 @@ test('physical theatre and record portal decorations are distinct and remain hin
   'mini-hanging-sleeve-',
   "def.id+'-'+side+'-hinge'",
   "def.id+'-'+side+'-door-leaf'",
-  'mark(hinge,def.id)',
+  'mark(hinge,def.id)','mark(display,def.id)',
   'doorAngle(opened,side)'
  ])assert.ok(code.includes(marker),marker);
  const art=read(dir+'dimensional-art.mjs');
@@ -144,25 +144,28 @@ test('physical theatre and record portal decorations are distinct and remain hin
  assert.ok(art.includes('interdimensional-vinyl-crown'));
  assert.ok(art.includes('living-portal-veil-'));
 });
-test('build and Cloudflare smoke include the new orbit source and preserve other worlds',()=>{
+test('build and Cloudflare checks preserve the orbit source and add detailed portal texture assets',()=>{
  const build=read('scripts/build-pages.sh');
  const smoke=read('scripts/check-cloudflare-staging.cjs');
  for(const marker of [
   'tests/dh12b3-foyer-orbit.test.cjs',
+  'tests/dh12b5-foyer-journey.test.cjs',
   'prototypes/dh-12b-music-world/foyer-orbit.mjs',
+  'prototypes/dh-12b-music-world/foyer-surfaces.mjs',
   'node --check prototypes/dh-12b-music-world/foyer-orbit.mjs',
+  'node --check prototypes/dh-12b-music-world/foyer-surfaces.mjs',
   "check('dist/previews/dh-12b/music-foyer/foyer-orbit.mjs'",
-  'DH-12B.3'
+  "check('dist/previews/dh-12b/music-foyer/foyer-surfaces.mjs'",
+  'DH-12B.5'
  ])assert.ok(build.includes(marker),marker);
  for(const marker of [
-  'DH-12B.3',
-  'dh12b3-orbit-portals-v1',
+  'DH-12B.5','dh12b5-clean-journey-v1',
   '/previews/dh-12b/music-foyer/foyer-orbit.mjs',
-  '/previews/dh-12b/music-foyer/foyer.mjs',
+  '/previews/dh-12b/music-foyer/foyer-surfaces.mjs',
   '/previews/dh-12b/record-shop/'
  ])assert.ok(smoke.includes(marker),marker);
  const shop=read(dir+'record-shop.html');
- assert.ok(shop.includes('DH-12B.2'),'record shop unchanged');
+ assert.ok(shop.includes('DH-12B.2'),'Record Shop remains its own space');
  const theatre=read('prototypes/dh-12a-listening-room/index.html');
- assert.ok(theatre.includes('DH-12A.3'),'theatre unchanged');
+ assert.ok(theatre.includes('DH-12A.3'),'theatre scene is unchanged');
 });

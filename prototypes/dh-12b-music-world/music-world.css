@@ -466,3 +466,139 @@ body[data-foyer-orbit="true"] .music-foyer__view{
   transition:none;
  }
 }
+
+/* DH-12B.5: physically detailed scene, minimal chrome.
+   The giant two-card selector and camera-projected signs are retired.
+   Only a slim branded banner, optional help and two compact destinations
+   remain over the real interactive geometry. */
+body[data-foyer-minimal="true"] .music-foyer__sr-only{
+ position:absolute!important;width:1px!important;height:1px!important;
+ padding:0!important;margin:-1px!important;overflow:hidden!important;
+ clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important;
+}
+body[data-foyer-minimal="true"] .music-foyer__help{
+ position:absolute;z-index:12;
+ top:calc(79px + env(safe-area-inset-top));
+ right:clamp(10px,2.2vw,27px);
+ width:max-content;max-width:min(330px,calc(100vw - 24px));
+ border:1px solid rgba(225,191,149,.42);
+ border-radius:12px;background:rgba(18,20,44,.68);
+ color:#efdec3;
+ box-shadow:0 7px 25px rgba(5,6,24,.24);
+ backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+body[data-foyer-minimal="true"] .music-foyer__help summary{
+ cursor:pointer;list-style:none;min-height:34px;
+ padding:10px 13px;
+ font:700 11px/1.2 system-ui,sans-serif;
+ text-align:center;letter-spacing:.02em;
+}
+body[data-foyer-minimal="true"] .music-foyer__help summary::before{
+ content:"?";margin-right:7px;font-weight:900;color:#eac391;
+}
+body[data-foyer-minimal="true"] .music-foyer__help summary::-webkit-details-marker{display:none}
+body[data-foyer-minimal="true"] .music-foyer__help[open]{
+ background:rgba(22,25,53,.93);
+ border-color:#e5c59e;
+}
+body[data-foyer-minimal="true"] .music-foyer__help-content{
+ padding:2px 12px 12px;max-width:290px;
+ font:12px/1.4 system-ui,sans-serif;
+}
+body[data-foyer-minimal="true"] .music-foyer__help-content p{
+ margin:3px 0 10px;color:#e5d9ca;
+}
+body[data-foyer-minimal="true"] #music-orbit-reset{
+ cursor:pointer;min-height:34px;
+ padding:7px 12px;border-radius:7px;
+ border:1px solid #eacb9f;
+ background:#e8d2ad;color:#33293d;
+ font:800 11px/1 system-ui,sans-serif;
+}
+body[data-foyer-minimal="true"] .music-foyer__portal-nav{
+ position:absolute;z-index:11;
+ left:50%;bottom:clamp(12px,2.8vh,28px);
+ transform:translateX(-50%);
+ display:flex;justify-content:center;gap:9px;
+ width:max-content;max-width:calc(100% - 24px);
+ padding:5px;
+ border:1px solid rgba(242,216,169,.28);
+ border-radius:999px;
+ background:rgba(17,18,37,.68);
+ backdrop-filter:blur(11px);-webkit-backdrop-filter:blur(11px);
+ box-shadow:0 9px 22px rgba(8,7,19,.39);
+}
+body[data-foyer-minimal="true"] .music-foyer__portal-link{
+ display:flex;align-items:center;justify-content:center;gap:7px;
+ min-height:39px;min-width:138px;
+ padding:9px 16px;border-radius:999px;
+ border:1px solid rgba(232,187,146,.45);
+ background:rgba(105,48,86,.40);
+ color:#f7e7da;cursor:pointer;
+ font:750 12px/1.15 system-ui,sans-serif;
+ letter-spacing:.015em;
+ box-shadow:none;
+}
+body[data-foyer-minimal="true"] .music-foyer__portal-link--records{
+ border-color:rgba(165,231,211,.52);
+ background:rgba(28,108,112,.35);
+}
+body[data-foyer-minimal="true"] .music-foyer__portal-link span{
+ font-size:17px;color:#f1cfaa;
+}
+body[data-foyer-minimal="true"] .music-foyer__portal-link--records span{
+ color:#b3f2dc;
+}
+body[data-foyer-minimal="true"] .music-foyer__portal-link:hover,
+body[data-foyer-minimal="true"] .music-foyer__portal-link:focus-visible{
+ background:rgba(163,92,116,.68);
+ border-color:#f4d39f;
+}
+body[data-foyer-minimal="true"] .music-foyer__portal-link--records:hover,
+body[data-foyer-minimal="true"] .music-foyer__portal-link--records:focus-visible{
+ background:rgba(57,150,150,.72);
+ border-color:#b7efdd;
+}
+body[data-foyer-minimal="true"] .music-foyer__portal-link:disabled{
+ opacity:.76;cursor:progress;
+}
+body[data-foyer-minimal="true"] .music-foyer__view{
+ position:absolute;z-index:12;
+ top:calc(80px + env(safe-area-inset-top));left:clamp(10px,2.2vw,27px);
+ right:auto;bottom:auto;
+}
+body[data-foyer-minimal="true"] .music-foyer__view button{
+ min-height:35px;
+ padding:8px 12px;
+ border-radius:9px;
+ font:750 11px/1.15 system-ui,sans-serif;
+ box-shadow:0 6px 18px rgba(8,10,25,.35);
+}
+@media(max-width:690px){
+ body[data-foyer-minimal="true"] .music-foyer__help{
+  top:calc(64px + env(safe-area-inset-top));
+  right:8px;left:auto;
+  width:auto;max-width:calc(100% - 16px);
+ }
+ body[data-foyer-minimal="true"] .music-foyer__help summary{
+  padding:8px 10px;min-height:34px;font-size:10px;
+ }
+ body[data-foyer-minimal="true"] .music-foyer__portal-nav{
+  bottom:12px;gap:5px;padding:4px;
+ }
+ body[data-foyer-minimal="true"] .music-foyer__portal-link{
+  min-width:119px;min-height:42px;padding:7px 9px;font-size:11px;
+ }
+ body[data-foyer-minimal="true"] .music-foyer__view{
+  top:calc(65px + env(safe-area-inset-top));
+  left:8px;right:auto;bottom:auto;
+ }
+}
+@media(max-height:530px){
+ body[data-foyer-minimal="true"] .music-foyer__portal-nav{
+  bottom:6px;padding:3px;
+ }
+ body[data-foyer-minimal="true"] .music-foyer__portal-link{
+  min-height:35px;padding:6px 11px;
+ }
+}
