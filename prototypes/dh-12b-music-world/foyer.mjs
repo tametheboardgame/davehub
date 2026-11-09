@@ -1,7 +1,7 @@
 // DH-12B.5: the doors open physically, the camera approaches, then the
 // selected destination loads automatically. One action, not two.
 import * as THREE from './vendor/three-r159.module.min.js';
-import {DOORS,doorFor,doorAngle,approach,settled,isLocalMusicRoute} from './music-portals.mjs?v=dh12b1-music-portals-v1';
+import {DOORS,doorFor,doorAngle,approach,settled,isLocalMusicRoute,shouldAutoEnter} from './music-portals.mjs?v=dh12b1-music-portals-v1';
 import {makeFoyerMaterials,makePortalSignTexture} from './foyer-surfaces.mjs?v=dh12b5-clean-journey-v1';
 import {buildFoyerDimension} from './dimensional-art.mjs?v=dh12b2-dimensional-world-v1';
 import {initialOrbit,dragOrbit,zoomOrbit,zoomPinch,orbitPose,dragDistance,pointerSeparation}
@@ -427,7 +427,7 @@ function frame(){
    Math.abs(opening.leaves[side].rotation.y-doorAngle(true,side))<.035);
   const cameraDone=settled(camera.position.toArray(),destination.toArray(),.10)&&
    settled(aim.toArray(),desiredTarget.toArray(),.10);
-  if(doorsDone&&cameraDone)enterSelectedWorld();
+  if(shouldAutoEnter({selected,entering,doorsDone,cameraDone}))enterSelectedWorld();
  }
  if(renderer)renderer.render(scene,camera);
  requestAnimationFrame(frame);
