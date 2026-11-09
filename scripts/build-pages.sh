@@ -63,6 +63,7 @@ for asset in \
   tests/dh12b-music-world.test.cjs \
   tests/dh12b2-dimensional-art.test.cjs \
   tests/dh12b3-foyer-orbit.test.cjs \
+  tests/dh12b4-home-music.test.cjs \
   prototypes/dh-12b-music-world/foyer-orbit.mjs \
   prototypes/dh-12b-music-world/dimensional-art.mjs \
   prototypes/dh-12b-music-world/foyer.html \
@@ -204,7 +205,7 @@ done
 
 # A private draft must never become a deployed page through a build bypass.
 # Validate both the empty/approved production manifest and fictional test fixtures.
-node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/dh11-worlds.test.cjs tests/dh11c-cabinet-geometry.test.cjs tests/dh11c-room.test.cjs tests/dh11c-drawer-picking.test.cjs tests/dh11c-art-direction.test.cjs tests/dh11c4-cabinet-glb.test.cjs tests/dh11c4b-blender.test.cjs tests/dh11c4c-room-architecture.test.cjs tests/dh11c4d-immersive-viewport.test.cjs tests/dh11c4e-room-shell.test.cjs tests/dh11c4f-furniture.test.cjs tests/dh11c4f-animation-fixes.test.cjs tests/dh11c5a-desk-materials.test.cjs tests/dh11c5b-archive-materials.test.cjs tests/dh11c5c-illustrated-style.test.cjs tests/dh11c5c2a-painted-surfaces.test.cjs tests/dh11c5c2b-soft-edges.test.cjs tests/dh11c5c3-comic-storybook.test.cjs tests/dh11c5d-view-pipeline.test.cjs tests/dh11c5d3-art-alignment.test.cjs tests/dh11c5d3b-authored-3d.test.cjs tests/dh11c5d3c-spine-art.test.cjs tests/dh11c5d3d-sculpted-bookcase.test.cjs tests/dh11c5d3e-authored-details.test.cjs tests/dh11c5d3f-readable-hoard.test.cjs tests/dh11c5d3g-authored-handwriting.test.cjs tests/dh11c5d3h-room-props.test.cjs tests/dh11c5d3i-exit-door.test.cjs tests/dh11c5d3j-writing-island.test.cjs tests/dh11c6a-minimal-ui.test.cjs tests/dh11c6a1-click-outside.test.cjs tests/dh11c6a2-dark-window.test.cjs tests/dh11c6b-finished-books.test.cjs tests/dh11c6b1-layout-polish.test.cjs tests/dh11c6b2-prompt-and-jacket.test.cjs tests/dh11c6b3-authentic-spines.test.cjs tests/dh11c6c1-manuscript-workshop.test.cjs tests/dh11c6c2-motion-first.test.cjs tests/dh11c6d-cabinet-archive.test.cjs tests/dh11c6d4-overhead-tray.test.cjs tests/dh11c6e-wastepaper.test.cjs tests/dh11c6e1-uncrumple.test.cjs tests/dh12a-theatre.test.cjs tests/dh12a2-camera-focus.test.cjs tests/dh12a3-living-sets.test.cjs tests/dh12b-music-world.test.cjs tests/dh12b2-dimensional-art.test.cjs tests/dh12b3-foyer-orbit.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs tests/dh10c-editorial.test.cjs tests/dh10c-hosted-http.test.cjs
+node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/dh11-worlds.test.cjs tests/dh11c-cabinet-geometry.test.cjs tests/dh11c-room.test.cjs tests/dh11c-drawer-picking.test.cjs tests/dh11c-art-direction.test.cjs tests/dh11c4-cabinet-glb.test.cjs tests/dh11c4b-blender.test.cjs tests/dh11c4c-room-architecture.test.cjs tests/dh11c4d-immersive-viewport.test.cjs tests/dh11c4e-room-shell.test.cjs tests/dh11c4f-furniture.test.cjs tests/dh11c4f-animation-fixes.test.cjs tests/dh11c5a-desk-materials.test.cjs tests/dh11c5b-archive-materials.test.cjs tests/dh11c5c-illustrated-style.test.cjs tests/dh11c5c2a-painted-surfaces.test.cjs tests/dh11c5c2b-soft-edges.test.cjs tests/dh11c5c3-comic-storybook.test.cjs tests/dh11c5d-view-pipeline.test.cjs tests/dh11c5d3-art-alignment.test.cjs tests/dh11c5d3b-authored-3d.test.cjs tests/dh11c5d3c-spine-art.test.cjs tests/dh11c5d3d-sculpted-bookcase.test.cjs tests/dh11c5d3e-authored-details.test.cjs tests/dh11c5d3f-readable-hoard.test.cjs tests/dh11c5d3g-authored-handwriting.test.cjs tests/dh11c5d3h-room-props.test.cjs tests/dh11c5d3i-exit-door.test.cjs tests/dh11c5d3j-writing-island.test.cjs tests/dh11c6a-minimal-ui.test.cjs tests/dh11c6a1-click-outside.test.cjs tests/dh11c6a2-dark-window.test.cjs tests/dh11c6b-finished-books.test.cjs tests/dh11c6b1-layout-polish.test.cjs tests/dh11c6b2-prompt-and-jacket.test.cjs tests/dh11c6b3-authentic-spines.test.cjs tests/dh11c6c1-manuscript-workshop.test.cjs tests/dh11c6c2-motion-first.test.cjs tests/dh11c6d-cabinet-archive.test.cjs tests/dh11c6d4-overhead-tray.test.cjs tests/dh11c6e-wastepaper.test.cjs tests/dh11c6e1-uncrumple.test.cjs tests/dh12a-theatre.test.cjs tests/dh12a2-camera-focus.test.cjs tests/dh12a3-living-sets.test.cjs tests/dh12b-music-world.test.cjs tests/dh12b2-dimensional-art.test.cjs tests/dh12b3-foyer-orbit.test.cjs tests/dh12b4-home-music.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs tests/dh10c-editorial.test.cjs tests/dh10c-hosted-http.test.cjs
 node -e "const {validateManifest}=require('./scripts/davehub-manifest.cjs'); const data=require('./davehub.json'); const result=validateManifest(data,'tametheboardgame/davehub');if(!result.valid)throw new Error(result.errors.join('; '));"
 # Fail closed: only individually owner-approved records and links enter production.
 node scripts/content-check.cjs content/public/catalogue.json
@@ -373,6 +374,14 @@ const check=(file,markers,excluded=[])=>{
  for(const marker of excluded)if(html.includes(marker))throw Error(file+' unexpectedly contains '+marker);
 };
 check('dist/assets/content/worlds.css',['.world-tile','.work-card','.primary-launch'],['const loc = window.location']);
+check('dist/index.html',[
+ 'data-dh12b4-music-island="true"',
+ 'class="island island--music" href="/previews/dh-12b/music-foyer/"',
+ '<use href="#icon-music"/>',
+ 'class="island island--writing" href="/worlds/writing/"',
+ 'class="island island--games" href="/worlds/games/"',
+ 'class="island island--projects" href="/worlds/projects/"']);
+check('dist/styles.css',['.island--music','left: 64.5%','left: 37%','top: 32%']);
 check('dist/assets/content/staging-review.js',["loc.hostname !== 'davehub.pages.dev'"],['.world-tile{']);
 check('dist/worlds/games/index.html',[
  'data-davehub-inline="worlds"','Unicorn Valley','The Stephen Martin Project','Tame The Board Game'
