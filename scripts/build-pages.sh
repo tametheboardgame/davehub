@@ -381,7 +381,7 @@ check('dist/index.html',[
  'class="island island--writing" href="/worlds/writing/"',
  'class="island island--games" href="/worlds/games/"',
  'class="island island--projects" href="/worlds/projects/"']);
-check('dist/styles.css',['.island--music','left: 64.5%','left: 37%','top: 32%']);
+check('dist/styles.css',['.island--music','left: 69%','left: 41%','top: 32%']);
 check('dist/assets/content/staging-review.js',["loc.hostname !== 'davehub.pages.dev'"],['.world-tile{']);
 check('dist/worlds/games/index.html',[
  'data-davehub-inline="worlds"','Unicorn Valley','The Stephen Martin Project','Tame The Board Game'
