@@ -441,7 +441,6 @@ export function buildFoyerDimension({THREE,scene,thresholds,reducedMotion=false}
    }
   }
  }
- const start=performance.now?.()||0;
  let elapsed=0;
  function update(dt,focus){
   const step=Math.min(.08,Math.max(0,Number(dt)||0));
@@ -486,6 +485,7 @@ export function buildRecordDimension({THREE,scene,crates,listening,disc,reducedM
   velvet:makeMaterial(THREE,'#845077'),
   gold:makeMaterial(THREE,'#f2c68c',{emissive:'#ab7a40',glow:.38}),
   pale:makeMaterial(THREE,'#eadcb9',{emissive:'#a77b4c',glow:.13}),
+  glass:makeMaterial(THREE,'#f7dcb0',{emissive:'#ffbd7d',glow:.82}),
   crystal:makeMaterial(THREE,'#78cfc6',{roughness:.24,metalness:.24,
    emissive:'#398c91',glow:.77})
  };
