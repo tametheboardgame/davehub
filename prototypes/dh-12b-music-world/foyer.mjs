@@ -294,7 +294,23 @@ function choose(id){
 for(const d of DOORS)actions[d.id].addEventListener('click',()=>choose(d.id));
 overview.addEventListener('click',returnToCrossroads);
 document.addEventListener('keydown',e=>{
- if(e.key==='Escape'&&selected){e.preventDefault();returnToCrossroads();}
+ if(e.key==='Escape'&&selected){e.preventDefault();returnToCrossroads();return;}
+ if(e.altKey||e.ctrlKey||e.metaKey||e.target?.closest?.('input,textarea,select,[contenteditable]'))return;
+ const keys={
+  ArrowLeft:{dx:-35,dy:0},ArrowRight:{dx:35,dy:0},
+  ArrowUp:{dx:0,dy:-35},ArrowDown:{dx:0,dy:35}
+ };
+ if(keys[e.key]){
+  e.preventDefault();
+  const {dx,dy}=keys[e.key];
+  setOrbit(dragOrbit(orbit,dx,dy));
+ }else if(['+','=','Add'].includes(e.key)){
+  e.preventDefault();setOrbit(zoomOrbit(orbit,-155));
+ }else if(['-','_','Subtract'].includes(e.key)){
+  e.preventDefault();setOrbit(zoomOrbit(orbit,155));
+ }else if(e.key==='Home'){
+  e.preventDefault();resetOrbit();
+ }
 });
 const pickRay=new THREE.Raycaster(),pointer=new THREE.Vector2();
 function hit(e){
@@ -305,17 +321,94 @@ function hit(e){
  pickRay.setFromCamera(pointer,camera);
  return pickRay.intersectObjects(selectable,false)[0]?.object?.userData.musicDoor||null;
 }
-let pressed=null;
-canvas.addEventListener('pointerdown',e=>{pressed={x:e.clientX,y:e.clientY};});
-canvas.addEventListener('pointerup',e=>{
- if(!pressed||Math.hypot(e.clientX-pressed.x,e.clientY-pressed.y)>9){pressed=null;return;}
- pressed=null;const id=hit(e);if(id)choose(id);else if(selected)returnToCrossroads();
+// Google Earth-style orbit: real camera rotates around an actual point in
+// the 3D island. A drag never becomes a portal click. Touch one finger orbits,
+// two fingers pinch zoom; the wheel and keyboard are equivalents.
+const pointers=new Map();
+let gestureDragged=false,multiTouch=false,lastPinch=0;
+canvas.addEventListener('pointerdown',e=>{
+ if(e.button!==0&&e.pointerType==='mouse')return;
+ canvas.setPointerCapture?.(e.pointerId);
+ const point={x:e.clientX,y:e.clientY,startX:e.clientX,startY:e.clientY};
+ pointers.set(e.pointerId,point);
+ if(pointers.size>=2){
+  multiTouch=true;gestureDragged=true;
+  lastPinch=pointerSeparation(...[...pointers.values()].slice(0,2));
+ }
+ canvas.style.cursor='grabbing';
 });
 canvas.addEventListener('pointermove',e=>{
+ if(pointers.has(e.pointerId)){
+  const pointer=pointers.get(e.pointerId);
+  const dx=e.clientX-pointer.x,dy=e.clientY-pointer.y;
+  pointer.x=e.clientX;pointer.y=e.clientY;
+  if(pointers.size>=2){
+   const pair=[...pointers.values()].slice(0,2);
+   const separation=pointerSeparation(pair[0],pair[1]);
+   if(lastPinch>1)setOrbit(zoomPinch(orbit,lastPinch,separation));
+   lastPinch=separation;
+   multiTouch=true;gestureDragged=true;
+  }else if(dragDistance({x:pointer.startX,y:pointer.startY},pointer)>6){
+   gestureDragged=true;
+   setOrbit(dragOrbit(orbit,dx,dy,
+    e.pointerType==='touch'?.0065:.0062));
+  }
+  canvas.style.cursor='grabbing';
+  return;
+ }
  const id=hit(e);
- canvas.style.cursor=id?'pointer':'default';
- canvas.title=id?'Open '+doorFor(id).label+' or enter its doorway':'The World Between Notes';
+ canvas.style.cursor=id?'pointer':'grab';
+ canvas.title=id?'Open '+doorFor(id).label+' or enter its doorway':
+  'Drag to orbit around the World Between Notes';
 });
+canvas.addEventListener('pointerup',e=>{
+ const pointer=pointers.get(e.pointerId);
+ if(!pointer)return;
+ const moved=dragDistance({x:pointer.startX,y:pointer.startY},
+  {x:e.clientX,y:e.clientY});
+ const shouldActivate=!gestureDragged&&!multiTouch&&moved<=7&&pointers.size===1;
+ pointers.delete(e.pointerId);
+ if(!pointers.size){
+  gestureDragged=false;multiTouch=false;lastPinch=0;
+  canvas.style.cursor='grab';
+ }
+ if(!shouldActivate)return;
+ const id=hit(e);
+ if(id)choose(id);
+ else if(selected)returnToCrossroads();
+});
+canvas.addEventListener('pointercancel',e=>{
+ pointers.delete(e.pointerId);
+ gestureDragged=true;
+ if(!pointers.size){
+  multiTouch=false;lastPinch=0;gestureDragged=false;
+  canvas.style.cursor='grab';
+ }
+});
+canvas.addEventListener('wheel',e=>{
+ e.preventDefault();
+ setOrbit(zoomOrbit(orbit,e.deltaY));
+},{passive:false});
+function positionPortalSigns(){
+ const width=canvas.clientWidth,height=canvas.clientHeight;
+ if(!width||!height)return;
+ for(const door of DOORS){
+  const button=signs[door.id];
+  const worldPoint=thresholds[door.id].root.localToWorld(
+   new THREE.Vector3(0,5.35,.12));
+  const p=worldPoint.project(camera);
+  const x=(p.x*.5+.5)*width;
+  const y=(-p.y*.5+.5)*height;
+  const bottomSafe=height-(width<690?235:174);
+  const inView=p.z>-1&&p.z<1&&x>75&&x<width-75&&
+   y>(width<690?75:112)&&y<bottomSafe;
+  button.hidden=!inView;
+  if(inView){
+   button.style.left=x+'px';
+   button.style.top=y+'px';
+  }
+ }
+}
 const resize=()=>{
  if(!renderer)return;
  renderer.setSize(Math.max(1,canvas.clientWidth),Math.max(1,canvas.clientHeight),false);
@@ -358,6 +451,7 @@ function frame(){
   }
  }
  if(renderer)renderer.render(scene,camera);
+ positionPortalSigns();
  requestAnimationFrame(frame);
 }
 frame();
