@@ -36,14 +36,14 @@ test('Music takes visitors into the real two-door foyer, not a historical placeh
 test('Music island sits between upper and lower hotspots, with mobile and short-screen layouts',()=>{
  const token='.island--music';
  assert.ok(css.includes('--island-color: #f9d29b'));
- assert.ok(css.includes('left: 64.5%')&&css.includes('top: 32%'));
+ assert.ok(css.includes('left: 69%')&&css.includes('top: 32%'));
  assert.ok(css.includes('.island--music:hover,.island--music:focus-visible'));
  const tablet=css.match(/@media \(max-width: 900px\) \{[\s\S]*?(?=\n\}\n@media \(max-width: 640px\))/);
- assert.ok(tablet&&tablet[0].includes('.island--music { left: 62%; top: 31%; }'));
+ assert.ok(tablet&&tablet[0].includes('.island--music { left: 66%; top: 31%; }'));
  const mobile=css.match(/@media \(max-width: 640px\) \{[\s\S]*?(?=\n\}\n@media \(max-width: 380px\))/);
- assert.ok(mobile&&mobile[0].includes('.island--music { left: 37%; top: 32%; }'));
- assert.ok(css.includes('.island--music { left: 36%; top: 30%; }'),'very narrow phones');
- assert.ok(css.includes('.island--music { left: 60%; top: 32%; }'),'short landscape');
+ assert.ok(mobile&&mobile[0].includes('.island--music { left: 41%; top: 32%; }'));
+ assert.ok(css.includes('.island--music { left: 40%; top: 30%; }'),'very narrow phones');
+ assert.ok(css.includes('.island--music { left: 63%; top: 32%; }'),'short landscape');
  assert.ok(css.includes('.island-nav { position: absolute; inset: 0; z-index: 2; pointer-events: none; }'));
  assert.ok(css.includes('.island { --island-color: #fff; position: absolute; pointer-events: auto;'));
 });
