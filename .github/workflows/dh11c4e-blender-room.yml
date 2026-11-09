@@ -1,0 +1,73 @@
+name: DH-11C.4E Blender Room Architecture
+
+on:
+  pull_request:
+    paths:
+      - 'prototypes/dh-11c-room/room-shell-asset.js'
+      - 'prototypes/dh-11c-room/room-shell-plan.js'
+      - 'scripts/build-dh11c4e-shell-glb.cjs'
+      - 'scripts/blender/dh11c_room_shell.py'
+      - 'scripts/validate-dh11c4e-shell.cjs'
+      - '.github/workflows/dh11c4e-blender-room.yml'
+  push:
+    branches: [staging]
+    paths:
+      - 'prototypes/dh-11c-room/room-shell-asset.js'
+      - 'prototypes/dh-11c-room/room-shell-plan.js'
+      - 'scripts/build-dh11c4e-shell-glb.cjs'
+      - 'scripts/blender/dh11c_room_shell.py'
+      - 'scripts/validate-dh11c4e-shell.cjs'
+      - '.github/workflows/dh11c4e-blender-room.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  blender-room-shell:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Blender and its Python NumPy dependency
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq blender python3-numpy
+          blender --version | head -n 2
+      - name: Generate same-source GLB and run pure architecture tests
+        run: |
+          set -euo pipefail
+          mkdir -p reports/dh11c4e
+          node --test tests/dh11c4e-room-shell.test.cjs
+          node scripts/build-dh11c4e-shell-glb.cjs reports/dh11c4e/source-room-shell.glb
+      - name: Import into Blender, save editable architecture, export GLB
+        run: |
+          set -euo pipefail
+          blender --background --factory-startup --python scripts/blender/dh11c_room_shell.py -- \
+            --input reports/dh11c4e/source-room-shell.glb \
+            --blend reports/dh11c4e/manuscript-room-shell.blend \
+            --output reports/dh11c4e/room-shell-blender.glb \
+            --report reports/dh11c4e/geometry-report.json
+      - name: Compare exact Blender geometry nodes and positions
+        run: |
+          set -euo pipefail
+          node scripts/validate-dh11c4e-shell.cjs \
+            reports/dh11c4e/source-room-shell.glb \
+            reports/dh11c4e/room-shell-blender.glb \
+            reports/dh11c4e/geometry-report.json
+      - name: Preserve editable Blender master and GLB for inspection
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dh11c4e-manuscript-room-architecture
+          path: |
+            reports/dh11c4e/source-room-shell.glb
+            reports/dh11c4e/manuscript-room-shell.blend
+            reports/dh11c4e/room-shell-blender.glb
+            reports/dh11c4e/geometry-report.json
+          if-no-files-found: error
+          retention-days: 30

@@ -1,0 +1,24 @@
+name: DH-09D verify the Cloudflare staging branch handoff
+on:
+  workflow_dispatch:
+  push:
+    branches: [staging]
+    paths:
+      - 'config/dh09d-staging-verification.json'
+permissions:
+  contents: read
+concurrency:
+  group: dh09d-staging-cutover-verification
+  cancel-in-progress: false
+jobs:
+  verify-staging:
+    if: github.repository == 'tametheboardgame/davehub' && github.ref == 'refs/heads/staging'
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+      - name: Verify live davehub.pages.dev environment, branch, commit and games
+        run: node scripts/verify-dh09d-staging-cutover.cjs

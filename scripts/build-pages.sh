@@ -19,12 +19,185 @@ for asset in \
   assets/characters/dave/dave-animation-v1.webm \
   prototypes/dh-07c/index.html \
   prototypes/dh-08/index.html \
+  prototypes/dh-11c-cabinet/index.html \
+  prototypes/dh-11c-room/index.html \
+  prototypes/dh-11c-room/room.css \
+  prototypes/dh-11c-room/room-plan.js \
+  prototypes/dh-11c-room/room.js \
+  prototypes/dh-11c-room/drawer-picking.mjs \
+  prototypes/dh-11c-room/furniture-motion.mjs \
+  tests/dh11c4f-animation-fixes.test.cjs \
+  tests/dh11c5a-desk-materials.test.cjs \
+  tests/dh11c5b-archive-materials.test.cjs \
+  tests/dh11c5c-illustrated-style.test.cjs \
+  tests/dh11c5c2a-painted-surfaces.test.cjs \
+  tests/dh11c5c2b-soft-edges.test.cjs \
+  tests/dh11c5c3-comic-storybook.test.cjs \
+  tests/dh11c5d-view-pipeline.test.cjs \
+  tests/dh11c5d3-art-alignment.test.cjs \
+  tests/dh11c5d3b-authored-3d.test.cjs \
+  tests/dh11c5d3c-spine-art.test.cjs \
+  tests/dh11c5d3d-sculpted-bookcase.test.cjs \
+  tests/dh11c5d3e-authored-details.test.cjs \
+  tests/dh11c5d3f-readable-hoard.test.cjs \
+  tests/dh11c5d3g-authored-handwriting.test.cjs \
+  tests/dh11c5d3h-room-props.test.cjs \
+  tests/dh11c5d3i-exit-door.test.cjs \
+  tests/dh11c5d3j-writing-island.test.cjs \
+  tests/dh11c6a-minimal-ui.test.cjs \
+  tests/dh11c6a1-click-outside.test.cjs \
+  tests/dh11c6a2-dark-window.test.cjs \
+  tests/dh11c6b-finished-books.test.cjs \
+  tests/dh11c6b1-layout-polish.test.cjs \
+  tests/dh11c6b2-prompt-and-jacket.test.cjs \
+  tests/dh11c6b3-authentic-spines.test.cjs \
+  tests/dh11c6c1-manuscript-workshop.test.cjs \
+  tests/dh11c6c2-motion-first.test.cjs \
+  tests/dh11c6d-cabinet-archive.test.cjs \
+  tests/dh11c6d4-overhead-tray.test.cjs \
+  tests/dh11c6e-wastepaper.test.cjs \
+  tests/dh11c6e1-uncrumple.test.cjs \
+  tests/dh12a-theatre.test.cjs \
+  tests/dh12a2-camera-focus.test.cjs \
+  tests/dh12a3-living-sets.test.cjs \
+  tests/dh12b-music-world.test.cjs \
+  tests/dh12b2-dimensional-art.test.cjs \
+  tests/dh12b3-foyer-orbit.test.cjs \
+  tests/dh12b4-home-music.test.cjs \
+  tests/dh11c-complete-release.test.cjs \
+  scripts/build-writing-room-release.cjs \
+  prototypes/dh-12b-music-world/foyer-orbit.mjs \
+  prototypes/dh-12b-music-world/dimensional-art.mjs \
+  prototypes/dh-12b-music-world/foyer.html \
+  prototypes/dh-12b-music-world/foyer.mjs \
+  prototypes/dh-12b-music-world/music-world.css \
+  prototypes/dh-12b-music-world/music-portals.mjs \
+  prototypes/dh-12b-music-world/record-shop.html \
+  prototypes/dh-12b-music-world/record-shop.mjs \
+  prototypes/dh-12b-music-world/record-shop-mechanics.mjs \
+  prototypes/dh-12a-listening-room/index.html \
+  prototypes/dh-12a-listening-room/theatre.css \
+  prototypes/dh-12a-listening-room/theatre.mjs \
+  prototypes/dh-12a-listening-room/theatre-mechanics.mjs \
+  prototypes/dh-12a-listening-room/theatre-camera.mjs \
+  prototypes/dh-12a-listening-room/theatre-scenery.mjs \
+  scripts/render-dh11c6e1-visible-uncrumple.cjs \
+  scripts/render-dh11c6e-wastepaper-bin.cjs \
+  prototypes/dh-11c-room/discarded-ideas.js \
+  prototypes/dh-11c-room/discarded-ideas.css \
+  scripts/render-dh11c6d4-cabinet-tray.cjs \
+  prototypes/dh-11c-room/cabinet-tray.js \
+  prototypes/dh-11c-room/cabinet-tray.css \
+  scripts/render-dh11c6d3-filing-cabinet.cjs \
+  prototypes/dh-11c-room/cabinet-catalogue.js \
+  prototypes/dh-11c-room/cabinet-experience.js \
+  prototypes/dh-11c-room/cabinet-experience.css \
+  prototypes/dh-11c-room/cabinet-folders.mjs \
+  scripts/render-dh11c6c2-motion-first.cjs \
+  prototypes/dh-11c-room/reveal-after-motion.mjs \
+  scripts/render-dh11c6c1-reader-workshop.cjs \
+  prototypes/dh-11c-room/manuscript-experience.js \
+  prototypes/dh-11c-room/manuscript-experience.css \
+  scripts/render-dh11c6b-finished-books.cjs \
+  prototypes/dh-11c-room/finished-books.js \
+  prototypes/dh-11c-room/book-experience.js \
+  prototypes/dh-11c-room/book-experience.css \
+  scripts/render-dh11c5d3j-writing-world.cjs \
+  scripts/render-dh11c6a-minimal-room.cjs \
+  prototypes/dh-11c-room/minimal-immersive.css \
+  prototypes/dh-11c-room/high-illustration-3d.js \
+  prototypes/dh-11c-room/high-illustration-3d-v2.js \
+  prototypes/dh-11c-room/high-illustration-3d-v3.js \
+  prototypes/dh-11c-room/high-illustration-3d-v4.js \
+  prototypes/dh-11c-room/high-illustration-3d-v5.js \
+  prototypes/dh-11c-room/window-illustration.js \
+  prototypes/dh-11c-room/window-illustration-v2.js \
+  prototypes/dh-11c-room/manuscript-personality.js \
+  prototypes/dh-11c-room/manuscript-personality-v2.js \
+  prototypes/dh-11c-room/room-props-v7.js \
+  prototypes/dh-11c-room/door-exit.js \
+  scripts/render-dh11c5d3i-exit-door.cjs \
+  scripts/render-dh11c5d3h-mystical-room.cjs \
+  scripts/render-dh11c5d3g-authored-handwriting.cjs \
+  scripts/render-dh11c5d3f-personality.cjs \
+  scripts/render-dh11c5d3e-details.cjs \
+  scripts/render-dh11c5d3d-sculpted-bookcase.cjs \
+  scripts/render-dh11c5d3c-spine-art.cjs \
+  scripts/render-dh11c5d3b-authored3d.cjs \
+  scripts/render-dh11c5d3-overview.cjs \
+  prototypes/dh-11c-room/overview-studio.html \
+  prototypes/dh-11c-room/overview-studio.css \
+  prototypes/dh-11c-room/overview-studio.js \
+  prototypes/dh-11c-room/view-pipeline.js \
+  scripts/render-dh11c5d-views.cjs \
+  prototypes/dh-11c-room/comic-storybook-style.js \
+  prototypes/dh-11c-room/comic-storybook-dressing.js \
+  scripts/render-dh11c5c3-comic.cjs \
+  prototypes/dh-11c-room/illustrated-style-v3.js \
+  scripts/render-dh11c5c2b-handdrawn.cjs \
+  prototypes/dh-11c-room/illustrated-style-v2.js \
+  scripts/render-dh11c5c2a-painted.cjs \
+  prototypes/dh-11c-room/illustrated-style.js \
+  scripts/render-dh11c5c-illustrated.cjs \
+  tests/dh11c-drawer-picking.test.cjs \
+  prototypes/dh-11c-room/room-shell-plan.js \
+  prototypes/dh-11c-room/room-shell-asset.js \
+  scripts/build-dh11c4e-shell-glb.cjs \
+  prototypes/dh-11c-room/furniture-asset.js \
+  prototypes/dh-11c-room/desk-materials.js \
+  prototypes/dh-11c-room/archive-materials.js \
+  scripts/build-dh11c4f-furniture-glb.cjs \
+  scripts/validate-dh11c4f-furniture.cjs \
+  scripts/render-dh11c4f-furniture.cjs \
+  scripts/blender/dh11c_furniture.py \
+  tests/dh11c4f-furniture.test.cjs \
+  scripts/build-dh11c4e-blender-model.cjs \
+  assets/worlds/writing/3d/models/room-shell-blender-verified.glb.deflate.b64 \
+  scripts/validate-dh11c4e-shell.cjs \
+  scripts/render-dh11c4e-room.cjs \
+  scripts/blender/dh11c_room_shell.py \
+  tests/dh11c4e-room-shell.test.cjs \
+  prototypes/dh-11c-room/architecture.css \
+  prototypes/dh-11c-room/immersive.css \
+  prototypes/dh-11c-room/immersive-ui.js \
+  tests/dh11c4d-immersive-viewport.test.cjs \
+  assets/worlds/writing/3d/models/cabinet-blender-verified.glb.deflate.b64 \
+  scripts/build-dh11c4c-blender-model.cjs \
+  scripts/render-dh11c4c-architecture.cjs \
+  tests/dh11c4c-room-architecture.test.cjs \
+  prototypes/dh-11c-room/glb-proof.css \
+  prototypes/dh-11c-room/vendor/GLTFLoader-r159.js \
+  prototypes/dh-11c-room/vendor/BufferGeometryUtils-r159.js \
+  scripts/build-dh11c4-cabinet-glb.cjs \
+  scripts/blender/dh11c_cabinet_roundtrip.py \
+  scripts/validate-dh11c4b-blender.cjs \
+  tests/dh11c4b-blender.test.cjs \
+  scripts/render-dh11c4-glb-proof.cjs \
+  tests/dh11c4-cabinet-glb.test.cjs \
+  prototypes/dh-11c-room/art-palettes.js \
+  prototypes/dh-11c-room/art-lab.css \
+  scripts/render-dh11c-art-lab.cjs \
+  tests/dh11c-art-direction.test.cjs \
+  prototypes/dh-11c-room/vendor/three-r159.module.min.js \
+  prototypes/dh-11c-room/vendor/THREE-LICENSE.txt \
+  tests/dh11c-room.test.cjs \
+  prototypes/dh-11c-cabinet/cabinet.css \
+  prototypes/dh-11c-cabinet/cabinet-math.js \
+  prototypes/dh-11c-cabinet/cabinet.js \
+  tests/dh11c-cabinet-geometry.test.cjs \
   content/public/catalogue.json \
   content/examples/fictional.json \
   assets/content/worlds.css \
+  assets/content/dh11-worlds.css \
+  assets/worlds/writing/manuscript-room-v1.avif \
+  assets/worlds/writing/room.css \
+  assets/worlds/writing/room.js \
   scripts/render-content.cjs \
+  scripts/render-dh11-worlds.cjs \
+  scripts/render-writing-scene.cjs \
   tests/render-content.test.cjs \
-  tests/navigation.test.cjs
+  tests/navigation.test.cjs \
+  tests/dh11-worlds.test.cjs
 do
   if [ ! -s "$asset" ]; then
     printf 'Missing or empty required file: %s\n' "$asset" >&2
@@ -34,7 +207,7 @@ done
 
 # A private draft must never become a deployed page through a build bypass.
 # Validate both the empty/approved production manifest and fictional test fixtures.
-node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs tests/dh11c-complete-release.test.cjs
+node --test tests/content.test.cjs tests/render-content.test.cjs tests/navigation.test.cjs tests/dh11-worlds.test.cjs tests/dh11c-cabinet-geometry.test.cjs tests/dh11c-room.test.cjs tests/dh11c-drawer-picking.test.cjs tests/dh11c-art-direction.test.cjs tests/dh11c4-cabinet-glb.test.cjs tests/dh11c4b-blender.test.cjs tests/dh11c4c-room-architecture.test.cjs tests/dh11c4d-immersive-viewport.test.cjs tests/dh11c4e-room-shell.test.cjs tests/dh11c4f-furniture.test.cjs tests/dh11c4f-animation-fixes.test.cjs tests/dh11c5a-desk-materials.test.cjs tests/dh11c5b-archive-materials.test.cjs tests/dh11c5c-illustrated-style.test.cjs tests/dh11c5c2a-painted-surfaces.test.cjs tests/dh11c5c2b-soft-edges.test.cjs tests/dh11c5c3-comic-storybook.test.cjs tests/dh11c5d-view-pipeline.test.cjs tests/dh11c5d3-art-alignment.test.cjs tests/dh11c5d3b-authored-3d.test.cjs tests/dh11c5d3c-spine-art.test.cjs tests/dh11c5d3d-sculpted-bookcase.test.cjs tests/dh11c5d3e-authored-details.test.cjs tests/dh11c5d3f-readable-hoard.test.cjs tests/dh11c5d3g-authored-handwriting.test.cjs tests/dh11c5d3h-room-props.test.cjs tests/dh11c5d3i-exit-door.test.cjs tests/dh11c5d3j-writing-island.test.cjs tests/dh11c6a-minimal-ui.test.cjs tests/dh11c6a1-click-outside.test.cjs tests/dh11c6a2-dark-window.test.cjs tests/dh11c6b-finished-books.test.cjs tests/dh11c6b1-layout-polish.test.cjs tests/dh11c6b2-prompt-and-jacket.test.cjs tests/dh11c6b3-authentic-spines.test.cjs tests/dh11c6c1-manuscript-workshop.test.cjs tests/dh11c6c2-motion-first.test.cjs tests/dh11c6d-cabinet-archive.test.cjs tests/dh11c6d4-overhead-tray.test.cjs tests/dh11c6e-wastepaper.test.cjs tests/dh11c6e1-uncrumple.test.cjs tests/dh12a-theatre.test.cjs tests/dh12a2-camera-focus.test.cjs tests/dh12a3-living-sets.test.cjs tests/dh12b-music-world.test.cjs tests/dh12b2-dimensional-art.test.cjs tests/dh12b3-foyer-orbit.test.cjs tests/dh12b4-home-music.test.cjs tests/dh11c-complete-release.test.cjs tests/davehub-discovery.test.cjs tests/davehub-new-repo.test.cjs tests/workshop.test.cjs tests/workshop-http.test.cjs tests/review-layout.test.cjs tests/staging-review.test.cjs tests/dh10c-editorial.test.cjs tests/dh10c-hosted-http.test.cjs
 node -e "const {validateManifest}=require('./scripts/davehub-manifest.cjs'); const data=require('./davehub.json'); const result=validateManifest(data,'tametheboardgame/davehub');if(!result.valid)throw new Error(result.errors.join('; '));"
 # Fail closed: only individually owner-approved records and links enter production.
 node scripts/content-check.cjs content/public/catalogue.json
@@ -43,8 +216,33 @@ node scripts/content-check.cjs content/examples/fictional.json
 node scripts/dh09d-topology.cjs check
 
 rm -rf dist
-mkdir -p dist/assets/branding dist/assets/homepage dist/assets/characters/dave dist/previews/dh-07c dist/previews/dh-08 dist/previews/dh-08b dist/previews/dh-08c dist/content dist/assets/content
+mkdir -p dist/assets/worlds/writing dist/assets/branding dist/assets/homepage dist/assets/characters/dave dist/previews/dh-07c dist/previews/dh-08 dist/previews/dh-08b dist/previews/dh-08c dist/previews/dh-11c/cabinet dist/previews/dh-11c/room/vendor dist/previews/dh-11c/art-lab dist/previews/dh-11c/cabinet-glb dist/previews/dh-11c/architecture dist/previews/dh-11c/room-shell dist/previews/dh-11c/furniture dist/previews/dh-11c/illustrated dist/previews/dh-11c/illustrated-v2 dist/previews/dh-11c/illustrated-v3 dist/previews/dh-11c/comic-storybook dist/previews/dh-11c/illustrated-views dist/previews/dh-11c/illustrated-overview dist/previews/dh-11c/authored-3d dist/previews/dh-11c/authored-3d-v2 dist/previews/dh-11c/authored-3d-v3 dist/previews/dh-11c/authored-3d-v4 dist/previews/dh-11c/authored-3d-v5 dist/previews/dh-11c/authored-3d-v6 dist/previews/dh-11c/authored-3d-v7 dist/previews/dh-11c/authored-3d-v8 dist/previews/dh-11c/room/models dist/content dist/assets/content
 
+# DH-12A geometry-first Music study. No approved audio or live Music route change.
+mkdir -p dist/previews/dh-12a/listening-room/vendor
+node --check prototypes/dh-12a-listening-room/theatre.mjs
+node --check prototypes/dh-12a-listening-room/theatre-mechanics.mjs
+node --check prototypes/dh-12a-listening-room/theatre-camera.mjs
+node --check prototypes/dh-12a-listening-room/theatre-scenery.mjs
+cp prototypes/dh-12a-listening-room/index.html prototypes/dh-12a-listening-room/theatre.css prototypes/dh-12a-listening-room/theatre.mjs prototypes/dh-12a-listening-room/theatre-mechanics.mjs prototypes/dh-12a-listening-room/theatre-camera.mjs prototypes/dh-12a-listening-room/theatre-scenery.mjs dist/previews/dh-12a/listening-room/
+cp prototypes/dh-11c-room/vendor/three-r159.module.min.js prototypes/dh-11c-room/vendor/THREE-LICENSE.txt dist/previews/dh-12a/listening-room/vendor/
+# DH-12B.1: the Music world becomes a two-door staging area linking
+# the musicals theatre to a genuinely independent record shop. No public
+# /worlds/music/ route or approved music catalogue is replaced here.
+mkdir -p dist/previews/dh-12b/music-foyer/vendor dist/previews/dh-12b/record-shop/vendor
+node --check prototypes/dh-12b-music-world/foyer.mjs
+node --check prototypes/dh-12b-music-world/foyer-orbit.mjs
+node --check prototypes/dh-12b-music-world/music-portals.mjs
+node --check prototypes/dh-12b-music-world/record-shop.mjs
+node --check prototypes/dh-12b-music-world/record-shop-mechanics.mjs
+node --check prototypes/dh-12b-music-world/dimensional-art.mjs
+cp prototypes/dh-12b-music-world/foyer.html dist/previews/dh-12b/music-foyer/index.html
+cp prototypes/dh-12b-music-world/record-shop.html dist/previews/dh-12b/record-shop/index.html
+cp prototypes/dh-12b-music-world/foyer.mjs prototypes/dh-12b-music-world/foyer-orbit.mjs prototypes/dh-12b-music-world/music-portals.mjs prototypes/dh-12b-music-world/music-world.css prototypes/dh-12b-music-world/dimensional-art.mjs dist/previews/dh-12b/music-foyer/
+cp prototypes/dh-12b-music-world/record-shop.mjs prototypes/dh-12b-music-world/record-shop-mechanics.mjs prototypes/dh-12b-music-world/music-world.css prototypes/dh-12b-music-world/dimensional-art.mjs dist/previews/dh-12b/record-shop/
+for world in music-foyer record-shop; do
+  cp prototypes/dh-11c-room/vendor/three-r159.module.min.js prototypes/dh-11c-room/vendor/THREE-LICENSE.txt "dist/previews/dh-12b/$world/vendor/"
+done
 cp index.html styles.css main.js catalogue.js dist/
 cp assets/branding/davehub-logo-faithful.svg dist/assets/branding/
 cp assets/homepage/floating-islands-background.png dist/assets/homepage/
@@ -52,10 +250,63 @@ cp assets/characters/dave/dave-static-v1.webp dist/assets/characters/dave/
 cp assets/characters/dave/dave-animation-v1.webm dist/assets/characters/dave/
 cp prototypes/dh-07c/index.html dist/previews/dh-07c/index.html
 cp prototypes/dh-08/index.html dist/previews/dh-08/index.html
+cp prototypes/dh-11c-cabinet/index.html prototypes/dh-11c-cabinet/cabinet.css prototypes/dh-11c-cabinet/cabinet-math.js prototypes/dh-11c-cabinet/cabinet.js dist/previews/dh-11c/cabinet/
+cp prototypes/dh-11c-room/index.html prototypes/dh-11c-room/room.css prototypes/dh-11c-room/room-plan.js prototypes/dh-11c-room/room.js prototypes/dh-11c-room/drawer-picking.mjs prototypes/dh-11c-room/furniture-motion.mjs prototypes/dh-11c-room/reveal-after-motion.mjs prototypes/dh-11c-room/cabinet-folders.mjs prototypes/dh-11c-room/art-palettes.js prototypes/dh-11c-room/desk-materials.js prototypes/dh-11c-room/archive-materials.js prototypes/dh-11c-room/illustrated-style.js prototypes/dh-11c-room/illustrated-style-v2.js prototypes/dh-11c-room/illustrated-style-v3.js prototypes/dh-11c-room/comic-storybook-style.js prototypes/dh-11c-room/comic-storybook-dressing.js prototypes/dh-11c-room/view-pipeline.js prototypes/dh-11c-room/high-illustration-3d.js prototypes/dh-11c-room/high-illustration-3d-v2.js prototypes/dh-11c-room/high-illustration-3d-v3.js prototypes/dh-11c-room/high-illustration-3d-v4.js prototypes/dh-11c-room/high-illustration-3d-v5.js prototypes/dh-11c-room/window-illustration.js prototypes/dh-11c-room/window-illustration-v2.js prototypes/dh-11c-room/manuscript-personality.js prototypes/dh-11c-room/manuscript-personality-v2.js prototypes/dh-11c-room/room-props-v7.js prototypes/dh-11c-room/door-exit.js dist/previews/dh-11c/room/
+cp prototypes/dh-11c-room/art-lab.css dist/previews/dh-11c/art-lab/
+node scripts/render-dh11c-art-lab.cjs dist/previews/dh-11c/art-lab
+cp prototypes/dh-11c-room/vendor/three-r159.module.min.js prototypes/dh-11c-room/vendor/THREE-LICENSE.txt prototypes/dh-11c-room/vendor/GLTFLoader-r159.js prototypes/dh-11c-room/vendor/BufferGeometryUtils-r159.js dist/previews/dh-11c/room/vendor/
+cp prototypes/dh-11c-room/glb-proof.css dist/previews/dh-11c/cabinet-glb/
+node scripts/render-dh11c4-glb-proof.cjs dist/previews/dh-11c/cabinet-glb
+node scripts/build-dh11c4-cabinet-glb.cjs dist/previews/dh-11c/room/models/cabinet-prototype.glb
+node scripts/build-dh11c4c-blender-model.cjs dist/previews/dh-11c/room/models/cabinet-blender-verified.glb
+cp prototypes/dh-11c-room/room-shell-plan.js prototypes/dh-11c-room/room-shell-asset.js dist/previews/dh-11c/room/
+node scripts/build-dh11c4e-shell-glb.cjs dist/previews/dh-11c/room/models/room-shell-source.glb
+node scripts/build-dh11c4e-blender-model.cjs dist/previews/dh-11c/room/models/room-shell-blender-verified.glb
+node scripts/render-dh11c4e-room.cjs dist/previews/dh-11c/room-shell
+cp prototypes/dh-11c-room/furniture-asset.js dist/previews/dh-11c/room/
+node scripts/build-dh11c4f-furniture-glb.cjs dist/previews/dh-11c/room/models/furniture-source.glb
+node scripts/render-dh11c4f-furniture.cjs dist/previews/dh-11c/furniture
+node scripts/render-dh11c5c-illustrated.cjs dist/previews/dh-11c/illustrated
+node scripts/render-dh11c5c2a-painted.cjs dist/previews/dh-11c/illustrated-v2
+node scripts/render-dh11c5c2b-handdrawn.cjs dist/previews/dh-11c/illustrated-v3
+node scripts/render-dh11c5c3-comic.cjs dist/previews/dh-11c/comic-storybook
+node scripts/render-dh11c5d-views.cjs dist/previews/dh-11c/illustrated-views
+node scripts/render-dh11c5d3-overview.cjs dist/previews/dh-11c/illustrated-overview
+node scripts/render-dh11c5d3b-authored3d.cjs dist/previews/dh-11c/authored-3d
+node scripts/render-dh11c5d3c-spine-art.cjs dist/previews/dh-11c/authored-3d-v2
+node scripts/render-dh11c5d3d-sculpted-bookcase.cjs dist/previews/dh-11c/authored-3d-v3
+node scripts/render-dh11c5d3e-details.cjs dist/previews/dh-11c/authored-3d-v4
+node scripts/render-dh11c5d3f-personality.cjs dist/previews/dh-11c/authored-3d-v5
+node scripts/render-dh11c5d3g-authored-handwriting.cjs dist/previews/dh-11c/authored-3d-v6
+node scripts/render-dh11c5d3h-mystical-room.cjs dist/previews/dh-11c/authored-3d-v7
+node scripts/render-dh11c5d3i-exit-door.cjs dist/previews/dh-11c/authored-3d-v8
+cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js prototypes/dh-11c-room/illustrated.css dist/previews/dh-11c/authored-3d/
+cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js prototypes/dh-11c-room/illustrated.css dist/previews/dh-11c/authored-3d-v2/
+cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js prototypes/dh-11c-room/illustrated.css dist/previews/dh-11c/authored-3d-v3/
+cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js prototypes/dh-11c-room/illustrated.css dist/previews/dh-11c/authored-3d-v4/
+cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js prototypes/dh-11c-room/illustrated.css dist/previews/dh-11c/authored-3d-v5/
+cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js prototypes/dh-11c-room/illustrated.css dist/previews/dh-11c/authored-3d-v6/
+cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js prototypes/dh-11c-room/illustrated.css dist/previews/dh-11c/authored-3d-v7/
+cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js prototypes/dh-11c-room/illustrated.css dist/previews/dh-11c/authored-3d-v8/
+cp prototypes/dh-11c-room/overview-studio.css prototypes/dh-11c-room/overview-studio.js dist/previews/dh-11c/illustrated-overview/
+mv dist/previews/dh-11c/illustrated-overview/overview-studio.css dist/previews/dh-11c/illustrated-overview/overview.css
+mv dist/previews/dh-11c/illustrated-overview/overview-studio.js dist/previews/dh-11c/illustrated-overview/overview.js
+cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js prototypes/dh-11c-room/view-guides.css dist/previews/dh-11c/illustrated-views/
+cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js prototypes/dh-11c-room/illustrated.css dist/previews/dh-11c/comic-storybook/
+cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js prototypes/dh-11c-room/illustrated.css dist/previews/dh-11c/illustrated-v3/
+cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js prototypes/dh-11c-room/illustrated.css dist/previews/dh-11c/illustrated-v2/
+cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js prototypes/dh-11c-room/illustrated.css dist/previews/dh-11c/illustrated/
+cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js prototypes/dh-11c-room/glb-proof.css dist/previews/dh-11c/furniture/
+cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js dist/previews/dh-11c/architecture/
+node scripts/render-dh11c4c-architecture.cjs dist/previews/dh-11c/architecture
+# DH-11C.4E derives the same immersive page but lives in a sibling folder.
+# Every relative stylesheet/script must be shipped in that sibling too.
+cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js dist/previews/dh-11c/room-shell/
 cp content/examples/fictional.json dist/previews/dh-08/catalogue.json
 cp content/public/catalogue.json dist/content/catalogue.json
-cp assets/content/worlds.css dist/assets/content/
+cp assets/content/worlds.css assets/content/dh11-worlds.css dist/assets/content/
 cp assets/content/staging-review.js dist/assets/content/
+cp assets/worlds/writing/manuscript-room-v1.avif dist/assets/worlds/writing/
 # Both live and fictional pages come from the same validated template generator.
 # Never copy example items into dist/worlds or dist/creations.
 node scripts/render-content.cjs content/public/catalogue.json dist '' public
@@ -63,8 +314,41 @@ node scripts/render-content.cjs content/examples/fictional.json dist/previews/dh
 # Publicly visible, LAYOUT-ONLY review of three existing public project names.
 # It never includes unapproved editorial text, outgoing links or private drafts.
 node scripts/render-review-layout.cjs dist/previews/dh-08c
-# Owner-approved complete 3D Writing Room, including all later reader interactions. Other staging worlds and editorial work stay out.
-node scripts/build-writing-room-release.cjs dist
+# The review desk reads public GitHub markers in the browser and writes nothing.
+# Never bundle the local Content Workshop or unapproved editorial descriptions.
+node scripts/render-editorial-review.cjs dist/review
+# DH-11C.5D.3J: the Writing island goes directly into its real 3D room.
+# Build this AFTER the legacy public content renderer, replacing ONLY the
+# staging /worlds/writing/ page. Assets have canonical, independent paths.
+mkdir -p dist/worlds/writing/scene dist/worlds/writing/cabinet-glb
+cp -R dist/previews/dh-11c/room dist/worlds/writing/
+cp prototypes/dh-11c-room/architecture.css prototypes/dh-11c-room/immersive.css prototypes/dh-11c-room/immersive-ui.js prototypes/dh-11c-room/illustrated.css dist/worlds/writing/scene/
+cp dist/previews/dh-11c/cabinet-glb/glb-proof.css dist/worlds/writing/cabinet-glb/
+node scripts/render-dh11c5d3j-writing-world.cjs dist/worlds/writing
+cp prototypes/dh-11c-room/minimal-immersive.css dist/worlds/writing/scene/
+node scripts/render-dh11c6a-minimal-room.cjs dist/worlds/writing
+# DH-11C.6B: published books live in the Writing room, not the public catalogue.
+cp prototypes/dh-11c-room/finished-books.js prototypes/dh-11c-room/book-experience.js prototypes/dh-11c-room/manuscript-experience.js dist/worlds/writing/room/
+cp prototypes/dh-11c-room/book-experience.css prototypes/dh-11c-room/manuscript-experience.css dist/worlds/writing/scene/
+node scripts/render-dh11c6b-finished-books.cjs dist/worlds/writing
+# DH-11C.6C.1: owner-review-only manuscript reader and typewriter workshop.
+node scripts/render-dh11c6c1-reader-workshop.cjs dist/worlds/writing
+# DH-11C.6C.2: retain physical interactions until the actual 3D motion finishes.
+node scripts/render-dh11c6c2-motion-first.cjs dist/worlds/writing
+# DH-11C.6D.1-3: 3D files extracted from the existing five physical drawer rigs.
+cp prototypes/dh-11c-room/cabinet-catalogue.js prototypes/dh-11c-room/cabinet-experience.js dist/worlds/writing/room/
+cp prototypes/dh-11c-room/cabinet-experience.css dist/worlds/writing/scene/
+node scripts/render-dh11c6d3-filing-cabinet.cjs dist/worlds/writing
+# DH-11C.6D.4: real drawer opens, then the top-down folder tray provides large targets.
+cp prototypes/dh-11c-room/cabinet-tray.js dist/worlds/writing/room/
+cp prototypes/dh-11c-room/cabinet-tray.css dist/worlds/writing/scene/
+node scripts/render-dh11c6d4-cabinet-tray.cjs dist/worlds/writing
+# DH-11C.6E: nine real reversible 3D bin tosses and an unfolding paper reader.
+cp prototypes/dh-11c-room/discarded-ideas.js dist/worlds/writing/room/
+cp prototypes/dh-11c-room/discarded-ideas.css dist/worlds/writing/scene/
+node scripts/render-dh11c6e-wastepaper-bin.cjs dist/worlds/writing
+# DH-11C.6E.1: the paper itself and an above-the-fold button can uncrumple.
+node scripts/render-dh11c6e1-visible-uncrumple.cjs dist/worlds/writing
 # Each game is independently built from its pinned upstream commit. Static
 # output is deployed under the same DaveHub origin, not embedded via iframe.
 # Fail the entire build if either pinned game cannot be built and verified.
@@ -80,7 +364,7 @@ ROUTES
 
 node scripts/bundle-games.cjs build dist
 node scripts/bundle-games.cjs verify dist
-node --test tests/game-bundles.test.cjs tests/game-auto-sync.test.cjs tests/game-staging-verification.test.cjs tests/game-deployment-health.test.cjs tests/dh09d-topology.test.cjs
+node --test tests/game-bundles.test.cjs tests/game-auto-sync.test.cjs tests/game-staging-verification.test.cjs tests/game-deployment-health.test.cjs tests/dh09d-topology.test.cjs tests/dh09d-cutover-verification.test.cjs
 
 # Both assets must be copied to their own filename; never overwrite CSS with JS.
 # Every generated public page must have styled HTML and explicit owner-approved content.
@@ -92,6 +376,14 @@ const check=(file,markers,excluded=[])=>{
  for(const marker of excluded)if(html.includes(marker))throw Error(file+' unexpectedly contains '+marker);
 };
 check('dist/assets/content/worlds.css',['.world-tile','.work-card','.primary-launch'],['const loc = window.location']);
+check('dist/index.html',[
+ 'data-dh12b4-music-island="true"',
+ 'class="island island--music" href="/previews/dh-12b/music-foyer/"',
+ '<use href="#icon-music"/>',
+ 'class="island island--writing" href="/worlds/writing/"',
+ 'class="island island--games" href="/worlds/games/"',
+ 'class="island island--projects" href="/worlds/projects/"']);
+check('dist/styles.css',['.island--music','left: 69%','left: 41%','top: 32%']);
 check('dist/assets/content/staging-review.js',["loc.hostname !== 'davehub.pages.dev'"],['.world-tile{']);
 check('dist/worlds/games/index.html',[
  'data-davehub-inline="worlds"','Unicorn Valley','The Stephen Martin Project','Tame The Board Game'
@@ -99,35 +391,181 @@ check('dist/worlds/games/index.html',[
 for(const slug of ['unicorn-valley','stephen-martin-project','tame-the-board-game']){
  check('dist/creations/'+slug+'/index.html',['data-davehub-inline="worlds"','class="primary-launch"'],['DESIGN REVIEW ONLY']);
 }
-check('dist/worlds/writing/index.html',[
- 'data-writing-world="true"','data-minimal-ui="true"',
- 'data-dark-window-preload="true"','data-exit-door-proof="true"',
- 'DH-11C.6A.2','DH-11C.6B','DH-11C.6C.1','DH-11C.6C.2',
- 'DH-11C.6D.3','DH-11C.6D.4','DH-11C.6E','DH-11C.6E.1',
- 'data-finished-books="true"','data-manuscript-experience="true"',
- 'data-motion-first="true"','data-cabinet-archive="true"',
- 'data-cabinet-tray="true"','data-discarded-ideas="true"',
- 'data-uncrumple-direct="true"','published-book-dialog','manuscript-dialog',
- 'workshop-dialog','archive-tray-dialog','archive-folder-dialog','discarded-dialog',
- 'id="discarded-unfold"','<base href="/worlds/writing/scene/">'
-],['data-scene="manuscript-hoard"','room-stage-image']);
-for(const [file,markers] of [
- ['room/room.js',['revealDiscardedIdeaAfterMotion()','cabinetFolders.attach(found)','revealCabinetDrawerAfterMotion()']],
- ['room/discarded-ideas.js',["folded.addEventListener('click',smooth)",'Fictional demonstration']],
- ['room/cabinet-catalogue.js',['Published book','Fictional demonstration']],
- ['room/cabinet-tray.js',['DH11CabinetTray','onCloseDrawer']],
- ['scene/discarded-ideas.css',['body[data-uncrumple-direct="true"] .discarded-dialog[open]']],
- ['scene/cabinet-tray.css',['.archive-tray-well']],
- ['scene/book-experience.css',['.published-book-dialog']],
- ['scene/manuscript-experience.css',['.manuscript-page']]
- ])check('dist/worlds/writing/'+file,markers);
-for(const model of ['furniture-source.glb','cabinet-blender-verified.glb','room-shell-blender-verified.glb']){
- const file='dist/worlds/writing/room/models/'+model;
- if(fs.statSync(file).size<2000)throw Error('Missing approved model '+file);
+check('dist/previews/dh-12a/listening-room/index.html',['DH-12A.3','data-living-sets="true"','id="theatre-set"','data-theatre-camera="motion-first"','id="theatre-overview"',
+ 'data-dh12a-theatre="true"','The Impossible Theatre','noindex,nofollow',
+ 'id="theatre-curtains"','id="theatre-stage"','id="theatre-record"',
+ 'theatre.mjs?v=dh12a3-living-sets-v1','theatre.css?v=dh12a3-living-sets-v1','A musicals-only stage prototype. These miniature sets are fictional studies, not published productions.','href="/previews/dh-12b/music-foyer/"']);
+check('dist/previews/dh-12b/music-foyer/index.html',[
+ 'DH-12B.3','data-music-foyer="true"','data-dimensional-art="true"','data-foyer-orbit="true"','The World Between Notes','music-foyer__topbar','music-orbit-reset','music-sign-theatre','music-sign-records','davehub-logo-faithful.svg',
+ 'id="portal-theatre"','id="portal-records"','id="music-portal-overview"',
+ 'foyer.mjs?v=dh12b3-orbit-portals-v1','music-world.css?v=dh12b3-orbit-portals-v1','noindex,nofollow',
+ 'A living pocket dimension. Doors lead to empty, publication-safe worlds; no unpublished music is loaded.']);
+check('dist/previews/dh-12b/music-foyer/foyer.mjs',[
+ 'new THREE.WebGLRenderer','makePortal','doorAngle(opened,side)',
+ 'window.location.assign(door.route)','doorsDone&&cameraDone','buildFoyerDimension','dimension.update(dt,selected)',
+ 'orbitPose(xyz,point,orbit,','pointerSeparation(', 'positionPortalSigns()', 'stage-footlight-',
+ 'real-shop-door-vinyl-']);
+check('dist/previews/dh-12b/music-foyer/foyer-orbit.mjs',[
+ 'export function orbitPose','export function dragOrbit',
+ 'export function zoomPinch','export function zoomOrbit','ORBIT_LIMITS']);
+check('dist/previews/dh-12b/music-foyer/music-portals.mjs',[
+ "route:'/previews/dh-12a/listening-room/'",
+ "route:'/previews/dh-12b/record-shop/'",
+ "export const FOYER_ROUTE"]);
+check('dist/previews/dh-12b/record-shop/index.html',[
+ 'DH-12B.2','data-music-record-shop="true"','data-dimensional-art="true"','The Record Shop',
+ 'id="record-shop-singles"','id="record-shop-bands"','id="record-shop-albums"',
+ 'id="record-shop-disc"','href="/previews/dh-12b/music-foyer/"',
+ 'record-shop.mjs?v=dh12b2-dimensional-world-v1']);
+check('dist/previews/dh-12b/record-shop/record-shop.mjs',[
+ 'new THREE.WebGLRenderer','real-record-pull-out-',
+ 'register(rack,r.id)','register(listening,\x27listening\x27)',
+ 'discAngle=spinDisc','c.drawer.position.z=motion','buildRecordDimension','dimension.update(dt,playing)']);
+check('dist/previews/dh-12b/record-shop/record-shop-mechanics.mjs',[
+ 'export const RACKS','export function shopDestination','export function pullPosition']);
+for(const world of ['music-foyer','record-shop']){
+ check('dist/previews/dh-12b/'+world+'/music-world.css',[
+  '.music-foyer','.record-shop','.music-choice','.record-shop__actions','data-dimensional-art']);
+ check('dist/previews/dh-12b/'+world+'/dimensional-art.mjs',[
+  'export function buildFoyerDimension','export function buildRecordDimension','impossible-painterly-cosmic-vault','living-portal-veil-']);
+ const three=fs.statSync('dist/previews/dh-12b/'+world+'/vendor/three-r159.module.min.js');
+ if(three.size<250000)throw Error('Missing physical Three.js runtime in '+world);
 }
+check('dist/previews/dh-12a/listening-room/theatre.mjs',[
+ 'new THREE.WebGLRenderer','makeCurtain','stageAngle(state.stageSteps)',
+ 'recordAngle=recordAdvance','raycaster.intersectObjects(hitTargets,false)','updateCameraDestination()','camera.lookAt(aim)','livingSets.update(dt,activeSets)']);
+check('dist/previews/dh-12a/listening-room/theatre.css',[
+ '.theatre-shell','.theatre-controls','@media(max-width:700px)']);
+check('dist/previews/dh-12a/listening-room/theatre-mechanics.mjs',[
+ 'export function curtainX','export function theatreState','export function stageAngle']);
+check('dist/previews/dh-12a/listening-room/theatre-camera.mjs',[
+ 'export function cameraPose','export function normalizeFocus','export function focusStatus']);
+check('dist/previews/dh-12a/listening-room/theatre-scenery.mjs',[
+ 'export function mountLivingSets','The Clockwork Chorus','The Theatre Within','The Marionette Assembly','stage-fly-system']);
+const threeSource=fs.statSync('dist/previews/dh-12a/listening-room/vendor/three-r159.module.min.js');
+if(threeSource.size<250000)throw Error('Missing actual Three.js module in DH-12A preview');
+check('dist/worlds/writing/index.html',['DH-11C.6E.1','data-uncrumple-direct="true"','discarded-ideas.js?v=dh11c6e1-uncrumple-v1','discarded-ideas.css?v=dh11c6e1-uncrumple-v1','DH-11C.6E','data-discarded-ideas="true"','discarded-dialog','discarded-unfold','discarded-reverse','DH-11C.6D.4','data-cabinet-tray="true"','archive-tray-dialog','archive-tray-slots','cabinet-tray.js?v=dh11c6d4-overhead-tray-v1','cabinet-tray.css?v=dh11c6d4-overhead-tray-v1','DH-11C.6D.3','data-cabinet-archive="true"','archive-folder-dialog','cabinet-catalogue.js?v=dh11c6d3-cabinet-archive-v1','cabinet-experience.js?v=dh11c6d3-cabinet-archive-v1','cabinet-experience.css?v=dh11c6d3-cabinet-archive-v1','DH-11C.6C.2','data-motion-first="true"','DH-11C.6A','DH-11C.6A.1','DH-11C.6A.2','DH-11C.6B','DH-11C.6B.1','DH-11C.6B.2','DH-11C.6B.3','DH-11C.6C.1','data-manuscript-experience="true"','manuscript-dialog','workshop-dialog','data-finished-books="true"','published-book-dialog','data-dark-window-preload="true"','data-minimal-ui="true"','<meta name="davehub-ui-stage" content="DH-11C.6A">','/assets/branding/davehub-logo-faithful.svg','← Back','id="object-prompt"','id="object-prompt-open"','id="object-full-close"','minimal-immersive.css','DH-11C.5D.3J','data-writing-world="true"','data-exit-door-proof="true"','<base href="/worlds/writing/scene/">','room.js?v=dh11c6e-wastepaper-v1','manuscript-experience.js?v=dh11c6c1-reading-workshop-v1','manuscript-experience.css?v=dh11c6c1-reading-workshop-v1','window-illustration-v2.js?v=dh11c6a2-dark-window-v1','door-exit.js?v=dh11c5d3i-door-home-exit-v1','<canvas id="room-canvas"'],['data-scene="manuscript-hoard"','room-stage-image','Existing Writing world','The Last Lightkeeper','The Clock of Tomorrow']);
+check('dist/worlds/writing/room/room.js',["window.location.assign(window.DH11DoorExit.HOME_PATH)","new GLTFLoader().load('../room/models/furniture-source.glb","revealAfterPhysicalMotion()","revealCabinetFolderAfterMotion()","revealCabinetDrawerAfterMotion()","revealDiscardedIdeaAfterMotion()","binPaperProgress[index]","cabinetFolders.attach(found)","manuscriptExperience.openManuscript(index)","manuscriptExperience.openWorkshop()"]);
+check('dist/worlds/writing/scene/immersive.css',['data-immersive-room']);
+check('dist/worlds/writing/scene/minimal-immersive.css',['object-prompt[hidden]','home-button:disabled','object-menu[open]']);
+check('dist/worlds/writing/room/reveal-after-motion.mjs',['export function revealReady','REVEAL_HOLD_SECONDS','keyIndexForCharacter']);
+check('dist/worlds/writing/room/cabinet-folders.mjs',['mountCabinetFolders','FOLDER_LIFT','FOLDER_PULL','folderSettled']);
+check('dist/worlds/writing/room/cabinet-tray.js',['DH11CabinetTray','archive-tray-dialog','archive-tray-slots','onCloseDrawer']);
+check('dist/worlds/writing/room/discarded-ideas.js',['DH11DiscardedIdeas','Fictional demonstration','onReturnToBin','discarded-unfold',"folded.addEventListener('click',smooth)"]);
+check('dist/worlds/writing/scene/discarded-ideas.css',['.discarded-sheet','.discarded-crumple','@media(prefers-reduced-motion:reduce)','body[data-uncrumple-direct="true"] .discarded-dialog[open]','body[data-uncrumple-direct="true"] .discarded-stage .discarded-unfold']);
+check('dist/worlds/writing/scene/cabinet-tray.css',['.archive-tray-well','.archive-tray-file__tab','@media(max-width:610px)']);
+check('dist/worlds/writing/room/cabinet-catalogue.js',['Published book','Fictional demonstration','DH11CabinetCatalogue']);
+check('dist/worlds/writing/room/cabinet-experience.js',['DH11CabinetExperience','relatedLabel','onClose']);
+check('dist/worlds/writing/scene/cabinet-experience.css',['.archive-folder-cover','.archive-folder-tab','@media(max-width:640px)']);
+check('dist/worlds/writing/scene/manuscript-experience.css',['.manuscript-page','.workshop-page','@media(max-width:620px)']);
+check('dist/worlds/writing/room/manuscript-experience.js',['Sample only, not a published manuscript','openWorkshop','openManuscript']);
+check('dist/worlds/writing/scene/book-experience.css',['published-book-dialog','published-book-cover-fallback','book-buy-link','width:min(1190px','@media(max-height:670px)','width:min(100%,260px);max-height:min(390px,48dvh)']);
+check('dist/worlds/writing/scene/minimal-immersive.css',['@media(min-width:640px)','@media(max-width:639px)','data-room-focus="bookcase"']);
+check('dist/worlds/writing/room/finished-books.js',['TOP_SHELF_SLOTS','indexForMesh']);
+check('dist/worlds/writing/room/finished-books.js',['The Legend of the Stormrider','The Duck Bread Baker','Eleanor and the Mystery of the Missing Stones',"binding:'#ba672c'",'glow:']);
+check('dist/worlds/writing/room/room.js',['published_book_foil_','published_book_seal_',"The three gold-framed bindings on the top shelf"]);
+check('dist/worlds/writing/room/book-experience.js',['DH11BookExperience','showModal','noopener noreferrer']);
+check('dist/worlds/writing/room/door-exit.js',['DH11DoorExit','HOME_PATH','makeTarget']);
+for(const file of ['dist/worlds/writing/room/models/furniture-source.glb','dist/worlds/writing/room/models/room-shell-blender-verified.glb','dist/worlds/writing/cabinet-glb/glb-proof.css']){
+ if(!fs.statSync(file).size)throw Error('Missing direct Writing world asset '+file);
+}
+check('dist/previews/dh-08b/worlds/writing/index.html',['data-scene="manuscript-hoard"','Fictional design demonstration','The Last Lightkeeper']);
+check('dist/previews/dh-11c/furniture/index.html',['DH-11C.4F','data-furniture-model-proof="true"','data-immersive-room="true"','id="furniture-model-status"','room.js?v=dh11c5b-archive-v1','room-plan.js?v=dh11c5b-archive-v1','desk-materials.js?v=dh11c5a-desk-v1','archive-materials.js?v=dh11c5b-archive-v1','davehub-furniture-release']);
+check('dist/previews/dh-11c/room/furniture-asset.js',['DH11FurnitureAsset','door_leaf_hinge','desk_lamp_shade','desk_lamp_cap','desk_lamp_bulb','lampShade','lampBulb','deskWalnut','deskParchment0','deskLeather','typewriterEnamel']);
+check('dist/previews/dh-11c/room/desk-materials.js',['DH11DeskMaterials','deskWalnut','deskParchment0','deskParchment1','deskParchment2','deskLeather','deskBrass','typewriterEnamel','lampLinen']);
+check('dist/previews/dh-11c/room/archive-materials.js',['DH11ArchiveMaterials','shelfWalnut','bookBinding0','bookBinding6','cabinetCase','cabinetFolder0','cabinetFinishForNode']);
+check('dist/previews/dh-11c/room/illustrated-style.js',['DH11IllustratedStyle','createRuntime','MeshToonMaterial','EdgesGeometry','gradientMap','protectedMesh']);
+check('dist/previews/dh-11c/room/illustrated-style-v2.js',['DH11IllustratedStyleV2','paintPixels','sourcePixels','paintMap','drawImage','MeshToonMaterial','EdgesGeometry']);
+check('dist/previews/dh-11c/room/illustrated-style-v3.js',['DH11IllustratedStyleV3','sketchEdgeSegments','Float32BufferAttribute','paintPixels','alphaTest','decorativeOnly','LineSegments']);
+check('dist/previews/dh-11c/room/comic-storybook-style.js',['DH11ComicStorybookStyle','sketchEdgeSegments','parchmentInk','new THREE.DataTexture','gouache']);
+check('dist/previews/dh-11c/room/comic-storybook-dressing.js',['DH11ComicDressing','floorManuscripts','wallNotes','ivy','decorativeOnly']);
+check('dist/previews/dh-11c/room/view-pipeline.js',['DH11IllustratedViews','function project','function contract','stateSummary','structural reference only']);
+check('dist/previews/dh-11c/illustrated-views/view-guides.css',['view-guide-panel','view-guide-buttons','focus-visible']);
+check('dist/previews/dh-11c/illustrated-views/index.html',['DH-11C.5D','data-illustrated-view-proof="true"','view-pipeline.js?v=dh11c5d-geometry-guides-v1','capture-view-guide','export-view-guide']);
+check('dist/previews/dh-11c/illustrated-views/camera-contract.json',['"views"','"home"','"desk"','"cabinet"','"bookcase"','"window"']);
+check('dist/previews/dh-11c/illustrated-overview/index.html',['DH-11C.5D.3A','data-overview-studio="true"','room-plan.js?v=dh11c5d-geometry-guides-v1','view-pipeline.js?v=dh11c5d-geometry-guides-v1','/assets/worlds/writing/manuscript-room-v1.avif','id="projection-map"']);
+check('dist/previews/dh-11c/illustrated-overview/overview.js',['home.targets.desktop.anchors','URL.createObjectURL(candidate)','URL.revokeObjectURL(objectUrl)']);
+check('dist/previews/dh-11c/illustrated-overview/overview.css',['.review-grid','.projection-map','focus-visible']);
+check('dist/previews/dh-11c/authored-3d/index.html',['DH-11C.5D.3B','data-illustrated-v5="true"','high-illustration-3d.js?v=dh11c5d3b-authored-3d-v1','room.js?v=dh11c5d3b-authored-3d-v1','data-illustration-mode="painterly"','data-illustration-mode="reference"']);
+check('dist/previews/dh-11c/authored-3d-v8/index.html',['DH-11C.5D.3I','data-exit-door-proof="true"','door-exit.js?v=dh11c5d3i-door-home-exit-v1','room.js?v=dh11c5d3i-door-home-exit-v1','data-illustration-mode="painterly"']);
+check('dist/previews/dh-11c/room/door-exit.js',['DH11DoorExit','HOME_PATH','APERTURE','advance','makeTarget']);
+check('dist/previews/dh-11c/authored-3d-v7/index.html',['DH-11C.5D.3H','data-mystical-room-proof="true"','room-props-v7.js?v=dh11c5d3h-mystical-room-props-v1','room.js?v=dh11c5d3h-mystical-room-props-v1','data-illustration-mode="painterly"']);
+check('dist/previews/dh-11c/room/room-props-v7.js',['DH11RoomProps','INNER_BALLS','LAMP_LIFT','inkRug','decorateFurniture']);
+check('dist/previews/dh-11c/authored-3d-v6/index.html',['DH-11C.5D.3G','data-handwritten-label-proof="true"','manuscript-personality-v2.js?v=dh11c5d3g-authored-handwriting-v1','high-illustration-3d-v5.js?v=dh11c5d3g-authored-handwriting-v1','room.js?v=dh11c5d3g-authored-handwriting-v1','data-illustration-mode="painterly"']);
+check('dist/previews/dh-11c/room/high-illustration-3d-v5.js',['DH11HighIllustration3D','cleanInkSurface','bareSpine']);
+check('dist/previews/dh-11c/room/manuscript-personality-v2.js',['DH11ManuscriptPersonality','AUTHORED_BOOK_TITLES','FEATURED_TITLES','typewriter_paper']);
+check('dist/previews/dh-11c/authored-3d-v5/index.html',['DH-11C.5D.3F','data-personality-proof="true"','manuscript-personality.js?v=dh11c5d3f-readable-hoard-v1','window-illustration-v2.js?v=dh11c5d3f-readable-hoard-v1','room.js?v=dh11c5d3f-readable-hoard-v1','data-illustration-mode="painterly"']);
+check('dist/previews/dh-11c/room/window-illustration-v2.js',['DH11WindowIllustration','paneVertices','for(const node of original)node.visible=!active']);
+check('dist/previews/dh-11c/room/manuscript-personality.js',['DH11ManuscriptPersonality','BOOK_TITLES','paintSpine','paintScrawl']);
+check('dist/previews/dh-11c/authored-3d-v4/index.html',['DH-11C.5D.3E','data-illustrated-v5="true"','data-authored-detail-proof="true"','high-illustration-3d-v4.js?v=dh11c5d3e-authored-details-v1','window-illustration.js?v=dh11c5d3e-authored-details-v1','room.js?v=dh11c5d3e-authored-details-v1','data-illustration-mode="painterly"']);
+check('dist/previews/dh-11c/room/high-illustration-3d-v4.js',['DH11HighIllustration3D','artVariant','itemDetails','seeded','sculpturePlan']);
+check('dist/previews/dh-11c/room/window-illustration.js',['DH11WindowIllustration','homepage-sky','far-mist','near-island','TextureLoader']);
+check('dist/previews/dh-11c/authored-3d-v3/index.html',['DH-11C.5D.3D','data-illustrated-v5="true"','high-illustration-3d-v3.js?v=dh11c5d3d-sculpted-bookcase-v1','room.js?v=dh11c5d3d-sculpted-bookcase-v1','data-illustration-mode="painterly"']);
+check('dist/previews/dh-11c/room/high-illustration-3d-v3.js',['DH11HighIllustration3D','sculpturePlan','decorativeOnly','CylinderGeometry','BoxGeometry','raycast=()=>{}']);
+check('dist/previews/dh-11c/authored-3d-v2/index.html',['DH-11C.5D.3C','data-illustrated-v5="true"','high-illustration-3d-v2.js?v=dh11c5d3c-unique-spines-v1','room.js?v=dh11c5d3c-unique-spines-v1','data-illustration-mode="painterly"']);
+check('dist/previews/dh-11c/room/high-illustration-3d-v2.js',['DH11HighIllustration3D','spineVariant','cacheKey', 'CanvasTexture','decorativeOnly']);
+check('dist/previews/dh-11c/room/high-illustration-3d.js',['DH11HighIllustration3D','paintCanvas','reliefPaths','CanvasTexture','LineSegments','decorativeOnly','original.clone()']);
+check('dist/previews/dh-11c/comic-storybook/index.html',['DH-11C.5C.3','data-illustrated-v4="true"','comic-storybook-style.js?v=dh11c5c-comic-storybook-v4','comic-storybook-dressing.js?v=dh11c5c-comic-storybook-v4','room.js?v=dh11c5c-comic-storybook-v4']);
+check('dist/previews/dh-11c/illustrated-v3/illustrated.css',['data-illustrated-proof','illustration-choices','aria-pressed']);
+check('dist/previews/dh-11c/illustrated-v3/index.html',['DH-11C.5C.2B','data-illustrated-v3="true"','room.js?v=dh11c5c-soft-edges-v3','illustrated-style-v3.js?v=dh11c5c-soft-edges-v3','data-illustration-mode="painterly"','data-illustration-mode="reference"']);
+check('dist/previews/dh-11c/illustrated-v2/illustrated.css',['data-illustrated-proof','illustration-choices','aria-pressed']);
+check('dist/previews/dh-11c/illustrated-v2/index.html',['DH-11C.5C.2A','data-illustrated-v2="true"','room.js?v=dh11c5c-painted-surfaces-v2','illustrated-style-v2.js?v=dh11c5c-painted-surfaces-v2','data-illustration-mode="painterly"','data-illustration-mode="reference"']);
+check('dist/previews/dh-11c/illustrated/illustrated.css',['data-illustrated-proof','illustration-choices','aria-pressed']);
+check('dist/previews/dh-11c/illustrated/index.html',['DH-11C.5C.2','data-illustrated-proof="true"','data-furniture-model-proof="true"','data-immersive-room="true"','room.js?v=dh11c5c-painterly-v1','illustrated-style.js?v=dh11c5c-painterly-v1','data-illustration-mode="painterly"','data-illustration-mode="reference"','aria-pressed="true"']);
+check('dist/previews/dh-11c/room-shell/index.html',['DH-11C.4E','data-shell-model-proof="true"','../room/room-shell-asset.js','id="shell-model-status"','data-immersive-room="true"']);
+
+const path=require('node:path');
+const shellDir='dist/previews/dh-11c/room-shell';
+const shellHtml=fs.readFileSync(path.join(shellDir,'index.html'),'utf8');
+const refs=[...shellHtml.matchAll(/(?:href|src)="(\.[^"]+\.(?:css|js))"/g)].map(match=>match[1]);
+if(!refs.includes('./immersive.css')||!refs.includes('./immersive-ui.js'))throw Error('Immersive shell asset references missing');
+for(const ref of refs){
+ const file=path.resolve(shellDir,ref);
+ if(!fs.existsSync(file))throw Error('Unpublished room-shell dependency '+ref+' ('+file+')');
+}
+check(path.join(shellDir,'immersive.css'),['body[data-immersive-room="true"] .canvas-frame','position:fixed;inset:0','height:100dvh']);
+check(path.join(shellDir,'immersive-ui.js'),['prototype-tools','scene-nav','Escape','preventScroll']);
+console.log('PASS: every room-shell CSS/JS reference has a real built asset (no fallback HTML)');
+check('dist/previews/dh-11c/architecture/index.html',['DH-11C.4C','data-shell-proof="true"','data-blender-compare="true"','data-immersive-room="true"','./immersive.css','./immersive-ui.js','id="prototype-tools"','id="scene-nav"','../room/room-shell-plan.js','../cabinet-glb/']);
+check('dist/previews/dh-11c/cabinet-glb/index.html',['DH-11C.4A','data-glb-proof="true"','id="glb-extension"','data-glb-snap="50"','../room/room.js']);
+check('dist/previews/dh-11c/art-lab/index.html',['DH-11C.3A','data-art-lab="true"','data-palette="amber-ink"','data-palette="moonlit-archive"','data-palette="golden-storybook"','../room/room.js']);
+check('dist/previews/dh-11c/room/index.html',['DH-11C.2','id="room-canvas"','room.js','room-plan.js','object-list']);
+check('dist/previews/dh-11c/room/drawer-picking.mjs',['export function drawerIndexForMesh','indexByGroup','return null']);
+check('dist/previews/dh-11c/room/furniture-motion.mjs',['export function paperPose','export const PAPER_LIMIT = 13','PAPER_END_POSITIONS','export function paperIndexForMesh','export function pressDepth','export function typewriterFeed','TYPE_PAPER_HEIGHT','TYPE_PLATEN_RADIUS','export function featuredBook','export function featuredBookIndexForMesh','export function bookPosition','export const BIN_PAPER_COUNT=9','export function binPaperIndexForMesh','export function binPaperPose','BIN_PAPER_FLOOR','export function lampPartForMesh']);
+check('dist/previews/dh-11c/room/room.js',["from './furniture-motion.mjs?v=dh11c4l-lamp-switch-v1'",'paperPose(home,i,state.papers[i])','paperIndexForMesh(mesh.name)','togglePaper(paperIndex)','pressDepth(clock.elapsedTime-activePress.at','typewriterFeed(state.typed)','typePaper.scale.y=THREE.MathUtils.lerp','platenTarget.copy(typePlatenHome).multiply(platenSpin)','typePlaten.quaternion.slerp(platenTarget,rate)','featuredBookIndexForMesh(mesh.name)','markFeaturedBook(mesh,i)','FEATURE_BOOK_COLOUR','featured_book_gilt_','accent.userData.featuredBookIndex=index','toggleBook(bookIndex)','bookPosition(bookHome[i],state.books[i])','binPaperIndexForMesh(mesh.name)','toggleBinPaper(binPaperIndex)','binPaperPose(binPaperHomes[i],i,binPaperProgress[i])','binPapers.splice(0,binPapers.length,...crumples)','crumples.forEach((mesh,i)=>{mesh.userData.binPaperIndex=i;})',
+ 'lampPartForMesh(mesh.name)','lampPart:id===\'desk\'?lampPartForMesh(mesh.name):null',
+ 'lampButton.addEventListener(\'click\',toggleLamp)','lampBulbMesh=glbBulb',
+ 'sceneLights.lamp.intensity=THREE.MathUtils.lerp','bulbMaterial.emissiveIntensity=THREE.MathUtils.lerp',
+ 'new THREE.CylinderGeometry(.245,.405,.30,24,1,true)',
+ "shade.name='desk_lamp_shade'",
+ 'lamp.position.set(-1.97,2.31,.17)',
+ "furniture-source.glb?v=dh11c5b-archive-v1",
+ 'new THREE.DataTexture(source.pixels,source.width,source.height,THREE.RGBAFormat)',
+ 'mats.deskWalnut','deskKit.generate(map)',
+ 'const illustratedProof=furnitureModelProof',
+ "document.body.dataset.illustratedV2==='true'?window.DH11IllustratedStyleV2:window.DH11IllustratedStyle",
+ "document.body.dataset.illustratedV3==='true'?window.DH11IllustratedStyleV3",
+ "document.body.dataset.illustratedV4==='true'?window.DH11ComicStorybookStyle",
+ "document.body.dataset.illustratedV5==='true'?window.DH11HighIllustration3D",
+ "window.DH11ComicDressing?.create(THREE,scene)",
+ 'illustratedRuntime=system.createRuntime({THREE,scene,renderer,lights:sceneLights})',
+ 'if(illustratedRuntime)illustratedRuntime.register(content)',
+ 'const archiveKit=window.DH11ArchiveMaterials',
+ 'archiveKit.cabinetFinishForNode(node.name)',
+ "mats['bookBinding'+materialIndex]",
+ 'mesh.material.map=null;mesh.material.needsUpdate=true']);
+check('dist/previews/dh-11c/room/room.js',["from './drawer-picking.mjs'",'drawerIndexForMesh(mesh,cabinetDrawers)']);
+check('dist/previews/dh-11c/cabinet/index.html',['id="cabinet-model"','id="cabinet-slots"','cabinet-math.js','cabinet.js','cabinet.css']);
 check('dist/previews/dh-08c/index.html',[
  'data-davehub-inline="worlds"','Unicorn Valley','The Stephen Martin Project'
 ]);
+for(const world of ['music','experiments','unfinished','memory-lane']){
+ const live='dist/worlds/'+world+'/index.html';
+ const demo='dist/previews/dh-08b/worlds/'+world+'/index.html';
+ check(live,['dh11-world--'+world,'data-davehub-inline="worlds"'],['The Last Lightkeeper','The Clock of Tomorrow','Glass Harbour','Fictional design demonstration']);
+ check(demo,['dh11-world--'+world,'Fictional design demonstration']);
+}
+console.log('PASS DH-11 five public-safe creative world layouts and separate fictional demos');
 console.log('PASS three approved and styled public works, no stale preview redirect and no swapped CSS/JS assets');
 NODE
 

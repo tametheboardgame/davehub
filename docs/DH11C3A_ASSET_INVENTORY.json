@@ -1,0 +1,392 @@
+{
+  "schemaVersion": 1,
+  "workPackage": "DH-11C.3A",
+  "approvedGeometryReference": "prototypes/dh-11c-room/room-plan.js",
+  "decision": "docs/DECISIONS/ADR-0012.md",
+  "designApproval": "pending",
+  "units": "metres",
+  "axis": "Three.js Y-up",
+  "preliminary": true,
+  "source": "Source-code inventory, not visual/functional browser QA",
+  "items": [
+    {
+      "id": "room-shell",
+      "name": "Room shell, floor and beams",
+      "priority": "P0",
+      "object": "environment",
+      "model": "room-shell.glb",
+      "materials": [
+        "plaster",
+        "stone",
+        "wood-floor",
+        "wood-beams"
+      ],
+      "interaction": "static",
+      "needs": [
+        "real door and window apertures",
+        "avoid camera showing exterior voids"
+      ],
+      "gate": "one consistent coordinate frame; visible walls not intersecting openings"
+    },
+    {
+      "id": "cabinet-body",
+      "name": "Five-drawer cabinet body and tracks",
+      "priority": "P0",
+      "object": "cabinet",
+      "model": "cabinet.glb",
+      "materials": [
+        "painted-teal-metal",
+        "aged-brass",
+        "recess-lining"
+      ],
+      "interaction": "hinged/sliding child nodes",
+      "needs": [
+        "actual hollow drawer recesses, not a solid box",
+        "physical sidewall/rail exposure",
+        "labels readable at cabinet camera"
+      ],
+      "gate": "closed, 50%, 100% drawer travel, switch and reverse without collision"
+    },
+    {
+      "id": "drawer-finished",
+      "name": "Cabinet drawer Finished",
+      "priority": "P0",
+      "object": "cabinet",
+      "model": "cabinet.glb",
+      "materials": [
+        "painted-teal-metal",
+        "parchment-label",
+        "aged-brass",
+        "wood-tray"
+      ],
+      "interaction": "slide along calibrated local drawer axis",
+      "needs": [
+        "stable node drawer_finished",
+        "interior and bottom walls",
+        "source-proof occlusion"
+      ],
+      "gate": "same pivot, scale and travel in all camera states"
+    },
+    {
+      "id": "drawer-drafts",
+      "name": "Cabinet drawer Drafts",
+      "priority": "P0",
+      "object": "cabinet",
+      "model": "cabinet.glb",
+      "materials": [
+        "painted-teal-metal",
+        "parchment-label",
+        "aged-brass",
+        "wood-tray"
+      ],
+      "interaction": "slide along calibrated local drawer axis",
+      "needs": [
+        "stable node drawer_drafts",
+        "interior and bottom walls",
+        "source-proof occlusion"
+      ],
+      "gate": "same pivot, scale and travel in all camera states"
+    },
+    {
+      "id": "drawer-oddities",
+      "name": "Cabinet drawer Oddities",
+      "priority": "P0",
+      "object": "cabinet",
+      "model": "cabinet.glb",
+      "materials": [
+        "painted-teal-metal",
+        "parchment-label",
+        "aged-brass",
+        "wood-tray"
+      ],
+      "interaction": "slide along calibrated local drawer axis",
+      "needs": [
+        "stable node drawer_oddities",
+        "interior and bottom walls",
+        "source-proof occlusion"
+      ],
+      "gate": "same pivot, scale and travel in all camera states"
+    },
+    {
+      "id": "drawer-fragments",
+      "name": "Cabinet drawer Fragments",
+      "priority": "P0",
+      "object": "cabinet",
+      "model": "cabinet.glb",
+      "materials": [
+        "painted-teal-metal",
+        "parchment-label",
+        "aged-brass",
+        "wood-tray"
+      ],
+      "interaction": "slide along calibrated local drawer axis",
+      "needs": [
+        "stable node drawer_fragments",
+        "interior and bottom walls",
+        "source-proof occlusion"
+      ],
+      "gate": "same pivot, scale and travel in all camera states"
+    },
+    {
+      "id": "drawer-field-notes",
+      "name": "Cabinet drawer Field Notes",
+      "priority": "P0",
+      "object": "cabinet",
+      "model": "cabinet.glb",
+      "materials": [
+        "painted-teal-metal",
+        "parchment-label",
+        "aged-brass",
+        "wood-tray"
+      ],
+      "interaction": "slide along calibrated local drawer axis",
+      "needs": [
+        "stable node drawer_field_notes",
+        "interior and bottom walls",
+        "source-proof occlusion"
+      ],
+      "gate": "same pivot, scale and travel in all camera states"
+    },
+    {
+      "id": "cabinet-folders",
+      "name": "Folder props and examination surface",
+      "priority": "P0",
+      "object": "cabinet",
+      "model": "cabinet.glb",
+      "materials": [
+        "parchment",
+        "cardstock",
+        "aged-ink"
+      ],
+      "interaction": "lift, place, read, return",
+      "needs": [
+        "one reusable folder model",
+        "only approved metadata can render on labels"
+      ],
+      "gate": "extractable from every drawer without unapproved work invention"
+    },
+    {
+      "id": "desk",
+      "name": "Desk frame, top and drawers",
+      "priority": "P0",
+      "object": "desk",
+      "model": "desk.glb",
+      "materials": [
+        "warm-oak",
+        "dark-walnut",
+        "aged-brass"
+      ],
+      "interaction": "paper stack movement",
+      "needs": [
+        "stable tabletop props and raycast targets",
+        "remove inappropriate static obstructions"
+      ],
+      "gate": "desk and typewriter focus are legible, no clickable occlusion"
+    },
+    {
+      "id": "desk-paper",
+      "name": "Paper piles and movable manuscript sheets",
+      "priority": "P0",
+      "object": "desk",
+      "model": "desk-props.glb",
+      "materials": [
+        "parchment",
+        "faded-ink"
+      ],
+      "interaction": "lift/shift/examine",
+      "needs": [
+        "mesh hierarchy for real object motion",
+        "approved-only content integration later"
+      ],
+      "gate": "sheet moves while the desk remains fixed"
+    },
+    {
+      "id": "desk-lamp",
+      "name": "Desk lamp",
+      "priority": "P0",
+      "object": "desk",
+      "model": "desk-props.glb",
+      "materials": [
+        "aged-brass",
+        "shade-fabric"
+      ],
+      "interaction": "ambient only initially",
+      "needs": [
+        "plausible lamp geometry",
+        "physical emitter location matches lighting"
+      ],
+      "gate": "warm light without visible model/light mismatch"
+    },
+    {
+      "id": "bookcase",
+      "name": "Bookcase frame and individual books",
+      "priority": "P0",
+      "object": "bookcase",
+      "model": "bookcase.glb",
+      "materials": [
+        "dark-wood",
+        "book-cloth",
+        "leather",
+        "paper"
+      ],
+      "interaction": "selected book slides on shelf depth",
+      "needs": [
+        "realistically spaced shelves",
+        "modelled books with distinctive but coherent shapes"
+      ],
+      "gate": "book retrieval from close camera, no shelf clipping"
+    },
+    {
+      "id": "typewriter",
+      "name": "Typewriter body, keys, platen and paper",
+      "priority": "P1",
+      "object": "typewriter",
+      "model": "typewriter.glb",
+      "materials": [
+        "enamel",
+        "metal",
+        "paper"
+      ],
+      "interaction": "key/roller/paper motion",
+      "needs": [
+        "accurate hierarchy for keys and platen",
+        "limited moving key variants"
+      ],
+      "gate": "key press and paper advance visually distinct"
+    },
+    {
+      "id": "bin",
+      "name": "Wastepaper bin and loose fragments",
+      "priority": "P1",
+      "object": "bin",
+      "model": "bin.glb",
+      "materials": [
+        "painted-metal",
+        "paper"
+      ],
+      "interaction": "rummage",
+      "needs": [
+        "bin with actual open top",
+        "paper cluster not clipping solid container"
+      ],
+      "gate": "paper rummage can be observed from bin camera"
+    },
+    {
+      "id": "door",
+      "name": "Exit door, frame and handle",
+      "priority": "P0",
+      "object": "door",
+      "model": "door.glb",
+      "materials": [
+        "aged-wood",
+        "brass"
+      ],
+      "interaction": "hinge about frame edge",
+      "needs": [
+        "door opening cut into side wall",
+        "right orientation and pivot",
+        "clear exit cue"
+      ],
+      "gate": "open doorway shows meaningful depth and return route"
+    },
+    {
+      "id": "window",
+      "name": "Window and exterior island silhouette",
+      "priority": "P0",
+      "object": "window",
+      "model": "window.glb",
+      "materials": [
+        "wood-frame",
+        "glass",
+        "stylised-sky",
+        "island-earth",
+        "island-foliage"
+      ],
+      "interaction": "ambient animation and inspection",
+      "needs": [
+        "actual opening, not sky plane pasted over wall",
+        "controlled cool-light direction"
+      ],
+      "gate": "floating islands stay legible and behind frame from camera"
+    },
+    {
+      "id": "rug",
+      "name": "Patterned rug",
+      "priority": "P1",
+      "object": "environment",
+      "model": "furniture-static.glb",
+      "materials": [
+        "woven-fabric"
+      ],
+      "interaction": "static",
+      "needs": [
+        "readable stylised pattern, not photographic carpet"
+      ],
+      "gate": "pattern scale consistent and affordable"
+    },
+    {
+      "id": "books-overflow",
+      "name": "Loose books and decorative objects",
+      "priority": "P1",
+      "object": "environment",
+      "model": "ambient-props.glb",
+      "materials": [
+        "book-cloth",
+        "leather",
+        "wood"
+      ],
+      "interaction": "ambient only",
+      "needs": [
+        "storytelling without confusing active object hotspots"
+      ],
+      "gate": "prop silhouettes don't hide hero objects"
+    },
+    {
+      "id": "wall-decor",
+      "name": "Architectural detail and room stories",
+      "priority": "P1",
+      "object": "environment",
+      "model": "ambient-props.glb",
+      "materials": [
+        "painted-plaster",
+        "wood",
+        "static-decal"
+      ],
+      "interaction": "static",
+      "needs": [
+        "restrained original motifs",
+        "original art permission and provenance"
+      ],
+      "gate": "no clashing cut-out/collage visual language"
+    },
+    {
+      "id": "dust",
+      "name": "Dust motes and subtle atmospheric particles",
+      "priority": "P2",
+      "object": "environment",
+      "model": "runtime-effects",
+      "materials": [
+        "particle"
+      ],
+      "interaction": "ambient only",
+      "needs": [
+        "reduced-motion support",
+        "pause when not visible"
+      ],
+      "gate": "measured GPU cost and restrained visibility"
+    },
+    {
+      "id": "extra-mechanisms",
+      "name": "Hidden compartments or additional puzzles",
+      "priority": "P2",
+      "object": "multiple",
+      "model": "deferred",
+      "materials": [],
+      "interaction": "future advanced",
+      "needs": [
+        "clear user value before scope expansion"
+      ],
+      "gate": "must not delay v1"
+    }
+  ]
+}
