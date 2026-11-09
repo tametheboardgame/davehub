@@ -2,7 +2,7 @@
 // selected destination loads automatically. One action, not two.
 import * as THREE from './vendor/three-r159.module.min.js';
 import {DOORS,doorFor,doorAngle,approach,settled,isLocalMusicRoute,shouldAutoEnter} from './music-portals.mjs?v=dh12b1-music-portals-v1';
-import {makeFoyerMaterials,makePortalSignTexture,FOYER_MARQUEE_DEPTH} from './foyer-surfaces.mjs?v=dh12b5-clean-journey-v1';
+import {makeFoyerMaterials,makePortalSignTexture,FOYER_MARQUEE_DEPTH} from './foyer-surfaces.mjs?v=dh12b5a-marquee-front-v1';
 import {buildFoyerDimension} from './dimensional-art.mjs?v=dh12b2-dimensional-world-v1';
 import {initialOrbit,dragOrbit,zoomOrbit,zoomPinch,orbitPose,dragDistance,pointerSeparation}
  from './foyer-orbit.mjs?v=dh12b3-orbit-portals-v1';
