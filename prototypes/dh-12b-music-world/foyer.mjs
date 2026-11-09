@@ -2,6 +2,7 @@
 // First click opens and physically approaches a threshold; Enter goes inside.
 import * as THREE from './vendor/three-r159.module.min.js';
 import {DOORS,doorFor,doorAngle,approach,settled} from './music-portals.mjs?v=dh12b1-music-portals-v1';
+import {buildFoyerDimension} from './dimensional-art.mjs?v=dh12b2-dimensional-world-v1';
 
 const canvas=document.getElementById('music-portals-canvas');
 const status=document.getElementById('music-portal-status');
@@ -19,13 +20,15 @@ try{
  renderer.outputColorSpace=THREE.SRGBColorSpace;
  renderer.shadowMap.enabled=true;
  renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+ renderer.toneMapping=THREE.ACESFilmicToneMapping;
+ renderer.toneMappingExposure=1.36;
 }catch(error){
  status.textContent='3D preview unavailable. The destination doors still work as accessible controls.';
  console.warn('Music world WebGL unavailable',error);
 }
 const scene=new THREE.Scene();
-scene.background=new THREE.Color('#1b1626');
-scene.fog=new THREE.FogExp2('#1b1626',.023);
+scene.background=new THREE.Color('#0c102a');
+scene.fog=new THREE.FogExp2('#15142e',.014);
 const camera=new THREE.PerspectiveCamera(44,1,.1,120);
 const aim=new THREE.Vector3(0,1.95,-2.0);
 camera.position.set(0,6.7,14.6);
@@ -158,19 +161,24 @@ function makePortal(def,number){
  return {root,leaves,light,id:def.id,position:atX};
 }
 DOORS.forEach((d,i)=>{thresholds[d.id]=makePortal(d,i);});
+// An authored cosmos, physically separate fragments, endless stairs, sculpted
+// portal ribs and animated dimensional veils surround the ORIGINAL hinges.
+const dimension=buildFoyerDimension({
+ THREE,scene,thresholds,reducedMotion:!!reduced?.matches
+});
 let selected=null,ready=false;
 const clock=new THREE.Clock();
 const desiredTarget=new THREE.Vector3(0,1.95,-2);
 function targetCamera(){
  const aspect=Math.max(.4,canvas.clientWidth/Math.max(1,canvas.clientHeight));
  const narrow=aspect<.8;
- let xyz=[0,6.7,14.6],point=[0,1.95,-2];
+ let xyz=[0,7.30,15.70],point=[0,2.22,-2.15];
  if(selected){
   const sign=selected==='theatre'?-1:1;
   xyz=[sign*3.2,3.3,narrow?10:5.5];
   point=[sign*3.25,narrow?1.37:2.2,-3.32];
  }else if(narrow){
-  xyz=[0,8.5,19.7];point=[0,1.4,-2.8];
+  xyz=[0,9.1,20.5];point=[0,1.60,-2.75];
  }
  destination.set(...xyz);desiredTarget.set(...point);
  if(reduced?.matches){
@@ -256,6 +264,7 @@ function frame(){
   n.rotation.z+=dt*n.userData.spin;
   n.position.y+=Math.sin(elapsed*1.2+n.position.x)*dt*.012;
  }
+ dimension.update(dt,selected);
  if(selected&&!ready){
   const opening=thresholds[selected];
   const doorsDone=['left','right'].every(side=>
