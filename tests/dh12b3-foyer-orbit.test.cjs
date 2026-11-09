@@ -64,7 +64,7 @@ test('pointer maths distinguishes a click from mouse dragging and two-finger mov
 test('the Music foyer retains its familiar topbar but has minimal overlay chrome',()=>{
  const html=read(dir+'foyer.html');
  for(const marker of [
-  'DH-12B.5','data-foyer-orbit="true"','data-foyer-minimal="true"',
+  'DH-12B.5A','data-foyer-orbit="true"','data-foyer-minimal="true"',
   'music-foyer__topbar','music-foyer__brand',
   '/assets/branding/davehub-logo-faithful.svg',
   '<h1>The World Between Notes</h1>',
@@ -74,7 +74,7 @@ test('the Music foyer retains its familiar topbar but has minimal overlay chrome
   'id="portal-theatre"','id="portal-records"',
   'id="music-portal-overview"',
   'music-foyer__portal-nav',
-  'foyer.mjs?v=dh12b5-clean-journey-v1',
+  'foyer.mjs?v=dh12b5a-marquee-front-v1',
   'music-world.css?v=dh12b5-clean-journey-v1','noindex,nofollow'
  ])assert.ok(html.includes(marker),marker);
  for(const removed of [
@@ -156,10 +156,10 @@ test('build and Cloudflare checks preserve the orbit source and add detailed por
   'node --check prototypes/dh-12b-music-world/foyer-surfaces.mjs',
   "check('dist/previews/dh-12b/music-foyer/foyer-orbit.mjs'",
   "check('dist/previews/dh-12b/music-foyer/foyer-surfaces.mjs'",
-  'DH-12B.5'
+  'DH-12B.5A'
  ])assert.ok(build.includes(marker),marker);
  for(const marker of [
-  'DH-12B.5','dh12b5-clean-journey-v1',
+  'DH-12B.5A','dh12b5-clean-journey-v1',
   '/previews/dh-12b/music-foyer/foyer-orbit.mjs',
   '/previews/dh-12b/music-foyer/foyer-surfaces.mjs',
   '/previews/dh-12b/record-shop/'
