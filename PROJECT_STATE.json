@@ -1,8 +1,8 @@
 {
   "project": "DaveHub",
-  "updated": "2026-11-08",
+  "updated": "2026-11-09",
   "status": "dh10c_hosted_editorial_foundation_deployed",
-  "current_work_package": "DH-12B.1 The World Between Notes: portals to musicals and record shop, staging",
+  "current_work_package": "DH-12B.2 Actual mystical Music foyer and Record Shop art, staging visual review",
   "completed": [
     "DH-00A",
     "DH-00B",
@@ -1401,10 +1401,10 @@
     }
   },
   "dh12_music": {
-    "stage": "DH-12B.1",
+    "stage": "DH-12B.2",
     "world": "music",
     "creativeDirection": "The Impossible Theatre, a surreal miniature stage with real moving mechanics",
-    "status": "staging_portal_foyer_and_independent_record_shop_under_test",
+    "status": "staging_code_visual_redesign_under_test",
     "previewRoute": "/previews/dh-12a/listening-room/",
     "existingMusicRouteReplaced": false,
     "physicalCurtains": true,
@@ -1414,7 +1414,7 @@
     "ownerVisualApproval": "pending",
     "mainChanged": false,
     "productionChanged": false,
-    "docs": "docs/DH12B_MUSIC_PORTALS_AND_RECORD_SHOP.md",
+    "docs": "docs/DH12B2_DIMENSIONAL_ART.md",
     "camera": {
       "type": "one perspective camera travelling to genuine object focus points",
       "modes": [
@@ -1448,6 +1448,17 @@
       "foyer": "two physical hinged door pairs, camera approaches and two-step enter after motion",
       "theatre": "approved real 3D stage, now explicitly musicals-only, links back to foyer",
       "shop": "three physical pull-out crates, camera inspection, silent real vinyl and tonearm"
+    },
+    "actualArt": {
+      "foyer": "procedural cosmic sky, 36 floating moonstone shards, rune rings, impossible stairs, arches, lanterns, theatrical and vinyl portal sculpture and shaders",
+      "shop": "open cosmic colonnades, arched windows, moon-record floor sigil, 11 floating blank vinyl discs, crooked stairs, pendants and record mobile",
+      "sharedModule": "prototypes/dh-12b-music-world/dimensional-art.mjs",
+      "originalDoorsAndMotionPreserved": true,
+      "originalThreeCratesAndSilentTurntablePreserved": true,
+      "updatedSourceNotMockups": true,
+      "reducedMotion": true,
+      "userReview": "pending",
+      "docs": "docs/DH12B2_DIMENSIONAL_ART.md"
     }
   }
 }
