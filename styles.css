@@ -45,10 +45,8 @@ a:focus-visible, button:focus-visible { outline: 3px solid #fff; outline-offset:
   --island-color: #f9d29b;
   left: 69%;
   top: 32%;
-  isolation: isolate;
-  border-color: rgba(249,210,155,.22);
-  background: radial-gradient(ellipse at 50% 48%,rgba(44,38,79,.48),rgba(12,24,53,.18) 66%,transparent);
-  box-shadow: 0 0 22px rgba(239,184,111,.12);
+  /* Like every other island: fully transparent at rest.
+     The highlighted surface appears only on hover or keyboard focus. */
 }
 .island--music .glyph {
   color: #fff3dd;
