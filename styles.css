@@ -39,11 +39,11 @@ a:focus-visible, button:focus-visible { outline: 3px solid #fff; outline-offset:
 .island:hover,.island:focus-visible { background: rgba(6,17,45,.52); border-color: color-mix(in srgb,var(--island-color) 70%, transparent); box-shadow: 0 0 24px color-mix(in srgb,var(--island-color) 25%,transparent); transform: translateY(-5px); }
 .island--writing { --island-color: #82bbff; left: 5.1%; top: 16%; }
 .island--games { --island-color: #b3caff; left: 47.5%; top: 5%; }
-/* DH-12B.4: the golden Music island sits over the illustrated sky/castle
-   island between Games and Experiments, rather than above the hero CTA. */
+/* DH-12B.4A: align Music with the illustrated city floating island,
+   not the empty sky immediately to its left. */
 .island--music {
   --island-color: #f9d29b;
-  left: 64.5%;
+  left: 69%;
   top: 32%;
   isolation: isolate;
   border-color: rgba(249,210,155,.22);
@@ -118,7 +118,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid #fff; outline-offset:
   .island { padding: 8px 10px; min-width: 120px; font-size: 12px; letter-spacing: .12em; }
   .island--writing { left: 2%; top: 18%; }
   .island--games { left: 43%; top: 8%; }
-  .island--music { left: 62%; top: 31%; }
+  .island--music { left: 66%; top: 31%; }
   .island--experiments { right: 2%; top: 18%; }
   .island--projects { right: 2%; top: 44%; }
   .welcome { margin-bottom: 30px; }
@@ -138,7 +138,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid #fff; outline-offset:
   .island .glyph { font-size: 25px; }
   .island--writing { left: 1%; top: 15%; }
   .island--games { left: 38%; top: 13%; }
-  .island--music { left: 37%; top: 32%; }
+  .island--music { left: 41%; top: 32%; }
   .island--experiments { right: 1%; top: 15%; }
   .island--projects { right: 1%; top: 32%; }
   .welcome { width: 100%; padding-top: 300px; margin-bottom: 24px; }
@@ -158,7 +158,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid #fff; outline-offset:
   .page-top__eyebrow { max-width: 170px; }
   .island { min-width: 80px; font-size: 10px; }
   .island--games { left: 35%; }
-  .island--music { left: 36%; top: 30%; }
+  .island--music { left: 40%; top: 30%; }
 
   .world-directory { grid-template-columns: 1fr; }
   .world-directory__item { min-height: 100px; }
@@ -288,7 +288,7 @@ html, body { height: 100%; width: 100%; overflow: hidden; }
   .island { min-width: 90px; font-size: 10px; gap: 2px; padding: 4px 6px; }
   .island .glyph { font-size: 21px; }
   .island--projects { top: 33%; }
-  .island--music { left: 60%; top: 32%; }
+  .island--music { left: 63%; top: 32%; }
   .homepage__footer { display: none; }
 }
 /* Extreme portrait heights/large zoom must not make controls inaccessible. */
