@@ -4,6 +4,14 @@
  */
 const BASE='https://davehub.pages.dev';
 const checks=[
+ {path:'/',required:[
+  'data-dh12b4-music-island="true"',
+  'class="island island--music" href="/previews/dh-12b/music-foyer/"',
+  '<use href="#icon-music"/>',
+  'class="island island--writing" href="/worlds/writing/"',
+  'class="island island--games" href="/worlds/games/"',
+  'class="island island--projects" href="/worlds/projects/"'
+ ]},
  {path:'/worlds/',required:['<style data-davehub-inline="worlds">','3 creations','2 creations'],forbidden:['data-davehub-inline="staging"']},
  {path:'/worlds/games/',required:['<style data-davehub-inline="worlds">','Unicorn Valley','The Stephen Martin Project','Tame The Board Game','3 creations in this world'],forbidden:['data-davehub-inline="staging"','DESIGN REVIEW ONLY']},
  {path:'/worlds/projects/',required:['<style data-davehub-inline="worlds">','Unicorn Valley','The Stephen Martin Project']},
@@ -57,7 +65,8 @@ async function main(){
   try{
    const results=[];
    for(const c of checks){
-    const version=c.path==='/previews/dh-12b/music-foyer/'?'?dh12b3-orbit-portals-v1=1':
+    const version=c.path==='/'?'?dh12b4-music-home-v1=1':
+     c.path==='/previews/dh-12b/music-foyer/'?'?dh12b3-orbit-portals-v1=1':
      c.path==='/previews/dh-12b/record-shop/'?'?dh12b2-dimensional-world-v1=1':
      c.path==='/previews/dh-12a/listening-room/'?'?dh12a3-living-sets-v1=1':
      c.path==='/worlds/writing/'?'?dh11c6e1-uncrumple-v1=1':
@@ -82,6 +91,7 @@ async function main(){
    // Require the actual MIME and source bytes, not just the page's script tags.
    // Verify real script and style assets; reject Cloudflare's HTML fallback.
    for(const asset of [
+    {path:'/styles.css',type:'text/css',markers:['.island--music','left: 64.5%','left: 37%','top: 32%']},
     {path:'/worlds/writing/room/reveal-after-motion.mjs',type:'javascript',markers:['export function revealReady','REVEAL_HOLD_SECONDS']},
     {path:'/worlds/writing/room/room.js',type:'javascript',markers:['revealAfterPhysicalMotion()','keyIndexForCharacter(e.key)']},
     {path:'/worlds/writing/scene/manuscript-experience.css',type:'text/css',markers:['.manuscript-page','.workshop-page']},
