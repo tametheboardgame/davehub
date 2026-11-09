@@ -6,19 +6,36 @@
  <meta name="robots" content="noindex,nofollow">
  <meta name="theme-color" content="#1c1727">
  <title>DH-12B · The World Between Notes | DaveHub</title>
- <meta name="davehub-stage" content="DH-12B.2">
- <link rel="stylesheet" href="./music-world.css?v=dh12b2-dimensional-world-v1">
+ <meta name="davehub-stage" content="DH-12B.3">
+ <link rel="stylesheet" href="./music-world.css?v=dh12b3-orbit-portals-v1">
 </head>
-<body data-music-foyer="true" data-dimensional-art="true">
+<body data-music-foyer="true" data-dimensional-art="true" data-foyer-orbit="true">
  <main class="music-foyer">
   <canvas id="music-portals-canvas" aria-label="An interactive 3D music world entrance with two real doors, one to the Impossible Theatre for musicals, and one to the Record Shop for songs and bands"></canvas>
   <div class="music-foyer__mist" aria-hidden="true"></div>
-  <header class="music-foyer__header">
-   <a class="music-foyer__back" href="/worlds/music/">← DaveHub Music</a>
-   <p class="music-eyebrow">SOMEWHERE BETWEEN WORLDS · TWO DOORS</p>
-   <h1>The World Between Notes</h1>
-   <p>Somewhere beyond the ordinary world, every piece of music has a doorway.</p>
+  <header class="music-foyer__topbar">
+   <a class="music-foyer__brand" href="/" aria-label="DaveHub home">
+    <img src="/assets/branding/davehub-logo-faithful.svg" width="158" height="50" alt="DaveHub">
+   </a>
+   <div class="music-foyer__world-id">
+    <span>THE MUSIC WORLD</span>
+    <h1>The World Between Notes</h1>
+   </div>
+   <a class="music-foyer__back" href="/worlds/music/">← Music island</a>
   </header>
+  <p class="music-foyer__invitation">An impossible crossroads. Follow a story into the theatre, or follow the music into the record shop.</p>
+  <div class="music-foyer__orbit-tools" aria-label="Explore the three-dimensional crossroads">
+   <p id="music-orbit-hint">Drag to orbit · Scroll or pinch to zoom · Arrow keys to turn</p>
+   <button id="music-orbit-reset" type="button" aria-label="Reset the foyer camera angle and zoom">Reset view</button>
+  </div>
+  <div class="music-foyer__floating-signs" aria-label="Portal signs">
+   <button id="music-sign-theatre" class="music-foyer__floating-sign music-foyer__floating-sign--theatre" type="button" hidden>
+    <span aria-hidden="true">✦</span><strong>THE IMPOSSIBLE THEATRE</strong><small>MUSICALS</small>
+   </button>
+   <button id="music-sign-records" class="music-foyer__floating-sign music-foyer__floating-sign--records" type="button" hidden>
+    <span aria-hidden="true">◉</span><strong>THE RECORD SHOP</strong><small>SONGS · BANDS · ALBUMS</small>
+   </button>
+  </div>
   <section class="music-foyer__choices" aria-label="Choose where to explore">
    <article class="music-choice music-choice--theatre">
     <div class="music-choice__heading">
@@ -43,6 +60,6 @@
   <p id="music-portal-status" class="music-foyer__status" role="status" aria-live="polite">Choose a door. It will open before you enter.</p>
   <p class="music-foyer__footnote">A living pocket dimension. Doors lead to empty, publication-safe worlds; no unpublished music is loaded.</p>
  </main>
- <script type="module" src="./foyer.mjs?v=dh12b2-dimensional-world-v1"></script>
+ <script type="module" src="./foyer.mjs?v=dh12b3-orbit-portals-v1"></script>
 </body>
 </html>
