@@ -2,7 +2,7 @@
   "project": "DaveHub",
   "updated": "2026-11-09",
   "status": "dh10c_hosted_editorial_foundation_deployed",
-  "current_work_package": "DH-12B.4 Home Music island discovery and return journey, staging",
+  "current_work_package": "DH-12B Music world work-in-progress promoted to GitHub main, further development on staging",
   "completed": [
     "DH-00A",
     "DH-00B",
@@ -1404,7 +1404,7 @@
     "stage": "DH-12B.4",
     "world": "music",
     "creativeDirection": "The Impossible Theatre, a surreal miniature stage with real moving mechanics",
-    "status": "staging_homepage_music_island_under_test",
+    "status": "wip_main_checkpoint_development_continues_on_staging",
     "previewRoute": "/previews/dh-12a/listening-room/",
     "existingMusicRouteReplaced": false,
     "physicalCurtains": true,
@@ -1412,7 +1412,7 @@
     "recordPlayer": "rotating geometry and physically moving tonearm, no audio",
     "content": "none; all future recordings/lyrics/cover art/characters owner-approved separately",
     "ownerVisualApproval": "pending",
-    "mainChanged": false,
+    "mainChanged": true,
     "productionChanged": false,
     "docs": "docs/DH12B4_HOME_MUSIC_ISLAND.md",
     "camera": {
@@ -1475,13 +1475,50 @@
       "docs": "docs/DH12B3_FOYER_ORBIT_AND_PORTALS.md"
     },
     "homepageMusicIsland": {
-      "status": "staging_only_pending_owner_review",
+      "status": "main_source_checkpoint_and_staging_in_active_development",
       "link": "/previews/dh-12b/music-foyer/",
       "hotspot": "fifth illustrated home island, icon-music SVG, CSS colour and responsive placement",
       "return": "foyer topbar leads to root homepage",
       "otherIslandsUnchanged": true,
-      "productionNotUpdated": true,
+      "productionNotUpdated": false,
       "docs": "docs/DH12B4_HOME_MUSIC_ISLAND.md"
-    }
+    },
+    "mainCheckpoint": "2026-11-09 owner-approved work-in-progress promotion"
+  },
+  "writingRoomMainRelease": {
+    "ownerApprovedOn": "2026-11-08",
+    "stage": "DH-11C.6E.1",
+    "state": "approved_for_main_branch_release",
+    "finalApprovedStagingCommit": "c5757d4b3fd796e7462230243015cb772fc88624",
+    "scope": "full illustrated physical Writing Room, bookcase, desk, typewriter, overhead cabinet, nine discarded papers and visible Uncrumple action",
+    "approvedBooks": 3,
+    "fictionalDemonstrationScraps": 9,
+    "otherUnpublishedContent": "not connected; owner will approve later",
+    "doc": "docs/DH11C_COMPLETE_RELEASE.md",
+    "branch": "main",
+    "stagingHost": "https://davehub.pages.dev/worlds/writing/",
+    "productionHost": "https://davehub.co.uk/",
+    "productionConfigured": false,
+    "unchanged": "DH-09D staging/live topology, public catalogue and pinned game assets",
+    "nextCreativeSpace": "DH-12A Listening Room",
+    "mainPromotionPR": 114
+  },
+  "mainCreativeCheckpoint": {
+    "date": "2026-11-09",
+    "approvedByOwner": true,
+    "scope": "Promote all current DaveHub staging source and worlds into GitHub main as a work-in-progress checkpoint; continue development on staging",
+    "releaseSource": "staging",
+    "stagingHead": "d5588ce0af48a3ed422e3dfa77b6e957f2c8ff65",
+    "developmentContinuesOn": "staging",
+    "musicWorld": {
+      "foyer": "/previews/dh-12b/music-foyer/",
+      "theatre": "/previews/dh-12a/listening-room/",
+      "records": "/previews/dh-12b/record-shop/",
+      "homepageMusicIsland": "/",
+      "developmentStatus": "work_in_progress"
+    },
+    "writingRoom": "Previously owner-approved DH-11C release preserved on main",
+    "protection": "Keep main verified deployment topology and staging-only game automation; no automatic published music or unpublished manuscripts",
+    "productionDomainConfigured": false
   }
 }
