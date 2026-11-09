@@ -255,27 +255,36 @@ function targetCamera(){
 function updateUI(){
  for(const door of DOORS){
   const button=actions[door.id],thisOne=selected===door.id;
-  button.textContent=thisOne?(ready?'Enter '+door.label:'Opening '+door.label+'…'):
-   'Open '+(door.id==='theatre'?'theatre doors':'record shop doors');
-  button.dataset.ready=String(thisOne&&ready);
+  button.textContent=thisOne?'Opening '+door.label+'…':
+   (door.id==='theatre'?'✦ Theatre':'◉ Record Shop');
+  button.disabled=entering||thisOne;
   button.setAttribute('aria-pressed',String(thisOne));
-  button.setAttribute('aria-label',thisOne&&ready?'Enter '+door.label+' from the open doorway':
-   'Open the physical '+door.label+' doors');
+  button.setAttribute('aria-label',thisOne?'Opening '+door.label+' and entering automatically':
+   'Open '+door.label+' and enter automatically');
  }
- overviewTray.hidden=!selected;
+ overviewTray.hidden=!selected||entering;
 }
 function returnToCrossroads(){
- selected=null;ready=false;orbit=initialOrbit();targetCamera();updateUI();
- status.textContent='Both doors are visible again. Choose where the music takes you.';
+ if(entering)return;
+ selected=null;orbit=initialOrbit();targetCamera();updateUI();
+ status.textContent='Journey cancelled. Choose another doorway.';
+}
+function enterSelectedWorld(){
+ // Called once, ONLY when both physical doors and the real camera have
+ // reached their destination, or directly when WebGL is unavailable.
+ if(entering||!selected)return;
+ const door=doorFor(selected);
+ if(!door||!isLocalMusicRoute(door.route))return;
+ entering=true;updateUI();
+ status.textContent='Entering '+door.label+'.';
+ window.location.assign(door.route);
 }
 function choose(id){
- const door=doorFor(id);if(!door)return;
- if(selected===id&&ready){
-  // Only one of the two fixed, local, declared staging destinations.
-  window.location.assign(door.route);return;
- }
- selected=id;ready=false;orbit=initialOrbit();targetCamera();updateUI();
- status.textContent=door.label+' · the real hinged doors are opening. Enter when they have opened.';
+ const door=doorFor(id);
+ if(!door||entering||selected===id)return;
+ selected=id;orbit=initialOrbit();targetCamera();updateUI();
+ status.textContent=door.label+' · opening the doors and taking you inside.';
+ if(!renderer)enterSelectedWorld();
 }
 for(const d of DOORS)actions[d.id].addEventListener('click',()=>choose(d.id));
 overview.addEventListener('click',returnToCrossroads);
@@ -375,26 +384,6 @@ canvas.addEventListener('wheel',e=>{
  e.preventDefault();
  setOrbit(zoomOrbit(orbit,e.deltaY));
 },{passive:false});
-function positionPortalSigns(){
- const width=canvas.clientWidth,height=canvas.clientHeight;
- if(!width||!height)return;
- for(const door of DOORS){
-  const button=signs[door.id];
-  const worldPoint=thresholds[door.id].root.localToWorld(
-   new THREE.Vector3(0,5.35,.12));
-  const p=worldPoint.project(camera);
-  const x=(p.x*.5+.5)*width;
-  const y=(-p.y*.5+.5)*height;
-  const bottomSafe=height-(width<690?235:174);
-  const inView=p.z>-1&&p.z<1&&x>75&&x<width-75&&
-   y>(width<690?75:112)&&y<bottomSafe;
-  button.hidden=!inView;
-  if(inView){
-   button.style.left=x+'px';
-   button.style.top=y+'px';
-  }
- }
-}
 const resize=()=>{
  if(!renderer)return;
  renderer.setSize(Math.max(1,canvas.clientWidth),Math.max(1,canvas.clientHeight),false);
@@ -403,6 +392,13 @@ const resize=()=>{
 };
 window.addEventListener('resize',resize);
 if(typeof ResizeObserver!=='undefined')new ResizeObserver(resize).observe(canvas);
+// A browser Back/Forward Cache return should restore the explorable foyer.
+window.addEventListener('pageshow',event=>{
+ if(event.persisted){
+  selected=null;entering=false;orbit=initialOrbit();
+  targetCamera();updateUI();
+ }
+});
 resize();targetCamera();updateUI();
 let elapsed=0;
 function frame(){
@@ -425,19 +421,15 @@ function frame(){
   n.position.y+=Math.sin(elapsed*1.2+n.position.x)*dt*.012;
  }
  dimension.update(dt,selected);
- if(selected&&!ready){
+ if(selected&&!entering){
   const opening=thresholds[selected];
   const doorsDone=['left','right'].every(side=>
    Math.abs(opening.leaves[side].rotation.y-doorAngle(true,side))<.035);
   const cameraDone=settled(camera.position.toArray(),destination.toArray(),.10)&&
    settled(aim.toArray(),desiredTarget.toArray(),.10);
-  if(!renderer||(doorsDone&&cameraDone)){
-   ready=true;updateUI();
-   status.textContent='The '+doorFor(selected).label+' doors are open. Select Enter to go inside.';
-  }
+  if(doorsDone&&cameraDone)enterSelectedWorld();
  }
  if(renderer)renderer.render(scene,camera);
- positionPortalSigns();
  requestAnimationFrame(frame);
 }
 frame();
