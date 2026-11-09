@@ -47,6 +47,19 @@ test('Music island sits between upper and lower hotspots, with mobile and short-
  assert.ok(css.includes('.island-nav { position: absolute; inset: 0; z-index: 2; pointer-events: none; }'));
  assert.ok(css.includes('.island { --island-color: #fff; position: absolute; pointer-events: auto;'));
 });
+test('Music island has no idle background, border or box-shadow, matching the other island hotspots',()=>{
+ const match=css.match(/\.island--music\s*\{([^}]+)\}/);
+ assert.ok(match,'a standalone Music island style block exists');
+ const idle=match[1];
+ assert.doesNotMatch(idle,/(?:^|\s)(?:background|background-image|border-color|box-shadow)\s*:/,
+  'Music must not carry a permanent coloured panel or glow');
+ assert.match(css,/\.island\s*\{[^}]*border:\s*1px solid transparent/,
+  'all islands start with a transparent border');
+ assert.match(css,/\.island--music:hover,\.island--music:focus-visible\s*\{[^}]*background:/,
+  'a visible background still appears only on interaction');
+ assert.match(css,/\.island--music:hover,\.island--music:focus-visible\s*\{[^}]*box-shadow:/,
+  'keyboard focus and hover still retain a clear golden highlight');
+});
 test('Music island must not change Writing, game, experiment or project routes',()=>{
  for(const route of ['writing','games','experiments','projects'])
   assert.ok(home.includes('class="island island--'+route+'" href="/worlds/'+route+'/"'));
