@@ -3,6 +3,7 @@
 import * as THREE from './vendor/three-r159.module.min.js';
 import {RACKS,rackFor,shopDestination,pullPosition,spinDisc,motion,focusAction}
  from './record-shop-mechanics.mjs?v=dh12b1-music-portals-v1';
+import {buildRecordDimension} from './dimensional-art.mjs?v=dh12b2-dimensional-world-v1';
 
 const canvas=document.getElementById('record-shop-canvas');
 const status=document.getElementById('record-shop-status');
@@ -20,13 +21,15 @@ try{
  renderer.outputColorSpace=THREE.SRGBColorSpace;
  renderer.setPixelRatio(Math.min(2,window.devicePixelRatio||1.5));
  renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+ renderer.toneMapping=THREE.ACESFilmicToneMapping;
+ renderer.toneMappingExposure=1.34;
 }catch(e){
  status.textContent='3D view unavailable. The shelf controls still describe the shop.';
  console.warn('Record Shop WebGL unavailable',e);
 }
 const scene=new THREE.Scene();
-scene.background=new THREE.Color('#1c2429');
-scene.fog=new THREE.FogExp2('#1c2429',.034);
+scene.background=new THREE.Color('#0c172b');
+scene.fog=new THREE.FogExp2('#151f32',.019);
 const camera=new THREE.PerspectiveCamera(44,1,.1,100);
 camera.position.set(7.4,5,12.7);
 const aim=new THREE.Vector3(0,2.1,-1.25);
@@ -78,9 +81,15 @@ lamp.position.set(0,5.3,2.0);scene.add(lamp);
 const accent=new THREE.PointLight('#9bd4c6',30,9,2);accent.position.set(4.5,3.7,1.0);scene.add(accent);
 // The shop is a walk-in timber room. The three racks are not flat cards.
 box('real-shop-floor',[11.9,.34,10.8],[0,-.29,-.85],oak);
-box('rear-wooden-shop-wall',[11.9,5.5,.31],[0,2.55,-5.9],darkOak);
-box('left-wall',[.34,5.5,10.8],[-5.85,2.55,-.85],darkOak);
-box('right-wall',[.34,5.5,10.8],[5.85,2.55,-.85],darkOak);
+// This is NOT a sealed rectangular shop. Real lower walls and side pilasters
+// leave arched openings to the impossible cosmic space beyond the racks.
+box('rear-shop-moonstone-parapet',[11.9,1.02,.31],[0,.44,-5.9],darkOak);
+for(const side of [-1,1]){
+ box('open-side-gallery-parapet-'+side,[.34,1.15,7.6],
+  [side*5.85,.48,-1.55],darkOak);
+ box('crooked-corner-pilaster-'+side,[.42,4.40,.53],
+  [side*5.80,2.15,-5.47],gold);
+}
 box('sculpted-ceiling-beam',[11.2,.25,.32],[0,5.0,-5.47],gold);
 for(let i=0;i<14;i++)box('oak-floor-board-'+i,
  [11.4,.025,.08],[0,-.09,-5.5+i*.70],i%2?gold:darkOak);
@@ -170,6 +179,11 @@ box('counter-top',[2.4,.14,1.02],[0,1.17,0],gold,counter);
 const smallSign=label('MUSIC FINDS A HOME',1.8);smallSign.position.set(0,1.48,.11);counter.add(smallSign);
 for(let i=0;i<3;i++)orb('counter-glass-marble-'+i,.12,
  [-.55+i*.55,1.38,-.13],i%2?turquoise:violet,counter);
+// Cosmos, open celestial windows, a gold record-sigil floor, levitating
+// vinyl and impossible stairs surround the original interactive racks.
+const dimension=buildRecordDimension({
+ THREE,scene,crates,listening,disc,reducedMotion:!!reduced?.matches
+});
 let focused=null,playing=false,discAngle=0;
 function update(){
  for(const r of RACKS){
@@ -251,6 +265,7 @@ function frame(){
  discAngle=spinDisc(discAngle,playing,dt);
  disc.rotation.y=discAngle;
  arm.rotation.y=motion(arm.rotation.y,playing?-.55:.23,dt,4.0);
+ dimension.update(dt,playing);
  if(renderer)renderer.render(scene,camera);
  requestAnimationFrame(frame);
 }
