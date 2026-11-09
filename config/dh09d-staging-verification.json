@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "expectedStagingCommit": "97baa4e4f08ecaddab4a2371b223faf0409ab384",
+  "purpose": "Verify Cloudflare Pages project davehub production deployment from staging branch, preserving future main production release boundaries",
+  "approval": "DH-09D Phase B cutover",
+  "generatedFor": "davehub.pages.dev"
+}

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width,initial-scale=1">
+ <meta name="robots" content="noindex,nofollow">
+ <meta name="theme-color" content="#17101e">
+ <title>DH-12A · The Impossible Theatre | DaveHub</title>
+ <link rel="stylesheet" href="./theatre.css?v=dh12a3-living-sets-v1">
+ <meta name="davehub-theatre-stage" content="DH-12A.3">
+</head>
+<body data-dh12a-theatre="true" data-theatre-camera="motion-first" data-living-sets="true">
+ <main class="theatre-shell">
+  <canvas id="theatre-canvas" aria-label="Interactive 3D miniature theatre with physical curtains, a revolving stage and a working record mechanism"></canvas>
+  <div class="theatre-vignette" aria-hidden="true"></div>
+  <header class="theatre-header">
+   <a class="theatre-back" href="/previews/dh-12b/music-foyer/">← World of Music doors</a>
+   <span class="theatre-tag">DH-12A · THE MUSICALS WORLD</span>
+   <h1>The Impossible Theatre</h1>
+   <p>A little theatre for musicals and stories that should not quite fit inside it.</p>
+  </header>
+  <div class="theatre-view" id="theatre-view" hidden>
+   <p id="theatre-focus-name" class="theatre-view__name">Velvet curtains · close-up view</p>
+   <button id="theatre-overview" type="button" aria-label="Return to the whole theatre view">← Whole theatre</button>
+  </div>
+  <aside class="theatre-controls" aria-labelledby="theatre-controls-title">
+   <p class="theatre-eyebrow">AN EXPERIMENT IN THREE ACTS</p>
+   <h2 id="theatre-controls-title">Pull the strings.</h2>
+   <p id="theatre-set-caption" class="theatre-set-caption">The Clockwork Chorus</p>
+   <p id="theatre-set-description" class="theatre-set-description">A tiny clockwork music box waits for someone to wind it.</p>
+   <p class="theatre-help">Click an object or use a control to move in for a closer look. Escape or Whole theatre returns to the overview.</p>
+   <div class="theatre-actions">
+    <button type="button" id="theatre-curtains">Open the curtains</button>
+    <button type="button" id="theatre-stage">Turn the stage · Songs</button>
+    <button type="button" id="theatre-set" class="theatre-set-action" aria-pressed="false">Bring Songs to life</button>
+    <button type="button" id="theatre-record">Start the record</button>
+    <button type="button" id="theatre-reset" class="theatre-subtle">Put everything back</button>
+   </div>
+   <p id="theatre-status" class="theatre-status" role="status" aria-live="polite">The stage is waiting.</p>
+   <p class="theatre-caveat">A musicals-only stage prototype. These miniature sets are fictional studies, not published productions.</p>
+  </aside>
+  <p class="theatre-hint">Click a miniature set piece, or Bring the set to life, to animate the scenery itself.</p>
+ </main>
+ <script type="module" src="./theatre.mjs?v=dh12a3-living-sets-v1"></script>
+</body>
+</html>

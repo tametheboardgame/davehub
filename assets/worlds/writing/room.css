@@ -1,0 +1,105 @@
+/* DH-11B Writing island: the illustration is THE interface, not a card banner.
+   Source artwork is original concept art approved by owner, cropped and resized.
+   Object hotspots are native buttons; panels use native dialog focus management. */
+.room-mode{margin:0;background:#100d19;color:#fff1d9;min-height:100svh}
+.room-mode .sky{display:none}
+.room-mode .shell{width:min(1620px,100%);margin:0 auto}
+.room-mode main{padding:0;min-height:0}
+.room-mode .room-navigation{display:flex;gap:14px;align-items:center;justify-content:space-between;
+ padding:13px clamp(15px,2.4vw,35px);background:#140e1feb;border-bottom:1px solid #c79b5866}
+.room-navigation a{text-decoration:none;color:#ffe1a7;font-weight:850;font-size:13px}
+.room-navigation .room-back{padding:8px 13px;border:1px solid #c69d7e77;border-radius:999px}
+.room-navigation .room-brand{font-family:Georgia,serif;font-size:20px}
+.room-mode .room-footer{text-align:center;font-size:12px;color:#b6a89f;padding:22px 12px}
+.room-world{position:relative}
+.room-story-heading{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;
+ background:linear-gradient(180deg,#221629,#130f1e);padding:19px 20px 18px}
+.room-story-heading>span{font-size:10px;color:#e8b77e;letter-spacing:.24em;font-weight:900}
+.room-story-heading h1{font-family:Georgia,'Times New Roman',serif;font-size:clamp(29px,4vw,52px);
+ margin:0;letter-spacing:-.045em;color:#ffe8c4;line-height:1.06;text-shadow:0 2px 14px #0007}
+.room-story-heading p{font-size:13px;line-height:1.5;color:#dfcbb6;margin:5px 0 0;max-width:830px}
+.room-fictional{font-size:12px;color:#ffd9a9;margin-top:7px;padding:8px 14px;background:#4b2632;border:1px solid #ddb06f77;border-radius:10px}
+.room-pan{width:100%;overflow-x:auto;overscroll-behaviour-inline:contain;scrollbar-color:#bf9568 #1a141d;touch-action:pan-x pan-y}
+.room-pan:focus-visible{outline:3px solid #ffe3a9;outline-offset:-4px}
+.room-stage{position:relative;width:100%;min-width:850px;aspect-ratio:1250/593;background:#322622;
+ isolation:isolate;overflow:hidden}
+.room-stage-image{display:block;width:100%;height:100%;object-fit:fill;user-select:none;pointer-events:none}
+.room-stage-vignette{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,#0003,transparent 12% 83%,#130c1a88),linear-gradient(90deg,#0b0b163d,transparent 13% 88%,#0b0b1640)}
+.room-hotspot{position:absolute;z-index:1;display:block;appearance:none;background:transparent;border:2px solid transparent;
+ border-radius:22px;cursor:pointer;color:white;transition:background .2s,border-color .2s,box-shadow .2s}
+.room-hotspot:before{content:"";position:absolute;inset:15%;border-radius:22px;pointer-events:none}
+.room-hotspot:hover,.room-hotspot:focus-visible{background:rgba(255,201,112,.105);border-color:#ffe4adbb;box-shadow:inset 0 0 30px #ffe4ad25,0 0 20px #ffe4ad4d;z-index:4}
+.room-hotspot:focus-visible{outline:3px solid #ffdf95;outline-offset:3px}
+.room-hotspot-tooltip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);
+ white-space:nowrap;background:#271624f2;color:#ffe9c9;border:1px solid #e4b371;border-radius:9px;
+ box-shadow:0 5px 22px #0008;padding:9px 13px;font-size:12px;font-weight:900;opacity:0;pointer-events:none;
+ transition:opacity .17s}
+.room-hotspot:hover .room-hotspot-tooltip,.room-hotspot:focus-visible .room-hotspot-tooltip{opacity:1}
+.room-hotspot--desk{left:23%;top:36%;width:37%;height:52%}
+.room-hotspot--cabinet{left:0%;top:11%;width:17%;height:50%}
+.room-hotspot--bin{left:12%;top:65%;width:17%;height:29%}
+.room-hotspot--bookcase{left:54.5%;top:5%;width:20.5%;height:50%}
+.room-hotspot--typewriter{left:79%;top:49%;width:21%;height:35%}
+.room-hotspot--exit{left:76%;top:9%;width:15%;height:38%}
+.room-bottom-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;
+ padding:12px clamp(19px,3vw,44px);font-size:12px;background:linear-gradient(90deg,#231824,#171527);
+ border-top:1px solid #cfa46b4a;border-bottom:1px solid #cfa46b3d}
+.room-bottom-bar p{margin:0;color:#e1c7ab}.room-bottom-bar span{font-weight:850;color:#efc58b;white-space:nowrap}
+.room-object-nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;background:#171423;padding:18px 16px}
+.room-object-nav button,.room-object-nav a{font:inherit;font-size:13px;font-weight:800;padding:11px 14px;
+ cursor:pointer;border:1px solid #c59a6288;background:#37293b;color:#ffe2b2;text-decoration:none;border-radius:8px}
+.room-object-nav button:hover,.room-object-nav a:hover,.room-object-nav button:focus-visible,.room-object-nav a:focus-visible{background:#5d3c44;border-color:#ffe0a3}
+.room-dialog{position:fixed;inset:0;max-width:min(1080px,calc(100vw - 36px));width:100%;
+ max-height:min(88svh,950px);overflow:auto;padding:0;margin:auto;border:2px solid #f3ca8977;border-radius:21px;
+ color:#f7e6ce;background:#1c1724;box-shadow:0 24px 90px #000c}
+.room-dialog::backdrop{background:rgba(4,5,13,.86);backdrop-filter:blur(7px)}
+.room-dialog-shell{position:relative;min-height:340px}
+.room-dialog-close{position:sticky;top:13px;z-index:6;display:flex;align-items:center;gap:8px;margin:13px 14px -49px auto;
+ padding:10px 14px;border:1px solid #f5c689;background:#291824;color:#ffe9c5;border-radius:30px;font-weight:800;cursor:pointer}
+.room-dialog-close:focus-visible{outline:3px solid #ffe69d}
+.room-panel{display:grid;grid-template-columns:minmax(0,.45fr) minmax(0,.55fr);min-height:500px}
+.room-panel[hidden]{display:none!important}
+.room-panel-illustration{background-image:linear-gradient(#16121b13,#130d1d88),url('/assets/worlds/writing/manuscript-room-v1.avif');
+ background-repeat:no-repeat;background-size:auto 230%;background-position:33% 52%;min-height:330px;
+ border-right:1px solid #e3b98150}
+.room-panel--cabinet .room-panel-illustration{background-position:0% 24%}
+.room-panel--bin .room-panel-illustration{background-position:13% 96%}
+.room-panel--bookcase .room-panel-illustration{background-position:59% 19%}
+.room-panel--typewriter .room-panel-illustration{background-position:100% 70%}
+.room-panel-content{padding:clamp(38px,5vw,70px) clamp(23px,4vw,54px) 36px;align-self:start}
+.room-panel-kicker{font-size:11px;font-weight:900;letter-spacing:.17em;color:#eac08a}
+.room-panel-content h2{font-family:Georgia,serif;font-size:clamp(31px,4vw,48px);line-height:1.05;letter-spacing:-.045em;margin:13px 0}
+.room-panel-hint{font-size:15px;line-height:1.65;color:#dac8b8;margin:0 0 22px}
+.room-manuscripts{display:flex;flex-wrap:wrap;gap:17px;margin:27px 0}
+.room-manuscript{width:min(100%,300px);min-height:180px;padding:21px;display:flex;flex-direction:column;gap:11px;
+ text-decoration:none;color:#352b27;border:1px solid #f8e0b4;
+ background:repeating-linear-gradient(0deg,transparent 0 25px,#9b78532b 26px,transparent 27px),linear-gradient(#f5e1ba,#dcc093);
+ transform:rotate(-2deg);box-shadow:5px 8px 0 #68462e93,9px 13px 17px #02030f7a;transition:transform .17s}
+.room-manuscript--1{transform:rotate(3deg);background-color:#ead1b3}
+.room-manuscript--2{transform:rotate(-4deg)}
+.room-manuscript:hover,.room-manuscript:focus-visible{transform:rotate(0deg) translateY(-3px)}
+.room-manuscript:focus-visible{outline:3px solid #ffe69d;outline-offset:5px}
+.room-manuscript-kind{font-size:10px;text-transform:uppercase;letter-spacing:.12em;font-weight:900;color:#6c493d}
+.room-manuscript strong{font-family:Georgia,serif;font-size:23px;line-height:1.1}
+.room-manuscript-description{font-family:Georgia,serif;font-size:13px;line-height:1.5;max-height:105px;overflow:hidden}
+.room-manuscript-action{font-size:12px;font-weight:900;margin-top:auto;color:#754a35}
+.room-no-manuscripts{margin-top:26px;padding:24px;border:1px dashed #e2b67b99;background:#543b344d;color:#edd4ba;line-height:1.65}
+.room-panel-count{display:block;font-size:11px;color:#beac9f;margin-top:23px}
+.room-noscript{padding:20px;text-align:center;color:#ebd0b5}
+@media(max-width:800px){
+ .room-stage{min-width:900px}
+ .room-mode .room-navigation{padding:10px 16px}
+ .room-story-heading h1{font-size:34px}
+ .room-bottom-bar{flex-wrap:wrap}
+ .room-dialog{max-height:90svh;max-width:calc(100vw - 16px)}
+ .room-panel{display:flex;flex-direction:column}
+ .room-panel-illustration{min-height:180px;height:180px;background-size:cover;background-position:center 50%}
+ .room-panel-content{padding:22px}
+ .room-dialog-close{top:7px;margin:8px 8px -48px auto}
+ .room-object-nav{gap:7px}
+ .room-object-nav button,.room-object-nav a{font-size:12px;padding:11px 12px}
+}
+@media(prefers-reduced-motion:reduce){
+ .room-hotspot,.room-hotspot-tooltip,.room-manuscript{transition:none!important}
+ .room-dialog::backdrop{backdrop-filter:none}
+}

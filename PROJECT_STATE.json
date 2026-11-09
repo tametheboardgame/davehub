@@ -1,8 +1,8 @@
 {
   "project": "DaveHub",
-  "updated": "2026-11-08",
-  "status": "dh09d_phase_b_staging_cloudflare_cutover_verified",
-  "current_work_package": "DH-12A Listening Room (next staging design), DH-11C approved complete main checkpoint",
+  "updated": "2026-11-09",
+  "status": "dh10c_hosted_editorial_foundation_deployed",
+  "current_work_package": "DH-12B.4 Home Music island discovery and return journey, staging",
   "completed": [
     "DH-00A",
     "DH-00B",
@@ -14,8 +14,7 @@
     "DH-07C",
     "DH-07D",
     "DH-07E",
-    "DH-08A",
-    "DH-11C.6E.1"
+    "DH-08A"
   ],
   "in_progress": [
     "D",
@@ -96,7 +95,6 @@
     "DH-09 first-party game hosting and staging/live plan"
   ],
   "next": [
-    "DH-12A: design a distinctive geometry-first Listening Room on staging; approved real audio and music content later",
     "DH-10 scanner merged: monitor weekly read-only reports and reject unapproved publications",
     "Unicorn Valley PR #338 must pass final verification before its opt-in merge",
     "Inspect generated candidate artifacts and integrate with private Content Workshop after PR #21 approval",
@@ -168,6 +166,13 @@
       "id": "DH07B-2026-10-25",
       "decision": "Give permanently unfinished creative work an archive view rather than implying work remains on the owner's to-do list; model musicals as a canonical production joining script, concept, tracks, releases, notes and approved media",
       "status": "agreed_direction"
+    },
+    {
+      "id": "ADR-0012",
+      "decision": "Geometry first, artwork second for all interactive 3D worlds. Never assemble independently AI-generated object-state images as perspective-critical moving geometry; model consistent 3D and animation before adding visual materials. Exceptions need a superseding owner-approved ADR.",
+      "status": "accepted_mandatory",
+      "date": "2026-10-31",
+      "reference": "docs/DECISIONS/ADR-0012.md"
     }
   ],
   "open_questions": [
@@ -202,9 +207,9 @@
     "remote_status": "connected"
   },
   "last_verified": {
-    "scope": "DH-09D Cloudflare production-branch migration from main to staging",
-    "result": "Verified davehub.pages.dev/deployment.json environment=staging, branch=staging, phase=staging_cutover, SHA 97baa4e4...; HTTP acceptance for both games, project pages and pinned Unicorn release passed GitHub #41104539053. First main-scheduled updater after PR #47 targeted staging and no-op passed #41104830463 on 2026-10-30.",
-    "date": "2026-10-30"
+    "scope": "DH-09E first automatic game release and no-op health verification",
+    "result": "Cloudflare Pages served pinned Unicorn Valley SHA 473506e2 with version main-ci-40093204337 on live davehub.pages.dev. HTTP smoke 40728639308 and post-monitor smoke 40729189325 passed, no-op GitHub updater run 40729189306 checked actual remote SHA/version. 2026-10-28 16:46 GMT. Full browser gameplay/save migration remains separate.",
+    "animation_review": "DH-06D1 CSS changes on feature/dh-06d-transparent-dave-animation: desktop up to 155svh with 14svh top, tablet 118svh/-43svh, mobile 102svh/-30svh; motion and still share crop; browser visual review pending"
   },
   "domain": {
     "primary": "davehub.co.uk",
@@ -636,7 +641,7 @@
     "sourceReleasePolicy": "Unicorn Valley public main exact SHA requires successful CI push workflow",
     "ciRevalidation": "check upstream before build and after full DaveHub build",
     "releaseMarker": "/games/unicorn-valley/davehub-release.json",
-    "approvalBoundary": "staging branch and davehub.pages.dev only; future main/live domain requires manual approved promotion",
+    "approvalBoundary": "staging only while main is still staging; future live main is owner-promoted",
     "stephen": "same-origin proxy automatically tracks existing public upstream releases; private repo untouched",
     "status": "GitHub auto-sync build and bot commit succeeded; Cloudflare exact-SHA/version HTTP smoke passed; no-op health validation passed",
     "ownerApprovedScope": "automatic releases to davehub.pages.dev staging only; never to davehub.co.uk",
@@ -651,9 +656,7 @@
     "recoveryIssue": 42,
     "recoveryIssueStatus": "closed_resolved_2026-10-28",
     "cloudflareBuildSkipForMonitoringCommits": true,
-    "next": "Future successful Unicorn Valley main commits sync hourly to staging subject to exact CI and full build. Stephen Martin proxy follows its public deployment. Production custom-domain promotion remains manual.",
-    "stagingBranch": "staging",
-    "lastCutoverHealthRun": 41104830463
+    "next": "Future successful Unicorn Valley main commits sync hourly to staging subject to exact CI and full build. Stephen Martin proxy follows its public deployment. Production custom-domain promotion remains manual."
   },
   "dh10": {
     "phase": "dh_10a_b_merged",
@@ -680,58 +683,805 @@
     "domainChange": "none"
   },
   "dh09d": {
-    "phase": "phase_b_complete_production_not_started",
+    "phase": "phase_b_staging_activation_candidate",
     "stagingBranchCreated": true,
     "stagingBranch": "staging",
     "existingPagesProject": "davehub",
-    "existingPagesProductionBranch": "staging",
+    "existingPagesProductionBranch": "main",
     "existingStagingHost": "davehub.pages.dev",
     "futureLivePagesProject": "davehub-live",
     "futureLiveProductionBranch": "main",
     "futureLiveHost": "davehub.co.uk",
     "liveDomainConnected": false,
-    "cloudflareSettingsChanged": true,
+    "cloudflareSettingsChanged": false,
     "deploymentTopology": "config/deployment-topology.json",
     "currentTopologyPhase": "staging_cutover",
     "cutoverGuardScript": "scripts/dh09d-topology.cjs",
     "releaseIdentityEndpoint": "/deployment.json",
     "stageOnlyBotBranchSelection": "policy validated; presently main until Cloudflare production branch is switched",
     "rolloutInstructions": "docs/DH09D_CUTOVER_EXECUTION.md",
-    "next": "Phase C is separately approved owner-led public launch: prepare live-role main release, create distinct davehub-live Pages project, domain/DNS/TLS verification and branch protection; NEVER attach live domain to davehub staging project.",
+    "next": "Merge activation into staging after CI; then owner changes existing Cloudflare Pages project production branch and role; verify exact deployed SHA; only then unfreeze default-main GitHub scheduler targeting staging.",
     "guardPR": 44,
     "guardPRMergedCommit": "ba102dd8af7d7c58970322fa1d839ae5f710a1ff",
     "ci": "11 discovery tests + 88 site tests + 30 game/deployment tests passed; full pinned Unicorn static game built",
-    "stagingBranchSyncedToReviewedMain": false,
-    "mainAutoSyncPaused": false,
-    "targetBranch": "staging",
-    "cloudflareProductionRole": "staging",
-    "stagingDeployedCommit": "97baa4e4f08ecaddab4a2371b223faf0409ab384",
-    "stagingIdentityVerificationRun": 41104539053,
-    "stagingIdentityVerification": "success_2026-10-30T18:10Z",
-    "stagingAssetVerification": "both same-origin games, HTML/JS/CSS/audio/image and creation links passed",
-    "mainOrchestratorPR": 47,
-    "mainOrchestratorMergedCommit": "867b73c70e468958d04e2267714ef29b6619a0f9",
-    "gameAutoSyncTargetBranch": "staging",
-    "gameAutoSyncNoopVerificationRun": 41104830463,
-    "gameAutoSyncNoopVerification": "success_2026-10-30T18:12Z; target staging; exact deployed game SHA/version match",
-    "productionPagesProjectConfigured": false
+    "stagingBranchSyncedToReviewedMain": true,
+    "autoUpdaterOnMainFrozen": true
   },
-  "writingRoomMainRelease": {
-    "ownerApprovedOn": "2026-11-08",
-    "stage": "DH-11C.6E.1",
-    "state": "approved_for_main_branch_release",
-    "finalApprovedStagingCommit": "c5757d4b3fd796e7462230243015cb772fc88624",
-    "scope": "full illustrated physical Writing Room, bookcase, desk, typewriter, overhead cabinet, nine discarded papers and visible Uncrumple action",
-    "approvedBooks": 3,
-    "fictionalDemonstrationScraps": 9,
-    "otherUnpublishedContent": "not connected; owner will approve later",
-    "doc": "docs/DH11C_COMPLETE_RELEASE.md",
-    "branch": "main",
-    "stagingHost": "https://davehub.pages.dev/worlds/writing/",
-    "productionHost": "https://davehub.co.uk/",
-    "productionConfigured": false,
-    "unchanged": "DH-09D staging/live topology, public catalogue and pinned game assets",
-    "nextCreativeSpace": "DH-12A Listening Room",
-    "mainPromotionPR": 114
+  "dh10c": {
+    "phase": "hosted_public_safe_review_operational_first_candidate_pending",
+    "stagingOnly": true,
+    "liveDomainConfigured": false,
+    "hostedReviewPath": "/review/",
+    "proposalWorkflow": ".github/workflows/dh10c-editorial-proposal.yml",
+    "proposalEngine": "scripts/dh10c-editorial-proposal.cjs",
+    "operations": [
+      "publish",
+      "revise",
+      "withdraw"
+    ],
+    "proposalDestination": "owner-reviewed PR against staging; no direct catalogue push or merge",
+    "sourceLimit": "only public, enabled, validated root davehub.json markers from known owner",
+    "privateEditorialStorage": "not implemented; never expose private drafts on Pages",
+    "mediaImport": "none; approved media requires later explicitly reviewed implementation",
+    "defaultBranchWorkflowEntry": "workflow-only main PR needed for GitHub Actions Run workflow visibility",
+    "approvalState": "no additional creative works published during implementation",
+    "firstCandidateSuggestions": [
+      "ordinary-universe",
+      "octo-maraton-ideas"
+    ],
+    "next": "Owner inspect hosted review and approve actual public synopsis/credits for Octo-Marathon. Manual GitHub workflow dispatch and review PR not yet end-to-end tested.",
+    "stagingPR": 48,
+    "defaultBranchWorkflowPR": 49,
+    "remoteSmokePR": 50,
+    "cloudflareVerifiedRun": 41120428437,
+    "cloudflareVerified": "live /review/ HTTP 200 and public-safe styling/links, both game HTML/JS/CSS/media and existing creation pages passed on 2026-10-30",
+    "defaultBranchWorkflowRegistered": true,
+    "catalogueChanges": "none, three approved creations remain",
+    "candidatePublicState": "octo-maraton-ideas public enabled with ID octo-marathon; ordinary-universe repository is private and excluded from public discovery"
+  },
+  "dh11_3d_architecture": {
+    "status": "locked_owner_approved",
+    "decision": "ADR-0012",
+    "mandatoryInstructions": "AGENTS.md",
+    "sourceOfTruth": "Coherent geometry, shared camera, real transforms and working mechanics; then materials/textures and lighting",
+    "prohibited": "Independent AI image generations composited as 3D moving states",
+    "validImageUses": [
+      "concept art",
+      "material/texture reference",
+      "static decoration",
+      "frames rendered from one consistent 3D scene"
+    ],
+    "exceptionPolicy": "Explicit owner-approved superseding ADR required",
+    "referencePrototypes": [
+      "/previews/dh-11c/cabinet/",
+      "/previews/dh-11c/room/"
+    ],
+    "liveDomainChange": "none"
+  },
+  "dh11_3d_production": {
+    "planStatus": "dh11c5d3b_live_high_illustration_3d_initial_art_pass",
+    "scope": "Writing / The Manuscript Hoard 3D world",
+    "foundation": "DH-11C.4 furniture mechanics approved by owner on 2026-11-01; 197 named source parts and GLB/Blender pipeline retained",
+    "architectureDecision": "ADR-0012",
+    "documentation": "docs/DH11C_3D_PRODUCTION_ROADMAP.md",
+    "currentGate": "DH-11C.5D.3B: owner review of newly authored UV painted 3D room and attached artwork, not image plates",
+    "milestones": [
+      {
+        "id": "DH-11C.3",
+        "phase": "Art direction and room asset bible",
+        "status": "in_progress_owner_visual_review_pending",
+        "approval": "owner approves style/materials and camera compositions"
+      },
+      {
+        "id": "DH-11C.4",
+        "phase": "Blender/GLB source and rigged models",
+        "status": "mechanics_owner_approved_2026-11-01_geometry_frozen",
+        "approval": "coherent geometry and mechanism tests"
+      },
+      {
+        "id": "DH-11C.5",
+        "phase": "Textures/UVs/material atlas",
+        "status": "C5A_approved_C5B_positive_C5C_realtime_style_not_approved_C5D_camera_reference_pipeline",
+        "approval": "C5C.2B handmade silhouettes pending owner visual approval"
+      },
+      {
+        "id": "DH-11C.6",
+        "phase": "Lighting, atmosphere and animation",
+        "status": "planned",
+        "approval": "accessibility and measured browser performance"
+      },
+      {
+        "id": "DH-11C.7",
+        "phase": "Deep interactions and approved-only content",
+        "status": "planned",
+        "approval": "editorial isolation and navigation parity"
+      },
+      {
+        "id": "DH-11C.8",
+        "phase": "QA and controlled Writing-world staging integration",
+        "status": "planned",
+        "approval": "explicit owner review, CI, hosted QA and rollback"
+      },
+      {
+        "id": "DH-11C.9",
+        "phase": "Shared world-engine components",
+        "status": "optional_post_v1"
+      }
+    ],
+    "priorRoutes": {
+      "roomPrototype": "/previews/dh-11c/room/",
+      "cabinetPrototype": "/previews/dh-11c/cabinet/",
+      "existingWriting": "/worlds/writing/"
+    },
+    "scopeLimits": [
+      "staging only",
+      "existing Writing site unchanged until owner sign-off",
+      "no new publication approval",
+      "games unchanged",
+      "davehub.co.uk unconfigured",
+      "reuse real geometry, not AI image-state compositing"
+    ],
+    "implementationStarted": true,
+    "next": "Review real 3D HOME/desk/bookcase/cabinet visual quality and author richer sculpted GLB shapes and UV assets where fidelity still falls short",
+    "artDirection": {
+      "status": "three_material_colour_and_light_candidates_owner_review_pending",
+      "preferredDraft": "amber-ink",
+      "candidates": [
+        "amber-ink",
+        "moonlit-archive",
+        "golden-storybook"
+      ],
+      "palettePreview": "/previews/dh-11c/art-lab/",
+      "bible": "docs/DH11C3_ART_BIBLE.md",
+      "cameraAudit": "docs/DH11C3A_SCENE_AUDIT.md",
+      "assetInventory": "docs/DH11C3A_ASSET_INVENTORY.json",
+      "assetCount": 21,
+      "gltfContract": "docs/DH11C3A_GLTF_NODE_CONTRACT.md",
+      "keySourceRisks": [
+        "solid cabinet case behind drawers",
+        "uncut wall geometry behind door/window",
+        "broad raycast selection meshes",
+        "browser visual QA not yet captured"
+      ],
+      "geometryChanged": false,
+      "approvedStyle": false
+    },
+    "glbCabinetProof": {
+      "status": "first_roundtrip_geometry_prototype_in_review",
+      "modelSource": "scripts/build-dh11c4-cabinet-glb.cjs",
+      "buildArtifact": "/previews/dh-11c/room/models/cabinet-prototype.glb",
+      "demo": "/previews/dh-11c/cabinet-glb/",
+      "documentation": "docs/DH11C4A_HOLLOW_CABINET_GLB.md",
+      "loader": "Three.js r159 locally vendored GLTFLoader",
+      "fiveNamedDrawers": true,
+      "hollowCase": true,
+      "hasBlenderMaster": false,
+      "materialPaletteApproved": false,
+      "visualBrowserQA": "pending",
+      "changedWorldsWriting": false,
+      "liveDomainChange": "none"
+    },
+    "blenderRoundTrip": {
+      "status": "validated_cloud_blender_roundtrip",
+      "decision": "ADR-0012",
+      "source": "scripts/blender/dh11c_cabinet_roundtrip.py",
+      "input": "scripts/build-dh11c4-cabinet-glb.cjs",
+      "validator": "scripts/validate-dh11c4b-blender.cjs",
+      "workflow": ".github/workflows/dh11c4b-blender-asset.yml",
+      "artifacts": [
+        "source-cabinet.glb",
+        "manuscript-cabinet.blend",
+        "cabinet-blender.glb",
+        "model-report.json"
+      ],
+      "runtimeReplacement": false,
+      "authoringEnvironment": "GitHub Actions Ubuntu headless Blender, no local owner setup",
+      "styleApproved": false,
+      "nextGate": "actual Blender asset export must succeed and pass node hierarchy and transform comparisons",
+      "validationWorkflowRun": 41296250123,
+      "validatedCommit": "b7c25cb26f26a051cc5fa6d9da10f4feb069f6a9",
+      "mergedStagingCommit": "bee345d8d80fd6a365d2b314bb05a0b5c6b2a0d7",
+      "blenderVersion": "4.0.2",
+      "meshCount": 78,
+      "objectCount": 106,
+      "exportedGlbSha256": "051e4abdb015799282234ea50b14cd179cb335ee496dbfdf965a4f1081abbf8a",
+      "editableBlendSha256": "14e2782279621c154b310c7effa58c872b48c617886aaba800f4b8def1eadd16",
+      "archivedGitHubArtifactId": 13079755791,
+      "githubArtifactRetentionEnd": "2026-12-01",
+      "binaryValidation": "passed",
+      "sourceVsExportGeometry": "passed (five drawer rigs, transforms and outward axis)",
+      "stagingCloudflare": "passed",
+      "visualBrowserQA": "pending"
+    },
+    "architecturePreview": {
+      "status": "staging_review_pending",
+      "route": "/previews/dh-11c/architecture/",
+      "specification": "docs/DH11C4C_ARCHITECTURE_AND_BLENDER_COMPARE.md",
+      "geometry": "seven physical wall panels, actual door and window openings, corridor beyond door",
+      "source": "prototypes/dh-11c-room/room-shell-plan.js",
+      "blenderGLB": "/previews/dh-11c/room/models/cabinet-blender-verified.glb",
+      "blenderGLBSha256": "051e4abdb015799282234ea50b14cd179cb335ee496dbfdf965a4f1081abbf8a",
+      "originalWritingWorldChanged": false,
+      "baselineRoomChanged": false,
+      "artPaletteApproved": false,
+      "ownerVisualReview": "pending"
+    },
+    "immersiveViewport": {
+      "status": "feature_implemented_browser_qa_pending",
+      "route": "/previews/dh-11c/architecture/",
+      "specification": "docs/DH11C4D_IMMERSIVE_VIEWPORT.md",
+      "mode": "opt_in_data_immersive_room",
+      "canvas": "fixed full viewport, responsive 100dvh",
+      "header": "fixed translucent overlay",
+      "wholeRoom": "fixed bottom right",
+      "objectControls": "native details menu bottom left",
+      "inspection": "floating internal-scroll panel",
+      "technicalControls": "native details with internal-scroll",
+      "modelOrGeometryChanged": false,
+      "artStyleChanged": false,
+      "originalWritingWorldChanged": false,
+      "ownerVisualReview": "pending"
+    },
+    "roomShellPipeline": {
+      "status": "Blender_4_0_2_export_validated_staging_visual_review_pending",
+      "route": "/previews/dh-11c/room-shell/",
+      "document": "docs/DH11C4E_BLENDER_ROOM_ARCHITECTURE.md",
+      "source": "prototypes/dh-11c-room/room-shell-asset.js",
+      "sourceModel": "/previews/dh-11c/room/models/room-shell-source.glb",
+      "blenderMaster": "manuscript-room-shell.blend (GitHub Actions artifact)",
+      "blenderWorkflow": ".github/workflows/dh11c4e-blender-room.yml",
+      "blenderModelCurrentlyUsedInBrowser": true,
+      "sourceGeometryFallback": true,
+      "existingWorldChanged": false,
+      "ownerVisualApproval": "pending",
+      "artPaletteApproved": false,
+      "verifiedBlenderModel": "/previews/dh-11c/room/models/room-shell-blender-verified.glb",
+      "blenderExportSha256": "2bb5d20bdcd742fa6e2e88bbbd4176be0f0c7f2b4cc8c35bf038859f1c6e28fc",
+      "blenderReportRun": 41299772477,
+      "blenderArchiveArtifact": 13080613354,
+      "editableMeshCount": 68
+    },
+    "furniturePipeline": {
+      "status": "C4_mechanics_and_C5A_desk_materials_owner_approved_C5B_pending",
+      "route": "/previews/dh-11c/furniture/",
+      "source": "prototypes/dh-11c-room/furniture-asset.js",
+      "sourceModel": "/previews/dh-11c/room/models/furniture-source.glb",
+      "master": "manuscript-furniture.blend from GitHub Actions",
+      "workflow": ".github/workflows/dh11c4f-blender-furniture.yml",
+      "document": "docs/DH11C4F_INTERACTIVE_FURNITURE.md",
+      "interactiveRoots": [
+        "desk_root",
+        "bookcase_root",
+        "typewriter_root",
+        "bin_root",
+        "door_root",
+        "window_root"
+      ],
+      "originalFurnitureFallback": true,
+      "ownerVisualReview": "mechanics_and_desk_materials_approved_2026_11_01_bookcase_cabinet_materials_pending",
+      "artDirectionApproved": false,
+      "liveDomainChanged": false
+    },
+    "deskMaterialReference": {
+      "milestone": "DH-11C.5A",
+      "status": "approved_by_owner_2026_11_01",
+      "route": "/previews/dh-11c/furniture/?v=dh11c5a-desk-v1",
+      "source": "prototypes/dh-11c-room/desk-materials.js",
+      "pbrTextureCount": 9,
+      "pixelDimensions": [
+        192,
+        192
+      ],
+      "pbrDelivery": "nine deterministic embedded PNG images in glTF/GLB, same pixel maps as browser fallback",
+      "authorisedScope": "writing desk and its associated objects only",
+      "preservedGeometryParts": 197,
+      "protectedInteractions": [
+        "13 desk sheets",
+        "24 typewriter keys and platen",
+        "lamp shade and switch",
+        "8 individually pullable books",
+        "9 bin crumples",
+        "five cabinet drawers",
+        "door and window"
+      ],
+      "ownerMaterialApproval": "approved",
+      "productionPromoted": false
+    },
+    "archiveMaterialReference": {
+      "milestone": "DH-11C.5B",
+      "status": "promising_first_pass_owner_reviewed_2026_11_01",
+      "route": "/previews/dh-11c/furniture/?v=dh11c5b-archive-v1",
+      "source": "prototypes/dh-11c-room/archive-materials.js",
+      "PBRTextureRecipes": 19,
+      "additionalEmbeddedFurnitureGLBMaps": 11,
+      "combinedEmbeddedFurnitureGLBMaps": 20,
+      "cabinetGLB": "preserved original verified Blender GLB; texture assignment to named surfaces at runtime",
+      "geometryProtected": true,
+      "interactiveBooks": 8,
+      "bookCount": 80,
+      "cabinetDrawerCount": 5,
+      "liveDomainChanged": false
+    },
+    "illustratedStyleCalibration": {
+      "milestone": "DH-11C.5C",
+      "phase": "5C.3 comic-storybook aesthetic study",
+      "status": "comic_storybook_implemented_pending_owner_visual_approval",
+      "route": "/previews/dh-11c/comic-storybook/?v=dh11c5c-comic-storybook-v4",
+      "originalReference": "/previews/dh-11c/furniture/?v=dh11c5b-archive-v1",
+      "source": "prototypes/dh-11c-room/comic-storybook-style.js",
+      "documentation": "docs/DH11C5C_ILLUSTRATED_STYLE_CALIBRATION.md",
+      "availableModes": [
+        "reference",
+        "painterly"
+      ],
+      "futureVariants": [
+        "stylised-animated",
+        "madmans-manuscript"
+      ],
+      "techniques": [
+        "repaint original GLB UV textures with graphic value grouping, gouache hatching and gilt accents",
+        "strong warm/cool comic-fantasy scene lighting",
+        "subtle broken ink contour lines from genuine geometry",
+        "new world-space static 3D stacks, books, pinned notes and ivy, outside interactive capture"
+      ],
+      "protectedInteractivity": [
+        "desk sheets",
+        "typewriter",
+        "lamp switch and bulb",
+        "eight turquoise/gilt books",
+        "five independent drawers",
+        "bin papers",
+        "door and window"
+      ],
+      "originalGLBsUnchanged": true,
+      "noRealContentPublication": true,
+      "ownerVisualApproval": "pending",
+      "productionPromoted": false,
+      "previousVariant": "/previews/dh-11c/illustrated-v3/?v=dh11c5c-soft-edges-v3",
+      "ownerFeedback": "V3 is a better direction; user supplied densely illustrated comic-fantasy study, specifically requiring its style not its layout",
+      "dressingSource": "prototypes/dh-11c-room/comic-storybook-dressing.js",
+      "referenceLayoutCopied": false
+    },
+    "illustratedViewPipeline": {
+      "milestone": "DH-11C.5D",
+      "stage": "5D.3B active 3D material and model-bound art calibration",
+      "status": "live_3d_art_staging_pending_visual_review",
+      "route": "/previews/dh-11c/illustrated-views/?v=dh11c5d-geometry-guides-v1",
+      "contract": "prototypes/dh-11c-room/view-pipeline.js",
+      "renderSource": "scripts/render-dh11c5d-views.cjs",
+      "authoritativeModel": "prototypes/dh-11c-room/room-plan.js and existing real furniture/cabinet GLBs",
+      "cameraCount": 8,
+      "desktopFov": 51,
+      "mobileFov": 62,
+      "currentExports": [
+        "same-source WebGL PNG structural guide",
+        "camera/projection/state JSON",
+        "deterministic server-generated camera-contract.json"
+      ],
+      "highIllustrationHeroPlates": "not_required_for_primary_working_3d_solution",
+      "publishedWritingChanged": false,
+      "productionChanged": false,
+      "ownerArtApproval": "pending",
+      "preserveADR0012": true,
+      "reviewRoute": "/previews/dh-11c/illustrated-overview/?v=dh11c5d3a-align-v1",
+      "heroCandidateStatus": "art-direction concept generated separately, not aligned or integrated into moving scene",
+      "liveArtRoute": "/previews/dh-11c/authored-3d/?v=dh11c5d3b-authored-3d-v1",
+      "liveArtSource": "prototypes/dh-11c-room/high-illustration-3d.js",
+      "ownerCorrection": "The image style must be applied to the genuine working 3D models, not as illustrated camera plates or separate compositions",
+      "spineArtCandidate": {
+        "stage": "DH-11C.5D.3C",
+        "status": "deployed_staging_owner_direction_approved_visual_refinements_ongoing",
+        "route": "/previews/dh-11c/authored-3d-v2/?v=dh11c5d3c-unique-spines-v1",
+        "source": "prototypes/dh-11c-room/high-illustration-3d-v2.js",
+        "documentation": "docs/DH11C5D3C_BOOK_SPINE_ART.md",
+        "approval": "pending",
+        "keepsV5": true,
+        "publishedWritingChanged": false,
+        "productionChanged": false
+      },
+      "sculptedBookcaseCandidate": {
+        "milestone": "DH-11C.5D.3D",
+        "status": "merged_staging_visual_feedback_incorporated_into_v4",
+        "route": "/previews/dh-11c/authored-3d-v3/?v=dh11c5d3d-sculpted-bookcase-v1",
+        "source": "prototypes/dh-11c-room/high-illustration-3d-v3.js",
+        "documentation": "docs/DH11C5D3D_SCULPTED_BOOKCASE.md",
+        "approval": "pending",
+        "preservedInteractions": true,
+        "productionChanged": false,
+        "publishedWritingChanged": false
+      },
+      "authoredDetailCandidate": {
+        "milestone": "DH-11C.5D.3E",
+        "status": "deployed_staging_owner_feedback_integrated_into_3F",
+        "route": "/previews/dh-11c/authored-3d-v4/?v=dh11c5d3e-authored-details-v1",
+        "source": "prototypes/dh-11c-room/high-illustration-3d-v4.js",
+        "window": "prototypes/dh-11c-room/window-illustration.js",
+        "documentation": "docs/DH11C5D3E_AUTHORED_DETAILS.md",
+        "ownerVisualApproval": "pending",
+        "preservedMechanics": true,
+        "productionChanged": false,
+        "publishedWritingChanged": false
+      },
+      "readableHoardCandidate": {
+        "stage": "DH-11C.5D.3F",
+        "status": "merged_staging_owner_feedback_implemented_in_V6",
+        "route": "/previews/dh-11c/authored-3d-v5/?v=dh11c5d3f-readable-hoard-v1",
+        "windowSource": "prototypes/dh-11c-room/window-illustration-v2.js",
+        "characterSource": "prototypes/dh-11c-room/manuscript-personality.js",
+        "fictitiousBookTitles": 80,
+        "chaoticManuscriptSurfaces": 15,
+        "approval": "pending",
+        "windowClippedToPhysicalPanes": true,
+        "productionChanged": false,
+        "publishedWritingChanged": false
+      },
+      "handwrittenLabelCandidate": {
+        "stage": "DH-11C.5D.3G",
+        "status": "deployed_staging_owner_approved_preceding_V7",
+        "route": "/previews/dh-11c/authored-3d-v6/?v=dh11c5d3g-authored-handwriting-v1",
+        "source": "prototypes/dh-11c-room/manuscript-personality-v2.js",
+        "artSource": "prototypes/dh-11c-room/high-illustration-3d-v5.js",
+        "documentation": "docs/DH11C5D3G_AUTHORED_HANDWRITING.md",
+        "featuredWorkTitles": 8,
+        "featuredTitlesStatus": "candidate_visual_identity_pending_owner_confirmation",
+        "handwrittenDeskPages": 14,
+        "typedTypewriter": true,
+        "productionChanged": false,
+        "publishedWritingChanged": false,
+        "approval": "pending"
+      },
+      "mysticalRoomCandidate": {
+        "milestone": "DH-11C.5D.3H",
+        "status": "deployed_staging_owner_positive_feedback_preceding_V8",
+        "route": "/previews/dh-11c/authored-3d-v7/?v=dh11c5d3h-mystical-room-props-v1",
+        "script": "prototypes/dh-11c-room/room-props-v7.js",
+        "documentation": "docs/DH11C5D3H_MYSTICAL_ROOM_PROPS.md",
+        "lampLiftMetres": 0.07,
+        "deskSurfaceTopMetres": 1.39,
+        "basketInteriorPaperBalls": 12,
+        "originalInteractiveCrumples": 9,
+        "rugSurfaceTexture": true,
+        "approvedPriorArtPreserved": true,
+        "approval": "pending",
+        "productionChanged": false,
+        "publishedWritingChanged": false
+      },
+      "exitDoorCandidate": {
+        "milestone": "DH-11C.5D.3I",
+        "status": "merged_staging_owner_accepted_for_integration",
+        "route": "/previews/dh-11c/authored-3d-v8/?v=dh11c5d3i-door-home-exit-v1",
+        "source": "prototypes/dh-11c-room/door-exit.js",
+        "documentation": "docs/DH11C5D3I_EXIT_DOOR.md",
+        "firstClick": "opens physical hinged door from any view",
+        "secondClick": "navigates to same-origin DaveHub homepage",
+        "destination": "/",
+        "physicalOpenDoorHitTarget": true,
+        "keyboardAccessible": true,
+        "previousArtPreserved": true,
+        "ownerApproval": "pending",
+        "productionChanged": false,
+        "publishedWritingChanged": false
+      },
+      "writingIslandDirectRoom": {
+        "milestone": "DH-11C.5D.3J",
+        "status": "deployed_staging_owner_accepted_as_core_before_6A",
+        "stagingRoute": "/worlds/writing/",
+        "sceneBase": "/worlds/writing/scene/",
+        "assetRoot": "/worlds/writing/room/",
+        "source": "scripts/render-dh11c5d3j-writing-world.cjs",
+        "documentation": "docs/DH11C5D3J_DIRECT_WRITING_WORLD.md",
+        "oldLanding": "retired_from_staging_served_route",
+        "destinationOnExit": "/",
+        "usesReal3DModels": true,
+        "interactiveDoorPreserved": true,
+        "publicCatalogueChanged": false,
+        "productionChanged": false,
+        "ownerReview": "pending"
+      },
+      "minimalImmersiveUI": {
+        "stage": "DH-11C.6A",
+        "status": "feature_branch_pending_CI_and_owner_visual_review",
+        "stagingRoute": "/worlds/writing/",
+        "renderer": "scripts/render-dh11c6a-minimal-room.cjs",
+        "stylesheet": "prototypes/dh-11c-room/minimal-immersive.css",
+        "homepageLogo": "/assets/branding/davehub-logo-faithful.svg",
+        "homeLinkLabel": "Back",
+        "persistentInspector": false,
+        "focusPrompt": true,
+        "expandFunction": "existing object controls until bespoke 6B work",
+        "doorTwoClickExitPreserved": true,
+        "previousPreviewsIsolated": true,
+        "publishedCatalogueChanged": false,
+        "productionChanged": false,
+        "documentation": "docs/DH11C6A_MINIMAL_IMMERSIVE_UI.md",
+        "ownerApproval": "pending"
+      },
+      "emptySceneryReturn": {
+        "stage": "DH-11C.6A.1",
+        "status": "deployed_staging_owner_approved",
+        "stagingRoute": "/worlds/writing/",
+        "marker": "DH-11C.6A.1",
+        "cacheVersion": "dh11c6a1-background-return-v1",
+        "behaviour": "click non-interactive scenery from focused object returns to whole room",
+        "guard": "data-minimal-ui=true and state.focus nonnull and pointer movement <= 8px",
+        "olderPreviewsChanged": false,
+        "doorAnd3DMechanicsChanged": false,
+        "productionChanged": false,
+        "publishedCatalogueChanged": false,
+        "documentation": "docs/DH11C6A1_BACKGROUND_CLICK.md",
+        "ownerVisualApproval": "pending"
+      },
+      "darkWindowPreload": {
+        "milestone": "DH-11C.6A.2",
+        "status": "feature_branch_awaiting_CI_and_visual_review",
+        "stagingRoute": "/worlds/writing/",
+        "flag": "data-dark-window-preload=true",
+        "darkColour": "#111827",
+        "source": "prototypes/dh-11c-room/window-illustration-v2.js",
+        "documentation": "docs/DH11C6A2_DARK_WINDOW_PRELOAD.md",
+        "onLoading": "dark sky, no old islands",
+        "onLoaded": "illustrated four-pane scene, old geometry suppressed",
+        "onError": "dark sky, no old islands",
+        "olderPreviewsChanged": false,
+        "productionChanged": false,
+        "ownerVisualApproval": "pending"
+      },
+      "finishedBookExperience": {
+        "stage": "DH-11C.6B",
+        "status": "deployed_staging_owner_reviewed_needs_6B1_polish",
+        "stagingRoute": "/worlds/writing/",
+        "productBooks": [
+          "The Legend of the Stormrider",
+          "The Duck Bread Baker",
+          "Eleanor and the Mystery of the Missing Stones"
+        ],
+        "physicalFeaturedIndices": [
+          0,
+          1,
+          2
+        ],
+        "detailView": "accessible native modal with book cover, description, ISBN and HTTPS purchase links",
+        "unverifiedEleanorCover": "fallback jacket, no invented image",
+        "otherSpines": "fictional decorative only",
+        "nextTextWorkViewer": "DH-11C.6C",
+        "mainChanged": false,
+        "productionChanged": false,
+        "publishedCatalogueChanged": false,
+        "documentation": "docs/DH11C6B_FINISHED_BOOKS.md",
+        "ownerApproval": "pending"
+      },
+      "bookcaseLayoutPolish": {
+        "stage": "DH-11C.6B.1",
+        "status": "deployed_staging_owner_requested_6B2_correction",
+        "stagingRoute": "/worlds/writing/",
+        "publishedBookPositions": [
+          "book_3_03",
+          "book_3_10",
+          "book_3_17"
+        ],
+        "ordering": "top shelf, left to right",
+        "desktopDetail": "up to 1190px wide, reduced vertical chrome, scroll only if overflow",
+        "contextPrompts": "dock opposite the selected object on desktop, reserve scene-free strip on narrow screens",
+        "exitDoorPreserved": true,
+        "older3DPreviewsPreserved": true,
+        "productionChanged": false,
+        "mainChanged": false,
+        "catalogueChanged": false,
+        "documentation": "docs/DH11C6B1_LAYOUT_POLISH.md",
+        "ownerApproval": "pending"
+      },
+      "floatingPromptAndCompactJacket": {
+        "stage": "DH-11C.6B.2",
+        "status": "feature_branch_pending_CI_and_owner_visual_review",
+        "stagingRoute": "/worlds/writing/",
+        "fullHeight3D": true,
+        "noReservedFooter": true,
+        "promptPlacement": "beside selected object within unaltered 3D scene; compact corner for narrow viewports",
+        "desktopBreakpoint": "640 CSS px, independent of viewport height",
+        "eleanorFallback": "max 260px wide x 390px tall (48dvh), mobile max 200px x 270px",
+        "otherCoversChanged": false,
+        "physicalBookPositionsChanged": false,
+        "mainChanged": false,
+        "productionChanged": false,
+        "catalogueChanged": false,
+        "documentation": "docs/DH11C6B2_FLOATING_PROMPTS.md",
+        "ownerVisualApproval": "pending"
+      },
+      "authenticPublishedSpines": {
+        "stage": "DH-11C.6B.3",
+        "status": "feature_branch_pending_CI_and_owner_visual_review",
+        "stagingRoute": "/worlds/writing/",
+        "spineBindings": [
+          "#36577a",
+          "#ba672c",
+          "#404864"
+        ],
+        "highlight": "fine gold frame with seal; binding colour no longer defines selection",
+        "coverSources": {
+          "stormrider": "verified publisher image",
+          "duckBreadBaker": "verified publisher image",
+          "eleanor": "no verified original in Drive or accessible retailer URL; original text fallback remains"
+        },
+        "olderArtPreviewsChanged": false,
+        "productionChanged": false,
+        "mainChanged": false,
+        "publicCatalogueChanged": false,
+        "documentation": "docs/DH11C6B3_REAL_BOOK_SPINES.md",
+        "ownerVisualApproval": "pending"
+      },
+      "manuscriptReaderAndWorkshop": {
+        "stage": "DH-11C.6C.1",
+        "status": "feature_branch_pending_CI_and_owner_visual_review",
+        "stagingRoute": "/worlds/writing/",
+        "reader": "13 physical desk sheets; 3 fictional 2-page samples; native modal with chapter navigation",
+        "typewriter": "temporary visitor text, prompt cycling, copy and clear; physical key animation retained",
+        "realManuscriptPublicationApproved": false,
+        "visitorDataPersisted": false,
+        "globalPublicCatalogueChanged": false,
+        "olderArtPreviewsChanged": false,
+        "mainChanged": false,
+        "productionChanged": false,
+        "next": "filing cabinet and owner-approved writing excerpts",
+        "documentation": "docs/DH11C6C1_MANUSCRIPT_READER_TYPEWRITER.md"
+      },
+      "motionFirstFurniture": {
+        "stage": "DH-11C.6C.2",
+        "status": "feature_branch_under_test",
+        "stagingRoute": "/worlds/writing/",
+        "dialogs": "deferred until 3D paper/book and shared camera actually settle, with 0.18s finished-pose hold",
+        "pointerTypewriter": "3D key clicks animate without opening workshop",
+        "keyboardTypewriter": "printable keys animate selected real 3D key and paper while typewriter is selected",
+        "cancellation": "focus changes, overview navigation and reversals discard pending overlays",
+        "reducedMotion": "settle test remains, with final hold skipped",
+        "productionChanged": false,
+        "mainChanged": false,
+        "approvedContentChanged": false,
+        "docs": "docs/DH11C6C2_MOTION_FIRST.md"
+      },
+      "livingFilingCabinet": {
+        "stage": "DH-11C.6D.1-3",
+        "status": "feature_branch_under_test",
+        "stagingRoute": "/worlds/writing/",
+        "scope": "physical folder meshes mounted on the five existing real drawer pivots; motion-first folder reader; public book and demo-sample links",
+        "publishedBooks": 3,
+        "fictionalDemonstrationFolders": 9,
+        "unfilledSlots": 8,
+        "dataProtection": "No real unpublished content or Drive data accessed; demonstrations explicitly invented",
+        "originalCabinetGeometryPreserved": true,
+        "earlierFurnitureMechanicsPreserved": true,
+        "mainChanged": false,
+        "productionChanged": false,
+        "docs": "docs/DH11C6D_LIVING_ARCHIVE.md",
+        "ownerVisualReview": "pending"
+      },
+      "overheadCabinetTray": {
+        "stage": "DH-11C.6D.4",
+        "status": "feature_branch_under_test",
+        "stagingRoute": "/worlds/writing/",
+        "issue": "Only lowest two drawers allow reliable direct 3D folder clicks from current cabinet camera",
+        "solution": "Wait for real drawer and camera to settle, then show overhead illustrated tray with four large file buttons",
+        "closeBehaviour": "Close folder returns its 3D mesh before reopening same overhead drawer; close-drawer command moves real drawer home",
+        "keyboardTouchReducedMotion": true,
+        "originalDrawerMeshMovementPreserved": true,
+        "olderPreviewsChanged": false,
+        "mainChanged": false,
+        "productionChanged": false,
+        "publicContent": "No changes; three published books plus nine clearly fictional demonstrations",
+        "docs": "docs/DH11C6D4_OVERHEAD_DRAWER.md",
+        "ownerVisualReview": "pending"
+      },
+      "discardedIdeas": {
+        "stage": "DH-11C.6E",
+        "status": "feature_branch_under_test",
+        "stagingRoute": "/worlds/writing/",
+        "motion": "nine existing GLB 3D crumple arcs retained, physical landing/camera gating before content",
+        "experience": "unfold invented scrap, turn over for absurd reason, leave on floor or crumple and throw back",
+        "fictionalRecords": 9,
+        "contentPolicy": "Fictional demonstration only, no actual unpublished work",
+        "accessibility": "pointer, touch, keyboard controls, real scene focus cancellation, reduced motion",
+        "originalBinGeometryAndPathsPreserved": true,
+        "olderPreviewsChanged": false,
+        "mainChanged": false,
+        "productionChanged": false,
+        "docs": "docs/DH11C6E_WASTEPAPER_BIN.md",
+        "ownerVisualReview": "pending"
+      },
+      "visibleUncrumple": {
+        "stage": "DH-11C.6E.1",
+        "status": "owner_approved_and_selectively_promoted_main_pr_114",
+        "defect": "existing Unfold action was below viewport and central crumpled paper was not clickable",
+        "solution": "native paper button plus above-fold Uncrumple paper button; scroll-safe dialog",
+        "originalNineBinTossesPreserved": true,
+        "otherWritingExperiencesPreserved": true,
+        "ownerVisualReview": "pending",
+        "mainChanged": false,
+        "productionChanged": false,
+        "docs": "docs/DH11C6E1_VISIBLE_UNCRUMPLE.md"
+      }
+    }
+  },
+  "dh12_music": {
+    "stage": "DH-12B.4",
+    "world": "music",
+    "creativeDirection": "The Impossible Theatre, a surreal miniature stage with real moving mechanics",
+    "status": "staging_homepage_music_island_under_test",
+    "previewRoute": "/previews/dh-12a/listening-room/",
+    "existingMusicRouteReplaced": false,
+    "physicalCurtains": true,
+    "stageSets": 3,
+    "recordPlayer": "rotating geometry and physically moving tonearm, no audio",
+    "content": "none; all future recordings/lyrics/cover art/characters owner-approved separately",
+    "ownerVisualApproval": "pending",
+    "mainChanged": false,
+    "productionChanged": false,
+    "docs": "docs/DH12B4_HOME_MUSIC_ISLAND.md",
+    "camera": {
+      "type": "one perspective camera travelling to genuine object focus points",
+      "modes": [
+        "overview",
+        "curtains",
+        "act",
+        "record"
+      ],
+      "actions": "select object -> approach + operate; Whole theatre / Escape / empty scene -> overview",
+      "responsive": true,
+      "reducedMotion": true,
+      "originalGeometryPreserved": true
+    },
+    "scenery": {
+      "songs": "The Clockwork Chorus: organ pipes, brass gear, articulated birds",
+      "shows": "The Theatre Within: hinged painted flats and rising stage-within-stage",
+      "characters": "The Marionette Assembly: two jointed puppets, arms, strings and heads",
+      "theatre": "original geometry plus actual fly-system ropes, pulleys, balconies and footlights",
+      "action": "toggle physical animation via clicked set piece or accessible button",
+      "catalogue": "none, fictional prototypes only",
+      "allExistingMotionAndCameraPreserved": true
+    },
+    "informationArchitecture": {
+      "entrance": "The World Between Notes /previews/dh-12b/music-foyer/",
+      "musicals": "The Impossible Theatre /previews/dh-12a/listening-room/",
+      "songsBandsAlbums": "The Record Shop /previews/dh-12b/record-shop/",
+      "canonicalMusicPageReplaced": false,
+      "publicationApprovedContent": "none"
+    },
+    "mechanics": {
+      "foyer": "two physical hinged door pairs, camera approaches and two-step enter after motion",
+      "theatre": "approved real 3D stage, now explicitly musicals-only, links back to foyer",
+      "shop": "three physical pull-out crates, camera inspection, silent real vinyl and tonearm"
+    },
+    "actualArt": {
+      "foyer": "procedural cosmic sky, 36 floating moonstone shards, rune rings, impossible stairs, arches, lanterns, theatrical and vinyl portal sculpture and shaders",
+      "shop": "open cosmic colonnades, arched windows, moon-record floor sigil, 11 floating blank vinyl discs, crooked stairs, pendants and record mobile",
+      "sharedModule": "prototypes/dh-12b-music-world/dimensional-art.mjs",
+      "originalDoorsAndMotionPreserved": true,
+      "originalThreeCratesAndSilentTurntablePreserved": true,
+      "updatedSourceNotMockups": true,
+      "reducedMotion": true,
+      "userReview": "pending",
+      "docs": "docs/DH12B2_DIMENSIONAL_ART.md"
+    },
+    "foyerRefinement": {
+      "realOrbit": "drag horizontal/vertical, wheel zoom, pinch, touch and keyboard",
+      "sharedCamera": true,
+      "fullRevolution": true,
+      "banner": "Writing Room-style dark strip with original DaveHub logo and Music world identity",
+      "physicalTheatreDoor": "velvet, theatre masks, footlights, gilded physical marquee",
+      "physicalRecordDoor": "vinyl with grooves, blank sleeves, carved physical shop marquee",
+      "signs": "high-contrast labels projected from real arch points",
+      "source": "prototypes/dh-12b-music-world/foyer-orbit.mjs",
+      "originalTwoStepDoorMotionPreserved": true,
+      "shopAndTheatreUnchanged": true,
+      "ownerVisualApproval": "pending",
+      "docs": "docs/DH12B3_FOYER_ORBIT_AND_PORTALS.md"
+    },
+    "homepageMusicIsland": {
+      "status": "staging_only_pending_owner_review",
+      "link": "/previews/dh-12b/music-foyer/",
+      "hotspot": "fifth illustrated home island, icon-music SVG, CSS colour and responsive placement",
+      "return": "foyer topbar leads to root homepage",
+      "otherIslandsUnchanged": true,
+      "productionNotUpdated": true,
+      "docs": "docs/DH12B4_HOME_MUSIC_ISLAND.md"
+    }
   }
 }

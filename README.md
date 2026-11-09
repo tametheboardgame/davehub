@@ -6,6 +6,20 @@ DaveHub is an eccentric, publicly accessible home for games, writing, music, int
 
 It is emphatically **not** a CV, developer portfolio, professional marketing site or generic blog template. The website itself should be an original, playful project.
 
+## Locked 3D world architecture: geometry first (ADR-0012)
+
+**Do not go back to “generate a bunch of pictures and try to fake a 3D world.” Build the world properly, then make it beautiful.**
+
+Every interactive 3D scene must first have coherent geometry, a shared camera, correct pivots and working mechanisms. Use Three.js, CSS 3D or properly modelled Blender/GLB assets as appropriate; apply artwork, stylised textures and lighting **after** the mechanics work. Never assemble independently AI-generated open/closed images as simulated physical parts. Generated artwork is permitted for concepts, textures and static decoration, not for inventing inconsistent moving geometry. Any deviation needs an explicit owner-approved superseding decision. See [ADR-0012](docs/DECISIONS/ADR-0012.md) and [development-agent instructions](AGENTS.md).
+
+## DH-11C.3A: art-direction comparison (staging-only)
+
+The [three-palette material laboratory](https://davehub.pages.dev/previews/dh-11c/art-lab/) applies Amber & Ink, Moonlit Archive or Golden Storybook material colours and lighting to **the exact same existing 3D Manuscript Hoard geometry**. No independently generated object images, changed camera positions or new publication content are included. This is a first-pass art review, not finished textures or production model approval. See the [draft art bible](docs/DH11C3_ART_BIBLE.md), [camera and geometry audit](docs/DH11C3A_SCENE_AUDIT.md), [asset inventory](docs/DH11C3A_ASSET_INVENTORY.json) and [GLB contract](docs/DH11C3A_GLTF_NODE_CONTRACT.md). Owner visual approval remains required before production modelling.
+
+## The Manuscript Hoard: textured 3D production plan
+
+The geometry-first 3D Writing room prototype is the implementation reference at [the hosted staging room](https://davehub.pages.dev/previews/dh-11c/room/). The owner selected a full milestone-by-milestone production plan for moving from the room blockout to a genuinely textured and interactive fantasy environment. **Read the [DH-11C 3D production roadmap](docs/DH11C_3D_PRODUCTION_ROADMAP.md)** before building models, art materials or new interactions. Milestones DH-11C.3–C.8 cover art direction, Blender/GLB asset workflow, textures, lighting, deep interactions, and staged integration, with a separate optional engine-extraction stage afterwards. Geometry and real movement must remain authoritative under [ADR-0012](docs/DECISIONS/ADR-0012.md); no replacement of the existing Writing route or production-domain changes are authorised by the plan.
+
 ## Staging and production domain policy (locked)
 
 The future launch will use **two separate Cloudflare Pages projects connected to the same GitHub repository**. The existing `davehub.pages.dev` hostname remains the permanent **staging/test** environment (persistent `staging` branch once the cutover is ready), and the future `davehub.co.uk` website will use a **new live Pages project** deploying the reviewed `main` branch. Routes such as `/games/stephen-martin/` and `/games/unicorn-valley/` will work on both hosts, but each environment can run a different approved version. A live release requires explicit owner approval; staging changes never automatically deploy to production.
@@ -37,6 +51,10 @@ The two independent game codebases and future staging/live deployment remain sep
 **Unicorn Valley**, **The Stephen Martin Project** and the collaborative **Tame The Board Game** blog have owner-approved text/link listings in `content/public/catalogue.json`. They appear in the usual Games, Projects, Writing and Memory Lane destinations with individual `/creations/<slug>/` pages. Both games have prominent **Play on DaveHub** links to the actual `/games/<slug>/` routes; separate external original sites remain linked for fallback. Unicorn is independently bundled, while Stephen is proxied from its existing public release. The blog credits both David and Miriam. No artwork, recordings, or WordPress posts are mirrored. [Publication scope and tests](docs/DH08D_FIRST_THREE_PUBLISHED_PROJECTS.md).
 
 The earlier local Content Workshop remains optional for future nominations, not the default owner review method; browser-based Cloudflare staging reviews are the standard.
+
+## DH-10C: Hosted editorial review and publication proposals
+
+Use `https://davehub.pages.dev/review/` to see opted-in **public** creative repositories and their current DaveHub listing status. For actual changes, use the [DH-10C authenticated GitHub Actions proposal workflow](.github/workflows/dh10c-editorial-proposal.yml) to propose a new publication, revision or withdrawal. The workflow requires owner/editorial sign-off, validates the upstream public marker and current catalogue, and creates a **review PR against staging**. It never automatically publishes, and no private draft text or media is copied into the hosted review page. See [the operating guide](docs/DH10C_HOSTED_EDITORIAL_WORKFLOW.md).
 
 ## DH-10D: Default-off marker in every managed new repository
 

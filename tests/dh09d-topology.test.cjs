@@ -19,7 +19,7 @@ const setup=phase=>{
  p.liveDomainConfigured=x.production.configured;
  return {x,p};
 };
-test('staging branch deployment requires explicit Cloudflare build role',()=>{
+test('staging branch configuration requires explicit staging Cloudflare role',()=>{
  assert.deepEqual(readTopology(),{stagingBranch:'staging',phase:'staging_cutover',liveConfigured:false,paused:false});
  assert.equal(validateStagingPolicy(policy,top),policy);
  assert.equal(buildRole(readTopology(),{CF_PAGES:'1',CF_PAGES_BRANCH:'staging',DAVEHUB_DEPLOY_ROLE:'staging'}),'staging');
