@@ -165,7 +165,7 @@ test('build and Cloudflare checks preserve the orbit source and add detailed por
   '/previews/dh-12b/record-shop/'
  ])assert.ok(smoke.includes(marker),marker);
  const shop=read(dir+'record-shop.html');
- assert.ok(shop.includes('DH-12B.2'),'Record Shop remains its own space');
+ assert.ok(shop.includes('DH-12C.2'),'Record Shop remains its own space');
  const theatre=read('prototypes/dh-12a-listening-room/index.html');
  assert.ok(theatre.includes('DH-12A.3'),'theatre scene is unchanged');
 });

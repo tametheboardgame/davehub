@@ -123,10 +123,10 @@ test('the two illustrated realms retain clear navigation, publication gates, and
  }
  assert.ok(foyer.includes('DH-12B.5'));
  assert.ok(foyer.includes('music-world.css?v=dh12b5-clean-journey-v1'));
- assert.ok(shop.includes('DH-12B.2'));
+ assert.ok(shop.includes('DH-12C.2'));
  assert.ok(shop.includes('music-world.css?v=dh12b2-dimensional-world-v1'));
  assert.ok(foyer.includes('foyer.mjs?v=dh12b5a-marquee-front-v1'));
- assert.ok(shop.includes('record-shop.mjs?v=dh12b2-dimensional-world-v1'));
+ assert.ok(shop.includes('record-shop.mjs?v=dh12c2-approved-catalogue-v1'));
  for(const marker of ['id="portal-theatre"','id="portal-records"','id="music-portal-overview"','role="status"'])
   assert.ok(foyer.includes(marker),marker);
  for(const marker of ['id="record-shop-singles"','id="record-shop-bands"','id="record-shop-albums"',
@@ -154,13 +154,13 @@ test('the new art module is packed into BOTH existing preview routes and enforce
   "check('dist/previews/dh-12b/'+world+'/dimensional-art.mjs'",
   'buildFoyerDimension',
   'buildRecordDimension',
-  'DH-12B.2'
+  'DH-12C.2'
  ])assert.ok(build.includes(marker),marker);
  for(const marker of [
   'dh12b2-dimensional-world-v1',
   '/previews/dh-12b/music-foyer/dimensional-art.mjs',
   '/previews/dh-12b/record-shop/dimensional-art.mjs',
-  'DH-12B.2',
+  'DH-12C.2',
   "window.location.assign(door.route)"
  ])assert.ok(smoke.includes(marker),marker);
  assert.ok(!build.includes('node scripts/render-music-foyer-live'));

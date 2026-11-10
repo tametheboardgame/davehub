@@ -172,7 +172,7 @@ test('staging build packages the real textured foyer and keeps Record Shop and T
   'dh12b5a-marquee-front-v1','data-foyer-minimal="true"',
   'shouldAutoEnter({selected,entering,doorsDone,cameraDone})'
  ])assert.ok(smoke.includes(marker),marker);
- assert.ok(read(dir+'record-shop.html').includes('DH-12B.2'));
+ assert.ok(read(dir+'record-shop.html').includes('DH-12C.2'));
  assert.ok(read('prototypes/dh-12a-listening-room/index.html').includes('DH-12A.3'));
  assert.ok(read(dir+'foyer.html').includes('href="/"'));
 });

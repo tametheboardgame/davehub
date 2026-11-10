@@ -1,0 +1,22 @@
+name: DH-12C private music verification
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  private-catalogue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run private-catalogue and publication-gate tests
+        run: node --test tests/dh12c-private-music.test.cjs
+      - name: Validate read access to allowlisted private music repositories
+        env:
+          DAVEHUB_MUSIC_READ_TOKEN: ${{ secrets.DAVEHUB_MUSIC_READ_TOKEN }}
+        run: node scripts/dh12c-private-music.cjs --check
+# Configure fine-grained Contents: read-only access to the seven music repos.
+# No output artifacts, raw source files, audio, artwork or deployment.

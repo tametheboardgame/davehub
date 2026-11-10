@@ -65,6 +65,11 @@ for asset in \
   tests/dh12b3-foyer-orbit.test.cjs \
   tests/dh12b4-home-music.test.cjs \
   tests/dh12b5-foyer-journey.test.cjs \
+  tests/dh12c-private-music.test.cjs \
+  scripts/dh12c-private-music.cjs \
+  content/music-publication-approvals.json \
+  prototypes/dh-12b-music-world/approved-catalogue-client.mjs \
+  prototypes/dh-12b-music-world/approved-catalogue.json \
   prototypes/dh-12b-music-world/foyer-surfaces.mjs \
   prototypes/dh-12b-music-world/foyer-orbit.mjs \
   prototypes/dh-12b-music-world/dimensional-art.mjs \
@@ -234,13 +239,15 @@ node --check prototypes/dh-12b-music-world/foyer.mjs
 node --check prototypes/dh-12b-music-world/foyer-orbit.mjs
 node --check prototypes/dh-12b-music-world/foyer-surfaces.mjs
 node --check prototypes/dh-12b-music-world/music-portals.mjs
+node --test tests/dh12c-private-music.test.cjs
+node --check prototypes/dh-12b-music-world/approved-catalogue-client.mjs
 node --check prototypes/dh-12b-music-world/record-shop.mjs
 node --check prototypes/dh-12b-music-world/record-shop-mechanics.mjs
 node --check prototypes/dh-12b-music-world/dimensional-art.mjs
 cp prototypes/dh-12b-music-world/foyer.html dist/previews/dh-12b/music-foyer/index.html
 cp prototypes/dh-12b-music-world/record-shop.html dist/previews/dh-12b/record-shop/index.html
 cp prototypes/dh-12b-music-world/foyer.mjs prototypes/dh-12b-music-world/foyer-orbit.mjs prototypes/dh-12b-music-world/foyer-surfaces.mjs prototypes/dh-12b-music-world/music-portals.mjs prototypes/dh-12b-music-world/music-world.css prototypes/dh-12b-music-world/dimensional-art.mjs dist/previews/dh-12b/music-foyer/
-cp prototypes/dh-12b-music-world/record-shop.mjs prototypes/dh-12b-music-world/record-shop-mechanics.mjs prototypes/dh-12b-music-world/music-world.css prototypes/dh-12b-music-world/dimensional-art.mjs dist/previews/dh-12b/record-shop/
+cp prototypes/dh-12b-music-world/record-shop.mjs prototypes/dh-12b-music-world/record-shop-mechanics.mjs prototypes/dh-12b-music-world/approved-catalogue-client.mjs prototypes/dh-12b-music-world/approved-catalogue.json prototypes/dh-12b-music-world/music-world.css prototypes/dh-12b-music-world/dimensional-art.mjs dist/previews/dh-12b/record-shop/
 for world in music-foyer record-shop; do
   cp prototypes/dh-11c-room/vendor/three-r159.module.min.js prototypes/dh-11c-room/vendor/THREE-LICENSE.txt "dist/previews/dh-12b/$world/vendor/"
 done
@@ -421,10 +428,10 @@ check('dist/previews/dh-12b/music-foyer/music-portals.mjs',[
  "route:'/previews/dh-12b/record-shop/'",
  "export const FOYER_ROUTE",'export function shouldAutoEnter']);
 check('dist/previews/dh-12b/record-shop/index.html',[
- 'DH-12B.2','data-music-record-shop="true"','data-dimensional-art="true"','The Record Shop',
+ 'DH-12C.2','data-music-record-shop="true"','data-dimensional-art="true"','The Record Shop',
  'id="record-shop-singles"','id="record-shop-bands"','id="record-shop-albums"',
  'id="record-shop-disc"','href="/previews/dh-12b/music-foyer/"',
- 'record-shop.mjs?v=dh12b2-dimensional-world-v1']);
+ 'record-shop.mjs?v=dh12c2-approved-catalogue-v1']);
 check('dist/previews/dh-12b/record-shop/record-shop.mjs',[
  'new THREE.WebGLRenderer','real-record-pull-out-',
  'register(rack,r.id)','register(listening,\x27listening\x27)',
