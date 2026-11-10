@@ -428,7 +428,7 @@ check('dist/previews/dh-12b/music-foyer/music-portals.mjs',[
  "route:'/previews/dh-12b/record-shop/'",
  "export const FOYER_ROUTE",'export function shouldAutoEnter']);
 check('dist/previews/dh-12b/record-shop/index.html',[
- 'DH-12B.2','data-music-record-shop="true"','data-dimensional-art="true"','The Record Shop',
+ 'DH-12C.2','data-music-record-shop="true"','data-dimensional-art="true"','The Record Shop',
  'id="record-shop-singles"','id="record-shop-bands"','id="record-shop-albums"',
  'id="record-shop-disc"','href="/previews/dh-12b/music-foyer/"',
  'record-shop.mjs?v=dh12c2-approved-catalogue-v1']);
