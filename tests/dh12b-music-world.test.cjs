@@ -123,7 +123,7 @@ test('record shop is genuinely separate geometry, not the theatre re-skinned or 
   'href="/previews/dh-12b/music-foyer/"',
   'id="record-shop-singles"','id="record-shop-bands"',
   'id="record-shop-albums"','id="record-shop-disc"',
-  'id="record-shop-overview"','record-shop.mjs?v=dh12b2-dimensional-world-v1',
+  'id="record-shop-overview"','record-shop.mjs?v=dh12c2-approved-catalogue-v1',
   'noindex,nofollow','A dreamlike listening dimension. No private songs, audio or unapproved links are loaded.'
  ])assert.ok(html.includes(marker),marker);
  for(const marker of [
@@ -140,8 +140,10 @@ test('record shop is genuinely separate geometry, not the theatre re-skinned or 
   'shopDestination(focused,ratio)',
   'function wholeShop()'
  ])assert.ok(js.includes(marker),marker);
- assert.ok(!/new Audio\s*\(|\.play\s*\(|<audio|fetch\s*\(/i.test(js),
-  'no unapproved online music or audio playback');
+ assert.ok(!/new Audio\s*\(|\.play\s*\(|<audio/i.test(js),
+  'no unapproved audio playback');
+ assert.ok(js.includes("fetch('./approved-catalogue.json'")&&js.includes("redirect:'error'"),
+  'browser may only retrieve the approved same-origin catalogue');
  assert.ok(!/\.png|\.jpg|\.webp|data:image\//i.test(js));
 });
 test('Music world has both-way connections, but the canonical Music page is untouched',()=>{

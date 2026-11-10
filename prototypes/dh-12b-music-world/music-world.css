@@ -602,3 +602,12 @@ body[data-foyer-minimal="true"] .music-foyer__view button{
   min-height:35px;padding:6px 11px;
  }
 }
+
+/* DH-12C.2: approved release labels, hidden when the projection is empty. */
+.record-shop__catalogue[hidden]{display:none!important}
+.record-shop__catalogue{margin:11px 0 8px;padding:11px;border:1px solid #c4ac83a8;border-radius:8px;background:#15252ec4;max-height:155px;overflow-y:auto}
+.record-shop__catalogue h3{margin:0 0 7px;font:700 12px/1.2 system-ui,sans-serif;color:#f2d6a6}
+.record-shop__catalogue ul{list-style:none;padding:0;margin:0;display:grid;gap:7px}
+.record-shop__catalogue li{display:flex;flex-direction:column;gap:2px;padding:0 0 5px;border-bottom:1px solid #e2c7a53b}
+.record-shop__catalogue li strong{font:700 12px/1.35 Georgia,serif;color:#ffecd4}
+.record-shop__catalogue li span{font:10px/1.25 system-ui,sans-serif;color:#c0dbd1}

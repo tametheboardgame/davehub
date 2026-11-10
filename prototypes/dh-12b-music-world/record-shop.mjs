@@ -4,12 +4,16 @@ import * as THREE from './vendor/three-r159.module.min.js';
 import {RACKS,rackFor,shopDestination,pullPosition,spinDisc,motion,focusAction}
  from './record-shop-mechanics.mjs?v=dh12b1-music-portals-v1';
 import {buildRecordDimension} from './dimensional-art.mjs?v=dh12b2-dimensional-world-v1';
+import {parseApprovedCatalogue,recordsForRack} from './approved-catalogue-client.mjs?v=dh12c2-approved-catalogue-v1';
 
 const canvas=document.getElementById('record-shop-canvas');
 const status=document.getElementById('record-shop-status');
 const description=document.getElementById('record-shop-description');
 const caption=document.getElementById('record-shop-caption');
 const overview=document.getElementById('record-shop-overview');
+const cataloguePanel=document.getElementById('record-shop-catalogue');
+const catalogueItems=document.getElementById('record-shop-catalogue-items');
+let approvedRecords=[];
 const controls=Object.fromEntries(RACKS.map(r=>[r.id,document.getElementById('record-shop-'+r.id)]));
 controls.listening=document.getElementById('record-shop-disc');
 if(!canvas||!status||!description||!caption||!overview||
@@ -146,14 +150,16 @@ for(const [index,r] of RACKS.entries()){
   box('sleeve-gold-spine-'+i,[.022,.63,.02],
    [(i-3.5)*.25,.55,.48+(i%3)*.03],gold,drawer);
  }
- // Upright back row of unapproved, abstract cover-colour objects.
+ // Abstract covers remain unlabelled until a separately approved projection exists.
+ const displayCovers=[];
  for(let i=0;i<5;i++){
-  box(r.id+'-display-sleeve-'+i,[.39,.73,.06],
+  const cover=box(r.id+'-display-sleeve-'+i,[.39,.73,.06],
    [(i-2)*.43,2.57,.54],i%2?accentMat:cream,rack);
+  displayCovers.push(cover);
   orb('display-emblem-'+i,.07,[(i-2)*.43,2.61,.59],gold,rack);
  }
  register(rack,r.id);
- crates[r.id]={rack,drawer,homeZ:.58};
+ crates[r.id]={rack,drawer,displayCovers,homeZ:.58};
 }
 // The listening desk uses a real disc and tonearm, but cannot play any
 // recording until a future publishing and rights approval.
@@ -184,6 +190,54 @@ for(let i=0;i<3;i++)orb('counter-glass-marble-'+i,.12,
 const dimension=buildRecordDimension({
  THREE,scene,crates,listening,disc,reducedMotion:!!reduced?.matches
 });
+function paintApprovedCovers(){
+ for(const rack of RACKS){
+  const approved=recordsForRack(approvedRecords,rack.id).slice(0,5);
+  for(const [index,record] of approved.entries()){
+   const cover=crates[rack.id].displayCovers[index];
+   if(!cover)continue;
+   const cv=document.createElement('canvas');cv.width=384;cv.height=512;
+   const c=cv.getContext('2d');
+   c.fillStyle=rack.colour;c.fillRect(0,0,384,512);
+   c.strokeStyle='#efd4a4';c.lineWidth=14;c.strokeRect(17,17,350,478);
+   c.textAlign='center';c.fillStyle='#fff0d2';
+   c.font='bold 31px Georgia,serif';
+   c.fillText(rack.id==='bands'?record.artist:record.title,192,245,322);
+   c.font='18px Georgia,serif';
+   c.fillText(rack.id==='bands'?'ARTIST':record.artist,192,299,330);
+   const texture=new THREE.CanvasTexture(cv);
+   texture.colorSpace=THREE.SRGBColorSpace;
+   cover.material=new THREE.MeshStandardMaterial({map:texture,roughness:.85});
+  }
+ }
+}
+function renderApprovedCatalogue(){
+ const records=recordsForRack(approvedRecords,focused);
+ cataloguePanel.hidden=!records.length;
+ catalogueItems.replaceChildren();
+ for(const record of records){
+  const li=document.createElement('li');
+  const title=document.createElement('strong');
+  title.textContent=focused==='bands'?record.artist:record.title;
+  const detail=document.createElement('span');
+  detail.textContent=focused==='bands'?'Artist':record.artist+
+   ' · '+(record.status==='scheduled'?'Coming '+(record.plannedReleaseDate||'soon'):record.type.toUpperCase());
+  li.append(title,detail);catalogueItems.append(li);
+ }
+}
+async function loadApprovedCatalogue(){
+ // Deliberately same-origin static JSON, not a client-side private GitHub call.
+ try{
+  const res=await fetch('./approved-catalogue.json',{cache:'no-store',redirect:'error',credentials:'same-origin'});
+  if(!res.ok)throw Error('approved catalogue unavailable');
+  approvedRecords=parseApprovedCatalogue(await res.json());
+  paintApprovedCovers();renderApprovedCatalogue();
+ }catch(error){
+  approvedRecords=[];
+  console.warn('Record Shop approved catalogue not available',error);
+ }
+}
+
 let focused=null,playing=false,discAngle=0;
 function update(){
  for(const r of RACKS){
@@ -197,9 +251,10 @@ function update(){
  description.textContent=found?found.subtitle:
   focused==='listening'?'A grooved disc and a tiny tonearm, awaiting approved music.':
   'Three real racks and a very particular turntable. Choose something to inspect.';
- caption.textContent=found?found.name+' · contents not yet published':
+ caption.textContent=found?found.name+' · '+(recordsForRack(approvedRecords,focused).length?'approved records available':'contents not yet published'):
   focused==='listening'?'A real listening mechanism with no audio loaded':
   'A physical home for future music projects.';
+ renderApprovedCatalogue();
 }
 function targetCamera(){
  const ratio=canvas.clientWidth/Math.max(1,canvas.clientHeight);
@@ -249,7 +304,7 @@ function resize(){
 }
 window.addEventListener('resize',resize);
 if(typeof ResizeObserver!=='undefined')new ResizeObserver(resize).observe(canvas);
-resize();update();
+resize();update();loadApprovedCatalogue();
 const clock=new THREE.Clock();
 function frame(){
  const dt=Math.min(.08,clock.getDelta());
